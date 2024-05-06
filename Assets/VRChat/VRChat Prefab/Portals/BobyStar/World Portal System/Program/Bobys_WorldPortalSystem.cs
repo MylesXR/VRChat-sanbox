@@ -7,6 +7,33 @@ using VRC.Udon.Common;
 
 public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 {
+
+    //Start of added variable for Attendee Menu
+    public string ClassType;
+    public GameObject AlchemistMenu;
+    public GameObject BarbarianMenu;
+    public GameObject ExplorerMenu;
+    //End of added methods for Attendee Menu
+
+    // Start of Added methods for Attendee Menu
+    //These methods have to be outside of the code below for some reason or it will ERROR
+    void AlchemistClass()
+    {
+        Debug.Log("Alchemist");
+    }
+
+    void BarbarianClass()
+    {
+        Debug.Log("Barbarian");
+    }
+
+    void ExplorerClass()
+    {
+        Debug.Log("Explorer");
+    }
+    //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
+    // End of added methods for Attendee Menu
+
     #region Core
     public Transform[] Spawns;
     [Space]
@@ -242,10 +269,13 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             SummonMode == 1 ? InputTriggerLCount == 2 || InputTriggerRCount == 2 :
             SummonMode == 2 || SummonMode == 3 ? Menu.IsHeld :
             false;
-
+        
         if (Input.GetKeyDown(KeyCode.Tab) || VRCheckSummon)
+            //Changed from here to the next comment
+
         { InputMenu = InputMenu < 2 ? InputMenu + 1 : InputMenu; }
-        else 
+            //End of changes
+        else
         { InputMenu = 0; }
         #endregion
         
@@ -491,6 +521,39 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     public void _SummonPortalMenu()
     {
         _HideStartupInfo();
+
+        // Start of added methods for Attendee Menu     
+        //This section controls what menu the player will see when they hit TAB or the VR Trigger
+        //The class type is set in the inspector as a string
+        //extra logic can be added to the Class Methods
+        switch (ClassType)
+        {
+            case "Alchemist":
+                BarbarianMenu.SetActive(false);
+                ExplorerMenu.SetActive(false);
+                AlchemistMenu.SetActive(true);      
+                AlchemistClass();
+                break;
+
+            case "Barbarian":
+                AlchemistMenu.SetActive(false);
+                ExplorerMenu.SetActive(false);
+                BarbarianMenu.SetActive(true);               
+                BarbarianClass();
+                break;
+
+            case "Explorer":
+                AlchemistMenu.SetActive(false);
+                BarbarianMenu.SetActive(false);
+                ExplorerMenu.SetActive(true);
+                ExplorerClass();
+                break;
+
+            default:
+                Debug.LogWarning("Unknown class type.");
+                break;
+        }
+        // End of added methods for Attendee Menu
 
         MenuPickupCollider.size = new Vector3(.025f, 1, .025f);
         MenuPickupCollider.center = Vector3.right * .525f * (MenuPickupSide.value == 1 ? 1 : -1);
