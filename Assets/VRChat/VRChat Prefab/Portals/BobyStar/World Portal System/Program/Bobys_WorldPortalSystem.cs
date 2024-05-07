@@ -10,11 +10,13 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     //Start of added variable for Attendee Menu
     public string ClassType;
+
     public GameObject AlchemistMenu;
     public GameObject BarbarianMenu;
     public GameObject ExplorerMenu;
-    public GameObject WallBreakerPotion;
-    public Transform WallBreakerPotionSpawnPoint;
+    public GameObject PotionWallBreaker;
+
+    public Transform PotionsSpawnPoint;
     public InteractableObjectManager IOC; // Assign in Inspector
     //End of added methods for Attendee Menu
 
@@ -34,10 +36,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     {
         ClassType = "Explorer";
     }
-
     
-
-
     public void CraftWallBreakerPotion()
     {
         IOC.CanCraftPotionWallBreaker();
@@ -61,7 +60,8 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
         if (IOC.PotionWallBreakerCollected == 1)
         {
-            Instantiate(WallBreakerPotion, WallBreakerPotionSpawnPoint.position, WallBreakerPotionSpawnPoint.rotation);
+            PotionWallBreaker.GetComponent<Rigidbody>().isKinematic= true;
+            Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
             IOC.PotionWallBreakerCollected--;
             IOC.UpdateUI();
             Debug.Log(" WALL BREAKER POTION SPAWNED ");
@@ -71,8 +71,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             Debug.LogWarning("NO WALL BREAKER POTIONS IN INVENTORY");
         }
     }
-
-
+    
     //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
     // End of added methods for Attendee Menu
 
@@ -175,6 +174,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     public void Start()
     {
+
         #region Check for Missing References
         if (Menu == null || OptionWindows.Length == 0 || Net == null)
         {

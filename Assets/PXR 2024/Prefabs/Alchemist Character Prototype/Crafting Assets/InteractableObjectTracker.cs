@@ -10,53 +10,51 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     public GameObject Herb;
     public GameObject Flower;
     public GameObject Gemstone;
+    public Rigidbody PotionWallBreakerRB;
+    public GameObject PotionWallBreaker;
     
 
     public string ItemType;
-    public InteractableObjectManager IOC;
+    public InteractableObjectManager IOM;
+
 
     private void Start()
     {
-        //IOC.PotionWallBreaker.SetActive(false);
+        if (PotionWallBreakerRB == false)
+        {
+            PotionWallBreakerRB.isKinematic= true;
+        }
     }
 
     public override void OnPickup()
     {
-        if (ItemType == "Herb")
+        switch (ItemType)
         {
-            Destroy(Herb);
-            IOC.IncrementHerbsCollected();
-        }
-        else if (ItemType == "Flower")
-        {
-            Destroy(Flower);
-            IOC.IncrementFlowersCollected();
-        }
-        else if (ItemType == "Gemstone")
-        {
-            Destroy(Gemstone);
-            IOC.IncrementGemstonesCollected();
-        }
-        else if (ItemType == "PotionWallBreaker")
-        {
-            //Destroy(IOC.PotionWallBreaker);
-            //IOC.IncrementPotionWallBreakerCollected();
+            case "Herb":
+                Destroy(Herb);
+                IOM.IncrementHerbsCollected();
+                break;
+
+            case "Flower":
+                Destroy(Flower);
+                IOM.IncrementFlowersCollected();
+                break;
+
+            case "Gemstone":
+                Destroy(Gemstone);
+                IOM.IncrementGemstonesCollected();
+                break;
         }
 
-
-        /*
-        // Check if the player has collected one of each item
-        if 
-           (IOC.HerbsCollected >= 1
-            && IOC.FlowersCollected >= 1
-            && IOC.GemstonesCollected >= 1)
+        // Toggle kinematic state off when the potion is picked up for the first time
+        if (ItemType == "PotionWallBreaker")
         {
-            IOC.PotionWallBreaker.SetActive(true);
 
-            // Remove objects that were used to craft.
-            IOC.HerbsCollected = 0;
-            IOC.FlowersCollected = 0;
-            IOC.GemstonesCollected = 0;
-        }*/
+            PotionWallBreakerRB.isKinematic = false;
+        }
+        else
+        {
+            Debug.LogError("PotionWallBreakerRB is not properly initialized");
+        }
     }
 }

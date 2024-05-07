@@ -12,12 +12,28 @@ public class InteractableObjectManager : UdonSharpBehaviour
     public int PotionWallBreakerCollected = 0;
     public bool CraftPotionWallBreaker;
 
-    //public GameObject PotionWallBreaker;
-
     public Text HerbsText;
     public Text FlowersText;
     public Text GemstonesText;
     public Text PotionWallBreakerText;
+
+    public void UpdateUI()
+    {
+        if (HerbsText != null)
+            HerbsText.text = $"{HerbsCollected}";
+
+        if (FlowersText != null)
+            FlowersText.text = $"{FlowersCollected}";
+
+        if (GemstonesText != null)
+            GemstonesText.text = $"{GemstonesCollected}";
+
+        if (PotionWallBreakerText != null)
+            PotionWallBreakerText.text = $"{PotionWallBreakerCollected}";
+    }
+
+
+
 
     public void IncrementHerbsCollected()
     {
@@ -47,7 +63,8 @@ public class InteractableObjectManager : UdonSharpBehaviour
         Debug.Log($"Crafting items collected: {PotionWallBreakerCollected}");
     }
 
-    // Method to craft a potion
+
+
     public void CanCraftPotionWallBreaker()
     {
         if (HerbsCollected >= 1 && FlowersCollected >= 1 && GemstonesCollected >= 1)
@@ -66,20 +83,39 @@ public class InteractableObjectManager : UdonSharpBehaviour
             CraftPotionWallBreaker = false;
         }
     }
-
-    // Method to update the UI text components
-    public void UpdateUI()
+    /*
+    public void CraftWallBreakerPotion()
     {
-        if (HerbsText != null)
-            HerbsText.text = $"{HerbsCollected}";
+        CanCraftPotionWallBreaker();
 
-        if (FlowersText != null)
-            FlowersText.text = $"{FlowersCollected}";
+        if (CraftPotionWallBreaker == true)
+        {
+            PotionWallBreakerCollected++;
 
-        if (GemstonesText != null)
-            GemstonesText.text = $"{GemstonesCollected}";
-
-        if (PotionWallBreakerText != null)
-            PotionWallBreakerText.text = $"{PotionWallBreakerCollected}";
+            Debug.Log(" WALL BREAKER POTION CRAFTED ");
+            UpdateUI();
+        }
+        else
+        {
+            Debug.LogWarning("Not enough resources to craft the potion");
+        }
     }
+
+    public void SpawnWallBreakerPotion()
+    {
+        CanCraftPotionWallBreaker();
+
+        if (PotionWallBreakerCollected == 1)
+        {
+            Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
+            PotionWallBreakerCollected--;
+            UpdateUI();
+            Debug.Log(" WALL BREAKER POTION SPAWNED ");
+        }
+        else
+        {
+            Debug.LogWarning("NO WALL BREAKER POTIONS IN INVENTORY");
+        }
+    }
+    */
 }
