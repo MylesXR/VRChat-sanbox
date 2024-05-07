@@ -16,7 +16,7 @@ public class InteractableObjectTracker : UdonSharpBehaviour
 
     private void Start()
     {
-        IOC.CraftingItem1.SetActive(false);
+        IOC.PotionWallBreaker.SetActive(false);
     }
 
     public override void OnPickup()
@@ -38,8 +38,8 @@ public class InteractableObjectTracker : UdonSharpBehaviour
         }
         else if (ItemType == "CraftingItem1")
         {
-            Destroy(IOC.CraftingItem1);
-            IOC.IncrementCraftingItem1Collected();
+            Destroy(IOC.PotionWallBreaker);
+            IOC.IncrementPotionWallBreakerCollected();
         }
  
 
@@ -50,7 +50,7 @@ public class InteractableObjectTracker : UdonSharpBehaviour
             && IOC.FlowersCollected >= 1
             && IOC.GemstonesCollected >= 1)
         {
-            IOC.CraftingItem1.SetActive(true);
+            IOC.PotionWallBreaker.SetActive(true);
 
             // Remove objects that were used to craft.
             IOC.HerbsCollected = 0;

@@ -9,8 +9,8 @@ public class InteractableObjectManager : UdonSharpBehaviour
     public int HerbsCollected = 0;
     public int FlowersCollected = 0;
     public int GemstonesCollected = 0;
-    public int CraftingItem1Collected = 0;
-    public GameObject CraftingItem1;
+    public int PotionWallBreakerCollected = 0;
+    public GameObject PotionWallBreaker;
 
     public void IncrementHerbsCollected()
     {
@@ -29,17 +29,17 @@ public class InteractableObjectManager : UdonSharpBehaviour
         GemstonesCollected++;
         Debug.Log($"Gemstones collected: {GemstonesCollected}");
     }
-    public void IncrementCraftingItem1Collected()
+    public void IncrementPotionWallBreakerCollected()
     {
-        CraftingItem1Collected++;
-        Debug.Log($"Crafting items collected: {CraftingItem1Collected}");
+        PotionWallBreakerCollected++;
+        Debug.Log($"Crafting items collected: {PotionWallBreakerCollected}");
     }
 
     public void ActivateCraftingItem()
     {
-        if (CraftingItem1 != null)
+        if (PotionWallBreaker != null)
         {
-            CraftingItem1.SetActive(true);
+            PotionWallBreaker.SetActive(true);
             Debug.Log("CraftingItem1 activated by controller.");
         }
         else
