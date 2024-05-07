@@ -17,19 +17,19 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     // Start of Added methods for Attendee Menu
     //These methods have to be outside of the code below for some reason or it will ERROR
-    void AlchemistClass()
+    public void AlchemistClass()
     {
-        Debug.Log("Alchemist");
+        ClassType = "Alchemist";
     }
 
-    void BarbarianClass()
+    public void BarbarianClass()
     {
-        Debug.Log("Barbarian");
+        ClassType = "Barbarian";
     }
 
-    void ExplorerClass()
+    public void ExplorerClass()
     {
-        Debug.Log("Explorer");
+        ClassType = "Explorer";
     }
     //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
     // End of added methods for Attendee Menu
@@ -531,22 +531,22 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             case "Alchemist":
                 BarbarianMenu.SetActive(false);
                 ExplorerMenu.SetActive(false);
-                AlchemistMenu.SetActive(true);      
-                AlchemistClass();
+                AlchemistMenu.SetActive(true);
+                Debug.Log("Alchemist");
                 break;
 
             case "Barbarian":
                 AlchemistMenu.SetActive(false);
                 ExplorerMenu.SetActive(false);
-                BarbarianMenu.SetActive(true);               
-                BarbarianClass();
+                BarbarianMenu.SetActive(true);
+                Debug.Log("Barbarian");
                 break;
 
             case "Explorer":
                 AlchemistMenu.SetActive(false);
                 BarbarianMenu.SetActive(false);
                 ExplorerMenu.SetActive(true);
-                ExplorerClass();
+                Debug.Log("Explorer");
                 break;
 
             default:
