@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class StatueSelectionTrigger : UdonSharpBehaviour
 {
-    public GameObject targetObject1; // explorer
-    public GameObject targetObject2; // barbarian
-    public GameObject targetObject3; // alchemist
+    public GameObject explorer; // explorer
+    public GameObject barbarian; // barbarian
+    public GameObject alchemist; // alchemist
+    public Bobys_WorldPortalSystem Bobys_WorldPortalSystem; 
 
     public int thisObjectValue; //value of this trigger, changes what class the trigger effects
 
@@ -18,24 +19,24 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
     {
         if (thisObjectValue == 1) //explorer on
         {
-            targetObject1.SetActive(true);
-            targetObject2.SetActive(false);
-            targetObject3.SetActive(false);
-            
+            explorer.SetActive(true);
+            barbarian.SetActive(false);
+            alchemist.SetActive(false);
+            Bobys_WorldPortalSystem.ClassType = "Explorer";
         }
         if (thisObjectValue == 2) // barbarian on 
         {
-            targetObject1.SetActive(false);
-            targetObject2.SetActive(true);
-            targetObject3.SetActive(false);
-            
+            explorer.SetActive(false);
+            barbarian.SetActive(true);
+            alchemist.SetActive(false);
+            Bobys_WorldPortalSystem.ClassType = "Barbarian";
         }
         if (thisObjectValue == 3) // alchemist on
         {
-            targetObject1.SetActive(false);
-            targetObject2.SetActive(false);
-            targetObject3.SetActive(true);
-            
+            explorer.SetActive(false);
+            barbarian.SetActive(false);
+            alchemist.SetActive(true);
+            Bobys_WorldPortalSystem.ClassType = "Alchemist";
         }
     }
 }
