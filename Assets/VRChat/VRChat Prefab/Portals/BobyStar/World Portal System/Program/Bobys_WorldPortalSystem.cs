@@ -13,6 +13,8 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     public GameObject AlchemistMenu;
     public GameObject BarbarianMenu;
     public GameObject ExplorerMenu;
+    public GameObject WallBreakerPotion;
+    public Transform WallBreakerPotionSpawnPoint;
     //End of added methods for Attendee Menu
 
     // Start of Added methods for Attendee Menu
@@ -31,6 +33,23 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     {
         ClassType = "Explorer";
     }
+
+    public void SpawnWallBreakerPoition()
+    {
+        // Check if the spawn point and prefab are assigned
+        if (WallBreakerPotion != null && WallBreakerPotionSpawnPoint != null)
+        {
+            // Instantiate the object at the spawn point's position and rotation
+            Instantiate(WallBreakerPotion, WallBreakerPotionSpawnPoint.position, WallBreakerPotionSpawnPoint.rotation);
+            Debug.Log("Wall Breaker Potion spawned");
+        }
+        else
+        {
+            Debug.LogWarning("WallBreakerPoition or WallBreakerSpawnPoint is not assigned!");
+        }
+    }
+
+
     //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
     // End of added methods for Attendee Menu
 
