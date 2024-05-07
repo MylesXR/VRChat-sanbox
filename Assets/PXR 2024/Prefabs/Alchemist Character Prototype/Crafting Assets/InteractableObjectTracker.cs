@@ -10,13 +10,14 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     public GameObject Herb;
     public GameObject Flower;
     public GameObject Gemstone;
+    
 
     public string ItemType;
     public InteractableObjectManager IOC;
 
     private void Start()
     {
-        IOC.PotionWallBreaker.SetActive(false);
+        //IOC.PotionWallBreaker.SetActive(false);
     }
 
     public override void OnPickup()
@@ -36,14 +37,14 @@ public class InteractableObjectTracker : UdonSharpBehaviour
             Destroy(Gemstone);
             IOC.IncrementGemstonesCollected();
         }
-        else if (ItemType == "CraftingItem1")
+        else if (ItemType == "PotionWallBreaker")
         {
-            Destroy(IOC.PotionWallBreaker);
-            IOC.IncrementPotionWallBreakerCollected();
+            //Destroy(IOC.PotionWallBreaker);
+            //IOC.IncrementPotionWallBreakerCollected();
         }
- 
 
 
+        /*
         // Check if the player has collected one of each item
         if 
            (IOC.HerbsCollected >= 1
@@ -56,7 +57,6 @@ public class InteractableObjectTracker : UdonSharpBehaviour
             IOC.HerbsCollected = 0;
             IOC.FlowersCollected = 0;
             IOC.GemstonesCollected = 0;
-
-        }
+        }*/
     }
 }

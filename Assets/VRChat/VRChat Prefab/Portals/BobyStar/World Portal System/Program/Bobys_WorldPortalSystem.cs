@@ -15,6 +15,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     public GameObject ExplorerMenu;
     public GameObject WallBreakerPotion;
     public Transform WallBreakerPotionSpawnPoint;
+    public InteractableObjectManager IOC; // Assign in Inspector
     //End of added methods for Attendee Menu
 
     // Start of Added methods for Attendee Menu
@@ -34,18 +35,40 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         ClassType = "Explorer";
     }
 
-    public void SpawnWallBreakerPoition()
+    
+
+
+    public void CraftWallBreakerPotion()
     {
-        // Check if the spawn point and prefab are assigned
-        if (WallBreakerPotion != null && WallBreakerPotionSpawnPoint != null)
+        IOC.CanCraftPotionWallBreaker();
+
+        if (IOC.CraftPotionWallBreaker == true)
         {
-            // Instantiate the object at the spawn point's position and rotation
-            Instantiate(WallBreakerPotion, WallBreakerPotionSpawnPoint.position, WallBreakerPotionSpawnPoint.rotation);
-            Debug.Log("Wall Breaker Potion spawned");
+            IOC.PotionWallBreakerCollected++;
+            
+            Debug.Log(" WALL BREAKER POTION CRAFTED ");
+            IOC.UpdateUI();
         }
         else
         {
-            Debug.LogWarning("WallBreakerPoition or WallBreakerSpawnPoint is not assigned!");
+            Debug.LogWarning("Not enough resources to craft the potion");
+        }
+    }
+
+    public void SpawnWallBreakerPotion()
+    {
+        IOC.CanCraftPotionWallBreaker();
+
+        if (IOC.PotionWallBreakerCollected == 1)
+        {
+            Instantiate(WallBreakerPotion, WallBreakerPotionSpawnPoint.position, WallBreakerPotionSpawnPoint.rotation);
+            IOC.PotionWallBreakerCollected--;
+            IOC.UpdateUI();
+            Debug.Log(" WALL BREAKER POTION SPAWNED ");
+        }
+        else
+        {
+            Debug.LogWarning("NO WALL BREAKER POTIONS IN INVENTORY");
         }
     }
 

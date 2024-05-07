@@ -10,10 +10,10 @@ public class InteractableObjectManager : UdonSharpBehaviour
     public int FlowersCollected = 0;
     public int GemstonesCollected = 0;
     public int PotionWallBreakerCollected = 0;
+    public bool CraftPotionWallBreaker;
 
-    public GameObject PotionWallBreaker;
+    //public GameObject PotionWallBreaker;
 
-    // Add references to UI Text components
     public Text HerbsText;
     public Text FlowersText;
     public Text GemstonesText;
@@ -47,21 +47,28 @@ public class InteractableObjectManager : UdonSharpBehaviour
         Debug.Log($"Crafting items collected: {PotionWallBreakerCollected}");
     }
 
-    public void ActivateCraftingItem()
+    // Method to craft a potion
+    public void CanCraftPotionWallBreaker()
     {
-        if (PotionWallBreaker != null)
+        if (HerbsCollected >= 1 && FlowersCollected >= 1 && GemstonesCollected >= 1)
         {
-            PotionWallBreaker.SetActive(true);
-            Debug.Log("CraftingItem1 activated by controller.");
+            Debug.Log("Crafting Now");
+            HerbsCollected--;
+            FlowersCollected--;
+            GemstonesCollected--;
+
+            UpdateUI();
+            CraftPotionWallBreaker = true;
         }
         else
         {
-            Debug.LogWarning("CraftingItem1 reference is missing!");
+            Debug.LogWarning("Not enough resources to craft the potion.");
+            CraftPotionWallBreaker = false;
         }
     }
 
     // Method to update the UI text components
-    private void UpdateUI()
+    public void UpdateUI()
     {
         if (HerbsText != null)
             HerbsText.text = $"{HerbsCollected}";
