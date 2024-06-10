@@ -10,6 +10,12 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
 
     public int thisObjectValue; //value of this trigger, changes what class the trigger effects
 
+    private void Start()
+    {
+        explorer.SetActive(false);
+        barbarian.SetActive(false);
+        alchemist.SetActive(false);
+    }
     private void OnPlayerTriggerEnter()
     {
         ToggleObject();

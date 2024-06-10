@@ -25,7 +25,7 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
         // Store the axe's parent object
         axeParent = transform.parent;
 
-        // Store initial local position and rotation
+        // Store initial local position and rotation when axe is enabled
         initialLocalPosition = transform.localPosition;
         initialLocalRotation = transform.localRotation;
     }
@@ -38,6 +38,11 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
 
     private void Update()
     {
+        if (isThrown == false)
+        {
+            transform.localPosition = initialLocalPosition;
+            transform.localRotation = initialLocalRotation;
+        }
         // Check if the throw key is pressed and the axe is not currently thrown
         if (Input.GetKeyDown(throwKey) && !isThrown)
         {

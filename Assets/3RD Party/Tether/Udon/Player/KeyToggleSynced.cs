@@ -46,7 +46,7 @@ namespace Player
                 for (int i = 0; i < toggleObject.Length; i++)
                 {
                     toggleObject[i].SetActive(initialState);
-                }
+                }//try this in update synced is not working yet
             }
         }
     }
