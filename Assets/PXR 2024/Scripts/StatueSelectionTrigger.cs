@@ -1,5 +1,6 @@
 ﻿using UdonSharp;
 using UnityEngine;
+using VRC.SDKBase;
 
 public class StatueSelectionTrigger : UdonSharpBehaviour
 {
@@ -7,6 +8,7 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
     public GameObject barbarian; // barbarian
     public GameObject alchemist; // alchemist
     public Bobys_WorldPortalSystem Bobys_WorldPortalSystem; 
+    
 
     public int thisObjectValue; //value of this trigger, changes what class the trigger effects
 
@@ -16,9 +18,12 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
         barbarian.SetActive(false);
         alchemist.SetActive(false);
     }
-    private void OnPlayerTriggerEnter()
+    public override void OnPlayerTriggerEnter(VRCPlayerApi player)
     {
-        ToggleObject();
+        if (player.isLocal)
+        {
+            ToggleObject();
+        }
     }
 
     public void ToggleObject()
