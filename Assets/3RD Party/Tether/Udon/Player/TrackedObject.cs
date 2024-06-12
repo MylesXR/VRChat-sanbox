@@ -1,4 +1,3 @@
-
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
@@ -6,12 +5,8 @@ using VRC.Udon;
 
 namespace Player
 {
-    /// <summary>
-    /// Script to track objects to the player's hands or head.
-    /// </summary>
     public class TrackedObject : UdonSharpBehaviour
     {
-
         [Tooltip("Whether this TrackedObject should be active if you are in desktop mode or VR mode.")]
         public bool vrEnabled;
         [Tooltip("Which GameObject to enable if vrEnabled matches which mode we are in.")]
@@ -29,7 +24,6 @@ namespace Player
             if (localPlayer != null)
             {
                 editorMode = false;
-
                 vrEnabledObject.SetActive(vrEnabled == localPlayer.IsUserInVR());
             }
         }

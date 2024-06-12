@@ -1,16 +1,16 @@
 ﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
+using VRC.Udon;
 
 public class StatueSelectionTrigger : UdonSharpBehaviour
 {
     public GameObject explorer; // explorer
     public GameObject barbarian; // barbarian
     public GameObject alchemist; // alchemist
-    public Bobys_WorldPortalSystem Bobys_WorldPortalSystem; 
-    
+    public Bobys_WorldPortalSystem Bobys_WorldPortalSystem;
 
-    public int thisObjectValue; //value of this trigger, changes what class the trigger effects
+    public int thisObjectValue; // value of this trigger, changes what class the trigger affects
 
     private void Start()
     {
@@ -18,36 +18,48 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
         barbarian.SetActive(false);
         alchemist.SetActive(false);
     }
+
     public override void OnPlayerTriggerEnter(VRCPlayerApi player)
     {
         if (player.isLocal)
         {
-            ToggleObject();
+            Networking.SetOwner(player, gameObject);
+            ToggleObject(player);
         }
     }
 
-    public void ToggleObject()
+    public void ToggleObject(VRCPlayerApi player)
     {
-        if (thisObjectValue == 1) //explorer on
+        if (thisObjectValue == 1) // explorer on
         {
-            explorer.SetActive(true);
-            barbarian.SetActive(false);
-            alchemist.SetActive(false);
-            Bobys_WorldPortalSystem.ClassType = "Explorer";
+            SetClass(player, "Explorer", explorer);
         }
-        if (thisObjectValue == 2) // barbarian on 
+        if (thisObjectValue == 2) // barbarian on
         {
-            explorer.SetActive(false);
-            barbarian.SetActive(true);
-            alchemist.SetActive(false);
-            Bobys_WorldPortalSystem.ClassType = "Barbarian";
+            SetClass(player, "Barbarian", barbarian);
         }
         if (thisObjectValue == 3) // alchemist on
         {
-            explorer.SetActive(false);
-            barbarian.SetActive(false);
-            alchemist.SetActive(true);
-            Bobys_WorldPortalSystem.ClassType = "Alchemist";
+            SetClass(player, "Alchemist", alchemist);
         }
+    }
+
+    private void SetClass(VRCPlayerApi player, string className, GameObject classObject)
+    {
+        explorer.SetActive(false);
+        barbarian.SetActive(false);
+        alchemist.SetActive(false);
+
+        classObject.SetActive(true);
+        Bobys_WorldPortalSystem.ClassType = className;
+
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UpdateClassObjects");
+    }
+
+    public void UpdateClassObjects()
+    {
+        explorer.SetActive(explorer.activeSelf);
+        barbarian.SetActive(barbarian.activeSelf);
+        alchemist.SetActive(alchemist.activeSelf);
     }
 }

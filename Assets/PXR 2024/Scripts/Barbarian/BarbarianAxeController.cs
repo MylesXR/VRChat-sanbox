@@ -15,13 +15,14 @@ namespace Player
 
         private GameObject localAxe;
 
-        private bool isAxeVisible = false;
+        [UdonSynced] private bool isAxeVisible = false;
 
         public override void Interact()
         {
             if (Networking.IsOwner(gameObject))
             {
                 isAxeVisible = !isAxeVisible;
+                RequestSerialization();
                 UpdateAxeVisibility();
             }
         }
@@ -41,18 +42,36 @@ namespace Player
                 localAxe.SetActive(isAxeVisible);
             }
         }
+
         private void OnEnable()
         {
-            localAxe = Object.Instantiate(axePrefab);
-            localAxe.SetActive(isAxeVisible);
-            localAxe.transform.SetParent(transform);
-            localAxe.transform.localPosition = Vector3.zero;
-            localAxe.transform.localRotation = Quaternion.identity;
-        }
-        private void OnDisable()
-        {
-            Destroy(localAxe);
+            if (Networking.LocalPlayer != null && Networking.LocalPlayer.isLocal)
+            {
+                Networking.SetOwner(Networking.LocalPlayer, gameObject);
+            }
+
+            if (localAxe == null)
+            {
+                localAxe = VRCInstantiate(axePrefab);
+                localAxe.transform.SetParent(transform);
+                localAxe.transform.localPosition = Vector3.zero;
+                localAxe.transform.localRotation = Quaternion.identity;
+                UpdateAxeVisibility();
+            }
         }
 
+        private void OnDisable()
+        {
+            if (localAxe != null)
+            {
+                Destroy(localAxe);
+                localAxe = null;
+            }
+        }
+
+        public override void OnDeserialization()
+        {
+            UpdateAxeVisibility();
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -7,44 +6,41 @@ using VRC.Udon;
 public class BarbarianObjectManager : UdonSharpBehaviour
 {
     public GameObject[] barbarianObjects;
-    public bool isBarbarian;
+    [UdonSynced] private bool isBarbarian;
+
     void Start()
     {
         isBarbarian = false;
         ToggleBarbarianObjects();
     }
+
     public void SetAsBarbarian()
     {
         isBarbarian = true;
+        RequestSerialization();
         ToggleBarbarianObjects();
     }
+
     public void SetAsNotBarbarian()
     {
         isBarbarian = false;
+        RequestSerialization();
         ToggleBarbarianObjects();
     }
+
+    public override void OnDeserialization()
+    {
+        ToggleBarbarianObjects();
+    }
+
     public void ToggleBarbarianObjects()
     {
-        if (isBarbarian == true)
+        foreach (GameObject obj in barbarianObjects)
         {
-            foreach (GameObject obj in barbarianObjects)
+            Collider collider = obj.GetComponent<Collider>();
+            if (collider != null)
             {
-                Collider collider = obj.GetComponent<Collider>();
-                if (collider != null)
-                {
-                    collider.enabled = true;
-                }
-            }
-        }
-        if (isBarbarian == false)
-        {
-            foreach (GameObject obj in barbarianObjects)
-            {
-                Collider collider = obj.GetComponent<Collider>();
-                if (collider != null)
-                {
-                    collider.enabled = false;
-                }
+                collider.enabled = isBarbarian;
             }
         }
     }

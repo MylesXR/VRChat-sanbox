@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -11,10 +10,10 @@ public class BarbarianManager : UdonSharpBehaviour
     public bool vrEnabled;
     [Tooltip("Which GameObject to enable if vrEnabled matches which mode we are in.")]
     private VRCPlayerApi localPlayer;
-    
 
     public GameObject vrEnabledObject;
     public GameObject pcEnabledObject;
+
     void Start()
     {
         vrEnabledObject.SetActive(false);
@@ -22,13 +21,13 @@ public class BarbarianManager : UdonSharpBehaviour
 
         localPlayer = Networking.LocalPlayer;
         vrEnabled = localPlayer.IsUserInVR();
-        
     }
 
     private void OnEnable()
     {
         if (localPlayer != null && localPlayer.isLocal)
         {
+            Networking.SetOwner(localPlayer, gameObject);
             barbarianObjectManager.SetAsBarbarian();
         }
         if (localPlayer != null && vrEnabled == true && localPlayer.isLocal)
@@ -52,6 +51,5 @@ public class BarbarianManager : UdonSharpBehaviour
             pcEnabledObject.SetActive(false);
             vrEnabledObject.SetActive(false);
         }
-
     }
 }
