@@ -1,52 +1,54 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 
 namespace Player
 {
-    /// <summary>
-    /// Basic gameobject toggle on key press script.
-    /// </summary>
     public class KeyToggleSynced : UdonSharpBehaviour
     {
-        [Tooltip("State of game objects when scene is loaded.")]
-        [UdonSynced] //Synchronized variable to keep track of object's active state
-        public bool initialState = false;
         [Tooltip("Key that toggles gameobjects.")]
         public KeyCode key;
-        [Tooltip("List of game objects to toggle on/off.")]
-        public GameObject[] toggleObject;
+
+        [Tooltip("Prefab of the axe to instantiate for each player.")]
+        public GameObject axePrefab;
+
+        private GameObject playerAxe;
+        private bool isAxeVisible = false;
+
+        private VRCPlayerApi localPlayer;
 
         public void Start()
         {
-            for (int i = 0; i < toggleObject.Length; i++)
-            {
-                toggleObject[i].SetActive(initialState);
-            }
+            localPlayer = Networking.LocalPlayer;
+
+            // Instantiate the axe for the local player
+            playerAxe = Object.Instantiate(axePrefab);
+            //playerAxe.transform.SetParent(localPlayer.gameObject.transform, false);
+            playerAxe.SetActive(isAxeVisible);
         }
 
         public void Update()
         {
-            if (Input.GetKeyDown(key))
+            if (localPlayer != null && localPlayer.IsUserInVR() && Input.GetKeyDown(key))
             {
-                for (int i = 0; i < toggleObject.Length; i++)
-                {
-                    toggleObject[i].SetActive(!toggleObject[i].activeSelf);
-                }
+                isAxeVisible = !isAxeVisible;
+                RequestSerialization(); // Sync the change across the network
+                UpdateAxeVisibility();
             }
         }
-        public override void OnDeserialization() //to do, check if object is synced on deserialization. 
+
+        public override void OnDeserialization()
         {
-            // Called when the UdonSynced variable is updated
             // Update the object's state based on the synced variable
-            if (toggleObject != null)
+            UpdateAxeVisibility();
+        }
+
+        private void UpdateAxeVisibility()
+        {
+            if (playerAxe != null)
             {
-                for (int i = 0; i < toggleObject.Length; i++)
-                {
-                    toggleObject[i].SetActive(initialState);
-                }//try this in update synced is not working yet
+                playerAxe.SetActive(isAxeVisible);
             }
         }
     }

@@ -27,13 +27,15 @@ public class BarbarianManager : UdonSharpBehaviour
 
     private void OnEnable()
     {
-        barbarianObjectManager.SetAsBarbarian();
-
-        if (localPlayer != null && vrEnabled == true)
+        if (localPlayer != null && localPlayer.isLocal)
+        {
+            barbarianObjectManager.SetAsBarbarian();
+        }
+        if (localPlayer != null && vrEnabled == true && localPlayer.isLocal)
         {
             vrEnabledObject.SetActive(true);
         }
-        if (localPlayer != null && vrEnabled == false)
+        if (localPlayer != null && vrEnabled == false && localPlayer.isLocal)
         {
             pcEnabledObject.SetActive(true);
         }
@@ -41,8 +43,15 @@ public class BarbarianManager : UdonSharpBehaviour
 
     private void OnDisable()
     {
-        barbarianObjectManager.SetAsNotBarbarian();
-        vrEnabledObject.SetActive(false);
-        pcEnabledObject.SetActive(false);
+        if (localPlayer != null && localPlayer.isLocal)
+        {
+            barbarianObjectManager.SetAsNotBarbarian();
+        }
+        if (localPlayer != null && localPlayer.isLocal)
+        {
+            pcEnabledObject.SetActive(false);
+            vrEnabledObject.SetActive(false);
+        }
+
     }
 }
