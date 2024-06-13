@@ -14,25 +14,23 @@ namespace Player
         public GameObject axePrefab;
 
         private GameObject localAxe;
-
-        [UdonSynced] private bool isAxeVisible = false;
-
-        public override void Interact()
-        {
-            if (Networking.IsOwner(gameObject))
-            {
-                isAxeVisible = !isAxeVisible;
-                RequestSerialization();
-                UpdateAxeVisibility();
-            }
-        }
+        private bool isAxeVisible = false;
 
         public void Update()
         {
-            if (Input.GetKeyDown(toggleKey))
+            if (Networking.LocalPlayer != null && Networking.LocalPlayer.isLocal)
             {
-                Interact();
+                if (Input.GetKeyDown(toggleKey))
+                {
+                    ToggleAxeVisibility();
+                }
             }
+        }
+
+        private void ToggleAxeVisibility()
+        {
+            isAxeVisible = !isAxeVisible;
+            UpdateAxeVisibility();
         }
 
         private void UpdateAxeVisibility()
@@ -47,16 +45,14 @@ namespace Player
         {
             if (Networking.LocalPlayer != null && Networking.LocalPlayer.isLocal)
             {
-                Networking.SetOwner(Networking.LocalPlayer, gameObject);
-            }
-
-            if (localAxe == null)
-            {
-                localAxe = VRCInstantiate(axePrefab);
-                localAxe.transform.SetParent(transform);
-                localAxe.transform.localPosition = Vector3.zero;
-                localAxe.transform.localRotation = Quaternion.identity;
-                UpdateAxeVisibility();
+                if (localAxe == null)
+                {
+                    localAxe = Object.Instantiate(axePrefab);
+                    localAxe.transform.SetParent(transform);
+                    localAxe.transform.localPosition = Vector3.zero;
+                    localAxe.transform.localRotation = Quaternion.identity;
+                    UpdateAxeVisibility();
+                }
             }
         }
 
@@ -67,11 +63,6 @@ namespace Player
                 Destroy(localAxe);
                 localAxe = null;
             }
-        }
-
-        public override void OnDeserialization()
-        {
-            UpdateAxeVisibility();
         }
     }
 }

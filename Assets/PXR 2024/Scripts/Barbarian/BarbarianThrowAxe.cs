@@ -20,10 +20,6 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
     private float throwTime;
     private float pressTime;
 
-    [UdonSynced] private Vector3 syncedPosition;
-    [UdonSynced] private Quaternion syncedRotation;
-    [UdonSynced] private bool syncedIsThrown = false;
-
     private void OnEnable()
     {
         axeParent = transform.parent;
@@ -38,27 +34,30 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
 
     private void Update()
     {
-        if (isThrown == false)
+        if (Networking.LocalPlayer != null && Networking.LocalPlayer.isLocal)
         {
-            transform.localPosition = initialLocalPosition;
-            transform.localRotation = initialLocalRotation;
-        }
+            if (isThrown == false)
+            {
+                transform.localPosition = initialLocalPosition;
+                transform.localRotation = initialLocalRotation;
+            }
 
-        if (Input.GetKeyDown(throwKey) && !isThrown)
-        {
-            pressTime = Time.time;
-        }
+            if (Input.GetKeyDown(throwKey) && !isThrown)
+            {
+                pressTime = Time.time;
+            }
 
-        if (Input.GetKeyUp(throwKey) && !isThrown)
-        {
-            float holdDuration = Time.time - pressTime;
-            float throwForce = Mathf.Lerp(minThrowForce, maxThrowForce, Mathf.Clamp01(holdDuration / forceHoldTime));
-            ThrowAxe(throwForce);
-        }
+            if (Input.GetKeyUp(throwKey) && !isThrown)
+            {
+                float holdDuration = Time.time - pressTime;
+                float throwForce = Mathf.Lerp(minThrowForce, maxThrowForce, Mathf.Clamp01(holdDuration / forceHoldTime));
+                ThrowAxe(throwForce);
+            }
 
-        if (isThrown && Time.time - throwTime >= resetTime)
-        {
-            ResetAxe();
+            if (isThrown && Time.time - throwTime >= resetTime)
+            {
+                ResetAxe();
+            }
         }
     }
 
@@ -72,11 +71,6 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
 
         isThrown = true;
         throwTime = Time.time;
-
-        syncedPosition = transform.position;
-        syncedRotation = transform.rotation;
-        syncedIsThrown = true;
-        RequestSerialization();
     }
 
     private void ResetAxe()
@@ -87,28 +81,5 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
 
         axeRigidbody.isKinematic = true;
         isThrown = false;
-
-        syncedPosition = transform.position;
-        syncedRotation = transform.rotation;
-        syncedIsThrown = false;
-        RequestSerialization();
-    }
-
-    public override void OnDeserialization()
-    {
-        if (syncedIsThrown)
-        {
-            transform.position = syncedPosition;
-            transform.rotation = syncedRotation;
-            axeRigidbody.isKinematic = false;
-        }
-        else
-        {
-            transform.localPosition = initialLocalPosition;
-            transform.localRotation = initialLocalRotation;
-            axeRigidbody.isKinematic = true;
-        }
-
-        isThrown = syncedIsThrown;
     }
 }

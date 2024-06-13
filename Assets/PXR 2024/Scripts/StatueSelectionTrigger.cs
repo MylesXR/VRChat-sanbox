@@ -5,12 +5,12 @@ using VRC.Udon;
 
 public class StatueSelectionTrigger : UdonSharpBehaviour
 {
-    public GameObject explorer; // explorer
-    public GameObject barbarian; // barbarian
-    public GameObject alchemist; // alchemist
+    public GameObject explorer;
+    public GameObject barbarian;
+    public GameObject alchemist;
     public Bobys_WorldPortalSystem Bobys_WorldPortalSystem;
 
-    public int thisObjectValue; // value of this trigger, changes what class the trigger affects
+    public int thisObjectValue;
 
     private void Start()
     {
@@ -23,28 +23,30 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
     {
         if (player.isLocal)
         {
-            Networking.SetOwner(player, gameObject);
             ToggleObject(player);
         }
     }
 
     public void ToggleObject(VRCPlayerApi player)
     {
-        if (thisObjectValue == 1) // explorer on
+        if (player.isLocal)
         {
-            SetClass(player, "Explorer", explorer);
-        }
-        if (thisObjectValue == 2) // barbarian on
-        {
-            SetClass(player, "Barbarian", barbarian);
-        }
-        if (thisObjectValue == 3) // alchemist on
-        {
-            SetClass(player, "Alchemist", alchemist);
+            if (thisObjectValue == 1)
+            {
+                SetClass("Explorer", explorer);
+            }
+            else if (thisObjectValue == 2)
+            {
+                SetClass("Barbarian", barbarian);
+            }
+            else if (thisObjectValue == 3)
+            {
+                SetClass("Alchemist", alchemist);
+            }
         }
     }
 
-    private void SetClass(VRCPlayerApi player, string className, GameObject classObject)
+    private void SetClass(string className, GameObject classObject)
     {
         explorer.SetActive(false);
         barbarian.SetActive(false);
@@ -53,6 +55,7 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
         classObject.SetActive(true);
         Bobys_WorldPortalSystem.ClassType = className;
 
+        // Update class objects for everyone
         SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UpdateClassObjects");
     }
 

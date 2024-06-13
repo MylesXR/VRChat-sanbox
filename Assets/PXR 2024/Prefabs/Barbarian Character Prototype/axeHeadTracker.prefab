@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7158433432095263495}
   - component: {fileID: 7158433432095263492}
   - component: {fileID: 7158433432095263493}
-  - component: {fileID: 7158433432095263491}
   - component: {fileID: 7158433432095263488}
   m_Layer: 22
   m_Name: axe
@@ -60,7 +59,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 7049275497679998252}
-  maxThrowForce: 20
+  maxThrowForce: 12
   minThrowForce: 5
   forceHoldTime: 1
   throwKey: 323
@@ -152,19 +151,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7158433432095263491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7158433432095263498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1783056023, guid: 661092b4961be7145bfbe56e1e62337b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllowCollisionOwnershipTransfer: 0
 --- !u!54 &7158433432095263488
 Rigidbody:
   m_ObjectHideFlags: 0
