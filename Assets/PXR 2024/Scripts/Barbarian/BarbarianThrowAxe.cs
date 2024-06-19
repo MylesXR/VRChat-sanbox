@@ -24,6 +24,9 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
     public AxeAssigner axeManager;  // Set this reference in AxeAssigner script
     public VRCPlayerApi ownerPlayer; // Set this in the AxeAssigner script
     [UdonSynced] public int axeIndex; // Set this in the AxeAssigner script
+    [UdonSynced] private Vector3 syncedHeadPosition;
+    [UdonSynced] private Quaternion syncedHeadRotation;
+    [UdonSynced] private float syncedThrowForce;
 
     private void OnEnable()
     {
@@ -90,7 +93,10 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
             isThrown = true;
             throwTime = Time.time;
 
-            // Sync the throw action across the network
+            // Sync the throw action across the network with position and rotation
+            syncedHeadPosition = playerHead.position;
+            syncedHeadRotation = playerHead.rotation;
+            syncedThrowForce = force;
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SyncThrow");
         }
         else
@@ -105,10 +111,12 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
 
         Debug.Log("[BarbarianThrowAxe] SyncThrow called on remote client");
         transform.parent = null;
-        Vector3 throwDirection = (playerHead.forward + Vector3.up).normalized;
+        transform.position = syncedHeadPosition;
+        transform.rotation = syncedHeadRotation;
+        Vector3 throwDirection = (syncedHeadRotation * Vector3.forward + Vector3.up).normalized;
 
         axeRigidbody.isKinematic = false;
-        axeRigidbody.AddForce(throwDirection * maxThrowForce, ForceMode.Impulse);
+        axeRigidbody.AddForce(throwDirection * syncedThrowForce, ForceMode.Impulse);
 
         isThrown = true;
         throwTime = Time.time;

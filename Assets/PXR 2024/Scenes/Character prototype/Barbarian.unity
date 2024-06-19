@@ -544,9 +544,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
+      propertyPath: axeIndex
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
+      propertyPath: axeManager
+      value: 
+      objectReference: {fileID: 680739535}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
+      propertyPath: axeAssigner
+      value: 
+      objectReference: {fileID: 680739535}
     - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
       propertyPath: axeRigidbody
@@ -3484,8 +3499,9 @@ GameObject:
   - component: {fileID: 680739536}
   - component: {fileID: 680739535}
   - component: {fileID: 680739534}
+  - component: {fileID: 680739537}
   m_Layer: 0
-  m_Name: AxeAssigner
+  m_Name: AxeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3539,12 +3555,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 680739534}
-  axes:
-  - {fileID: 897881109}
-  - {fileID: 1873201099}
-  - {fileID: 678683257}
-  - {fileID: 547932075}
-  - {fileID: 1509443953}
+  axePool: {fileID: 680739537}
 --- !u!4 &680739536
 Transform:
   m_ObjectHideFlags: 0
@@ -3559,6 +3570,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &680739537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680739533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 454367647, guid: 661092b4961be7145bfbe56e1e62337b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Pool:
+  - {fileID: 897881109}
+  - {fileID: 1873201099}
+  - {fileID: 678683257}
+  - {fileID: 547932075}
+  - {fileID: 1509443953}
+  StartPositions: []
+  StartRotations: []
 --- !u!1 &684682302 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9113801744943298638, guid: fc1aea6b3007a3944a28ff0893eb1de5,
@@ -3876,9 +3907,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
+      propertyPath: axeIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
+      propertyPath: axeManager
+      value: 
+      objectReference: {fileID: 680739535}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
+      propertyPath: axeAssigner
+      value: 
+      objectReference: {fileID: 680739535}
     - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
       propertyPath: axeRigidbody
@@ -4289,9 +4335,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
+      propertyPath: axeIndex
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
+      propertyPath: axeManager
+      value: 
+      objectReference: {fileID: 680739535}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
+      propertyPath: axeAssigner
+      value: 
+      objectReference: {fileID: 680739535}
     - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
       propertyPath: axeRigidbody
@@ -5949,9 +6010,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
+      propertyPath: axeIndex
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
+      propertyPath: axeManager
+      value: 
+      objectReference: {fileID: 680739535}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
+      propertyPath: axeAssigner
+      value: 
+      objectReference: {fileID: 680739535}
     - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
       propertyPath: axeRigidbody
@@ -7363,6 +7439,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
+      propertyPath: axeManager
+      value: 
+      objectReference: {fileID: 680739535}
+    - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
+        type: 3}
+      propertyPath: axeAssigner
+      value: 
+      objectReference: {fileID: 680739535}
     - target: {fileID: 3339195966527791847, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
       propertyPath: axeRigidbody
