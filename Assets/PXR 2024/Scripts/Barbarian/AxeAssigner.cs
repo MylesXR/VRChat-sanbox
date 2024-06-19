@@ -2,79 +2,67 @@
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
+using VRC.SDK3.Components;
 
 public class AxeAssigner : UdonSharpBehaviour
 {
-    public GameObject[] axes; // Array of existing axe GameObjects to assign to players
-    private bool[] axeAssigned; // Array to track which axe has been assigned
+    public VRCObjectPool axePool; // Reference to the VRCObjectPool component
+    private int currentIndex = 0; // To keep track of the axe index
 
     void Start()
     {
-        axeAssigned = new bool[axes.Length]; // Initialize the array to track assignment status
-
-        // Ensure all axes start as inactive
-        foreach (GameObject axe in axes)
+        if (axePool == null)
         {
-            axe.SetActive(false);
+            Debug.LogError("Axe pool is not assigned.");
+            return;
         }
     }
 
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         base.OnPlayerJoined(player);
+        Debug.Log($"[AxeAssigner] Player joined: {player.displayName}");
 
-        // Sync axeAssigned array across network
-        RequestSerialization();
-
-        int axeIndex = GetNextAvailableAxeIndex();
-
-        if (axeIndex != -1)
+        if (!Networking.IsOwner(Networking.LocalPlayer, gameObject))
         {
-            GameObject axeToAssign = axes[axeIndex];
+            Debug.LogWarning("Non-owner attempted to spawn object from AxeManager");
+            return;
+        }
 
-            // Check if this axe is already assigned
-            if (axeAssigned[axeIndex])
+
+        GameObject axeToAssign = axePool.TryToSpawn();
+        if (axeToAssign != null)
+        {
+            // Assign ownership to the player
+            Networking.SetOwner(player, axeToAssign);
+            Debug.Log($"[AxeAssigner] Set ownership of axe {axeToAssign.name} to player {player.displayName}");
+
+            // Ensure the child objects also have the correct ownership
+            foreach (Transform child in axeToAssign.transform)
             {
-                Debug.LogWarning($"Axe at index {axeIndex} is already assigned.");
-                return;
+                Networking.SetOwner(player, child.gameObject);
+                Debug.Log($"[AxeAssigner] Set ownership of child {child.gameObject.name} to player {player.displayName}");
             }
+
+            // Assign axe index to the BarbarianThrowAxe component
+            BarbarianThrowAxe throwAxeScript = axeToAssign.GetComponent<BarbarianThrowAxe>();
+            if (throwAxeScript != null)
+            {
+                throwAxeScript.axeIndex = currentIndex; // Use the current index
+                throwAxeScript.axeManager = this; // Set reference to AxeManager
+                throwAxeScript.ownerPlayer = player; // Set the owner player
+                Debug.Log($"[AxeAssigner] Assigned axe index {currentIndex} to {player.displayName}");
+            }
+
+            // Increment the index for the next axe
+            currentIndex++;
 
             // Activate the axe object
             axeToAssign.SetActive(true);
-
-            // Optionally, assign ownership to the player
-            Networking.SetOwner(player, axeToAssign);
-
-            // Mark axe as assigned locally and sync across network
-            axeAssigned[axeIndex] = true;
-            RequestSerialization(); // Request serialization after assignment
-
-            Debug.Log($"Assigned axe {axeToAssign.name} to player {player.displayName}");
         }
         else
         {
-            Debug.LogWarning("Not enough axes to assign to all players.");
+            Debug.LogWarning("No available axes in the pool.");
         }
-    }
-
-    public override void OnDeserialization()
-    {
-        // Ensure axes are correctly activated/deactivated based on axeAssigned array
-        for (int i = 0; i < axes.Length; i++)
-        {
-            axes[i].SetActive(axeAssigned[i]);
-        }
-    }
-
-    int GetNextAvailableAxeIndex()
-    {
-        for (int i = 0; i < axeAssigned.Length; i++)
-        {
-            if (!axeAssigned[i])
-            {
-                return i;
-            }
-        }
-        return -1; // Return -1 if all axes are assigned
     }
 }
