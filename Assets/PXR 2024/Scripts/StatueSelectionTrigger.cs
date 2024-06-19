@@ -9,6 +9,7 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
     public GameObject barbarian;
     public GameObject alchemist;
     public Bobys_WorldPortalSystem Bobys_WorldPortalSystem;
+    public PlayerManager playerManager;
 
     public int thisObjectValue;
 
@@ -33,21 +34,25 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
         {
             if (thisObjectValue == 1)
             {
-                SetClass("Explorer", explorer);
+                SetClass("Explorer", explorer, player);
             }
             else if (thisObjectValue == 2)
             {
-                SetClass("Barbarian", barbarian);
+                SetClass("Barbarian", barbarian, player);
             }
             else if (thisObjectValue == 3)
             {
-                SetClass("Alchemist", alchemist);
+                SetClass("Alchemist", alchemist, player);
             }
         }
     }
 
-    private void SetClass(string className, GameObject classObject)
+    private void SetClass(string className, GameObject classObject, VRCPlayerApi player)
     {
+        // Update the local player's class
+        playerManager.SetPlayerClass(player, className);
+
+        // Update the local player's visual representation
         explorer.SetActive(false);
         barbarian.SetActive(false);
         alchemist.SetActive(false);
@@ -55,14 +60,17 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
         classObject.SetActive(true);
         Bobys_WorldPortalSystem.ClassType = className;
 
-        // Update class objects for everyone
+        // Notify other scripts that this player's class has changed
         SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UpdateClassObjects");
     }
 
     public void UpdateClassObjects()
     {
-        explorer.SetActive(explorer.activeSelf);
-        barbarian.SetActive(barbarian.activeSelf);
-        alchemist.SetActive(alchemist.activeSelf);
+        VRCPlayerApi localPlayer = Networking.LocalPlayer;
+        string className = playerManager.GetPlayerClass(localPlayer);
+
+        explorer.SetActive(className == "Explorer");
+        barbarian.SetActive(className == "Barbarian");
+        alchemist.SetActive(className == "Alchemist");
     }
 }

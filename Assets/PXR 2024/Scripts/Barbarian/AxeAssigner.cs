@@ -8,7 +8,7 @@ public class AxeAssigner : UdonSharpBehaviour
 {
     public VRCObjectPool axePool; // Reference to the VRCObjectPool component
     private int currentIndex = 0; // To keep track of the axe index
-
+    private GameObject playersAxe;
     void Start()
     {
         if (axePool == null)
@@ -41,6 +41,7 @@ public class AxeAssigner : UdonSharpBehaviour
             foreach (Transform child in axeToAssign.transform)
             {
                 Networking.SetOwner(player, child.gameObject);
+                
                 Debug.Log($"[AxeAssigner] Set ownership of child {child.gameObject.name} to player {player.displayName}");
             }
 
@@ -59,10 +60,22 @@ public class AxeAssigner : UdonSharpBehaviour
 
             // Activate the axe object
             axeToAssign.SetActive(true);
+
+            if (axeToAssign.transform.childCount > 0)
+            {
+                GameObject childGameObject = axeToAssign.transform.GetChild(0).gameObject;
+                childGameObject.SetActive(false);
+                Debug.Log($"[AxeAssigner] Deactivated child game object: {childGameObject.name}");
+            }
         }
         else
         {
             Debug.LogWarning("No available axes in the pool.");
         }
+    }
+
+    public override void OnPlayerLeft(VRCPlayerApi player)
+    {
+        
     }
 }

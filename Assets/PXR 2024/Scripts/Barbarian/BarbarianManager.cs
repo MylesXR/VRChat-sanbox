@@ -28,28 +28,28 @@ public class BarbarianManager : UdonSharpBehaviour
         if (localPlayer != null && localPlayer.isLocal)
         {
             Networking.SetOwner(localPlayer, gameObject);
-            barbarianObjectManager.SetAsBarbarian();
+            //barbarianObjectManager.SetAsBarbarian();
         }
-        if (localPlayer != null && vrEnabled == true && localPlayer.isLocal)
-        {
-            vrEnabledObject.SetActive(true);
-        }
-        if (localPlayer != null && vrEnabled == false && localPlayer.isLocal)
-        {
-            pcEnabledObject.SetActive(true);
-        }
+        //if (localPlayer != null && vrEnabled == true && localPlayer.isLocal)
+        //{
+        //    vrEnabledObject.SetActive(true);
+        //}
+        //if (localPlayer != null && vrEnabled == false && localPlayer.isLocal)
+        //{
+        //    pcEnabledObject.SetActive(true);
+        //}
     }
 
     private void OnDisable()
     {
         if (localPlayer != null && localPlayer.isLocal)
         {
-            barbarianObjectManager.SetAsNotBarbarian();
+            //barbarianObjectManager.SetAsNotBarbarian();
         }
-        if (localPlayer != null && localPlayer.isLocal)
-        {
-            pcEnabledObject.SetActive(false);
-            vrEnabledObject.SetActive(false);
-        }
+        //if (localPlayer != null && localPlayer.isLocal)
+        //{
+        //    pcEnabledObject.SetActive(false);
+        //    vrEnabledObject.SetActive(false);
+        //}
     }
 }

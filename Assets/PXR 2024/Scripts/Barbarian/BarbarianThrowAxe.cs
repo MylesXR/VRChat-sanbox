@@ -27,13 +27,19 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
     [UdonSynced] private Vector3 syncedHeadPosition;
     [UdonSynced] private Quaternion syncedHeadRotation;
     [UdonSynced] private float syncedThrowForce;
+    private bool hasBeenEnabled = false;
 
     private void OnEnable()
     {
-        axeParent = transform.parent;
-        initialLocalPosition = transform.localPosition;
-        initialLocalRotation = transform.localRotation;
-        Debug.Log("[BarbarianThrowAxe] OnEnable called");
+        if (!hasBeenEnabled)
+        {
+            axeParent = transform.parent;
+            initialLocalPosition = transform.localPosition;
+            initialLocalRotation = transform.localRotation;
+            Debug.Log("[BarbarianThrowAxe] OnEnable called");
+            hasBeenEnabled = true;
+        }
+        
     }
 
     private void Start()

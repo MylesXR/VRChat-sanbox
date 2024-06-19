@@ -11,9 +11,10 @@ public class AxeToggle : UdonSharpBehaviour
     // Reference to the child GameObject to toggle
     public GameObject axeObject;
 
-    // Synced variable to track visibility state across network
-    [UdonSynced]
-    private bool isVisible = true;
+    public PlayerManager playerManager;
+
+    // Local variable to track visibility state
+    private bool isVisible = false;
 
     void Start()
     {
@@ -22,9 +23,10 @@ public class AxeToggle : UdonSharpBehaviour
         {
             Debug.LogError("Axe object reference is not set!");
             enabled = false; // Disable the script if the axeObject is not assigned
+            return;
         }
 
-        // Initialize visibility state based on synced variable
+        // Initialize visibility state
         SetVisibility(isVisible);
     }
 
@@ -34,12 +36,27 @@ public class AxeToggle : UdonSharpBehaviour
         {
             if (Input.GetKeyDown(toggleKey))
             {
-                // Toggle visibility locally and sync across network
-                isVisible = !isVisible;
-                SetVisibility(isVisible);
+                // Check if the local player is a Barbarian
+                VRCPlayerApi localPlayer = Networking.LocalPlayer;
+                if (localPlayer != null)
+                {
+                    string playerClass = playerManager.GetPlayerClass(localPlayer);
+                    if (playerClass == "Barbarian")
+                    {
+                        Debug.Log("[AxeToggle] Player is a Barbarian. Toggling visibility.");
 
-                // Request serialization to sync with other players
-                RequestSerialization();
+                        // Toggle visibility locally and sync across network
+                        isVisible = !isVisible;
+                        SetVisibility(isVisible);
+
+                        // Request serialization to sync with other players
+                        RequestSerialization();
+                    }
+                    else
+                    {
+                        Debug.Log("[AxeToggle] Player is not a Barbarian. Visibility not changed.");
+                    }
+                }
             }
         }
     }
@@ -47,6 +64,7 @@ public class AxeToggle : UdonSharpBehaviour
     public override void OnDeserialization()
     {
         // Sync the visibility state when receiving network updates
+        Debug.Log("[AxeToggle] OnDeserialization called. Setting visibility to: " + isVisible);
         SetVisibility(isVisible);
     }
 
@@ -54,5 +72,15 @@ public class AxeToggle : UdonSharpBehaviour
     {
         // Set the visibility of the child object
         axeObject.SetActive(visible);
+        Debug.Log("[AxeToggle] Axe visibility set to: " + visible);
+    }
+
+    public override void OnPlayerJoined(VRCPlayerApi player)
+    {
+        // Ensure the new player receives the correct visibility state
+        if (Networking.IsOwner(gameObject))
+        {
+            RequestSerialization();
+        }
     }
 }
