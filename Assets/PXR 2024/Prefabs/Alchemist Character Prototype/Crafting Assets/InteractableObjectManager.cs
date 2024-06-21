@@ -17,6 +17,10 @@ public class InteractableObjectManager : UdonSharpBehaviour
     public Text GemstonesText;
     public Text PotionWallBreakerText;
 
+    public ParticleSystem PotionWallBreakerVFX;
+    public Collider PotionCollisionCollider;
+    public Bobys_WorldPortalSystem BWPS;
+
     public void UpdateUI()
     {
         if (HerbsText != null)
@@ -31,9 +35,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
         if (PotionWallBreakerText != null)
             PotionWallBreakerText.text = $"{PotionWallBreakerCollected}";
     }
-
-
-
 
     public void IncrementHerbsCollected()
     {
@@ -83,6 +84,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
             CraftPotionWallBreaker = false;
         }
     }
+
     /*
     public void CraftWallBreakerPotion()
     {

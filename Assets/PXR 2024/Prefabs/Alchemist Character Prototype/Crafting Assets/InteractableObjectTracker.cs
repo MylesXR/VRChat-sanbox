@@ -6,23 +6,24 @@ using VRC.Udon;
 
 public class InteractableObjectTracker : UdonSharpBehaviour
 {
-
     public GameObject Herb;
     public GameObject Flower;
     public GameObject Gemstone;
-    public Rigidbody PotionWallBreakerRB;
     public GameObject PotionWallBreaker;
-    
-
+    public Rigidbody PotionWallBreakerRB;
     public string ItemType;
     public InteractableObjectManager IOM;
 
-
-    private void Start()
+    void Start()
     {
-        if (PotionWallBreakerRB == false)
+        // Assign the Rigidbody component from the PotionWallBreaker GameObject
+        if (PotionWallBreaker != null)
         {
-            PotionWallBreakerRB.isKinematic= true;
+            PotionWallBreakerRB = PotionWallBreaker.GetComponent<Rigidbody>();
+            if (ItemType == "PotionWallBreaker" && PotionWallBreakerRB != null)
+            {
+                PotionWallBreakerRB.isKinematic = true;
+            }
         }
     }
 
@@ -44,17 +45,10 @@ public class InteractableObjectTracker : UdonSharpBehaviour
                 Destroy(Gemstone);
                 IOM.IncrementGemstonesCollected();
                 break;
-        }
 
-        // Toggle kinematic state off when the potion is picked up for the first time
-        if (ItemType == "PotionWallBreaker")
-        {
-
-            PotionWallBreakerRB.isKinematic = false;
-        }
-        else
-        {
-            Debug.LogError("PotionWallBreakerRB is not properly initialized");
+            case "PotionWallBreaker":
+                PotionWallBreakerRB.isKinematic = false;
+                break;
         }
     }
 }
