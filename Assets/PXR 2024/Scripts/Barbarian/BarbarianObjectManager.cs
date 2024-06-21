@@ -6,7 +6,7 @@ using VRC.Udon;
 public class BarbarianObjectManager : UdonSharpBehaviour
 {
     public GameObject[] barbarianObjects;
-    [UdonSynced] private bool isBarbarian;
+    private bool isBarbarian;
 
     void Start()
     {
@@ -17,19 +17,12 @@ public class BarbarianObjectManager : UdonSharpBehaviour
     public void SetAsBarbarian()
     {
         isBarbarian = true;
-        RequestSerialization();
         ToggleBarbarianObjects();
     }
 
     public void SetAsNotBarbarian()
     {
         isBarbarian = false;
-        RequestSerialization();
-        ToggleBarbarianObjects();
-    }
-
-    public override void OnDeserialization()
-    {
         ToggleBarbarianObjects();
     }
 
