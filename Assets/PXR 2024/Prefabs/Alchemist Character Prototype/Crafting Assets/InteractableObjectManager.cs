@@ -1,6 +1,7 @@
 ﻿using UdonSharp;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using VRC.SDKBase;
 using VRC.Udon;
 
@@ -12,10 +13,10 @@ public class InteractableObjectManager : UdonSharpBehaviour
     public int PotionWallBreakerCollected = 0;
     public bool CraftPotionWallBreaker;
 
-    public Text HerbsText;
-    public Text FlowersText;
-    public Text GemstonesText;
-    public Text PotionWallBreakerText;
+    public TextMeshProUGUI HerbsText;
+    public TextMeshProUGUI FlowersText;
+    public TextMeshProUGUI GemstonesText;
+    public TextMeshProUGUI PotionWallBreakerText;
 
     public ParticleSystem PotionWallBreakerVFX;
     public Collider PotionCollisionCollider;
