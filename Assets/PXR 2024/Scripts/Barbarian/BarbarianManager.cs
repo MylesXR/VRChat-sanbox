@@ -14,6 +14,7 @@ public class BarbarianManager : UdonSharpBehaviour
     public GameObject vrEnabledObject;
     public GameObject pcEnabledObject;
 
+
     void Start()
     {
         vrEnabledObject.SetActive(false);

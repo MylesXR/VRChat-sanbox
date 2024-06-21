@@ -19,6 +19,10 @@ public class AxeToggle : UdonSharpBehaviour
 
     private bool hasBeenEnabled = false;
 
+    private VRCPlayerApi localPlayer;
+
+    private int ownershipTransferCount = 0;
+
     private bool IsVisible
     {
         get => isVisible;
@@ -60,6 +64,7 @@ public class AxeToggle : UdonSharpBehaviour
 
             if (Input.GetKeyDown(toggleKey))
             {
+                
                 // Check if the local player is a Barbarian
                 VRCPlayerApi localPlayer = Networking.LocalPlayer;
                 if (localPlayer != null)
@@ -81,15 +86,26 @@ public class AxeToggle : UdonSharpBehaviour
                     }
                 }
             }
+            
         }
     }
 
     public void CustomUpdateSeconds()
     {
+        VRCPlayerApi localPlayer = Networking.LocalPlayer;
+        if (localPlayer != null)
+        {
+            string playerClass = playerManager.GetPlayerClass(localPlayer);
+            if (playerClass != "Barbarian")
+            {
+                isVisible = false;
+            }
+        }
+        
         UpdateVisibility();
 
         // Schedule the next call
-        SendCustomEventDelayedSeconds(nameof(CustomUpdateSeconds), 1.0f);
+        SendCustomEventDelayedSeconds(nameof(CustomUpdateSeconds), 1.5f);
     }
 
     public void UpdateVisibility()
@@ -99,7 +115,7 @@ public class AxeToggle : UdonSharpBehaviour
     public override void OnDeserialization()
     {
         // Sync the visibility state when receiving network updates
-        Debug.Log("[AxeToggle] OnDeserialization called. Setting visibility to: " + isVisible);
+        //Debug.Log("[AxeToggle] OnDeserialization called. Setting visibility to: " + isVisible);
         SetVisibility(isVisible);
     }
 
@@ -107,7 +123,7 @@ public class AxeToggle : UdonSharpBehaviour
     {
         // Set the visibility of the child object
         axeObject.SetActive(visible);
-        Debug.Log("[AxeToggle] Axe visibility set to: " + visible);
+        //Debug.Log("[AxeToggle] Axe visibility set to: " + visible);
     }
 
     public override void OnPlayerJoined(VRCPlayerApi player)
@@ -119,4 +135,18 @@ public class AxeToggle : UdonSharpBehaviour
             RequestSerialization();
         //}
     }
+    public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
+    {
+        ownershipTransferCount++;
+        Debug.Log($"[AxeToggle] Ownership transferred to: {newOwner.displayName}. Transfer count: {ownershipTransferCount}");
+
+        // Check if the transfer count exceeds 1
+        if (ownershipTransferCount > 0)
+        {
+            Debug.Log("[AxeToggle] Ownership transferred more than once. Destroying the object.");
+            Destroy(gameObject); // Destroy the game object
+            return;
+        }
+    }
+    
 }
