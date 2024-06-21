@@ -612,7 +612,7 @@ PrefabInstance:
     - target: {fileID: 8828364936306503408, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
       propertyPath: m_Name
-      value: axeHeadTracker (3)
+      value: HeadTracker (3)
       objectReference: {fileID: 0}
     - target: {fileID: 8828364936306503408, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
@@ -691,6 +691,7 @@ PrefabInstance:
     - {fileID: 1721750591710706914, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
     - {fileID: 0}
     - {fileID: 8967493598575108758, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
 --- !u!1 &206927202 stripped
 GameObject:
@@ -1077,7 +1078,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333844359}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.32, z: 3.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1429976979}
@@ -1469,6 +1470,7 @@ Transform:
   m_Children:
   - {fileID: 680739536}
   - {fileID: 347623774}
+  - {fileID: 833863236}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3753,7 +3755,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1601535997}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740504340}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c9e249c221803e439d95e105b88840f, type: 3}
   m_Name: 
@@ -3905,12 +3907,12 @@ GameObject:
   - component: {fileID: 833863238}
   - component: {fileID: 833863237}
   m_Layer: 0
-  m_Name: Barbarian Objects Manager
+  m_Name: Barbarian Move Objects Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &833863236
 Transform:
   m_ObjectHideFlags: 0
@@ -3927,8 +3929,8 @@ Transform:
   - {fileID: 191300573}
   - {fileID: 333844360}
   - {fileID: 242013495}
-  m_Father: {fileID: 1093584684}
-  m_RootOrder: 4
+  m_Father: {fileID: 444745148}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &833863237
 MonoBehaviour:
@@ -4142,7 +4144,7 @@ PrefabInstance:
     - target: {fileID: 8828364936306503408, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
       propertyPath: m_Name
-      value: axeHeadTracker (1)
+      value: HeadTracker (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8828364936306503408, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
@@ -4221,6 +4223,7 @@ PrefabInstance:
     - {fileID: 0}
     - {fileID: 1721750591710706914, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
     - {fileID: 8967493598575108758, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
 --- !u!1 &904892899 stripped
 GameObject:
@@ -4412,7 +4415,6 @@ Transform:
   - {fileID: 1623008748}
   - {fileID: 2069458029}
   - {fileID: 1625782958}
-  - {fileID: 833863236}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4570,7 +4572,7 @@ PrefabInstance:
     - target: {fileID: 8828364936306503408, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
       propertyPath: m_Name
-      value: axeHeadTracker (4)
+      value: HeadTracker (4)
       objectReference: {fileID: 0}
     - target: {fileID: 8828364936306503408, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
@@ -4649,6 +4651,7 @@ PrefabInstance:
     - {fileID: 1721750591710706914, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
     - {fileID: 0}
     - {fileID: 8967493598575108758, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
 --- !u!1 &1266088903 stripped
 GameObject:
@@ -6042,7 +6045,7 @@ PrefabInstance:
     - target: {fileID: 1216169144190685170, guid: e065e11f8c3a1564db29b872e4c93e3b,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1216169144190685170, guid: e065e11f8c3a1564db29b872e4c93e3b,
         type: 3}
@@ -6068,7 +6071,7 @@ PrefabInstance:
     - target: {fileID: 1216169144190685171, guid: e065e11f8c3a1564db29b872e4c93e3b,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1216169145637631780, guid: e065e11f8c3a1564db29b872e4c93e3b,
         type: 3}
@@ -6348,7 +6351,7 @@ PrefabInstance:
     - target: {fileID: 8828364936306503408, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
       propertyPath: m_Name
-      value: axeHeadTracker (2)
+      value: HeadTracker (2)
       objectReference: {fileID: 0}
     - target: {fileID: 8828364936306503408, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
@@ -6427,6 +6430,7 @@ PrefabInstance:
     - {fileID: 0}
     - {fileID: 1721750591710706914, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
     - {fileID: 8967493598575108758, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
 --- !u!1 &1717003823 stripped
 GameObject:
@@ -7763,7 +7767,7 @@ PrefabInstance:
     - target: {fileID: 8828364936306503408, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
       propertyPath: m_Name
-      value: axeHeadTracker
+      value: HeadTracker
       objectReference: {fileID: 0}
     - target: {fileID: 8828364936306503408, guid: 905eaf90bd116c44ba9cd7c9a18e4526,
         type: 3}
@@ -7849,7 +7853,5 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8765579298722572472, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
     - {fileID: 4265967000429164979, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
-    - {fileID: 0}
-    - {fileID: 1721750591710706914, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
     - {fileID: 8967493598575108758, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 905eaf90bd116c44ba9cd7c9a18e4526, type: 3}
