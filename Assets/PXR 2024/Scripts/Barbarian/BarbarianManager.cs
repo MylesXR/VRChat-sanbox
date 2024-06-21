@@ -14,10 +14,11 @@ public class BarbarianManager : UdonSharpBehaviour
     public GameObject vrEnabledObject;
     public GameObject pcEnabledObject;
 
+
     void Start()
     {
-        vrEnabledObject.SetActive(false);
-        pcEnabledObject.SetActive(false);
+        //vrEnabledObject.SetActive(false);
+       // pcEnabledObject.SetActive(false);
 
         localPlayer = Networking.LocalPlayer;
         vrEnabled = localPlayer.IsUserInVR();
@@ -28,7 +29,7 @@ public class BarbarianManager : UdonSharpBehaviour
         if (localPlayer != null && localPlayer.isLocal)
         {
             Networking.SetOwner(localPlayer, gameObject);
-            //barbarianObjectManager.SetAsBarbarian();
+            barbarianObjectManager.SetAsBarbarian();
         }
         //if (localPlayer != null && vrEnabled == true && localPlayer.isLocal)
         //{
@@ -44,7 +45,7 @@ public class BarbarianManager : UdonSharpBehaviour
     {
         if (localPlayer != null && localPlayer.isLocal)
         {
-            //barbarianObjectManager.SetAsNotBarbarian();
+            barbarianObjectManager.SetAsNotBarbarian();
         }
         //if (localPlayer != null && localPlayer.isLocal)
         //{
