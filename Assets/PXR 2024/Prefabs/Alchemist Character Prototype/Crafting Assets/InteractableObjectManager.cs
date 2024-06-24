@@ -1,6 +1,7 @@
 ﻿using UdonSharp;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using VRC.SDKBase;
 using VRC.Udon;
 
@@ -12,10 +13,14 @@ public class InteractableObjectManager : UdonSharpBehaviour
     public int PotionWallBreakerCollected = 0;
     public bool CraftPotionWallBreaker;
 
-    public Text HerbsText;
-    public Text FlowersText;
-    public Text GemstonesText;
-    public Text PotionWallBreakerText;
+    [SerializeField] TextMeshProUGUI HerbsText;
+    [SerializeField] TextMeshProUGUI FlowersText;
+    [SerializeField] TextMeshProUGUI GemstonesText;
+    [SerializeField] TextMeshProUGUI PotionWallBreakerText;
+
+    public ParticleSystem PotionWallBreakerVFX;
+    public Collider PotionCollisionCollider;
+    public Bobys_WorldPortalSystem BWPS;
 
     public void UpdateUI()
     {
@@ -31,9 +36,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
         if (PotionWallBreakerText != null)
             PotionWallBreakerText.text = $"{PotionWallBreakerCollected}";
     }
-
-
-
 
     public void IncrementHerbsCollected()
     {
@@ -83,6 +85,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
             CraftPotionWallBreaker = false;
         }
     }
+
     /*
     public void CraftWallBreakerPotion()
     {

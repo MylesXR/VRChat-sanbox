@@ -6,23 +6,35 @@ using VRC.Udon;
 
 public class InteractableObjectTracker : UdonSharpBehaviour
 {
+    [SerializeField] GameObject Herb;
+    [SerializeField] GameObject Flower;
+    [SerializeField] GameObject Gemstone;
+    [SerializeField] GameObject Item4;
+    [SerializeField] GameObject Item5;
+    [SerializeField] GameObject Item6;
+    [SerializeField] GameObject Item7;
+    [SerializeField] GameObject Item8;
 
-    public GameObject Herb;
-    public GameObject Flower;
-    public GameObject Gemstone;
+    [SerializeField] GameObject PotionWallBreaker;
+    [SerializeField] GameObject Potion2;
+    [SerializeField] GameObject Potion3;
+    [SerializeField] GameObject Potion4;
+
+
     public Rigidbody PotionWallBreakerRB;
-    public GameObject PotionWallBreaker;
-    
-
     public string ItemType;
     public InteractableObjectManager IOM;
 
-
-    private void Start()
+    void Start()
     {
-        if (PotionWallBreakerRB == false)
+        // Assign the Rigidbody component from the PotionWallBreaker GameObject
+        if (PotionWallBreaker != null)
         {
-            PotionWallBreakerRB.isKinematic= true;
+            PotionWallBreakerRB = PotionWallBreaker.GetComponent<Rigidbody>();
+            if (ItemType == "PotionWallBreaker" && PotionWallBreakerRB != null)
+            {
+                PotionWallBreakerRB.isKinematic = true;
+            }
         }
     }
 
@@ -44,17 +56,10 @@ public class InteractableObjectTracker : UdonSharpBehaviour
                 Destroy(Gemstone);
                 IOM.IncrementGemstonesCollected();
                 break;
-        }
 
-        // Toggle kinematic state off when the potion is picked up for the first time
-        if (ItemType == "PotionWallBreaker")
-        {
-
-            PotionWallBreakerRB.isKinematic = false;
-        }
-        else
-        {
-            Debug.LogError("PotionWallBreakerRB is not properly initialized");
+            case "PotionWallBreaker":
+                PotionWallBreakerRB.isKinematic = false;
+                break;
         }
     }
 }

@@ -15,28 +15,26 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     public GameObject BarbarianMenu;
     public GameObject ExplorerMenu;
     public GameObject PotionWallBreaker;
+    public ParticleSystem PotionBreakVFX;
 
     public Transform PotionsSpawnPoint;
-    public InteractableObjectManager IOC; // Assign in Inspector
+    public InteractableObjectManager IOC;
+
+    private GameObject currentPotionInstance; // To keep track of the instantiated potion
+
     //End of added methods for Attendee Menu
 
     // Start of Added methods for Attendee Menu
     //These methods have to be outside of the code below for some reason or it will ERROR
-    public void AlchemistClass()
+    public void AlchemistClass() { ClassType = "Alchemist"; }
+    public void BarbarianClass() { ClassType = "Barbarian"; }
+    public void ExplorerClass() { ClassType = "Explorer"; }
+
+    public GameObject CurrentPotionInstanceGO
     {
-        ClassType = "Alchemist";
+        get { return currentPotionInstance; }
     }
 
-    public void BarbarianClass()
-    {
-        ClassType = "Barbarian";
-    }
-
-    public void ExplorerClass()
-    {
-        ClassType = "Explorer";
-    }
-    
     public void CraftWallBreakerPotion()
     {
         IOC.CanCraftPotionWallBreaker();
@@ -62,6 +60,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         {
             PotionWallBreaker.GetComponent<Rigidbody>().isKinematic= true;
             Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
+            
             IOC.PotionWallBreakerCollected--;
             IOC.UpdateUI();
             Debug.Log(" WALL BREAKER POTION SPAWNED ");
@@ -71,7 +70,26 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             Debug.LogWarning("NO WALL BREAKER POTIONS IN INVENTORY");
         }
     }
-    
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider == IOC.PotionCollisionCollider && currentPotionInstance != null && collision.gameObject == currentPotionInstance)
+        {
+            Debug.Log("Potion has collided with the designated ground collider.");
+
+            if (PotionBreakVFX != null)
+            {
+                PotionBreakVFX.Play();
+            }
+            else
+            {
+                Debug.LogWarning("No ParticleSystem found on the potion object.");
+            }
+        }
+    }
+
+
+
     //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
     // End of added methods for Attendee Menu
 
@@ -568,6 +586,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         //This section controls what menu the player will see when they hit TAB or the VR Trigger
         //The class type is set in the inspector as a string
         //extra logic can be added to the Class Methods
+        
         switch (ClassType)
         {
             case "Alchemist":
@@ -596,6 +615,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
                 break;
         }
         // End of added methods for Attendee Menu
+        
 
         MenuPickupCollider.size = new Vector3(.025f, 1, .025f);
         MenuPickupCollider.center = Vector3.right * .525f * (MenuPickupSide.value == 1 ? 1 : -1);
