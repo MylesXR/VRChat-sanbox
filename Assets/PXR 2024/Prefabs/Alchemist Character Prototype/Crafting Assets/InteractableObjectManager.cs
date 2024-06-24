@@ -13,10 +13,10 @@ public class InteractableObjectManager : UdonSharpBehaviour
     public int PotionWallBreakerCollected = 0;
     public bool CraftPotionWallBreaker;
 
-    public TextMeshProUGUI HerbsText;
-    public TextMeshProUGUI FlowersText;
-    public TextMeshProUGUI GemstonesText;
-    public TextMeshProUGUI PotionWallBreakerText;
+    [SerializeField] TextMeshProUGUI HerbsText;
+    [SerializeField] TextMeshProUGUI FlowersText;
+    [SerializeField] TextMeshProUGUI GemstonesText;
+    [SerializeField] TextMeshProUGUI PotionWallBreakerText;
 
     public ParticleSystem PotionWallBreakerVFX;
     public Collider PotionCollisionCollider;

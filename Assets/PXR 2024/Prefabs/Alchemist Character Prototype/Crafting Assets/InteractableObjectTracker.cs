@@ -6,10 +6,21 @@ using VRC.Udon;
 
 public class InteractableObjectTracker : UdonSharpBehaviour
 {
-    public GameObject Herb;
-    public GameObject Flower;
-    public GameObject Gemstone;
-    public GameObject PotionWallBreaker;
+    [SerializeField] GameObject Herb;
+    [SerializeField] GameObject Flower;
+    [SerializeField] GameObject Gemstone;
+    [SerializeField] GameObject Item4;
+    [SerializeField] GameObject Item5;
+    [SerializeField] GameObject Item6;
+    [SerializeField] GameObject Item7;
+    [SerializeField] GameObject Item8;
+
+    [SerializeField] GameObject PotionWallBreaker;
+    [SerializeField] GameObject Potion2;
+    [SerializeField] GameObject Potion3;
+    [SerializeField] GameObject Potion4;
+
+
     public Rigidbody PotionWallBreakerRB;
     public string ItemType;
     public InteractableObjectManager IOM;

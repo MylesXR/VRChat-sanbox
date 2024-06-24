@@ -15,6 +15,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     public GameObject BarbarianMenu;
     public GameObject ExplorerMenu;
     public GameObject PotionWallBreaker;
+    public ParticleSystem PotionBreakVFX;
 
     public Transform PotionsSpawnPoint;
     public InteractableObjectManager IOC;
@@ -58,17 +59,8 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         if (IOC.PotionWallBreakerCollected == 1)
         {
             PotionWallBreaker.GetComponent<Rigidbody>().isKinematic= true;
-            //PotionWallBreaker = currentPotionInstance;
             Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
             
-
-            //currentPotionInstance.GetComponent<Rigidbody>().isKinematic = true;
-            //currentPotionInstance = Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
-            
-            //currentPotionInstance.GetComponent<Rigidbody>().isKinematic = true;
-
-            
-
             IOC.PotionWallBreakerCollected--;
             IOC.UpdateUI();
             Debug.Log(" WALL BREAKER POTION SPAWNED ");
@@ -81,12 +73,22 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider == IOC.PotionCollisionCollider && PotionWallBreaker.GetComponent<Collider>())
+        if (collision.collider == IOC.PotionCollisionCollider && currentPotionInstance != null && collision.gameObject == currentPotionInstance)
         {
-            Debug.Log("Specific collider has been hit!");
+            Debug.Log("Potion has collided with the designated ground collider.");
 
+            if (PotionBreakVFX != null)
+            {
+                PotionBreakVFX.Play();
+            }
+            else
+            {
+                Debug.LogWarning("No ParticleSystem found on the potion object.");
+            }
         }
     }
+
+
 
     //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
     // End of added methods for Attendee Menu
