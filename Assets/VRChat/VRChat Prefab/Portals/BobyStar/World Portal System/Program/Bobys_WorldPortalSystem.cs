@@ -17,6 +17,9 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     public GameObject PotionWallBreaker;
     public ParticleSystem PotionBreakVFX;
 
+    public GameObject PopUpMessageCrafting;
+    public GameObject PopUpMessageSpawning;
+
     public Transform PotionsSpawnPoint;
     public InteractableObjectManager IOC;
 
@@ -35,6 +38,12 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         get { return currentPotionInstance; }
     }
 
+    public void HidePopupMessage()
+    {
+        PopUpMessageCrafting.SetActive(false);
+        PopUpMessageSpawning.SetActive(false);
+    }
+
     public void CraftWallBreakerPotion()
     {
         IOC.CanCraftPotionWallBreaker();
@@ -49,6 +58,9 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         else
         {
             Debug.LogWarning("Not enough resources to craft the potion");
+            PopUpMessageCrafting.SetActive(true);
+            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 6f); 
+
         }
     }
 
@@ -68,6 +80,8 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         else
         {
             Debug.LogWarning("NO WALL BREAKER POTIONS IN INVENTORY");
+            PopUpMessageSpawning.SetActive(true);
+            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 2f);
         }
     }
 
