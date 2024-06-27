@@ -4,39 +4,40 @@ using UnityEngine.UI;
 using VRC.SDKBase;
 using VRC.Udon;
 using VRC.Udon.Common;
+using System.Collections.Generic;
 
 public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 {
 
     //Start of added variable for Attendee Menu
-    public string ClassType;
 
+    [Space(5)][Header("Class Settings")][Space(10)]
+    public string ClassType;
     public GameObject AlchemistMenu;
     public GameObject BarbarianMenu;
     public GameObject ExplorerMenu;
-    public GameObject PotionWallBreaker;
-    public ParticleSystem PotionBreakVFX;
 
-    public GameObject PopUpMessageCrafting;
-    public GameObject PopUpMessageSpawning;
 
-    public Transform PotionsSpawnPoint;
-    public InteractableObjectManager IOC;
+    [SerializeField] GameObject PotionWallBreaker;
+    [SerializeField] ParticleSystem PotionBreakVFX;
+
+    [SerializeField] GameObject PopUpMessageCrafting;
+    [SerializeField] GameObject PopUpMessageSpawning;
+
+    [SerializeField] Transform PotionsSpawnPoint;
+    [SerializeField] InteractableObjectManager IOM;
 
     private GameObject currentPotionInstance; // To keep track of the instantiated potion
+    private GameObject[] instantiatedPotions = new GameObject[10]; // Adjust the size as needed
+    private int potionIndex = 0;
 
-    //End of added methods for Attendee Menu
+
 
     // Start of Added methods for Attendee Menu
     //These methods have to be outside of the code below for some reason or it will ERROR
     public void AlchemistClass() { ClassType = "Alchemist"; }
     public void BarbarianClass() { ClassType = "Barbarian"; }
     public void ExplorerClass() { ClassType = "Explorer"; }
-
-    public GameObject CurrentPotionInstanceGO
-    {
-        get { return currentPotionInstance; }
-    }
 
     public void HidePopupMessage()
     {
@@ -46,14 +47,14 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     public void CraftWallBreakerPotion()
     {
-        IOC.CanCraftPotionWallBreaker();
+        IOM.CanCraftPotionWallBreaker();
 
-        if (IOC.CraftPotionWallBreaker == true)
+        if (IOM.CraftPotionWallBreaker == true)
         {
-            IOC.PotionWallBreakerCollected++;
+            IOM.PotionWallBreakerCollected++;
             
             Debug.Log(" WALL BREAKER POTION CRAFTED ");
-            IOC.UpdateUI();
+            IOM.UpdateUI();
         }
         else
         {
@@ -66,41 +67,55 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     public void SpawnWallBreakerPotion()
     {
-        IOC.CanCraftPotionWallBreaker();
+        IOM.CanCraftPotionWallBreaker();
 
-        if (IOC.PotionWallBreakerCollected == 1)
+        if (IOM.PotionWallBreakerCollected == 1)
         {
-            PotionWallBreaker.GetComponent<Rigidbody>().isKinematic= true;
-            Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
-            
-            IOC.PotionWallBreakerCollected--;
-            IOC.UpdateUI();
+            GameObject potionInstance = Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
+            potionInstance.GetComponent<Rigidbody>().isKinematic = true;
+
+            if (potionIndex < instantiatedPotions.Length)
+            {
+                instantiatedPotions[potionIndex] = potionInstance;
+                potionIndex++;
+            }
+
+            IOM.PotionWallBreakerCollected--;
+            IOM.UpdateUI();
             Debug.Log(" WALL BREAKER POTION SPAWNED ");
         }
         else
         {
             Debug.LogWarning("NO WALL BREAKER POTIONS IN INVENTORY");
             PopUpMessageSpawning.SetActive(true);
-            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 2f);
+            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 3f);
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    public GameObject[] GetInstantiatedPotions()
     {
-        if (collision.collider == IOC.PotionCollisionCollider && currentPotionInstance != null && collision.gameObject == currentPotionInstance)
-        {
-            Debug.Log("Potion has collided with the designated ground collider.");
-
-            if (PotionBreakVFX != null)
-            {
-                PotionBreakVFX.Play();
-            }
-            else
-            {
-                Debug.LogWarning("No ParticleSystem found on the potion object.");
-            }
-        }
+        return instantiatedPotions;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void UsePotionWallBreaker()
+    {
+
+    }
+
+
 
 
 

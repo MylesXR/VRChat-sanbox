@@ -7,20 +7,27 @@ using VRC.Udon;
 
 public class InteractableObjectManager : UdonSharpBehaviour
 {
+    [Space(5)][Header("Item Amounts")][Space(10)]
+
     public int HerbsCollected = 0;
     public int FlowersCollected = 0;
     public int GemstonesCollected = 0;
     public int PotionWallBreakerCollected = 0;
     public bool CraftPotionWallBreaker;
 
+
+    [Space(5)][Header("Item Text")][Space(10)]
+
     [SerializeField] TextMeshProUGUI HerbsText;
     [SerializeField] TextMeshProUGUI FlowersText;
     [SerializeField] TextMeshProUGUI GemstonesText;
     [SerializeField] TextMeshProUGUI PotionWallBreakerText;
 
-    public ParticleSystem PotionWallBreakerVFX;
-    public Collider PotionCollisionCollider;
+
+    [Space(5)][Header("Other")][Space(10)]
+
     public Bobys_WorldPortalSystem BWPS;
+
 
     public void UpdateUI()
     {
@@ -37,12 +44,14 @@ public class InteractableObjectManager : UdonSharpBehaviour
             PotionWallBreakerText.text = $"{PotionWallBreakerCollected}";
     }
 
+
     public void IncrementHerbsCollected()
     {
         HerbsCollected++;
         UpdateUI();
         Debug.Log($"HerbAmount: {HerbsCollected}");
     }
+
 
     public void IncrementFlowersCollected()
     {
@@ -51,6 +60,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
         Debug.Log($"Flowers collected: {FlowersCollected}");
     }
 
+
     public void IncrementGemstonesCollected()
     {
         GemstonesCollected++;
@@ -58,13 +68,13 @@ public class InteractableObjectManager : UdonSharpBehaviour
         Debug.Log($"Gemstones collected: {GemstonesCollected}");
     }
 
+
     public void IncrementPotionWallBreakerCollected()
     {
         PotionWallBreakerCollected++;
         UpdateUI();
         Debug.Log($"Crafting items collected: {PotionWallBreakerCollected}");
     }
-
 
 
     public void CanCraftPotionWallBreaker()
@@ -86,39 +96,16 @@ public class InteractableObjectManager : UdonSharpBehaviour
         }
     }
 
-    /*
-    public void CraftWallBreakerPotion()
+
+    public void RemovePotion(GameObject potion)
     {
-        CanCraftPotionWallBreaker();
-
-        if (CraftPotionWallBreaker == true)
+        for (int i = 0; i < BWPS.GetInstantiatedPotions().Length; i++)
         {
-            PotionWallBreakerCollected++;
-
-            Debug.Log(" WALL BREAKER POTION CRAFTED ");
-            UpdateUI();
-        }
-        else
-        {
-            Debug.LogWarning("Not enough resources to craft the potion");
+            if (BWPS.GetInstantiatedPotions()[i] == potion)
+            {
+                BWPS.GetInstantiatedPotions()[i] = null;
+                return;
+            }
         }
     }
-
-    public void SpawnWallBreakerPotion()
-    {
-        CanCraftPotionWallBreaker();
-
-        if (PotionWallBreakerCollected == 1)
-        {
-            Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
-            PotionWallBreakerCollected--;
-            UpdateUI();
-            Debug.Log(" WALL BREAKER POTION SPAWNED ");
-        }
-        else
-        {
-            Debug.LogWarning("NO WALL BREAKER POTIONS IN INVENTORY");
-        }
-    }
-    */
 }
