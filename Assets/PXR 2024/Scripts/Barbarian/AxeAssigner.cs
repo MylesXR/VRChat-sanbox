@@ -3,30 +3,30 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 using VRC.SDK3.Components;
+using UnityEngine.UI;
 
 public class AxeAssigner : UdonSharpBehaviour
 {
     public VRCObjectPool axePool; // Reference to the VRCObjectPool component
     private int currentIndex = 0; // To keep track of the axe index
-
+    public Text debugText; // Reference to the UI Text component for debug logs
 
     void Start()
     {
-        
         if (axePool == null)
         {
-            Debug.LogError("Axe pool is not assigned.");
+            LogError("Axe pool is not assigned.");
             return;
         }
     }
 
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
-        Debug.Log($"[AxeAssigner] Player joined: {player.displayName}");
+        Log($"Player joined: {player.displayName}");
 
         if (!Networking.IsOwner(Networking.LocalPlayer, gameObject))
         {
-            Debug.LogWarning("Non-owner attempted to spawn object from AxeManager");
+            LogWarning("Non-owner attempted to spawn object from AxeManager");
             return;
         }
 
@@ -42,13 +42,13 @@ public class AxeAssigner : UdonSharpBehaviour
 
             // Assign ownership to the player
             Networking.SetOwner(player, axeToAssign);
-            Debug.Log($"[AxeAssigner] Set ownership of axe {axeToAssign.name} to player {player.displayName}");
+            Log($"Set ownership of axe {axeToAssign.name} to player {player.displayName}");
 
             // Ensure the child objects also have the correct ownership
             foreach (Transform child in axeToAssign.transform)
             {
                 Networking.SetOwner(player, child.gameObject);
-                Debug.Log($"[AxeAssigner] Set ownership of child {child.gameObject.name} to player {player.displayName}");
+                Log($"Set ownership of child {child.gameObject.name} to player {player.displayName}");
                 child.gameObject.SetActive(false);
             }
 
@@ -59,9 +59,9 @@ public class AxeAssigner : UdonSharpBehaviour
                 throwAxeScript.axeIndex = currentIndex; // Use the current index
                 throwAxeScript.axeManager = this; // Set reference to AxeManager
                 throwAxeScript.ownerPlayer = player; // Set the owner player
-                Debug.Log($"[AxeAssigner] Assigned axe index {currentIndex} to {player.displayName}");
+                Log($"Assigned axe index {currentIndex} to {player.displayName}");
             }
-             
+
             // Increment the index for the next axe
             currentIndex++;
 
@@ -72,18 +72,50 @@ public class AxeAssigner : UdonSharpBehaviour
             {
                 GameObject childGameObject = axeToAssign.transform.GetChild(0).gameObject;
                 childGameObject.SetActive(false);
-                Debug.Log($"[AxeAssigner] Deactivated child game object: {childGameObject.name}");
+                Log($"Deactivated child game object: {childGameObject.name}");
+            }
+            if (axeToAssign.transform.childCount > -1)
+            {
+                GameObject childGameObject = axeToAssign.transform.GetChild(1).gameObject;
+                childGameObject.SetActive(true);
+                Log($"activated child game object: {childGameObject.name}");
             }
         }
         else
         {
-            Debug.LogWarning("No available axes in the pool.");
+            LogWarning("No available axes in the pool.");
         }
     }
 
-    
     public override void OnPlayerLeft(VRCPlayerApi player)
     {
         // Handle player leaving logic if needed
+    }
+
+    private void Log(string message)
+    {
+        Debug.Log(message);
+        if (debugText != null)
+        {
+            debugText.text += "\n" + message;
+        }
+    }
+
+    private void LogWarning(string message)
+    {
+        Debug.LogWarning(message);
+        if (debugText != null)
+        {
+            debugText.text += "\nWARNING: " + message;
+        }
+    }
+
+    private void LogError(string message)
+    {
+        Debug.LogError(message);
+        if (debugText != null)
+        {
+            debugText.text += "\nERROR: " + message;
+        }
     }
 }
