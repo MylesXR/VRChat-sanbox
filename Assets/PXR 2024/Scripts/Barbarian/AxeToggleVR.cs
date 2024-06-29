@@ -84,26 +84,29 @@ public class AxeToggleVR : UdonSharpBehaviour
 
     public void CustomUpdateSeconds()
     {
-        VRCPlayerApi localPlayer = Networking.LocalPlayer;
-        isVisibleVR = localPlayer.IsUserInVR();
-        if (localPlayer != null)
+        if (Networking.IsOwner(gameObject))
         {
-            string playerClass = playerManager.GetPlayerClass(localPlayer);
-            if (playerClass != "Barbarian")
+            VRCPlayerApi localPlayer = Networking.LocalPlayer;
+            isVisibleVR = localPlayer.IsUserInVR();
+            if (localPlayer != null)
             {
-                isVisibleVR = false;
+                string playerClass = playerManager.GetPlayerClass(localPlayer);
+                if (playerClass != "Barbarian")
+                {
+                    isVisibleVR = false;
 
+                }
+                if (playerClass == "Barbarian" && isPlayerInVR)
+                {
+                    isVisibleVR = true;
+                }
             }
-            if (playerClass == "Barbarian" && isPlayerInVR)
-            {
-                isVisibleVR = true;
-            }
+
+            UpdateVisibility();
+
+            // Schedule the next call
+            SendCustomEventDelayedSeconds(nameof(CustomUpdateSeconds), 1.5f);
         }
-
-        UpdateVisibility();
-
-        // Schedule the next call
-        SendCustomEventDelayedSeconds(nameof(CustomUpdateSeconds), 1.5f);
     }
 
     public void UpdateVisibility()

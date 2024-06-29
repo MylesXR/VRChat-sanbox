@@ -14,6 +14,9 @@ namespace Tether
         public bool hasReturnPoint;
         [Tooltip("Position to return this pickup when the player lets go. Typically attached to behind the player's head.")]
         public Transform returnPoint;
+        [Tooltip("Original parent of this axe.")]
+
+        public Transform axeParentVR;
 
         [Header("Scripts")]
         [Tooltip("The VRC_Pickup to use. Required to be on the same game object.")]
@@ -28,21 +31,28 @@ namespace Tether
         [Header("Debugging")]
         [Tooltip("Text component to display debug logs in the VRChat world.")]
         public Text debugText;
+        private string logMessages = "";
 
+        [Header("Properties")]
+        public Rigidbody axeRidgidbodyVR;
         public MeshRenderer axeMeshRenderer;
 
-        //private bool currentlyHeld = false;
-        [UdonSynced] private bool resetPosition;
-        private VRCPlayerApi owner;
-
+        [Header("Settings")]
+        [Tooltip("The Time it will take this axe to reset after thrown.")]
         public float resetTime = 10f;
+
+
         private float dropTime;
-        private string logMessages = "";
+        private VRCPlayerApi owner;
 
         [UdonSynced] private Vector3 syncedPosition;
         [UdonSynced] private Quaternion syncedRotation;
         [UdonSynced] private bool syncedCurrentlyHeld;
         [UdonSynced] private bool syncedMeshRendererEnabled;
+        //[UdonSynced] private bool syncedAtReturnPoint;
+        [UdonSynced] private bool resetPosition;
+        [UdonSynced] private bool positionResetTriggered;
+        [UdonSynced] private bool currentlyHeld = false;
 
         void Start()
         {
@@ -52,34 +62,53 @@ namespace Tether
 
         public void Update()
         {
-            if (!syncedCurrentlyHeld && Time.time - dropTime >= resetTime)
+            if (Networking.IsOwner(gameObject))
             {
-                resetPosition = true;
+                if (!currentlyHeld && !resetPosition && !positionResetTriggered && Time.time - dropTime >= resetTime)
+                {
+                    resetPosition = true;
+                    positionResetTriggered = true;
+                    LogDebug("reset position true update fired");
+                } 
+                // Sync position, rotation, and gravity state frequently
+                //syncedPosition = transform.position;
+                //syncedRotation = transform.rotation;
+
+                if (!currentlyHeld && resetPosition && hasReturnPoint)
+                {
+                    LogDebug("reset position false update fired");
+                    axeRidgidbodyVR.isKinematic = true;
+                    transform.parent = axeParentVR;
+                    transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
+                    axeMeshRenderer.enabled = false;
+                    syncedCurrentlyHeld = false;
+                    syncedMeshRendererEnabled = false;
+                    //syncedAtReturnPoint = true;
+                    resetPosition = false;
+
+                }
+                else
+                {
+
+                    syncedMeshRendererEnabled = axeMeshRenderer.enabled;
+                    //syncedAtReturnPoint = !currentlyHeld && resetPosition && hasReturnPoint;
+                }
+                //RequestSerialization();
             }
-        }
-
-        public void LateUpdate()
-        {
-            if (!syncedCurrentlyHeld && resetPosition && hasReturnPoint)
+            else
             {
-                transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
-                axeMeshRenderer.enabled = false;
-                resetPosition = false;
+                // Apply synced state for non-owners
+                //transform.SetPositionAndRotation(syncedPosition, syncedRotation);
+                axeMeshRenderer.enabled = syncedMeshRendererEnabled; // && !syncedAtReturnPoint;
+                currentlyHeld = syncedCurrentlyHeld;
+                axeRidgidbodyVR.isKinematic = currentlyHeld;
 
-                // Sync state across network
-                syncedPosition = returnPoint.position;
-                syncedRotation = returnPoint.rotation;
-                syncedCurrentlyHeld = false;
-                syncedMeshRendererEnabled = false;
-                RequestSerialization();
-
-                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SyncAxeReturn");
             }
         }
 
         private void OnEnable()
         {
-            if (!syncedCurrentlyHeld && hasReturnPoint)
+            if (!currentlyHeld && hasReturnPoint)
             {
                 transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
                 axeMeshRenderer.enabled = false;
@@ -89,7 +118,7 @@ namespace Tether
 
         private void OnDisable()
         {
-            syncedCurrentlyHeld = false;
+            currentlyHeld = false;
             axeMeshRenderer.enabled = false;
             LogDebug("OnDisable: Axe mesh renderer disabled");
         }
@@ -105,18 +134,18 @@ namespace Tether
             }
 
             resetPosition = false;
-            syncedCurrentlyHeld = true;
+            positionResetTriggered = false;
+            currentlyHeld = true;
             axeMeshRenderer.enabled = true;
-            LogDebug("OnPickup: Axe picked up");
+            LogDebug($"OnPickup: Axe picked up, reset position = {resetPosition}, positionResetTriggered = {positionResetTriggered}");
 
-            // Detach from return point
+            // Detach from head tracker
             transform.SetParent(null);
 
             // Sync the state
-            syncedPosition = transform.position;
-            syncedRotation = transform.rotation;
             syncedCurrentlyHeld = true;
             syncedMeshRendererEnabled = true;
+            //syncedAtReturnPoint = false;
             RequestSerialization();
 
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SyncAxePickup");
@@ -124,22 +153,19 @@ namespace Tether
 
         public override void OnDrop()
         {
-            syncedCurrentlyHeld = false;
+            currentlyHeld = false;
             dropTime = Time.time;
             LogDebug("OnDrop: Axe dropped");
 
-            Rigidbody rb = GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = false;
-                LogDebug("OnDrop: Rigidbody kinematic turned off");
-            }
+
+                axeRidgidbodyVR.isKinematic = false;
+                LogDebug("OnDrop: Rigidbody kinematic turned off, gravity turned on");
+
 
             // Sync the state
-            syncedPosition = transform.position;
-            syncedRotation = transform.rotation;
             syncedCurrentlyHeld = false;
-            syncedMeshRendererEnabled = false;
+            syncedMeshRendererEnabled = true; // Keep renderer enabled while axe is moving
+            //syncedAtReturnPoint = false;
             RequestSerialization();
 
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SyncAxeDrop");
@@ -149,22 +175,20 @@ namespace Tether
         {
             // Handle synchronization of the axe mesh renderer and kinematic state
             transform.SetPositionAndRotation(syncedPosition, syncedRotation);
-            axeMeshRenderer.enabled = syncedMeshRendererEnabled;
+            axeMeshRenderer.enabled = syncedMeshRendererEnabled; //&& !syncedAtReturnPoint;
+            currentlyHeld = syncedCurrentlyHeld;
 
-            Rigidbody rb = GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = syncedCurrentlyHeld;
-                LogDebug("OnDeserialization: Rigidbody kinematic state synchronized");
-            }
+                axeRidgidbodyVR.isKinematic = currentlyHeld;
+                //LogDebug("OnDeserialization: Rigidbody kinematic and gravity state synchronized");
+
         }
 
         public void SyncAxePickup()
         {
             if (!Networking.IsOwner(Networking.LocalPlayer, gameObject))
             {
-                axeMeshRenderer.enabled = false;
-                LogDebug($"SyncAxePickup: Axe mesh renderer set to false for non-owner player {Networking.LocalPlayer.displayName}");
+                axeMeshRenderer.enabled = true;
+                LogDebug($"SyncAxePickup: Axe mesh renderer set to true for non-owner player {Networking.LocalPlayer.displayName}");
             }
         }
 
@@ -172,26 +196,13 @@ namespace Tether
         {
             if (axeMeshRenderer != null)
             {
-                axeMeshRenderer.enabled = syncedCurrentlyHeld;
+                axeMeshRenderer.enabled = true;
                 LogDebug("SyncAxeDrop: Axe mesh renderer state synchronized");
             }
 
-            Rigidbody rb = GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = syncedCurrentlyHeld;
-                LogDebug("SyncAxeDrop: Rigidbody kinematic state synchronized");
-            }
-        }
+                axeRidgidbodyVR.isKinematic = currentlyHeld;
+                LogDebug("SyncAxeDrop: Rigidbody kinematic and gravity state synchronized");
 
-        public void SyncAxeReturn()
-        {
-            if (!syncedCurrentlyHeld && hasReturnPoint)
-            {
-                transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
-                axeMeshRenderer.enabled = false;
-                //LogDebug("SyncAxeReturn: Axe returned to return point and visibility updated");
-            }
         }
 
         private void LogDebug(string message)
@@ -202,12 +213,6 @@ namespace Tether
             {
                 debugText.text = logMessages;
             }
-        }
-
-        public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
-        {
-            owner = newOwner;
-            LogDebug($"OnOwnershipTransferred: New owner is {owner.displayName}");
         }
     }
 }
