@@ -3,28 +3,23 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 using VRC.Udon.Common.Interfaces;
+using VRC.SDK3.Components;
 
 public class AxeToggle : UdonSharpBehaviour
 {
     public KeyCode toggleKey = KeyCode.T; // Key to press for toggling
 
+    public VRCObjectPool axePool;
     // Reference to the child GameObject to toggle
     public GameObject axeObject;
-    public GameObject vrAxeObject;
 
     public PlayerManager playerManager;
-
-    // Synced variable to track visibility state across network
-
 
     private bool hasBeenEnabled = false;
 
     private VRCPlayerApi localPlayer;
 
     private int ownershipTransferCount = 0;
-
-    [UdonSynced]
-    private bool vrEnabled;
 
     [UdonSynced, FieldChangeCallback(nameof(IsVisible))]
     private bool isVisible = false;
@@ -35,18 +30,6 @@ public class AxeToggle : UdonSharpBehaviour
         {
             isVisible = value;
             SetVisibility(isVisible);
-        }
-    }
-
-    [UdonSynced, FieldChangeCallback(nameof(IsVisibleVR))]
-    private bool isVisibleVR = false;
-    private bool IsVisibleVR
-    {
-        get => isVisibleVR;
-        set
-        {
-            isVisibleVR = value;
-            SetVisibility(isVisibleVR);
         }
     }
 
@@ -61,6 +44,7 @@ public class AxeToggle : UdonSharpBehaviour
         }
         axeObject.SetActive(false);
 
+        localPlayer = Networking.GetOwner(gameObject);
         // Start the enum for custom update cycle
         CustomUpdateSeconds();
     }
@@ -103,20 +87,11 @@ public class AxeToggle : UdonSharpBehaviour
         VRCPlayerApi localPlayer = Networking.LocalPlayer;
         if (localPlayer != null)
         {
-            vrEnabled = localPlayer.IsUserInVR();
             string playerClass = playerManager.GetPlayerClass(localPlayer);
             if (playerClass != "Barbarian")
             {
                 isVisible = false;
-                isVisibleVR = false;
 
-            }
-            if (playerClass == "Barbarian" && vrEnabled)
-            {
-                if (Networking.IsOwner(gameObject))
-                {
-                    isVisibleVR = true;
-                }
             }
         }
 
@@ -129,14 +104,12 @@ public class AxeToggle : UdonSharpBehaviour
     public void UpdateVisibility()
     {
         SetVisibility(isVisible);
-        SetVisibilityVR(isVisibleVR);
     }
     public override void OnDeserialization()
     {
         // Sync the visibility state when receiving network updates
         //Debug.Log("[AxeToggle] OnDeserialization called. Setting visibility to: " + isVisible);
         SetVisibility(isVisible);
-        SetVisibilityVR(isVisibleVR);
     }
 
     private void SetVisibility(bool visible)
@@ -146,28 +119,34 @@ public class AxeToggle : UdonSharpBehaviour
         //Debug.Log("[AxeToggle] Axe visibility set to: " + visible);
     }
 
-    private void SetVisibilityVR(bool visibleVR)
-    {
-        // Set the visibility of the child object
-        vrAxeObject.SetActive(visibleVR);
-        //Debug.Log("[AxeToggle] Axe visibility set to: " + visible);
-    }
-
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         RequestSerialization();
     }
     public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
     {
-        ownershipTransferCount++;
-        Debug.Log($"[AxeToggle] Ownership transferred to: {newOwner.displayName}. Transfer count: {ownershipTransferCount}");
+        //ownershipTransferCount++;
+        //Debug.Log($"[AxeToggle] Ownership transferred to: {newOwner.displayName}. Transfer count: {ownershipTransferCount}");
 
-        // Check if the transfer count exceeds 1
-        if (ownershipTransferCount > 0)
+        //// Check if the transfer count exceeds 1
+        //if (ownershipTransferCount > 0)
+        //{
+        //    Debug.Log("[AxeToggle] Ownership transferred more than once. Destroying the object.");
+        //    Destroy(gameObject); // Destroy the game object
+        //    return;
+        //}
+    }
+
+    public override void OnPlayerLeft(VRCPlayerApi player)
+    {
+        if(player == localPlayer)
         {
-            Debug.Log("[AxeToggle] Ownership transferred more than once. Destroying the object.");
-            Destroy(gameObject); // Destroy the game object
-            return;
+            axePool.Return(gameObject);
+            
+            foreach(Transform child in (gameObject.transform))
+            {
+                axePool.Return(gameObject);
+            }
         }
     }
 
