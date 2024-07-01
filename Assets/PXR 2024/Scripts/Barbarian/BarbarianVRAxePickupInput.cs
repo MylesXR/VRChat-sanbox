@@ -45,14 +45,14 @@ namespace Tether
         private float dropTime;
         private VRCPlayerApi owner;
 
-        [UdonSynced] private Vector3 syncedPosition;
-        [UdonSynced] private Quaternion syncedRotation;
-        [UdonSynced] private bool syncedCurrentlyHeld;
+        //[UdonSynced] private Vector3 syncedPosition;
+        //[UdonSynced] private Quaternion syncedRotation;
+        //[UdonSynced] private bool syncedCurrentlyHeld;
         [UdonSynced] private bool syncedMeshRendererEnabled;
         //[UdonSynced] private bool syncedAtReturnPoint;
-        [UdonSynced] private bool resetPosition;
-        [UdonSynced] private bool positionResetTriggered;
-        [UdonSynced] private bool currentlyHeld = false;
+        private bool resetPosition;
+        private bool positionResetTriggered;
+        private bool currentlyHeld = false;
 
         void Start()
         {
@@ -81,7 +81,7 @@ namespace Tether
                     transform.parent = axeParentVR;
                     transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
                     axeMeshRenderer.enabled = false;
-                    syncedCurrentlyHeld = false;
+                    //syncedCurrentlyHeld = false;
                     syncedMeshRendererEnabled = false;
                     //syncedAtReturnPoint = true;
                     resetPosition = false;
@@ -100,38 +100,45 @@ namespace Tether
                 // Apply synced state for non-owners
                 //transform.SetPositionAndRotation(syncedPosition, syncedRotation);
                 axeMeshRenderer.enabled = syncedMeshRendererEnabled; // && !syncedAtReturnPoint;
-                currentlyHeld = syncedCurrentlyHeld;
+                //currentlyHeld = syncedCurrentlyHeld;
                 axeRidgidbodyVR.isKinematic = currentlyHeld;
-
+                transform.SetParent(null);
+                pickup.pickupable = false;
             }
         }
 
         private void OnEnable()
         {
-            if (!currentlyHeld && hasReturnPoint)
+            if (Networking.IsOwner(gameObject))
             {
-                transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
-                axeMeshRenderer.enabled = false;
-                LogDebug("OnEnable: Axe returned to return point");
+                if (!currentlyHeld && hasReturnPoint)
+                {
+                    transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
+                    axeMeshRenderer.enabled = false;
+                    LogDebug("OnEnable: Axe returned to return point");
+                }
             }
         }
 
         private void OnDisable()
         {
-            currentlyHeld = false;
-            axeMeshRenderer.enabled = false;
-            LogDebug("OnDisable: Axe mesh renderer disabled");
+            if (Networking.IsOwner(gameObject))
+            {
+                currentlyHeld = false;
+                axeMeshRenderer.enabled = false;
+                LogDebug("OnDisable: Axe mesh renderer disabled");
+            }
         }
 
         public override void OnPickup()
         {
-            VRCPlayerApi player = Networking.LocalPlayer;
-            if (player != owner)
-            {
-                pickup.Drop();
-                LogDebug("OnPickup: Non-owner attempted to pick up the axe");
-                return;
-            }
+            //VRCPlayerApi player = Networking.LocalPlayer;
+            //if (player != owner)
+            //{
+            //    pickup.Drop();
+            //    LogDebug("OnPickup: Non-owner attempted to pick up the axe");
+            //    return;
+            //}
 
             resetPosition = false;
             positionResetTriggered = false;
@@ -143,12 +150,12 @@ namespace Tether
             transform.SetParent(null);
 
             // Sync the state
-            syncedCurrentlyHeld = true;
+            //syncedCurrentlyHeld = true;
             syncedMeshRendererEnabled = true;
             //syncedAtReturnPoint = false;
-            RequestSerialization();
 
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SyncAxePickup");
+            RequestSerialization();
         }
 
         public override void OnDrop()
@@ -163,7 +170,7 @@ namespace Tether
 
 
             // Sync the state
-            syncedCurrentlyHeld = false;
+            //syncedCurrentlyHeld = false;
             syncedMeshRendererEnabled = true; // Keep renderer enabled while axe is moving
             //syncedAtReturnPoint = false;
             RequestSerialization();
@@ -174,9 +181,9 @@ namespace Tether
         public override void OnDeserialization()
         {
             // Handle synchronization of the axe mesh renderer and kinematic state
-            transform.SetPositionAndRotation(syncedPosition, syncedRotation);
+            //transform.SetPositionAndRotation(syncedPosition, syncedRotation);
             axeMeshRenderer.enabled = syncedMeshRendererEnabled; //&& !syncedAtReturnPoint;
-            currentlyHeld = syncedCurrentlyHeld;
+            //currentlyHeld = syncedCurrentlyHeld;
 
                 axeRidgidbodyVR.isKinematic = currentlyHeld;
                 //LogDebug("OnDeserialization: Rigidbody kinematic and gravity state synchronized");
@@ -188,6 +195,7 @@ namespace Tether
             if (!Networking.IsOwner(Networking.LocalPlayer, gameObject))
             {
                 axeMeshRenderer.enabled = true;
+                transform.SetParent(null);
                 LogDebug($"SyncAxePickup: Axe mesh renderer set to true for non-owner player {Networking.LocalPlayer.displayName}");
             }
         }
