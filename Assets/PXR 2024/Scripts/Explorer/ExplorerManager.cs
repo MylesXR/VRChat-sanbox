@@ -7,22 +7,33 @@ using VRC.Udon;
 public class ExplorerManager : UdonSharpBehaviour
 {
     public GlyphObjectManager GlyphObjectManager;
-    public GameObject grapplePC;
-    public GameObject grappleVR;
+    private VRCPlayerApi localPlayer;
+    //public GameObject grapplePC;
+    //public GameObject grappleVR;
     void Start()
     {
-
+        localPlayer = Networking.LocalPlayer;
     }
     private void OnEnable()
     {
-        GlyphObjectManager.SetAsExplorer();
-        grapplePC.SetActive(true);
-        grappleVR.SetActive(true);
+        if (localPlayer != null && localPlayer.isLocal)
+        {
+            Networking.SetOwner(localPlayer, gameObject);
+            GlyphObjectManager.SetAsExplorer();
+        }
+        //GlyphObjectManager.SetAsExplorer();
+        //grapplePC.SetActive(true);
+        //grappleVR.SetActive(true);
     }
     private void OnDisable()
     {
-        GlyphObjectManager.SetAsNotExplorer();
-        grapplePC.SetActive(false);
-        grappleVR.SetActive(false);
+        if (localPlayer != null && localPlayer.isLocal)
+        {
+            Networking.SetOwner(localPlayer, gameObject);
+            GlyphObjectManager.SetAsNotExplorer();
+        }
+        //GlyphObjectManager.SetAsNotExplorer();
+        //grapplePC.SetActive(false);
+        //grappleVR.SetActive(false);
     }
 }
