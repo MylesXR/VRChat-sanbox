@@ -203,14 +203,14 @@ MonoBehaviour:
   _udonSharpBackingUdonBehaviour: {fileID: 1589001488213726916}
   hasReturnPoint: 1
   returnPoint: {fileID: 1416975099610468458}
+  axeParentVR: {fileID: 8828364936306503421}
   pickup: {fileID: 5990878713782547502}
   leftInput: Oculus_CrossPlatform_PrimaryIndexTrigger
   rightInput: Oculus_CrossPlatform_SecondaryIndexTrigger
   debugText: {fileID: 0}
-  resetTime: 5
-  axeParentVR: {fileID: 8828364936306503421}
   axeRidgidbodyVR: {fileID: 2655194666642819260}
   axeMeshRenderer: {fileID: 8839695254547841191}
+  resetTime: 5
 --- !u!114 &1589001488213726916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,9 +305,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4448984167173475271}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0.05
-  m_AngularDrag: 0.05
+  m_Mass: 5
+  m_Drag: 0
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0

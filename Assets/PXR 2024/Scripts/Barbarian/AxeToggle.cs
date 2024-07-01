@@ -3,11 +3,13 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 using VRC.Udon.Common.Interfaces;
+using VRC.SDK3.Components;
 
 public class AxeToggle : UdonSharpBehaviour
 {
     public KeyCode toggleKey = KeyCode.T; // Key to press for toggling
 
+    public VRCObjectPool axePool;
     // Reference to the child GameObject to toggle
     public GameObject axeObject;
 
@@ -42,6 +44,7 @@ public class AxeToggle : UdonSharpBehaviour
         }
         axeObject.SetActive(false);
 
+        localPlayer = Networking.GetOwner(gameObject);
         // Start the enum for custom update cycle
         CustomUpdateSeconds();
     }
@@ -122,15 +125,28 @@ public class AxeToggle : UdonSharpBehaviour
     }
     public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
     {
-        ownershipTransferCount++;
-        Debug.Log($"[AxeToggle] Ownership transferred to: {newOwner.displayName}. Transfer count: {ownershipTransferCount}");
+        //ownershipTransferCount++;
+        //Debug.Log($"[AxeToggle] Ownership transferred to: {newOwner.displayName}. Transfer count: {ownershipTransferCount}");
 
-        // Check if the transfer count exceeds 1
-        if (ownershipTransferCount > 0)
+        //// Check if the transfer count exceeds 1
+        //if (ownershipTransferCount > 0)
+        //{
+        //    Debug.Log("[AxeToggle] Ownership transferred more than once. Destroying the object.");
+        //    Destroy(gameObject); // Destroy the game object
+        //    return;
+        //}
+    }
+
+    public override void OnPlayerLeft(VRCPlayerApi player)
+    {
+        if(player == localPlayer)
         {
-            Debug.Log("[AxeToggle] Ownership transferred more than once. Destroying the object.");
-            Destroy(gameObject); // Destroy the game object
-            return;
+            axePool.Return(gameObject);
+            
+            foreach(Transform child in (gameObject.transform))
+            {
+                axePool.Return(gameObject);
+            }
         }
     }
 
