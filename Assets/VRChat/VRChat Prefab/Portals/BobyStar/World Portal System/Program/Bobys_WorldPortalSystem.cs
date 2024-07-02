@@ -25,6 +25,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     [SerializeField] GameObject PotionWallBreaker;
     [SerializeField] Transform PotionsSpawnPoint;
     [SerializeField] InteractableObjectManager IOM;
+    [SerializeField] GameObject BreakableObject;
 
 
     // Start of Added methods for Attendee Menu
@@ -65,11 +66,25 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
         if (IOM.PotionWallBreakerCollected >= 1)
         {
-            Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
-            PotionWallBreaker.GetComponent<Rigidbody>().isKinematic = true;
+            GameObject spawnedPotion = Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
+
+            // Ensure the Rigidbody is initially kinematic
+            Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
+            if (potionRigidbody != null)
+            {
+                potionRigidbody.isKinematic = true;
+            }
+
+            // Pass a reference to the destroyable object
+            PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
+            if (potionHandler != null)
+            {
+                potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
+            }
+
             IOM.PotionWallBreakerCollected--;
             IOM.UpdateUI();
-            Debug.Log(" WALL BREAKER POTION SPAWNED ");
+            Debug.Log("WALL BREAKER POTION SPAWNED");
         }
         else
         {
@@ -78,6 +93,10 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 3f);
         }
     }
+
+
+
+
 
 
     //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
