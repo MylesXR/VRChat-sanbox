@@ -22,6 +22,7 @@ public class AxeAssigner : UdonSharpBehaviour
 
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
+        #region head Tracker Ownership
         Log($"Player joined: {player.displayName}");
 
         if (!Networking.IsOwner(Networking.LocalPlayer, gameObject))
@@ -68,8 +69,14 @@ public class AxeAssigner : UdonSharpBehaviour
             // Activate the axe object but ensure its children remain inactive
             axeToAssign.SetActive(true);
 
+            #endregion
+
+            #region pc and vr axe ownership
+
             if (axeToAssign.transform.childCount > -1)
             {
+
+
                 //the PC axe in the head tracker prefab
                 GameObject pcAxeChild = axeToAssign.transform.GetChild(0).gameObject;
                 pcAxeChild.SetActive(false);
@@ -82,7 +89,15 @@ public class AxeAssigner : UdonSharpBehaviour
                 returnPointChild.SetActive(true);
                 Log($"activated child game object: {returnPointChild.name}");
 
+                //the VR axe in the head tracker prefab
+                GameObject vrAxeChild = axeToAssign.transform.GetChild(2).gameObject;
+                vrAxeChild.SetActive(false);
+                Log($"Deactivated child game object: {vrAxeChild.name}");
 
+                #endregion
+
+
+                #region pc Tether Ownership
 
                 //The parent of the pc tether objects in the head tracker prefab
                 GameObject pcTetherPartent = axeToAssign.transform.GetChild(3).gameObject;
@@ -114,8 +129,104 @@ public class AxeAssigner : UdonSharpBehaviour
                     pcTetherRightRingGrandChild.gameObject.SetActive(true);
                 }
 
+                #endregion
+
+                #region vrTetherParent
+
+                //define the parent of the vr tether objects in head tracker (tetherVRPickUpParent 1)
+                GameObject vrTetherParent = axeToAssign.transform.GetChild(4).gameObject;
+                vrTetherParent.SetActive(false);
+                Log($"Deactivated child game object: {vrTetherParent.name}");
+
+                //Set ownership of all the pc tether objects children (left and right pickup 1)
+                foreach (Transform vrTetherHands in vrTetherParent.transform)
+                {
+                    Networking.SetOwner(player, vrTetherHands.gameObject);
+                    Log($"Set ownership of grandchild {vrTetherHands.gameObject.name} to player {player.displayName}");
+                    vrTetherHands.gameObject.SetActive(true);
+                }
+
+                #endregion
+
+                #region vr Tether Lefthand Ownership
+
+                //define the parent of the vr tether objects left hand 2
+                GameObject vrTetherHandsLeft = vrTetherParent.transform.GetChild(0).gameObject;
+                //set ownership of the tether object left hand 2
+                Networking.SetOwner(player, vrTetherHandsLeft.gameObject);
+
+                //define the parent of the left hands child (forward) 3
+                GameObject vrTetherLeftHandChildForward = vrTetherHandsLeft.transform.GetChild(0).gameObject; //forward
+                Networking.SetOwner(player, vrTetherLeftHandChildForward.gameObject);
+
+                //set ownership of the vr tether objects left hand children (forward) 3
+                foreach (Transform vrTetherLeftHandChildren in vrTetherLeftHandChildForward.transform)
+                {
+                    Networking.SetOwner(player, vrTetherLeftHandChildren.gameObject);
+                    Log($"Set ownership of grandchild {vrTetherLeftHandChildren.gameObject.name} to player {player.displayName}");
+                    vrTetherLeftHandChildren.gameObject.SetActive(true);
+                }
+
+                //define the child of the vr tether left hand (forward) 4
+                GameObject vrTetherLeftHandGrandchildrenParent = vrTetherLeftHandChildForward.transform.GetChild(2).gameObject; // tetherRing
+
+                //set ownership for the great grand childrend of tether left hand 4
+                foreach (Transform vrTetherLeftHandGreatGrandchildren in vrTetherLeftHandGrandchildrenParent.transform)
+                {
+                    Networking.SetOwner(player, vrTetherLeftHandGreatGrandchildren.gameObject);
+                    Log($"Set ownership of great grandchild {vrTetherLeftHandGreatGrandchildren.gameObject.name} to player {player.displayName}");
+                    vrTetherLeftHandGreatGrandchildren.gameObject.SetActive(true);
+                }
+
+                #endregion
+
+                #region VR tether Righthand Ownership
+
+                //the grandchild of the vr tether left hand 
+
+
+                //define the parent of the vr tether objects left hand 2
+                GameObject vrTetherHandsRight = vrTetherParent.transform.GetChild(1).gameObject;
+                //set ownership of the tether object right hand 2
+                Networking.SetOwner(player, vrTetherHandsRight.gameObject);
+
+                //define the parent of the right hands child (forward) 3
+                GameObject vrTetherRightHandChildForward = vrTetherHandsRight.transform.GetChild(0).gameObject; //forward
+                Networking.SetOwner(player, vrTetherRightHandChildForward.gameObject);
+
+                //set ownership of the vr tether objects right hand children (forward) 3
+                foreach (Transform vrTetherRightHandChildren in vrTetherRightHandChildForward.transform)
+                {
+                    Networking.SetOwner(player, vrTetherRightHandChildren.gameObject);
+                    Log($"Set ownership of grandchild {vrTetherRightHandChildren.gameObject.name} to player {player.displayName}");
+                    vrTetherRightHandChildren.gameObject.SetActive(true);
+                }
+
+                //define the child of the vr tether right hand (forward) 4
+                GameObject vrTetherRightHandGrandchildrenParent = vrTetherLeftHandChildForward.transform.GetChild(2).gameObject; // tetherRing
+
+                //set ownership for the great grand childrend of tether right hand 4
+                foreach (Transform vrTetherRightHandGreatGrandchildren in vrTetherRightHandGrandchildrenParent.transform)
+                {
+                    Networking.SetOwner(player, vrTetherRightHandGreatGrandchildren.gameObject);
+                    Log($"Set ownership of great grandchild {vrTetherRightHandGreatGrandchildren.gameObject.name} to player {player.displayName}");
+                    vrTetherRightHandGreatGrandchildren.gameObject.SetActive(true);
+                }
+
+                #endregion
+
+                #region VR Tether Return Points
+                GameObject vrTetherLeftReturnPoint = axeToAssign.transform.GetChild(5).gameObject;
+                vrTetherLeftReturnPoint.SetActive(true);
+                Log($"Deactivated child game object: {vrTetherParent.name}");
+
+                GameObject vrTetherRightReturnPoint = axeToAssign.transform.GetChild(6).gameObject;
+                vrTetherRightReturnPoint.SetActive(true);
+                Log($"Deactivated child game object: {vrTetherParent.name}");
+               
             }
         }
+        #endregion
         else
         {
             LogWarning("No available axes in the pool.");

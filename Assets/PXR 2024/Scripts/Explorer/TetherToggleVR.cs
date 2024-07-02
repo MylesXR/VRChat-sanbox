@@ -4,12 +4,12 @@ using VRC.SDKBase;
 using VRC.Udon;
 using VRC.Udon.Common.Interfaces;
 
-public class AxeToggleVR : UdonSharpBehaviour
+public class TetherToggleVR : UdonSharpBehaviour
 {
     public KeyCode toggleKey = KeyCode.T; // Key to press for toggling
 
     // Reference to the child GameObject to toggle
-    public GameObject axeObjectVR;
+    public GameObject TetherObjectVR;
 
     public PlayerManager playerManager;
 
@@ -21,29 +21,29 @@ public class AxeToggleVR : UdonSharpBehaviour
 
     private bool isPlayerInVR = false;
 
-    [UdonSynced, FieldChangeCallback(nameof(IsVisibleVR))]
-    private bool isVisibleVR = false;
+    [UdonSynced, FieldChangeCallback(nameof(TetherIsVisibleVR))]
+    private bool tetherIsVisibleVR = false;
 
-    private bool IsVisibleVR
+    private bool TetherIsVisibleVR
     {
-        get => isVisibleVR;
+        get => tetherIsVisibleVR;
         set
         {
-            isVisibleVR = value;
-            SetVisibility(isVisibleVR);
+            tetherIsVisibleVR = value;
+            SetVisibility(tetherIsVisibleVR);
         }
     }
 
     void Start()
     {
         // Ensure the axeObject is set
-        if (axeObjectVR == null)
+        if (TetherObjectVR == null)
         {
-            Debug.LogError("Axe object reference is not set!");
+            Debug.LogError("Tether object reference is not set!");
             enabled = false; // Disable the script if the axeObject is not assigned
             return;
         }
-        axeObjectVR.SetActive(false);
+        TetherObjectVR.SetActive(false);
 
         // Start the enum for custom update cycle
         CustomUpdateSeconds();
@@ -87,18 +87,18 @@ public class AxeToggleVR : UdonSharpBehaviour
         if (Networking.IsOwner(gameObject))
         {
             VRCPlayerApi localPlayer = Networking.LocalPlayer;
-            isVisibleVR = localPlayer.IsUserInVR();
+            tetherIsVisibleVR = localPlayer.IsUserInVR();
             if (localPlayer != null)
             {
                 string playerClass = playerManager.GetPlayerClass(localPlayer);
-                if (playerClass != "Barbarian")
+                if (playerClass != "Explorer")
                 {
-                    isVisibleVR = false;
+                    tetherIsVisibleVR = false;
 
                 }
-                if (playerClass == "Barbarian" && isPlayerInVR)
+                if (playerClass == "Explorer" && isPlayerInVR)
                 {
-                    isVisibleVR = true;
+                    tetherIsVisibleVR = true;
                 }
             }
 
@@ -111,19 +111,19 @@ public class AxeToggleVR : UdonSharpBehaviour
 
     public void UpdateVisibility()
     {
-        SetVisibility(isVisibleVR);
+        SetVisibility(tetherIsVisibleVR);
     }
     public override void OnDeserialization()
     {
         // Sync the visibility state when receiving network updates
         //Debug.Log("[AxeToggle] OnDeserialization called. Setting visibility to: " + isVisible);
-        SetVisibility(isVisibleVR);
+        SetVisibility(tetherIsVisibleVR);
     }
 
     private void SetVisibility(bool visible)
     {
         // Set the visibility of the child object
-        axeObjectVR.SetActive(visible);
+        TetherObjectVR.SetActive(visible);
         //Debug.Log("[AxeToggle] Axe visibility set to: " + visible);
     }
 

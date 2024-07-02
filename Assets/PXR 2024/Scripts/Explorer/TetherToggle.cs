@@ -64,7 +64,7 @@ public class TetherToggle : UdonSharpBehaviour
                     string playerClass = playerManager.GetPlayerClass(localPlayer);
                     if (playerClass == "Explorer")
                     {
-                        Debug.Log("[AxeToggle] Player is a Explorer. Toggling visibility.");
+                        Debug.Log("[TetherToggle] Player is a Explorer. Toggling visibility.");
 
                         // Toggle visibility locally and sync across network
                         IsVisibleTether = !IsVisibleTether;
@@ -74,7 +74,7 @@ public class TetherToggle : UdonSharpBehaviour
                     }
                     else
                     {
-                        Debug.Log("[AxeToggle] Player is not a Explorer. Visibility not changed.");
+                        Debug.Log("[TetherToggle] Player is not a Explorer. Visibility not changed.");
                     }
                 }
             }
