@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -16,7 +15,6 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     [SerializeField] GameObject Item7;
     [SerializeField] GameObject Item8;
 
-
     [Space(5)][Header("Potions")][Space(10)]
     [SerializeField] GameObject PotionWallBreaker;
     [SerializeField] GameObject Potion2;
@@ -25,9 +23,15 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     [SerializeField] GameObject potionBreakVFX;
     private Rigidbody PotionWallBreakerRB;
 
-    [Space(5)][Header("Other")][Space(10)]
+    [Space(5)][Header("Item Management")][Space(10)]
     public string ItemType;
-    public InteractableObjectManager IOM;
+    public InteractableObjectManager IOM; //must be public
+
+    [Header("Visual Indicators")]
+    [SerializeField] GameObject visualIndicatorPrefab;
+    private GameObject visualIndicatorInstanceOnPickup;
+    private GameObject visualIndicatorInstanceOnDrop;
+
 
 
     void Start()
@@ -63,7 +67,23 @@ public class InteractableObjectTracker : UdonSharpBehaviour
 
             case "PotionWallBreaker":
                 PotionWallBreakerRB.isKinematic = false;
+                ShowRadiusIndicatorOnPickup();
                 break;
+        }
+    }
+
+    public override void OnDrop()
+    {
+        if (visualIndicatorInstanceOnDrop != null)
+        {
+            Destroy(visualIndicatorInstanceOnDrop);
+        }
+       
+        ShowRadiusIndicatorOnDrop();
+
+        if (visualIndicatorInstanceOnPickup != null)
+        {
+            Destroy(visualIndicatorInstanceOnPickup);
         }
     }
 
@@ -75,13 +95,12 @@ public class InteractableObjectTracker : UdonSharpBehaviour
 
             if (potionBreakVFX != null)
             {
-                // Instantiate the VFX at the collision point and play it
-                GameObject vfxInstance = Instantiate(potionBreakVFX, transform.position, Quaternion.identity);
-                ParticleSystem ps = vfxInstance.GetComponent<ParticleSystem>();
-                if (ps != null)
+                GameObject vfxInstance = Instantiate(potionBreakVFX, transform.position, Quaternion.identity);                               
+                ParticleSystem vfxInstanceParticleSystem = vfxInstance.GetComponent<ParticleSystem>();
+
+                if (vfxInstanceParticleSystem != null)
                 {
-                    ps.Play();
-                    // Destroy the VFX after 6 seconds
+                    vfxInstanceParticleSystem.Play();
                     Destroy(vfxInstance, 6f);
                 }
                 else
@@ -94,10 +113,44 @@ public class InteractableObjectTracker : UdonSharpBehaviour
                 Debug.LogWarning("No VFX prefab assigned.");
             }
 
-            // Destroy the potion after collision and VFX
             Destroy(gameObject);
+            if (visualIndicatorInstanceOnDrop != null)
+            {
+                Destroy(visualIndicatorInstanceOnDrop);
+            }
         }
     }
 
 
+    private void ShowRadiusIndicatorOnPickup()
+    {
+        if (visualIndicatorPrefab != null)
+        {
+            Vector3 playerPosition = Networking.LocalPlayer.GetPosition();
+            RaycastHit hit;
+            if (Physics.Raycast(playerPosition, Vector3.down, out hit))
+            {
+                visualIndicatorInstanceOnPickup = Instantiate(visualIndicatorPrefab, hit.point, Quaternion.identity);               
+            }
+        }
+    }
+
+    private void ShowRadiusIndicatorOnDrop()
+    {
+        visualIndicatorInstanceOnDrop = Instantiate(visualIndicatorPrefab, PotionWallBreaker.transform);
+        visualIndicatorInstanceOnDrop.transform.localPosition = Vector3.down * PotionWallBreaker.transform.localScale.y;
+        visualIndicatorInstanceOnDrop.transform.rotation = Quaternion.Euler(0, 90, 0); // Ensure the indicator is flat on the ground
+    }
+
+
+ 
+
+
+    public override void OnPlayerTriggerEnter(VRCPlayerApi player)
+    {
+        if (player.isLocal)
+        {
+
+        }
+    }
 }

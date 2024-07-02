@@ -27,6 +27,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
     [Space(5)][Header("Other")][Space(10)]
 
     public Bobys_WorldPortalSystem BWPS;
+    //public Collider targetColliderToDestroy; // Add this field
 
 
     public void UpdateUI()
@@ -81,7 +82,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
     {
         if (HerbsCollected >= 1 && FlowersCollected >= 1 && GemstonesCollected >= 1)
         {
-            Debug.Log("Crafting Now");
+            Debug.Log("Crafting");
             HerbsCollected--;
             FlowersCollected--;
             GemstonesCollected--;
@@ -94,18 +95,5 @@ public class InteractableObjectManager : UdonSharpBehaviour
             Debug.LogWarning("Not enough resources to craft the potion.");
             CraftPotionWallBreaker = false;
         }
-    }
-
-
-    public void RemovePotion(GameObject potion)
-    {
-        for (int i = 0; i < BWPS.GetInstantiatedPotions().Length; i++)
-        {
-            if (BWPS.GetInstantiatedPotions()[i] == potion)
-            {
-                BWPS.GetInstantiatedPotions()[i] = null;
-                return;
-            }
-        }
-    }
+    }   
 }

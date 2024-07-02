@@ -16,21 +16,15 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     public GameObject AlchemistMenu;
     public GameObject BarbarianMenu;
     public GameObject ExplorerMenu;
-
-
-    [SerializeField] GameObject PotionWallBreaker;
-    [SerializeField] ParticleSystem PotionBreakVFX;
+    
 
     [SerializeField] GameObject PopUpMessageCrafting;
     [SerializeField] GameObject PopUpMessageSpawning;
 
+
+    [SerializeField] GameObject PotionWallBreaker;
     [SerializeField] Transform PotionsSpawnPoint;
     [SerializeField] InteractableObjectManager IOM;
-
-    private GameObject currentPotionInstance; // To keep track of the instantiated potion
-    private GameObject[] instantiatedPotions = new GameObject[10]; // Adjust the size as needed
-    private int potionIndex = 0;
-
 
 
     // Start of Added methods for Attendee Menu
@@ -69,17 +63,10 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     {
         IOM.CanCraftPotionWallBreaker();
 
-        if (IOM.PotionWallBreakerCollected == 1)
+        if (IOM.PotionWallBreakerCollected >= 1)
         {
-            GameObject potionInstance = Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
-            potionInstance.GetComponent<Rigidbody>().isKinematic = true;
-
-            if (potionIndex < instantiatedPotions.Length)
-            {
-                instantiatedPotions[potionIndex] = potionInstance;
-                potionIndex++;
-            }
-
+            Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
+            PotionWallBreaker.GetComponent<Rigidbody>().isKinematic = true;
             IOM.PotionWallBreakerCollected--;
             IOM.UpdateUI();
             Debug.Log(" WALL BREAKER POTION SPAWNED ");
@@ -91,32 +78,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 3f);
         }
     }
-
-    public GameObject[] GetInstantiatedPotions()
-    {
-        return instantiatedPotions;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void UsePotionWallBreaker()
-    {
-
-    }
-
-
-
 
 
     //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
