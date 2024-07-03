@@ -1,4 +1,3 @@
-
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
@@ -32,32 +31,67 @@ namespace Tether
 
         private bool currentlyHeld = false;
 
-        public void Update()
+        [UdonSynced, FieldChangeCallback(nameof(SyncedCurrentlyHeld))]
+        private bool syncedCurrentlyHeld;
+        public bool SyncedCurrentlyHeld
         {
-            // read analog values of triggers instead of using OnPickupUseDown
-            if (currentlyHeld)
+            get => syncedCurrentlyHeld;
+            set
             {
-                float input = 0.0f;
-
-                switch (pickup.currentHand)
-                {
-                    case VRC_Pickup.PickupHand.Left:
-                        input = Input.GetAxis(leftInput);
-                        break;
-                    case VRC_Pickup.PickupHand.Right:
-                        input = Input.GetAxis(rightInput);
-                        break;
-                }
-
-                controller.SetInput(input);
-            }
-            else
-            {
-                controller.SetInput(0.0f);
+                syncedCurrentlyHeld = value;
+                UpdatePickupState();
             }
         }
 
-        public void LateUpdate()
+        private void Start()
+        {
+            // Ensure owner is set correctly on start
+            if (Networking.LocalPlayer.IsOwner(gameObject))
+            {
+                SyncedCurrentlyHeld = currentlyHeld;
+            }
+        }
+
+        private void Update()
+        {
+            if (Networking.LocalPlayer.IsOwner(gameObject))
+            {
+                // Read analog values of triggers instead of using OnPickupUseDown
+                if (currentlyHeld)
+                {
+                    float input = 0.0f;
+
+                    switch (pickup.currentHand)
+                    {
+                        case VRC_Pickup.PickupHand.Left:
+                            input = Input.GetAxis(leftInput);
+                            break;
+                        case VRC_Pickup.PickupHand.Right:
+                            input = Input.GetAxis(rightInput);
+                            break;
+                    }
+
+                    controller.SetInput(input);
+                }
+                else
+                {
+                    controller.SetInput(0.0f);
+                }
+
+                // Request serialization to sync the pickup state with other players
+                if (syncedCurrentlyHeld != currentlyHeld)
+                {
+                    SyncedCurrentlyHeld = currentlyHeld;
+                    RequestSerialization();
+                }
+            }
+            else
+            {
+                pickup.pickupable = false;
+            }
+        }
+
+        private void LateUpdate()
         {
             if (!currentlyHeld && hasReturnPoint)
             {
@@ -69,16 +103,34 @@ namespace Tether
         {
             currentlyHeld = false;
             controller.SetInput(0.0f);
+            SyncedCurrentlyHeld = currentlyHeld;
+            RequestSerialization();
         }
 
-        override public void OnPickup()
+        public override void OnPickup()
         {
             currentlyHeld = true;
+            SyncedCurrentlyHeld = currentlyHeld;
+            RequestSerialization();
         }
 
-        override public void OnDrop()
+        public override void OnDrop()
         {
             currentlyHeld = false;
+            SyncedCurrentlyHeld = currentlyHeld;
+            RequestSerialization();
+        }
+
+        private void UpdatePickupState()
+        {
+            if (!Networking.LocalPlayer.IsOwner(gameObject))
+            {
+                currentlyHeld = syncedCurrentlyHeld;
+                if (!currentlyHeld && hasReturnPoint)
+                {
+                    transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
+                }
+            }
         }
     }
 }
