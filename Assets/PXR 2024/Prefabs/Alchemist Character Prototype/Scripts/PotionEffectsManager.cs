@@ -6,6 +6,7 @@ using VRC.Udon;
 
 public class PotionEffectsManager : UdonSharpBehaviour
 {
+    /*
     private bool isPickedUp = false;
 
     public override void OnPickup()
@@ -28,4 +29,5 @@ public class PotionEffectsManager : UdonSharpBehaviour
             // Additional logic for what happens on collision can be added here
         }
     }
+    */
 }

@@ -5,6 +5,7 @@ using VRC.Udon;
 
 public class InteractableObjectTracker : UdonSharpBehaviour
 {
+
     [Space(5)][Header("Interactable Items")]
     [SerializeField] GameObject Herb;
     [SerializeField] GameObject Flower;
@@ -15,23 +16,24 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     [SerializeField] GameObject Item7;
     [SerializeField] GameObject Item8;
 
+
     [Space(5)][Header("Potions")][Space(10)]
     [SerializeField] GameObject PotionWallBreaker;
     [SerializeField] GameObject Potion2;
     [SerializeField] GameObject Potion3;
     [SerializeField] GameObject Potion4;
-    [SerializeField] GameObject potionBreakVFX;
     private Rigidbody PotionWallBreakerRB;
+
 
     [Space(5)][Header("Item Management")][Space(10)]
     public string ItemType;
     public InteractableObjectManager IOM; //must be public
 
+
     [Header("Visual Indicators")]
     [SerializeField] GameObject visualIndicatorPrefab;
     private GameObject visualIndicatorInstanceOnPickup;
     private GameObject visualIndicatorInstanceOnDrop;
-
 
 
     void Start()
@@ -45,6 +47,8 @@ public class InteractableObjectTracker : UdonSharpBehaviour
             }
         }
     }
+
+
 
     public override void OnPickup()
     {
@@ -67,59 +71,24 @@ public class InteractableObjectTracker : UdonSharpBehaviour
 
             case "PotionWallBreaker":
                 PotionWallBreakerRB.isKinematic = false;
+                Destroy(visualIndicatorInstanceOnPickup);
                 ShowRadiusIndicatorOnPickup();
+                Destroy(visualIndicatorInstanceOnDrop);
                 break;
         }
     }
 
+
+
     public override void OnDrop()
-    {
-        if (visualIndicatorInstanceOnDrop != null)
-        {
-            Destroy(visualIndicatorInstanceOnDrop);
-        }
-       
-        ShowRadiusIndicatorOnDrop();
-
-        if (visualIndicatorInstanceOnPickup != null)
-        {
-            Destroy(visualIndicatorInstanceOnPickup);
-        }
+    {     
+        Destroy(visualIndicatorInstanceOnDrop);
+        ShowRadiusIndicatorOnDrop();    
+        Destroy(visualIndicatorInstanceOnPickup);
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (ItemType == "PotionWallBreaker")
-        {
-            Debug.Log("Potion has collided with the ground.");
 
-            if (potionBreakVFX != null)
-            {
-                GameObject vfxInstance = Instantiate(potionBreakVFX, transform.position, Quaternion.identity);                               
-                ParticleSystem vfxInstanceParticleSystem = vfxInstance.GetComponent<ParticleSystem>();
 
-                if (vfxInstanceParticleSystem != null)
-                {
-                    vfxInstanceParticleSystem.Play();
-                    Destroy(vfxInstance, 6f);
-                }
-                else
-                {
-                    Debug.LogWarning("No ParticleSystem component found on the instantiated VFX.");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("No VFX prefab assigned.");
-            }
-
-            Destroy(gameObject);
-            if (visualIndicatorInstanceOnDrop != null)
-            {
-                Destroy(visualIndicatorInstanceOnDrop);
-            }
-        }
-    }
 
 
     private void ShowRadiusIndicatorOnPickup()
@@ -130,10 +99,11 @@ public class InteractableObjectTracker : UdonSharpBehaviour
             RaycastHit hit;
             if (Physics.Raycast(playerPosition, Vector3.down, out hit))
             {
-                visualIndicatorInstanceOnPickup = Instantiate(visualIndicatorPrefab, hit.point, Quaternion.identity);               
+                visualIndicatorInstanceOnPickup = Instantiate(visualIndicatorPrefab, hit.point, Quaternion.identity);
             }
         }
     }
+
 
     private void ShowRadiusIndicatorOnDrop()
     {
@@ -141,16 +111,5 @@ public class InteractableObjectTracker : UdonSharpBehaviour
         visualIndicatorInstanceOnDrop.transform.localPosition = Vector3.down * PotionWallBreaker.transform.localScale.y;
         visualIndicatorInstanceOnDrop.transform.rotation = Quaternion.Euler(0, 90, 0); // Ensure the indicator is flat on the ground
     }
-
-
- 
-
-
-    public override void OnPlayerTriggerEnter(VRCPlayerApi player)
-    {
-        if (player.isLocal)
-        {
-
-        }
-    }
 }
+

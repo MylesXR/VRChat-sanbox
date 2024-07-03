@@ -20,13 +20,15 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     [SerializeField] GameObject PopUpMessageCrafting;
     [SerializeField] GameObject PopUpMessageSpawning;
+    [SerializeField] GameObject PopUpMessagePotionAlreadySpawned;
 
 
     [SerializeField] GameObject PotionWallBreaker;
     [SerializeField] Transform PotionsSpawnPoint;
+
+
     [SerializeField] InteractableObjectManager IOM;
     [SerializeField] GameObject BreakableObject;
-
 
     // Start of Added methods for Attendee Menu
     //These methods have to be outside of the code below for some reason or it will ERROR
@@ -38,44 +40,41 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     {
         PopUpMessageCrafting.SetActive(false);
         PopUpMessageSpawning.SetActive(false);
+        PopUpMessagePotionAlreadySpawned.SetActive(false);
     }
+
+
 
     public void CraftWallBreakerPotion()
     {
         IOM.CanCraftPotionWallBreaker();
 
-        if (IOM.CraftPotionWallBreaker == true)
+        if (IOM.CraftPotionWallBreaker)
         {
             IOM.PotionWallBreakerCollected++;
-            
-            Debug.Log(" WALL BREAKER POTION CRAFTED ");
             IOM.UpdateUI();
+            Debug.Log(" WALL BREAKER POTION CRAFTED ");            
         }
         else
         {
-            Debug.LogWarning("Not enough resources to craft the potion");
             PopUpMessageCrafting.SetActive(true);
-            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 6f); 
-
+            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 6f);
+            Debug.LogWarning("Not enough resources to craft the potion");
         }
     }
 
     public void SpawnWallBreakerPotion()
     {
-        IOM.CanCraftPotionWallBreaker();
-
         if (IOM.PotionWallBreakerCollected >= 1)
         {
             GameObject spawnedPotion = Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
-
-            // Ensure the Rigidbody is initially kinematic
             Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
+
             if (potionRigidbody != null)
             {
                 potionRigidbody.isKinematic = true;
             }
 
-            // Pass a reference to the destroyable object
             PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
             if (potionHandler != null)
             {
@@ -93,11 +92,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 3f);
         }
     }
-
-
-
-
-
 
     //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
     // End of added methods for Attendee Menu

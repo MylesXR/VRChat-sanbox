@@ -4,11 +4,13 @@ using UnityEngine.UI;
 using TMPro;
 using VRC.SDKBase;
 using VRC.Udon;
+using static UnityEditor.PlayerSettings;
 
 public class InteractableObjectManager : UdonSharpBehaviour
 {
-    [Space(5)][Header("Item Amounts")][Space(10)]
 
+    [Space(5)][Header("Item Amounts")][Space(10)]
+    //These variables track how many of each resource or potions the player has
     public int HerbsCollected = 0;
     public int FlowersCollected = 0;
     public int GemstonesCollected = 0;
@@ -17,26 +19,24 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
 
     [Space(5)][Header("Item Text")][Space(10)]
-
+    //These are the text elements that will be updated on the players UI
     [SerializeField] TextMeshProUGUI HerbsText;
     [SerializeField] TextMeshProUGUI FlowersText;
     [SerializeField] TextMeshProUGUI GemstonesText;
     [SerializeField] TextMeshProUGUI PotionWallBreakerText;
 
-
     [Space(5)][Header("Other")][Space(10)]
+    public GameObject BreakableObject;
 
-    public Bobys_WorldPortalSystem BWPS;
-    //public Collider targetColliderToDestroy; // Add this field
-
-    // Reference to the destroyable object
-    public GameObject destroyableObject;
+    private void Start()
+    {      
+        UpdateUI();
+    }
 
     public GameObject GetObjectToDestroy()
     {
-        return destroyableObject;
+        return BreakableObject;
     }
-
 
     public void UpdateUI()
     {
