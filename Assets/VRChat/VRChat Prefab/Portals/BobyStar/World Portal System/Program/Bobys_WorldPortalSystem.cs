@@ -47,13 +47,16 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     public void CraftWallBreakerPotion()
     {
+        if (!Networking.IsOwner(gameObject)) return;
+
         IOM.CanCraftPotionWallBreaker();
 
         if (IOM.CraftPotionWallBreaker)
         {
             IOM.PotionWallBreakerCollected++;
             IOM.UpdateUI();
-            Debug.Log(" WALL BREAKER POTION CRAFTED ");            
+            Debug.Log("WALL BREAKER POTION CRAFTED");
+            RequestSerialization();
         }
         else
         {
@@ -65,9 +68,14 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     public void SpawnWallBreakerPotion()
     {
+        if (!Networking.IsOwner(gameObject)) return;
+
         if (IOM.PotionWallBreakerCollected >= 1)
         {
-            GameObject spawnedPotion = Instantiate(PotionWallBreaker, PotionsSpawnPoint.position, PotionsSpawnPoint.rotation);
+            GameObject spawnedPotion = VRCInstantiate(PotionWallBreaker);
+            spawnedPotion.transform.position = PotionsSpawnPoint.position;
+            spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation;
+
             Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
 
             if (potionRigidbody != null)
@@ -84,12 +92,26 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             IOM.PotionWallBreakerCollected--;
             IOM.UpdateUI();
             Debug.Log("WALL BREAKER POTION SPAWNED");
+            RequestSerialization();
         }
         else
         {
             Debug.LogWarning("NO WALL BREAKER POTIONS IN INVENTORY");
             PopUpMessageSpawning.SetActive(true);
             SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 3f);
+        }
+    }
+
+    public override void OnDeserialization()
+    {
+        IOM.UpdateUI();
+    }
+
+    public override void OnOwnershipTransferred(VRCPlayerApi player)
+    {
+        if (Networking.IsOwner(gameObject))
+        {
+            IOM.UpdateUI();
         }
     }
 

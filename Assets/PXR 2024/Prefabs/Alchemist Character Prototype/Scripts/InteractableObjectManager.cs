@@ -1,41 +1,30 @@
 ﻿using UdonSharp;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using VRC.SDKBase;
-using VRC.Udon;
-using static UnityEditor.PlayerSettings;
+using VRC.Udon.Common.Interfaces;
 
 public class InteractableObjectManager : UdonSharpBehaviour
 {
+    [Space(5)][Header("Players Inventory Items")][Space(10)]
+    [UdonSynced] public int HerbsCollected = 10;
+    [UdonSynced] public int FlowersCollected = 10;
+    [UdonSynced] public int GemstonesCollected = 10;
+    [UdonSynced] public int PotionWallBreakerCollected = 0;
+    [UdonSynced] public bool CraftPotionWallBreaker;
 
-    [Space(5)][Header("Item Amounts")][Space(10)]
-    //These variables track how many of each resource or potions the player has
-    public int HerbsCollected = 0;
-    public int FlowersCollected = 0;
-    public int GemstonesCollected = 0;
-    public int PotionWallBreakerCollected = 0;
-    public bool CraftPotionWallBreaker;
-
-
-    [Space(5)][Header("Item Text")][Space(10)]
-    //These are the text elements that will be updated on the players UI
+    [Space(5)][Header("Players Inventory Items Text")][Space(10)]
     [SerializeField] TextMeshProUGUI HerbsText;
     [SerializeField] TextMeshProUGUI FlowersText;
     [SerializeField] TextMeshProUGUI GemstonesText;
     [SerializeField] TextMeshProUGUI PotionWallBreakerText;
 
-    [Space(5)][Header("Other")][Space(10)]
     public GameObject BreakableObject;
 
-    private void Start()
-    {      
-        UpdateUI();
-    }
 
-    public GameObject GetObjectToDestroy()
+    private void Start()
     {
-        return BreakableObject;
+        UpdateUI();
     }
 
     public void UpdateUI()
@@ -53,44 +42,49 @@ public class InteractableObjectManager : UdonSharpBehaviour
             PotionWallBreakerText.text = $"{PotionWallBreakerCollected}";
     }
 
+    public GameObject GetObjectToDestroy()
+    {
+        return BreakableObject;
+    }
 
     public void IncrementHerbsCollected()
     {
+        if (!Networking.IsOwner(gameObject)) return;
+
         HerbsCollected++;
         UpdateUI();
-        Debug.Log($"HerbAmount: {HerbsCollected}");
     }
-
 
     public void IncrementFlowersCollected()
     {
+        if (!Networking.IsOwner(gameObject)) return;
+
         FlowersCollected++;
         UpdateUI();
-        Debug.Log($"Flowers collected: {FlowersCollected}");
     }
-
 
     public void IncrementGemstonesCollected()
     {
+        if (!Networking.IsOwner(gameObject)) return;
+
         GemstonesCollected++;
         UpdateUI();
-        Debug.Log($"Gemstones collected: {GemstonesCollected}");
     }
-
 
     public void IncrementPotionWallBreakerCollected()
     {
+        if (!Networking.IsOwner(gameObject)) return;
+
         PotionWallBreakerCollected++;
         UpdateUI();
-        Debug.Log($"Crafting items collected: {PotionWallBreakerCollected}");
     }
-
 
     public void CanCraftPotionWallBreaker()
     {
+        if (!Networking.IsOwner(gameObject)) return;
+
         if (HerbsCollected >= 1 && FlowersCollected >= 1 && GemstonesCollected >= 1)
         {
-            Debug.Log("Crafting");
             HerbsCollected--;
             FlowersCollected--;
             GemstonesCollected--;
@@ -100,8 +94,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
         }
         else
         {
-            Debug.LogWarning("Not enough resources to craft the potion.");
             CraftPotionWallBreaker = false;
         }
-    }   
+    }
 }
