@@ -25,7 +25,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     [SerializeField] GameObject PopUpMessagePotionAlreadySpawned;
 
 
-    //[SerializeField] GameObject PotionWallBreaker;
     [SerializeField] Transform PotionsSpawnPoint;
 
 
@@ -49,7 +48,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     public void CraftWallBreakerPotion()
     {
-        //if (!Networking.IsOwner(gameObject)) return;
 
         IOM.CanCraftPotionWallBreaker();
 
@@ -65,58 +63,79 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             PopUpMessageCrafting.SetActive(true);
             SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 6f);
             Debug.LogWarning("Not enough resources to craft the potion");
+            RequestSerialization();
         }
     }
 
+
+
+
+
+
+
     public void SpawnWallBreakerPotion()
     {
-        //if (!Networking.IsOwner(gameObject)) return;
-
         if (IOM.PotionWallBreakerCollected >= 1)
         {
-            //GameObject spawnedPotion = potionsPool.TryToSpawn();
-            //Networking.SetOwner(Networking.LocalPlayer, spawnedPotion);
-            //spawnedPotion.transform.position = PotionsSpawnPoint.position;
-            //spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation;
 
-            //Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
-
-            //if (potionRigidbody != null)
-            //{
-            //    potionRigidbody.isKinematic = true;
-            //}
-
-            //PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
-            //if (potionHandler != null)
-            //{
-            //    potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
-            //}
-
-            IOM.PotionWallBreakerCollected--;
-            IOM.UpdateUI();
-            Debug.Log("WALL BREAKER POTION SPAWNED");
-            RequestSerialization();
+            ExecutePotionSpawnLogic();
         }
         else
         {
             Debug.LogWarning("NO WALL BREAKER POTIONS IN INVENTORY");
             PopUpMessageSpawning.SetActive(true);
-            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 3f);
+            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 3f);  // Hide popup after 3 seconds
         }
     }
+
+
+
+
+    public void ExecutePotionSpawnLogic()
+    {
+        GameObject spawnedPotion = potionsPool.TryToSpawn();
+        if (spawnedPotion != null)
+        {
+            // Ensure the local player is the owner of the spawned object
+            Networking.SetOwner(Networking.LocalPlayer, spawnedPotion);
+
+            // Set position and rotation of the spawned object locally
+            spawnedPotion.transform.position = PotionsSpawnPoint.position;
+            spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation;
+
+
+
+
+
+            Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
+            if (potionRigidbody != null)
+            {
+                potionRigidbody.isKinematic = true;  // Set kinematic to true to avoid physics issues during spawn
+            }
+
+            PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
+            if (potionHandler != null)
+            {
+                potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
+            }
+
+            IOM.PotionWallBreakerCollected--;
+            IOM.UpdateUI();
+            Debug.Log("WALL BREAKER POTION SPAWNED");
+        }
+        else
+        {
+            Debug.LogWarning("POTION SPAWN POOL EMPTY");
+        }
+    }
+
+
+
 
     public override void OnDeserialization()
     {
         IOM.UpdateUI();
     }
-
-    //public override void OnOwnershipTransferred(VRCPlayerApi player)
-    //{
-    //    if (Networking.IsOwner(gameObject))
-    //    {
-    //        IOM.UpdateUI();
-    //    }
-    //}
 
     //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
     // End of added methods for Attendee Menu

@@ -52,17 +52,9 @@ public class InteractableObjectTracker : UdonSharpBehaviour
         }
     }
 
-    public override void OnPickup()
-    {
-        //if (!Networking.IsOwner(gameObject))
-        //{
-        //    Networking.SetOwner(Networking.LocalPlayer, gameObject);
-        //}
-        SyncOnPickup();
-        
-    }
 
-    public void SyncOnPickup()
+
+    public override void OnPickup()
     {
 
         if (ItemType == "Herb")
@@ -97,10 +89,6 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     {
         if (item != null)
         {
-            //if (!Networking.IsOwner(item))
-            //{
-            //    Networking.SetOwner(Networking.LocalPlayer, item);
-            //}
             SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DeactivateItem));
         }
     }
@@ -118,10 +106,6 @@ public class InteractableObjectTracker : UdonSharpBehaviour
 
     public override void OnDrop()
     {
-        //if (!Networking.IsOwner(gameObject))
-        //{
-        //    Networking.SetOwner(Networking.LocalPlayer, gameObject);
-        //}
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SyncOnDrop));
     }
 
