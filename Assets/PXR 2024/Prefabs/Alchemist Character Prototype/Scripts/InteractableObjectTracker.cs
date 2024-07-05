@@ -24,7 +24,7 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     [SerializeField] GameObject Potion2;
     [SerializeField] GameObject Potion3;
     [SerializeField] GameObject Potion4;
-    private Rigidbody PotionWallBreakerRB;
+    Rigidbody PotionWallBreakerRB;
 
     [Space(5)]
     [Header("Item Management")]
@@ -54,48 +54,53 @@ public class InteractableObjectTracker : UdonSharpBehaviour
 
     public override void OnPickup()
     {
-        if (!Networking.IsOwner(gameObject))
-        {
-            Networking.SetOwner(Networking.LocalPlayer, gameObject);
-        }
+        //if (!Networking.IsOwner(gameObject))
+        //{
+        //    Networking.SetOwner(Networking.LocalPlayer, gameObject);
+        //}
         SyncOnPickup();
+        
     }
 
     public void SyncOnPickup()
     {
-        switch (ItemType)
+
+        if (ItemType == "Herb")
         {
-            case "Herb":
-                HandleItemPickup(Herb);
-                IOM.IncrementHerbsCollected();
-                break;
-
-            case "Flower":
-                HandleItemPickup(Flower);
-                IOM.IncrementFlowersCollected();
-                break;
-
-            case "Gemstone":
-                HandleItemPickup(Gemstone);
-                IOM.IncrementGemstonesCollected();
-                break;
-
-            case "PotionWallBreaker":
-                PotionWallBreakerRB.isKinematic = false;
-                DestroyVisualIndicators();
-                ShowRadiusIndicatorOnPickup();
-                break;
+            HandleItemPickup(Herb);
+            IOM.IncrementHerbsCollected();
         }
+
+        if (ItemType == "Flower")
+        {
+            HandleItemPickup(Flower);
+            IOM.IncrementFlowersCollected();
+        }
+
+        if (ItemType == "Gemstone")
+        {
+            HandleItemPickup(Gemstone);
+            IOM.IncrementGemstonesCollected();
+        }
+
+        if (ItemType == "PotionWallBreaker")
+        {
+
+            PotionWallBreakerRB.isKinematic = false;
+            DestroyVisualIndicators();
+            ShowRadiusIndicatorOnPickup();
+        }     
+        
     }
 
     private void HandleItemPickup(GameObject item)
     {
         if (item != null)
         {
-            if (!Networking.IsOwner(item))
-            {
-                Networking.SetOwner(Networking.LocalPlayer, item);
-            }
+            //if (!Networking.IsOwner(item))
+            //{
+            //    Networking.SetOwner(Networking.LocalPlayer, item);
+            //}
             SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DeactivateItem));
         }
     }
@@ -113,10 +118,10 @@ public class InteractableObjectTracker : UdonSharpBehaviour
 
     public override void OnDrop()
     {
-        if (!Networking.IsOwner(gameObject))
-        {
-            Networking.SetOwner(Networking.LocalPlayer, gameObject);
-        }
+        //if (!Networking.IsOwner(gameObject))
+        //{
+        //    Networking.SetOwner(Networking.LocalPlayer, gameObject);
+        //}
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SyncOnDrop));
     }
 

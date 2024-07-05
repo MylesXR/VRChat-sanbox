@@ -4,27 +4,53 @@ using TMPro;
 using VRC.SDKBase;
 using VRC.Udon.Common.Interfaces;
 
+
 public class InteractableObjectManager : UdonSharpBehaviour
 {
-    [Space(5)][Header("Players Inventory Items")][Space(10)]
-    [UdonSynced] public int HerbsCollected = 10;
-    [UdonSynced] public int FlowersCollected = 10;
-    [UdonSynced] public int GemstonesCollected = 10;
-    [UdonSynced] public int PotionWallBreakerCollected = 0;
-    [UdonSynced] public bool CraftPotionWallBreaker;
+    [Space(5)]
+    [Header("Players Inventory Items")]
+    [Space(10)]
+    public int HerbsCollected = 10;
+    public int FlowersCollected = 10;
+    public int GemstonesCollected = 10;
+    public int PotionWallBreakerCollected = 0;
+    public bool CraftPotionWallBreaker;
 
-    [Space(5)][Header("Players Inventory Items Text")][Space(10)]
+    [Space(5)]
+    [Header("Players Inventory Items Text")]
+    [Space(10)]
     [SerializeField] TextMeshProUGUI HerbsText;
     [SerializeField] TextMeshProUGUI FlowersText;
     [SerializeField] TextMeshProUGUI GemstonesText;
     [SerializeField] TextMeshProUGUI PotionWallBreakerText;
 
-    public GameObject BreakableObject;
+    [Space(5)]
+    [Header("Debug Text")]
+    [Space(10)]
+    [SerializeField] TextMeshProUGUI DebugText;
+    private VRCPlayerApi localPlayer;
 
+    public GameObject BreakableObject;
 
     private void Start()
     {
+        localPlayer = Networking.LocalPlayer;
+        LogDebug("Game started.");
         UpdateUI();
+    }
+    //public override void OnPlayerJoined(VRCPlayerApi player)
+    //{
+    //    base.OnPlayerJoined(player);
+    //    localPlayer = player;
+    //    LogDebug($"{player.displayName} has joined game");
+    //    localPlayer = player;
+    //}
+    private void OnEnable()
+    {
+        if(localPlayer != null && localPlayer.isLocal)
+        {
+            Networking.IsOwner(localPlayer,gameObject);
+        }
     }
 
     public void UpdateUI()
@@ -42,46 +68,82 @@ public class InteractableObjectManager : UdonSharpBehaviour
             PotionWallBreakerText.text = $"{PotionWallBreakerCollected}";
     }
 
+    public void LogDebug(string message)
+    {
+        if (DebugText != null)
+        {
+            DebugText.text += message + "\n";
+        }
+        Debug.Log(message);
+    }
+
     public GameObject GetObjectToDestroy()
     {
+        LogDebug("Returning breakable object.");
         return BreakableObject;
     }
 
     public void IncrementHerbsCollected()
     {
-        if (!Networking.IsOwner(gameObject)) return;
+        //if (!Networking.IsOwner(gameObject))
+        //{
+        //    LogDebug($"{localPlayer} is not the owner of {gameObject}");
+        //}
 
-        HerbsCollected++;
-        UpdateUI();
+
+        
+            HerbsCollected++;
+            UpdateUI();
+            //LogDebug($"Herbs collected incremented. by {localPlayer.displayName}");
+
+
     }
 
     public void IncrementFlowersCollected()
     {
-        if (!Networking.IsOwner(gameObject)) return;
+        //if (!Networking.IsOwner(gameObject))
+        //{
+        //    LogDebug($"{localPlayer} is not the owner of {gameObject}");
+        //}
 
-        FlowersCollected++;
-        UpdateUI();
+            FlowersCollected++;
+            UpdateUI();
+            //LogDebug($"Flowers collected incremented. by {localPlayer.displayName}");
+
     }
 
     public void IncrementGemstonesCollected()
     {
-        if (!Networking.IsOwner(gameObject)) return;
+        //if (!Networking.IsOwner(gameObject))
+        //{
+        //    LogDebug($"{localPlayer} is not the owner of {gameObject}");
+        //}
+            GemstonesCollected++;
+            UpdateUI();
+            //LogDebug($"Gemstones collected incremented. by {localPlayer.displayName}");
 
-        GemstonesCollected++;
-        UpdateUI();
+
     }
 
     public void IncrementPotionWallBreakerCollected()
     {
-        if (!Networking.IsOwner(gameObject)) return;
 
-        PotionWallBreakerCollected++;
-        UpdateUI();
+
+        //if (localPlayer.isLocal)
+        //{
+            PotionWallBreakerCollected++;
+            UpdateUI();
+            //LogDebug($"Potion Wall Breaker collected incremented. by { localPlayer}");
+        //}
+
     }
 
     public void CanCraftPotionWallBreaker()
     {
-        if (!Networking.IsOwner(gameObject)) return;
+        //if (!Networking.IsOwner(gameObject))
+        //{
+
+        //}
 
         if (HerbsCollected >= 1 && FlowersCollected >= 1 && GemstonesCollected >= 1)
         {
@@ -91,10 +153,12 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
             UpdateUI();
             CraftPotionWallBreaker = true;
+            LogDebug("Potion Wall Breaker crafted.");
         }
         else
         {
             CraftPotionWallBreaker = false;
+            LogDebug("Not enough resources to craft Potion Wall Breaker.");
         }
     }
 }

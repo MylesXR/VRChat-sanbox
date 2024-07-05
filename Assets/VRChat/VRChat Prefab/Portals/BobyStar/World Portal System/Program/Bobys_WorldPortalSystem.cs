@@ -5,6 +5,7 @@ using VRC.SDKBase;
 using VRC.Udon;
 using VRC.Udon.Common;
 using System.Collections.Generic;
+using VRC.SDK3.Components;
 
 public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 {
@@ -16,6 +17,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     public GameObject AlchemistMenu;
     public GameObject BarbarianMenu;
     public GameObject ExplorerMenu;
+    public VRCObjectPool potionsPool;
     
 
     [SerializeField] GameObject PopUpMessageCrafting;
@@ -47,7 +49,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     public void CraftWallBreakerPotion()
     {
-        if (!Networking.IsOwner(gameObject)) return;
+        //if (!Networking.IsOwner(gameObject)) return;
 
         IOM.CanCraftPotionWallBreaker();
 
@@ -68,26 +70,27 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     public void SpawnWallBreakerPotion()
     {
-        if (!Networking.IsOwner(gameObject)) return;
+        //if (!Networking.IsOwner(gameObject)) return;
 
         if (IOM.PotionWallBreakerCollected >= 1)
         {
-            GameObject spawnedPotion = VRCInstantiate(PotionWallBreaker);
-            spawnedPotion.transform.position = PotionsSpawnPoint.position;
-            spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation;
+            //GameObject spawnedPotion = potionsPool.TryToSpawn();
+            //Networking.SetOwner(Networking.LocalPlayer, spawnedPotion);
+            //spawnedPotion.transform.position = PotionsSpawnPoint.position;
+            //spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation;
 
-            Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
+            //Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
 
-            if (potionRigidbody != null)
-            {
-                potionRigidbody.isKinematic = true;
-            }
+            //if (potionRigidbody != null)
+            //{
+            //    potionRigidbody.isKinematic = true;
+            //}
 
-            PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
-            if (potionHandler != null)
-            {
-                potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
-            }
+            //PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
+            //if (potionHandler != null)
+            //{
+            //    potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
+            //}
 
             IOM.PotionWallBreakerCollected--;
             IOM.UpdateUI();
@@ -107,13 +110,13 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         IOM.UpdateUI();
     }
 
-    public override void OnOwnershipTransferred(VRCPlayerApi player)
-    {
-        if (Networking.IsOwner(gameObject))
-        {
-            IOM.UpdateUI();
-        }
-    }
+    //public override void OnOwnershipTransferred(VRCPlayerApi player)
+    //{
+    //    if (Networking.IsOwner(gameObject))
+    //    {
+    //        IOM.UpdateUI();
+    //    }
+    //}
 
     //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
     // End of added methods for Attendee Menu
@@ -144,6 +147,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     [Space]
     public SphereCollider PlayerSphereTrigger;
     #endregion
+
 
     #region Portal Settings
     [Header("Portals")]
