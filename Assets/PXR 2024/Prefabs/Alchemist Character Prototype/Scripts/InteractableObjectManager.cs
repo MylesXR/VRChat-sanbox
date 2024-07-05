@@ -24,9 +24,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
     [SerializeField] TextMeshProUGUI GemstonesText;
     [SerializeField] TextMeshProUGUI PotionWallBreakerText;
 
-    [Space(5)]
-    [Header("Debug Text")]
-    [Space(10)]
+    [Space(5)]  [Header("Debug Text")]  [Space(10)]
     [SerializeField] TextMeshProUGUI DebugText;
     private VRCPlayerApi localPlayer;
 
@@ -38,6 +36,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
         LogDebug("Game started.");
         UpdateUI();
     }
+
     //public override void OnPlayerJoined(VRCPlayerApi player)
     //{
     //    base.OnPlayerJoined(player);
@@ -45,6 +44,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
     //    LogDebug($"{player.displayName} has joined game");
     //    localPlayer = player;
     //}
+
     private void OnEnable()
     {
         if(localPlayer != null && localPlayer.isLocal)

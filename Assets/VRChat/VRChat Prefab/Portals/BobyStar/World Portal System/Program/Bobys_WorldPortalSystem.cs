@@ -25,7 +25,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     [SerializeField] GameObject PopUpMessagePotionAlreadySpawned;
 
 
-    [SerializeField] GameObject PotionWallBreaker;
+    //[SerializeField] GameObject PotionWallBreaker;
     [SerializeField] Transform PotionsSpawnPoint;
 
 
