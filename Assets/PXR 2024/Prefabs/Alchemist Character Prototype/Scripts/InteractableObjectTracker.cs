@@ -92,7 +92,7 @@ public class InteractableObjectTracker : UdonSharpBehaviour
         {
             PotionWallBreakerRB.isKinematic = false;
             DestroyVisualIndicators();
-            ShowRadiusIndicatorOnPickup();
+            //ShowRadiusIndicatorOnPickup();
         }
 
 
@@ -134,7 +134,7 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     public void SyncOnDrop()
     {
         DestroyVisualIndicators();
-        ShowRadiusIndicatorOnDrop();
+        //ShowRadiusIndicatorOnDrop();
     }
 
     private void DestroyVisualIndicators()
@@ -149,28 +149,28 @@ public class InteractableObjectTracker : UdonSharpBehaviour
         }
     }
 
-    private void ShowRadiusIndicatorOnPickup()
-    {
-        if (visualIndicatorPrefab != null)
-        {
-            Vector3 playerPosition = Networking.LocalPlayer.GetPosition();
-            if (Physics.Raycast(playerPosition, Vector3.down, out RaycastHit hit))
-            {
-                visualIndicatorInstanceOnPickup = VRCInstantiate(visualIndicatorPrefab);
-                visualIndicatorInstanceOnPickup.transform.position = hit.point;
-                visualIndicatorInstanceOnPickup.transform.rotation = Quaternion.identity;
-            }
-        }
-    }
+    //private void ShowRadiusIndicatorOnPickup()
+    //{
+    //    if (visualIndicatorPrefab != null)
+    //    {
+    //        Vector3 playerPosition = Networking.LocalPlayer.GetPosition();
+    //        if (Physics.Raycast(playerPosition, Vector3.down, out RaycastHit hit))
+    //        {
+    //            visualIndicatorInstanceOnPickup = VRCInstantiate(visualIndicatorPrefab);
+    //            visualIndicatorInstanceOnPickup.transform.position = hit.point;
+    //            visualIndicatorInstanceOnPickup.transform.rotation = Quaternion.identity;
+    //        }
+    //    }
+    //}
 
-    private void ShowRadiusIndicatorOnDrop()
-    {
-        if (visualIndicatorPrefab != null)
-        {
-            visualIndicatorInstanceOnDrop = VRCInstantiate(visualIndicatorPrefab);
-            visualIndicatorInstanceOnDrop.transform.SetParent(PotionWallBreaker.transform);
-            visualIndicatorInstanceOnDrop.transform.localPosition = Vector3.down * PotionWallBreaker.transform.localScale.y;
-            visualIndicatorInstanceOnDrop.transform.rotation = Quaternion.Euler(0, 90, 0);
-        }
-    }
+    //private void ShowRadiusIndicatorOnDrop()
+    //{
+    //    if (visualIndicatorPrefab != null)
+    //    {
+    //        visualIndicatorInstanceOnDrop = VRCInstantiate(visualIndicatorPrefab);
+    //        visualIndicatorInstanceOnDrop.transform.SetParent(PotionWallBreaker.transform);
+    //        visualIndicatorInstanceOnDrop.transform.localPosition = Vector3.down * PotionWallBreaker.transform.localScale.y;
+    //        visualIndicatorInstanceOnDrop.transform.rotation = Quaternion.Euler(0, 90, 0);
+    //    }
+    //}
 }
