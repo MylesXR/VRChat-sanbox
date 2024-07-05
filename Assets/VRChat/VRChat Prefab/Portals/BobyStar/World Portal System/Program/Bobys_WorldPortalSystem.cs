@@ -5,6 +5,7 @@ using VRC.SDKBase;
 using VRC.Udon;
 using VRC.Udon.Common;
 using System.Collections.Generic;
+using VRC.SDK3.Components;
 
 public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 {
@@ -16,6 +17,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     public GameObject AlchemistMenu;
     public GameObject BarbarianMenu;
     public GameObject ExplorerMenu;
+    //public VRCObjectPool potionPool;
     
 
     [SerializeField] GameObject PopUpMessageCrafting;
@@ -47,7 +49,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     public void CraftWallBreakerPotion()
     {
-        if (!Networking.IsOwner(gameObject)) return;
+
 
         IOM.CanCraftPotionWallBreaker();
 
@@ -68,11 +70,12 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     public void SpawnWallBreakerPotion()
     {
-        if (!Networking.IsOwner(gameObject)) return;
+
 
         if (IOM.PotionWallBreakerCollected >= 1)
         {
             GameObject spawnedPotion = VRCInstantiate(PotionWallBreaker);
+            //GameObject spawnedPotion = potionPool.TryToSpawn();
             spawnedPotion.transform.position = PotionsSpawnPoint.position;
             spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation;
 

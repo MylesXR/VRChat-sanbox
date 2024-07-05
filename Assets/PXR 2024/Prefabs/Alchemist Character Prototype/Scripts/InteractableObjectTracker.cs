@@ -54,38 +54,49 @@ public class InteractableObjectTracker : UdonSharpBehaviour
 
     public override void OnPickup()
     {
-        if (!Networking.IsOwner(gameObject))
-        {
-            Networking.SetOwner(Networking.LocalPlayer, gameObject);
-        }
+        //if (!Networking.IsOwner(gameObject))
+        //{
+        //    Networking.SetOwner(Networking.LocalPlayer, gameObject);
+        //}
         SyncOnPickup();
     }
 
     public void SyncOnPickup()
     {
-        switch (ItemType)
+
+        if (ItemType == "Herb")
         {
-            case "Herb":
-                HandleItemPickup(Herb);
-                IOM.IncrementHerbsCollected();
-                break;
-
-            case "Flower":
-                HandleItemPickup(Flower);
-                IOM.IncrementFlowersCollected();
-                break;
-
-            case "Gemstone":
-                HandleItemPickup(Gemstone);
-                IOM.IncrementGemstonesCollected();
-                break;
-
-            case "PotionWallBreaker":
-                PotionWallBreakerRB.isKinematic = false;
-                DestroyVisualIndicators();
-                ShowRadiusIndicatorOnPickup();
-                break;
+            HandleItemPickup(Herb);
+            IOM.IncrementHerbsCollected();
         }
+
+
+
+        if (ItemType == "Flower") 
+        {
+            HandleItemPickup(Flower);
+            IOM.IncrementFlowersCollected();
+        }
+
+
+
+        if (ItemType == "Gemstone")
+        {
+            HandleItemPickup(Gemstone);
+            IOM.IncrementGemstonesCollected();
+        }
+
+
+
+        if (ItemType == "PotionWallBreaker")
+        {
+            PotionWallBreakerRB.isKinematic = false;
+            DestroyVisualIndicators();
+            ShowRadiusIndicatorOnPickup();
+        }
+
+
+        
     }
 
     private void HandleItemPickup(GameObject item)

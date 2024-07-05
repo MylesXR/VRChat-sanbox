@@ -7,11 +7,11 @@ using VRC.Udon.Common.Interfaces;
 public class InteractableObjectManager : UdonSharpBehaviour
 {
     [Space(5)][Header("Players Inventory Items")][Space(10)]
-    [UdonSynced] public int HerbsCollected = 10;
-    [UdonSynced] public int FlowersCollected = 10;
-    [UdonSynced] public int GemstonesCollected = 10;
-    [UdonSynced] public int PotionWallBreakerCollected = 0;
-    [UdonSynced] public bool CraftPotionWallBreaker;
+    public int HerbsCollected = 10;
+    public int FlowersCollected = 10;
+    public int GemstonesCollected = 10;
+    public int PotionWallBreakerCollected = 0;
+    public bool CraftPotionWallBreaker;
 
     [Space(5)][Header("Players Inventory Items Text")][Space(10)]
     [SerializeField] TextMeshProUGUI HerbsText;
@@ -49,15 +49,12 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     public void IncrementHerbsCollected()
     {
-        if (!Networking.IsOwner(gameObject)) return;
-
         HerbsCollected++;
         UpdateUI();
     }
 
     public void IncrementFlowersCollected()
     {
-        if (!Networking.IsOwner(gameObject)) return;
 
         FlowersCollected++;
         UpdateUI();
@@ -65,7 +62,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     public void IncrementGemstonesCollected()
     {
-        if (!Networking.IsOwner(gameObject)) return;
+
 
         GemstonesCollected++;
         UpdateUI();
@@ -73,7 +70,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     public void IncrementPotionWallBreakerCollected()
     {
-        if (!Networking.IsOwner(gameObject)) return;
+
 
         PotionWallBreakerCollected++;
         UpdateUI();
@@ -81,7 +78,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     public void CanCraftPotionWallBreaker()
     {
-        if (!Networking.IsOwner(gameObject)) return;
 
         if (HerbsCollected >= 1 && FlowersCollected >= 1 && GemstonesCollected >= 1)
         {
