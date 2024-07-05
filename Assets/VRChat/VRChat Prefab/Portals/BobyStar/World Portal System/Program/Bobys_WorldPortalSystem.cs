@@ -6,30 +6,35 @@ using VRC.Udon;
 using VRC.Udon.Common;
 using System.Collections.Generic;
 using VRC.SDK3.Components;
+using VRC.Udon.Common.Interfaces;
 
 public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 {
 
     //Start of added variable for Attendee Menu
-
-    [Space(5)][Header("Class Settings")][Space(10)]
+    [Header("Class Settings")][Space(10)]
     public string ClassType;
     public GameObject AlchemistMenu;
     public GameObject BarbarianMenu;
     public GameObject ExplorerMenu;
-    public VRCObjectPool potionsPool;
     
 
+    [Space(5)][Header("UI Popup Messages")][Space(10)]
     [SerializeField] GameObject PopUpMessageCrafting;
     [SerializeField] GameObject PopUpMessageSpawning;
     [SerializeField] GameObject PopUpMessagePotionAlreadySpawned;
 
 
+    [Space(5)][Header("UI Popup Messages")][Space(10)]
     [SerializeField] Transform PotionsSpawnPoint;
-
+    //public VRCObjectPool potionsPool;
 
     [SerializeField] InteractableObjectManager IOM;
     [SerializeField] GameObject BreakableObject;
+
+    [SerializeField] VRCObjectPool[] potionsPools; // Array of object pools
+    private VRCObjectPool playerPotionPool;
+
 
     // Start of Added methods for Attendee Menu
     //These methods have to be outside of the code below for some reason or it will ERROR
@@ -44,98 +49,142 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         PopUpMessagePotionAlreadySpawned.SetActive(false);
     }
 
-
+    public override void OnPlayerJoined(VRCPlayerApi player)
+    {
+        if (player.isLocal)
+        {
+            // Assign an object pool to the local player
+            int playerIndex = player.playerId % potionsPools.Length;
+            playerPotionPool = potionsPools[playerIndex];
+            Debug.Log($"Assigned object pool {playerIndex} to player {Networking.LocalPlayer.displayName}");
+        }
+    }
 
     public void CraftWallBreakerPotion()
     {
-
         IOM.CanCraftPotionWallBreaker();
-
         if (IOM.CraftPotionWallBreaker)
         {
             IOM.PotionWallBreakerCollected++;
             IOM.UpdateUI();
             Debug.Log("WALL BREAKER POTION CRAFTED");
-            RequestSerialization();
         }
         else
         {
             PopUpMessageCrafting.SetActive(true);
             SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 6f);
             Debug.LogWarning("Not enough resources to craft the potion");
-            RequestSerialization();
         }
     }
-
-
-
-
-
-
 
     public void SpawnWallBreakerPotion()
     {
         if (IOM.PotionWallBreakerCollected >= 1)
         {
-
-            ExecutePotionSpawnLogic();
+            GameObject spawnedPotion = playerPotionPool.TryToSpawn();
+            if (spawnedPotion != null)
+            {
+                Debug.Log($"Player {Networking.LocalPlayer.displayName} is attempting to spawn a potion.");
+                Networking.SetOwner(Networking.LocalPlayer, spawnedPotion); // Ensure ownership of the spawned potion
+                spawnedPotion.transform.position = PotionsSpawnPoint.position; // Set the correct position
+                spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation; // Set the correct rotation
+                Debug.Log($"Ownership set to {Networking.LocalPlayer.displayName} for the potion.");
+                ExecutePotionSpawnLogic(spawnedPotion); // Local call
+                SendCustomNetworkEvent(NetworkEventTarget.All, nameof(NetworkSpawnWallBreakerPotion)); // Network call
+            }
+            else
+            {
+                Debug.LogWarning("POTION SPAWN POOL EMPTY");
+            }
         }
         else
         {
             Debug.LogWarning("NO WALL BREAKER POTIONS IN INVENTORY");
             PopUpMessageSpawning.SetActive(true);
-            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 3f);  // Hide popup after 3 seconds
+            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 3f);
         }
     }
 
-
-
-
-    public void ExecutePotionSpawnLogic()
+    public void NetworkSpawnWallBreakerPotion()
     {
-        GameObject spawnedPotion = potionsPool.TryToSpawn();
+        Debug.Log("NetworkSpawnWallBreakerPotion called.");
+        GameObject spawnedPotion = playerPotionPool.TryToSpawn();
         if (spawnedPotion != null)
         {
-            // Ensure the local player is the owner of the spawned object
-            Networking.SetOwner(Networking.LocalPlayer, spawnedPotion);
-
-            // Set position and rotation of the spawned object locally
-            spawnedPotion.transform.position = PotionsSpawnPoint.position;
-            spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation;
-
-
-
-
-
-            Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
-            if (potionRigidbody != null)
-            {
-                potionRigidbody.isKinematic = true;  // Set kinematic to true to avoid physics issues during spawn
-            }
-
-            PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
-            if (potionHandler != null)
-            {
-                potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
-            }
-
-            IOM.PotionWallBreakerCollected--;
-            IOM.UpdateUI();
-            Debug.Log("WALL BREAKER POTION SPAWNED");
+            Networking.SetOwner(Networking.LocalPlayer, spawnedPotion); // Ensure ownership of the spawned potion
+            Debug.Log($"Network spawning potion for player {Networking.LocalPlayer.displayName}.");
+            spawnedPotion.transform.position = PotionsSpawnPoint.position; // Set the correct position
+            spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation; // Set the correct rotation
+            ExecutePotionSpawnLogic(spawnedPotion);
         }
         else
         {
-            Debug.LogWarning("POTION SPAWN POOL EMPTY");
+            Debug.LogWarning("POTION SPAWN POOL EMPTY ON NETWORK");
         }
     }
+
+    public void ExecutePotionSpawnLogic(GameObject spawnedPotion)
+    {
+        Debug.Log($"Executing spawn logic for potion by {Networking.LocalPlayer.displayName}.");
+        spawnedPotion.transform.position = PotionsSpawnPoint.position;
+        spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation;
+
+        Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
+        if (potionRigidbody != null)
+        {
+            potionRigidbody.isKinematic = true;
+            Debug.Log("Potion Rigidbody set to kinematic.");
+        }
+
+        PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
+        if (potionHandler != null)
+        {
+            potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
+            Debug.Log("Potion collision handler set.");
+        }
+
+        IOM.PotionWallBreakerCollected--;
+        IOM.UpdateUI();
+        Debug.Log("WALL BREAKER POTION SPAWNED");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
     public override void OnDeserialization()
     {
+        Debug.Log("OnDeserialization called, updating UI.");
         IOM.UpdateUI();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
     // End of added methods for Attendee Menu
