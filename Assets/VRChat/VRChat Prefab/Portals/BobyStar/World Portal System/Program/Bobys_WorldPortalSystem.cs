@@ -48,17 +48,17 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         PopUpMessageSpawning.SetActive(false);
         PopUpMessagePotionAlreadySpawned.SetActive(false);
     }
-    
-    //public override void OnPlayerJoined(VRCPlayerApi player)
-    //{
-    //    if (player.isLocal)
-    //    {
-    //        // Assign an object pool to the local player
-    //        int playerIndex = player.playerId % potionsPools.Length;
-    //        playerPotionPool = potionsPools[playerIndex];
-    //        Debug.Log($"Assigned object pool {playerIndex} to player {Networking.LocalPlayer.displayName}");
-    //    }
-    //}
+
+    public override void OnPlayerJoined(VRCPlayerApi player)
+    {
+        if (player.isLocal)
+        {
+            // Assign an object pool to the local player
+            int playerIndex = player.playerId % potionsPools.Length;
+            playerPotionPool = potionsPools[playerIndex];
+            Debug.Log($"Assigned object pool {playerIndex} to player {Networking.LocalPlayer.displayName}");
+        }
+    }
 
     public void CraftWallBreakerPotion()
     {
