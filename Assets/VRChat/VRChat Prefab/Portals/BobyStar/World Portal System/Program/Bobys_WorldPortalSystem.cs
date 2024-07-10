@@ -10,8 +10,8 @@ using VRC.Udon.Common.Interfaces;
 
 public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 {
-
     //Start of added variable for Attendee Menu
+
     [Header("Class Settings")][Space(10)]
     public string ClassType;
     public GameObject AlchemistMenu;
@@ -25,23 +25,32 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     [SerializeField] GameObject PopUpMessagePotionAlreadySpawned;
 
 
-    [Space(5)][Header("UI Popup Messages")][Space(10)]
+    [Space(5)][Header("Potions")][Space(10)]
     [SerializeField] Transform PotionsSpawnPoint;
-    //public VRCObjectPool potionsPool;
-
-    [SerializeField] InteractableObjectManager IOM;
-    [SerializeField] GameObject BreakableObject;
-
     [SerializeField] VRCObjectPool[] potionsPools; // Array of object pools
     private VRCObjectPool playerPotionPool;
 
 
+    [Space(5)][Header("Other")][Space(10)]
+    [SerializeField] InteractableObjectManager IOM;
+    [SerializeField] GameObject BreakableObject;
+
+
+    [UdonSynced] private Vector3 syncedPotionPosition;
+    [UdonSynced] private Quaternion syncedPotionRotation;
+
+    private const int maxActivePotions = 20; // Increase if needed
+    private GameObject[] activePotions = new GameObject[10]; // Fixed size array for tracking active potions
+    private int activePotionCount = 0;
+
     // Start of Added methods for Attendee Menu
+
     //These methods have to be outside of the code below for some reason or it will ERROR
     public void AlchemistClass() { ClassType = "Alchemist"; }
     public void BarbarianClass() { ClassType = "Barbarian"; }
     public void ExplorerClass() { ClassType = "Explorer"; }
 
+   
     public void HidePopupMessage()
     {
         PopUpMessageCrafting.SetActive(false);
@@ -49,11 +58,11 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         PopUpMessagePotionAlreadySpawned.SetActive(false);
     }
 
+
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         if (player.isLocal)
         {
-            // Assign an object pool to the local player
             int playerIndex = player.playerId % potionsPools.Length;
             playerPotionPool = potionsPools[playerIndex];
             Debug.Log($"Assigned object pool {playerIndex} to player {Networking.LocalPlayer.displayName}");
@@ -77,20 +86,30 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
     }
 
+
+
     public void SpawnWallBreakerPotion()
     {
         if (IOM.PotionWallBreakerCollected >= 1)
         {
+            if (playerPotionPool == null)
+            {
+                Debug.LogError("Player potion pool is not assigned.");
+                return;
+            }
+
             GameObject spawnedPotion = playerPotionPool.TryToSpawn();
             if (spawnedPotion != null)
             {
-                Debug.Log($"Player {Networking.LocalPlayer.displayName} is attempting to spawn a potion.");
                 Networking.SetOwner(Networking.LocalPlayer, spawnedPotion); // Ensure ownership of the spawned potion
-                spawnedPotion.transform.position = PotionsSpawnPoint.position; // Set the correct position
-                spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation; // Set the correct rotation
-                Debug.Log($"Ownership set to {Networking.LocalPlayer.displayName} for the potion.");
-                ExecutePotionSpawnLogic(spawnedPotion); // Local call
-                SendCustomNetworkEvent(NetworkEventTarget.All, nameof(NetworkSpawnWallBreakerPotion)); // Network call
+
+                syncedPotionPosition = PotionsSpawnPoint.position;
+                syncedPotionRotation = PotionsSpawnPoint.rotation;
+                RequestSerialization();
+
+                SetPotionTransform(spawnedPotion);
+                ExecutePotionSpawnLogic(spawnedPotion);
+                SendCustomNetworkEvent(NetworkEventTarget.All, nameof(NetworkSpawnWallBreakerPotion));
             }
             else
             {
@@ -107,14 +126,16 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     public void NetworkSpawnWallBreakerPotion()
     {
-        Debug.Log("NetworkSpawnWallBreakerPotion called.");
+        if (playerPotionPool == null)
+        {
+            Debug.LogError("Player potion pool is not assigned in NetworkSpawnWallBreakerPotion.");
+            return;
+        }
+
         GameObject spawnedPotion = playerPotionPool.TryToSpawn();
         if (spawnedPotion != null)
         {
-            Networking.SetOwner(Networking.LocalPlayer, spawnedPotion); // Ensure ownership of the spawned potion
-            Debug.Log($"Network spawning potion for player {Networking.LocalPlayer.displayName}.");
-            spawnedPotion.transform.position = PotionsSpawnPoint.position; // Set the correct position
-            spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation; // Set the correct rotation
+            SetPotionTransform(spawnedPotion);
             ExecutePotionSpawnLogic(spawnedPotion);
         }
         else
@@ -123,24 +144,37 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
     }
 
+    private void SetPotionTransform(GameObject potion)
+    {
+        if (PotionsSpawnPoint == null)
+        {
+            Debug.LogError("PotionsSpawnPoint is not assigned.");
+            return;
+        }
+
+        potion.transform.position = syncedPotionPosition;
+        potion.transform.rotation = syncedPotionRotation;
+        Debug.Log($"Potion transform set to position: {syncedPotionPosition}, rotation: {syncedPotionRotation}");
+    }
+
     public void ExecutePotionSpawnLogic(GameObject spawnedPotion)
     {
-        Debug.Log($"Executing spawn logic for potion by {Networking.LocalPlayer.displayName}.");
-        spawnedPotion.transform.position = PotionsSpawnPoint.position;
-        spawnedPotion.transform.rotation = PotionsSpawnPoint.rotation;
+        if (spawnedPotion == null)
+        {
+            Debug.LogError("Spawned potion is null in ExecutePotionSpawnLogic.");
+            return;
+        }
 
         Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
         if (potionRigidbody != null)
         {
             potionRigidbody.isKinematic = true;
-            Debug.Log("Potion Rigidbody set to kinematic.");
         }
 
         PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
         if (potionHandler != null)
         {
             potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
-            Debug.Log("Potion collision handler set.");
         }
 
         IOM.PotionWallBreakerCollected--;
@@ -148,39 +182,15 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         Debug.Log("WALL BREAKER POTION SPAWNED");
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public override void OnDeserialization()
     {
-        Debug.Log("OnDeserialization called, updating UI.");
+        Debug.Log("OnDeserialization called, updating UI and syncing potion transform.");
+        for (int i = 0; i < activePotionCount; i++)
+        {
+            SetPotionTransform(activePotions[i]);
+        }
         IOM.UpdateUI();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
