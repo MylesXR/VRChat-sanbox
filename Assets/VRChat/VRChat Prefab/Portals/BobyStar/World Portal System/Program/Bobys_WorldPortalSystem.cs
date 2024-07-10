@@ -43,6 +43,9 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     private GameObject[] activePotions = new GameObject[10]; // Fixed size array for tracking active potions
     private int activePotionCount = 0;
 
+    [SerializeField] private DebugMenu debugMenu; // Reference to the DebugMenu component
+
+
     // Start of Added methods for Attendee Menu
 
     //These methods have to be outside of the code below for some reason or it will ERROR
@@ -65,7 +68,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         {
             int playerIndex = player.playerId % potionsPools.Length;
             playerPotionPool = potionsPools[playerIndex];
-            Debug.Log($"Assigned object pool {playerIndex} to player {Networking.LocalPlayer.displayName}");
+            debugMenu.Log($"Assigned object pool {playerIndex} to player {Networking.LocalPlayer.displayName}");
         }
     }
 
@@ -76,17 +79,15 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         {
             IOM.PotionWallBreakerCollected++;
             IOM.UpdateUI();
-            Debug.Log("WALL BREAKER POTION CRAFTED");
+            debugMenu.Log("WALL BREAKER POTION CRAFTED");
         }
         else
         {
             PopUpMessageCrafting.SetActive(true);
             SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 6f);
-            Debug.LogWarning("Not enough resources to craft the potion");
+            debugMenu.Log("Not enough resources to craft the potion");
         }
     }
-
-
 
     public void SpawnWallBreakerPotion()
     {
@@ -94,53 +95,58 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         {
             if (playerPotionPool == null)
             {
-                Debug.LogError("Player potion pool is not assigned.");
+                debugMenu.Log("Player potion pool is not assigned.");
                 return;
             }
 
             GameObject spawnedPotion = playerPotionPool.TryToSpawn();
             if (spawnedPotion != null)
             {
-                Networking.SetOwner(Networking.LocalPlayer, spawnedPotion); // Ensure ownership of the spawned potion
+                Networking.SetOwner(Networking.LocalPlayer, spawnedPotion);
 
                 syncedPotionPosition = PotionsSpawnPoint.position;
                 syncedPotionRotation = PotionsSpawnPoint.rotation;
                 RequestSerialization();
 
                 SetPotionTransform(spawnedPotion);
+                AddActivePotion(spawnedPotion);
+
+                // Set DebugMenu reference for the spawned potion's collision handler
+                PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
+                if (potionHandler != null)
+                {
+                    potionHandler.debugMenu = debugMenu;
+                }
+
                 ExecutePotionSpawnLogic(spawnedPotion);
                 SendCustomNetworkEvent(NetworkEventTarget.All, nameof(NetworkSpawnWallBreakerPotion));
             }
             else
             {
-                Debug.LogWarning("POTION SPAWN POOL EMPTY");
+                debugMenu.Log("POTION SPAWN POOL EMPTY");
             }
         }
         else
         {
-            Debug.LogWarning("NO WALL BREAKER POTIONS IN INVENTORY");
+            debugMenu.Log("NO WALL BREAKER POTIONS IN INVENTORY");
             PopUpMessageSpawning.SetActive(true);
             SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 3f);
         }
     }
 
+
     public void NetworkSpawnWallBreakerPotion()
     {
-        if (playerPotionPool == null)
-        {
-            Debug.LogError("Player potion pool is not assigned in NetworkSpawnWallBreakerPotion.");
-            return;
-        }
-
         GameObject spawnedPotion = playerPotionPool.TryToSpawn();
         if (spawnedPotion != null)
         {
             SetPotionTransform(spawnedPotion);
+            AddActivePotion(spawnedPotion);
             ExecutePotionSpawnLogic(spawnedPotion);
         }
         else
         {
-            Debug.LogWarning("POTION SPAWN POOL EMPTY ON NETWORK");
+            debugMenu.Log("POTION SPAWN POOL EMPTY ON NETWORK");
         }
     }
 
@@ -148,20 +154,33 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     {
         if (PotionsSpawnPoint == null)
         {
-            Debug.LogError("PotionsSpawnPoint is not assigned.");
+            debugMenu.Log("PotionsSpawnPoint is not assigned.");
             return;
         }
 
         potion.transform.position = syncedPotionPosition;
         potion.transform.rotation = syncedPotionRotation;
-        Debug.Log($"Potion transform set to position: {syncedPotionPosition}, rotation: {syncedPotionRotation}");
+        debugMenu.Log($"Potion transform set to position: {syncedPotionPosition}, rotation: {syncedPotionRotation}");
+    }
+
+    private void AddActivePotion(GameObject potion)
+    {
+        if (activePotionCount < activePotions.Length)
+        {
+            activePotions[activePotionCount] = potion;
+            activePotionCount++;
+        }
+        else
+        {
+            debugMenu.Log("Active potions array is full.");
+        }
     }
 
     public void ExecutePotionSpawnLogic(GameObject spawnedPotion)
     {
         if (spawnedPotion == null)
         {
-            Debug.LogError("Spawned potion is null in ExecutePotionSpawnLogic.");
+            debugMenu.Log("Spawned potion is null in ExecutePotionSpawnLogic.");
             return;
         }
 
@@ -179,19 +198,42 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
         IOM.PotionWallBreakerCollected--;
         IOM.UpdateUI();
-        Debug.Log("WALL BREAKER POTION SPAWNED");
+        debugMenu.Log("WALL BREAKER POTION SPAWNED");
     }
 
     public override void OnDeserialization()
     {
-        Debug.Log("OnDeserialization called, updating UI and syncing potion transform.");
+        debugMenu.Log("OnDeserialization called, syncing potion transforms.");
         for (int i = 0; i < activePotionCount; i++)
         {
-            SetPotionTransform(activePotions[i]);
+            if (activePotions[i] != null)
+            {
+                SetPotionTransform(activePotions[i]);
+            }
         }
         IOM.UpdateUI();
     }
 
+    public void Interact()
+    {
+        if (Networking.LocalPlayer == null)
+        {
+            debugMenu.Log("Local player is null.");
+            return;
+        }
+
+        if (Networking.IsOwner(gameObject))
+        {
+            debugMenu.Log($"Player {Networking.LocalPlayer.displayName} is the owner, spawning potion.");
+            SpawnWallBreakerPotion();
+        }
+        else
+        {
+            debugMenu.Log($"Player {Networking.LocalPlayer.displayName} is not the owner, requesting ownership.");
+            Networking.SetOwner(Networking.LocalPlayer, gameObject);
+            SpawnWallBreakerPotion();
+        }
+    }
 
 
 

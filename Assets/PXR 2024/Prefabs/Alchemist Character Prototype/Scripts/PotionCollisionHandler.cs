@@ -5,20 +5,30 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 {
     [SerializeField] GameObject potionBreakVFX; // Particle effect when the potion breaks
     private GameObject objectToDestroy;
+    public DebugMenu debugMenu;
 
     public void SetObjectToDestroy(GameObject target)
     {
         objectToDestroy = target;
-        Debug.Log("Object to destroy set to: " + objectToDestroy.name);
+        if (debugMenu != null)
+        {
+            debugMenu.Log("Object to destroy set to: " + objectToDestroy.name);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Potion has collided with: " + collision.gameObject.name);
+        if (debugMenu != null)
+        {
+            debugMenu.Log("Potion has collided with: " + collision.gameObject.name);
+        }
 
         if (collision.gameObject == objectToDestroy)
         {
-            Debug.Log("Potion collided with the destroyable object: " + objectToDestroy.name);
+            if (debugMenu != null)
+            {
+                debugMenu.Log("Potion collided with the destroyable object: " + objectToDestroy.name);
+            }
             Destroy(objectToDestroy);
         }
 
