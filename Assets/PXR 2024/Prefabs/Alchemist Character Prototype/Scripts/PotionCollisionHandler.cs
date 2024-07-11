@@ -65,6 +65,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
             }
 
             TriggerPotionBreakEffect();
+            SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffectNetworked));
             SetShouldDestroy(true);
             SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
         }
@@ -94,6 +95,11 @@ public class PotionCollisionHandler : UdonSharpBehaviour
             GameObject vfxInstance = Instantiate(potionBreakVFX, transform.position, Quaternion.identity);
             Destroy(vfxInstance, 5f);
         }
+    }
+
+    public void TriggerPotionBreakEffectNetworked()
+    {
+        TriggerPotionBreakEffect();
     }
 
     private void DestroyPotion()
