@@ -41,7 +41,6 @@ public class InteractableObjectTracker : UdonSharpBehaviour
 
     void Start()
     {
-
         if (PotionWallBreaker != null)
         {
             PotionWallBreakerRB = PotionWallBreaker.GetComponent<Rigidbody>();
@@ -52,37 +51,32 @@ public class InteractableObjectTracker : UdonSharpBehaviour
         }
     }
 
-
-
     public override void OnPickup()
     {
-
         if (ItemType == "Herb")
         {
             HandleItemPickup(Herb);
             IOM.IncrementHerbsCollected();
         }
-
-        if (ItemType == "Flower")
+        else if (ItemType == "Flower")
         {
             HandleItemPickup(Flower);
             IOM.IncrementFlowersCollected();
         }
-
-        if (ItemType == "Gemstone")
+        else if (ItemType == "Gemstone")
         {
             HandleItemPickup(Gemstone);
             IOM.IncrementGemstonesCollected();
         }
-
-        if (ItemType == "PotionWallBreaker")
+        else if (ItemType == "PotionWallBreaker")
         {
-
-            PotionWallBreakerRB.isKinematic = false;
-            DestroyVisualIndicators();
-            ShowRadiusIndicatorOnPickup();
-        }     
-        
+            if (PotionWallBreakerRB != null)
+            {
+                PotionWallBreakerRB.isKinematic = false;
+                DestroyVisualIndicators();
+                ShowRadiusIndicatorOnPickup();
+            }
+        }
     }
 
     private void HandleItemPickup(GameObject item)

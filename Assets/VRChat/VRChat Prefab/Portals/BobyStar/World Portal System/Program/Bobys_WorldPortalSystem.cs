@@ -26,8 +26,8 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
 
     [Space(5)][Header("Potions")][Space(10)]
-    [SerializeField] Transform PotionsSpawnPoint;
-    [SerializeField] VRCObjectPool[] potionsPools; // Array of object pools
+    [SerializeField] Transform PotionsSpawnPoint;   
+    [SerializeField] VRCObjectPool[] potionsPools; // Array of object pools [SerializeField] VRCObjectPool potionPoolPrefab;
     private VRCObjectPool playerPotionPool;
 
 
@@ -62,12 +62,26 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     }
 
 
+
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         if (player.isLocal)
         {
             int playerIndex = player.playerId % potionsPools.Length;
             playerPotionPool = potionsPools[playerIndex];
+
+            foreach (GameObject potion in playerPotionPool.Pool)
+            {
+                if (potion != null)
+                {
+                    potion.SetActive(false);
+                }
+                else
+                {
+                    debugMenu.Log("Found a null potion in the pool.");
+                }
+            }
+
             debugMenu.Log($"Assigned object pool {playerIndex} to player {Networking.LocalPlayer.displayName}");
         }
     }
@@ -103,6 +117,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             if (spawnedPotion != null)
             {
                 Networking.SetOwner(Networking.LocalPlayer, spawnedPotion);
+                debugMenu.Log($"Potion spawned by {Networking.LocalPlayer.displayName}. Transferring ownership.");
 
                 syncedPotionPosition = PotionsSpawnPoint.position;
                 syncedPotionRotation = PotionsSpawnPoint.rotation;
@@ -111,7 +126,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
                 SetPotionTransform(spawnedPotion);
                 AddActivePotion(spawnedPotion);
 
-                // Set DebugMenu reference for the spawned potion's collision handler
                 PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
                 if (potionHandler != null)
                 {
@@ -134,7 +148,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
     }
 
-
     public void NetworkSpawnWallBreakerPotion()
     {
         GameObject spawnedPotion = playerPotionPool.TryToSpawn();
@@ -150,6 +163,15 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
     }
 
+    public void NetworkDestroyPotion(GameObject potion)
+    {
+        PotionCollisionHandler potionHandler = potion.GetComponent<PotionCollisionHandler>();
+        if (potionHandler != null)
+        {
+            potionHandler.DestroyPotionNetworked();
+        }
+    }
+
     private void SetPotionTransform(GameObject potion)
     {
         if (PotionsSpawnPoint == null)
@@ -160,6 +182,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
         potion.transform.position = syncedPotionPosition;
         potion.transform.rotation = syncedPotionRotation;
+        potion.SetActive(true);
         debugMenu.Log($"Potion transform set to position: {syncedPotionPosition}, rotation: {syncedPotionRotation}");
     }
 
@@ -184,16 +207,12 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             return;
         }
 
-        Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
-        if (potionRigidbody != null)
-        {
-            potionRigidbody.isKinematic = true;
-        }
-
         PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
         if (potionHandler != null)
         {
             potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
+            potionHandler.SetKinematicState(false);
+            potionHandler.SetShouldDestroy(false);
         }
 
         IOM.PotionWallBreakerCollected--;
@@ -234,7 +253,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             SpawnWallBreakerPotion();
         }
     }
-
 
 
 
