@@ -10,9 +10,28 @@ public class DebugMenu : UdonSharpBehaviour
     {
         if (debugText != null)
         {
-            debugText.text += message + "\n";  // Display message in the 3D debug console
-            Debug.Log(message);  // Also log to Unity's console
+            debugText.text += message + "\n";  
+            Debug.Log(message);  
+        }
+    }
 
+
+    public void LogWarning(string message)
+    {
+        if (debugText != null)
+        {
+            debugText.text += "\nWARNING: " + message; 
+            Debug.Log(message);  
+        }
+    }
+
+
+    public void LogError(string message)
+    {
+        if (debugText != null)
+        {
+            debugText.text += "\nERROR: " + message;  
+            Debug.Log(message);  
         }
     }
 }

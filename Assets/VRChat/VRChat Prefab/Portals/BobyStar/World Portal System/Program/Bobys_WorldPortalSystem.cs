@@ -7,34 +7,41 @@ using VRC.Udon.Common;
 using System.Collections.Generic;
 using VRC.SDK3.Components;
 using VRC.Udon.Common.Interfaces;
+using System;
 
 public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 {
     //Start of added variable for Attendee Menu
+
+    #region Variables
+
+    #region Class Settings
 
     [Header("Class Settings")][Space(10)]
     public string ClassType;
     public GameObject AlchemistMenu;
     public GameObject BarbarianMenu;
     public GameObject ExplorerMenu;
-    
+
+    #endregion
+
+    #region UI Popup Messages
 
     [Space(5)][Header("UI Popup Messages")][Space(10)]
     [SerializeField] GameObject PopUpMessageCrafting;
     [SerializeField] GameObject PopUpMessageSpawning;
     [SerializeField] GameObject PopUpMessagePotionAlreadySpawned;
 
+    #endregion
 
-    [Space(5)][Header("Potions")][Space(10)]
-    [SerializeField] Transform PotionsSpawnPoint;   
-    [SerializeField] VRCObjectPool[] potionsPools; // Array of object pools [SerializeField] VRCObjectPool potionPoolPrefab;
-    private VRCObjectPool playerPotionPool;
+    #region Interactable Items
 
-
-    [Space(5)][Header("Other")][Space(10)]
+    [Space(5)][Header("Interactable Items")][Space(10)]
+    [SerializeField] Transform PotionsSpawnPoint;
+    [SerializeField] GameObject BreakableObject; 
     [SerializeField] InteractableObjectManager IOM;
-    [SerializeField] GameObject BreakableObject;
 
+    #endregion
 
     [UdonSynced] private Vector3 syncedPotionPosition;
     [UdonSynced] private Quaternion syncedPotionRotation;
@@ -45,6 +52,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     [SerializeField] private DebugMenu debugMenu; // Reference to the DebugMenu component
 
+    #endregion
 
     // Start of Added methods for Attendee Menu
 
@@ -61,30 +69,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         PopUpMessagePotionAlreadySpawned.SetActive(false);
     }
 
-
-
-    public override void OnPlayerJoined(VRCPlayerApi player)
-    {
-        if (player.isLocal)
-        {
-            int playerIndex = player.playerId % potionsPools.Length;
-            playerPotionPool = potionsPools[playerIndex];
-
-            foreach (GameObject potion in playerPotionPool.Pool)
-            {
-                if (potion != null)
-                {
-                    potion.SetActive(false);
-                }
-                else
-                {
-                    debugMenu.Log("Found a null potion in the pool.");
-                }
-            }
-
-            debugMenu.Log($"Assigned object pool {playerIndex} to player {Networking.LocalPlayer.displayName}");
-        }
-    }
 
     public void CraftWallBreakerPotion()
     {
@@ -107,11 +91,15 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     {
         if (IOM.PotionWallBreakerCollected >= 1)
         {
+            VRCObjectPool playerPotionPool = IOM.GetPlayerPotionPool(Networking.LocalPlayer.playerId);
+
             if (playerPotionPool == null)
             {
                 debugMenu.Log("Player potion pool is not assigned.");
                 return;
             }
+
+            debugMenu.Log($"Trying to spawn potion from pool: {playerPotionPool.gameObject.name}");
 
             GameObject spawnedPotion = playerPotionPool.TryToSpawn();
             if (spawnedPotion != null)
@@ -150,6 +138,16 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     public void NetworkSpawnWallBreakerPotion()
     {
+        VRCObjectPool playerPotionPool = IOM.GetPlayerPotionPool(Networking.LocalPlayer.playerId);
+
+        if (playerPotionPool == null)
+        {
+            debugMenu.Log("Player potion pool is not assigned.");
+            return;
+        }
+
+        debugMenu.Log($"Trying to spawn potion from pool: {playerPotionPool.gameObject.name} on network");
+
         GameObject spawnedPotion = playerPotionPool.TryToSpawn();
         if (spawnedPotion != null)
         {
