@@ -101,6 +101,14 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
             debugMenu.Log($"Trying to spawn potion from pool: {playerPotionPool.gameObject.name}");
 
+            foreach (GameObject potion in playerPotionPool.Pool)
+            {
+                if (potion != null)
+                {
+                    debugMenu.Log($"Potion in pool: {potion.name} - Active: {potion.activeSelf}");
+                }
+            }
+
             GameObject spawnedPotion = playerPotionPool.TryToSpawn();
             if (spawnedPotion != null)
             {
@@ -147,6 +155,14 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
 
         debugMenu.Log($"Trying to spawn potion from pool: {playerPotionPool.gameObject.name} on network");
+
+        foreach (GameObject potion in playerPotionPool.Pool)
+        {
+            if (potion != null)
+            {
+                debugMenu.Log($"Potion in pool: {potion.name} - Active: {potion.activeSelf}");
+            }
+        }
 
         GameObject spawnedPotion = playerPotionPool.TryToSpawn();
         if (spawnedPotion != null)

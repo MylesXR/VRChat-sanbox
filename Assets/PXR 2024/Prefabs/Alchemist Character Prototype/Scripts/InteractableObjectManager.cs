@@ -140,6 +140,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
 
 
+
     public void UpdateUI()
     {
         if (HerbsText != null)
