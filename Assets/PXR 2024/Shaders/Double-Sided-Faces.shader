@@ -5,6 +5,8 @@
         _AlbedoMap("Albedo", 2D) = "white" {}
         [Toggle] _UseAlbedoTexture("Use Albedo Texture", Float) = 1.0
         _AlbedoColor("Albedo Color", Color) = (1,1,1,1)
+        _TintColor("Tint Color", Color) = (0,1,0,1) // New property for tint color
+        _TintIntensity("Tint Intensity", Range(0, 1)) = 0.5 // New property for tint intensity
         _NormalMap("Normal Map", 2D) = "bump" {}
         _EmissionMap("Emission Map", 2D) = "black" {}
         _AlphaMap("Alpha Map", 2D) = "white" {}
@@ -32,6 +34,8 @@
             sampler2D _AlbedoMap;
             float _UseAlbedoTexture;
             float4 _AlbedoColor;
+            float4 _TintColor; // Tint color variable
+            float _TintIntensity; // Tint intensity variable
             sampler2D _NormalMap;
             sampler2D _EmissionMap;
             sampler2D _AlphaMap;
@@ -46,6 +50,7 @@
             struct Input
             {
                 float2 uv_AlbedoMap;
+                float2 uv_NormalMap;
             };
 
             void surf(Input IN, inout SurfaceOutput o)
@@ -61,10 +66,11 @@
 
                 // Albedo
                 fixed4 albedoTex = tex2D(_AlbedoMap, uv);
-                o.Albedo = albedoTex.rgb * _UseAlbedoTexture + _AlbedoColor.rgb * (1 - _UseAlbedoTexture);
+                fixed4 finalAlbedo = lerp(albedoTex, albedoTex * _TintColor, _TintIntensity); // Blend albedo texture with tint color based on tint intensity
+                o.Albedo = finalAlbedo.rgb * _UseAlbedoTexture + _AlbedoColor.rgb * (1 - _UseAlbedoTexture);
 
                 // Normal map
-                o.Normal = UnpackNormal(tex2D(_NormalMap, uv));
+                o.Normal = UnpackNormal(tex2D(_NormalMap, IN.uv_NormalMap));
 
                 // Emission
                 fixed4 emissionColor = tex2D(_EmissionMap, uv);
