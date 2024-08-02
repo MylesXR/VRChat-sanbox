@@ -6,6 +6,10 @@
         [MaterialToggle] _StereoEnabled("Stereo Enabled", Float) = 0
         _Rotation("Rotation", Range(0, 360)) = 0
         _Tile("Tiling", Vector) = (1, 1, 0, 0)
+        _Exposure("Exposure", Range(0, 10)) = 1
+        _NeonIntensity("Neon Intensity", Range(0, 5)) = 1
+        _Contrast("Contrast", Range(0, 2)) = 1
+        _Saturation("Saturation", Range(0, 2)) = 1
     }
         SubShader
         {
@@ -28,6 +32,10 @@
                 float _StereoEnabled;
                 float _Rotation;
                 float4 _Tile;
+                float _Exposure;
+                float _NeonIntensity;
+                float _Contrast;
+                float _Saturation;
 
                 float3 RotateVector(float3 v, float angle)
                 {
@@ -81,6 +89,21 @@
                     return o;
                 }
 
+                float4 AdjustContrast(float4 color, float contrast)
+                {
+                    float3 midpoint = float3(0.5, 0.5, 0.5);
+                    color.rgb = lerp(midpoint, color.rgb, contrast);
+                    return color;
+                }
+
+                float4 AdjustSaturation(float4 color, float saturation)
+                {
+                    float luminance = dot(color.rgb, float3(0.299, 0.587, 0.114));
+                    float3 grey = float3(luminance, luminance, luminance);
+                    color.rgb = lerp(grey, color.rgb, saturation);
+                    return color;
+                }
+
                 float4 frag(v2f i) : SV_Target
                 {
                     float3 viewDir = normalize(i.worldPos - _WorldSpaceCameraPos);
@@ -89,6 +112,14 @@
                     float2 uv = _StereoEnabled > 0.5 ? StereoPanoProjection(viewDir) : MonoPanoProjection(viewDir);
 
                     float4 texColor = tex2D(_MainTex, uv);
+                    texColor.rgb *= _Exposure;
+                    texColor = AdjustContrast(texColor, _Contrast);
+                    texColor = AdjustSaturation(texColor, _Saturation);
+
+                    // Boost the brightness and saturation of the neon colors
+                    float3 neonFactor = pow(texColor.rgb, float3(_NeonIntensity, _NeonIntensity, _NeonIntensity));
+                    texColor.rgb = lerp(texColor.rgb, neonFactor, texColor.rgb);
+
                     return texColor;
                 }
                 ENDCG

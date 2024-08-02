@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Skybox-Advertising-Hell
   m_Shader: {fileID: 4800000, guid: ac3073ad28a52854bb0b7f67d429b6bc, type: 3}
-  m_ShaderKeywords: _MAPPING_LATITUDE_LONGITUDE_LAYOUT _STEREOENABLED_ON
+  m_ShaderKeywords: _MAPPING_LATITUDE_LONGITUDE_LAYOUT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: b558453ef3048924b9edd540760e569d, type: 3}
+        m_Texture: {fileID: 2800000, guid: df26c8b440a99f84a9d3ce961932c8aa, type: 3}
         m_Scale: {x: 2, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -60,15 +60,21 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _BrightAdjust: 0.183
+    - _BrightLevel: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _DarkLevel: 0.175
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Exposure: 1
+    - _Exposure: 0.47
+    - _Gamma: 0.45
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
     - _ImageType: 0
+    - _InputBlack: 0.093
+    - _InputWhite: 0.532
     - _Layout: 0
     - _Mapping: 1
     - _Metallic: 0
@@ -80,11 +86,11 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _StereoEnabled: 1
+    - _StereoEnabled: 0
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Tile: {r: 2, g: 1, b: 0, a: 1}
+    - _Tile: {r: 1, g: 2, b: 0, a: 2}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
