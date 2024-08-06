@@ -10,6 +10,7 @@
         _NeonIntensity("Neon Intensity", Range(0, 5)) = 1
         _Contrast("Contrast", Range(0, 2)) = 1
         _Saturation("Saturation", Range(0, 2)) = 1
+        _TintColor("Tint Color", Color) = (1, 1, 1, 1)
     }
         SubShader
         {
@@ -36,6 +37,7 @@
                 float _NeonIntensity;
                 float _Contrast;
                 float _Saturation;
+                float4 _TintColor;
 
                 float3 RotateVector(float3 v, float angle)
                 {
@@ -115,6 +117,10 @@
                     texColor.rgb *= _Exposure;
                     texColor = AdjustContrast(texColor, _Contrast);
                     texColor = AdjustSaturation(texColor, _Saturation);
+
+                    // Apply tint color
+                    float3 tintFactor = lerp(float3(1.0, 1.0, 1.0), _TintColor.rgb, 1.0 - step(0.999, dot(_TintColor.rgb, float3(0.333, 0.333, 0.333))));
+                    texColor.rgb *= tintFactor;
 
                     // Boost the brightness and saturation of the neon colors
                     float3 neonFactor = pow(texColor.rgb, float3(_NeonIntensity, _NeonIntensity, _NeonIntensity));
