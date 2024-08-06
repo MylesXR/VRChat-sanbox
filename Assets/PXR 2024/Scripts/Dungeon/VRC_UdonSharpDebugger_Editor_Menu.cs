@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using UnityEditor;
 using VRC.Udon;
 using UdonSharp;
@@ -111,3 +111,4 @@ public class VRC_UdonSharpDebugger_Editor_Menu : EditorWindow
         return false;
     }
 }
+*/
