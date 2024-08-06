@@ -4,7 +4,7 @@ using VRC.SDKBase;
 
 public class RestrictedAreaTrigger : UdonSharpBehaviour
 {
-    public Bobys_WorldPortalSystem BWPS;
+    private Bobys_WorldPortalSystem BWPS;
     [SerializeField] private GameObject Block;
 
     public override void OnPlayerTriggerEnter(VRCPlayerApi player)
