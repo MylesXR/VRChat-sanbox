@@ -9,7 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Advertisement-V1
   m_Shader: {fileID: 4800000, guid: 41943bc69514a7540ba2d3bf10dbf729, type: 3}
-  m_ShaderKeywords: _EMISSION _ENABLESCANLINES_ON
+  m_ShaderKeywords: _EMISSION _ENABLEDISTORTION_ON _ENABLEMULTITEXTURE_ON _ENABLESCANLINES_ON
+    _SYNCWITHTEXTURESETTINGS_ON
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -19,23 +20,76 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BreakawayDistortionTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BreakawayMask:
+        m_Texture: {fileID: 2800000, guid: 6d2a6005cc3b3f94eb9eee1e2cacc305, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DistortionTex:
+        m_Texture: {fileID: 2800000, guid: bb43e0db51116aa44ad5e74b7e11138d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 6b13c5cba8afefd43a0e78fd58e95a54, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ScanlineTex:
-        m_Texture: {fileID: 2800000, guid: f3e185b65edefbd4a819a8864be7fa1b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2eed447021dcbfd4db5b22fc7043298c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture1:
+        m_Texture: {fileID: 2800000, guid: 6b13c5cba8afefd43a0e78fd58e95a54, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2:
+        m_Texture: {fileID: 2800000, guid: c7fe97058567ab5419ac03cd025185ee, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture3:
+        m_Texture: {fileID: 2800000, guid: 71ef6af05786b4747bce61a108fb2fe5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture4:
+        m_Texture: {fileID: 2800000, guid: 693c3f69d18db6f489d626882a205611, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AdditionalDistortionDuration: 0.5
+    - _BreakawayDistortionIntensity: 0.1
+    - _BreakawayDistortionScale: 1
+    - _BreakawayDistortionSpeed: 0.5
+    - _BreakawayFadeDuration: 1
+    - _DisplayInterval: 10
+    - _DistortionDuration: 0
+    - _DistortionIntensity: 1
+    - _DistortionInterval: 0
+    - _DistortionScale: 1
+    - _DistortionSpeed: 1
+    - _EnableDistortion: 1
+    - _EnableMultiTexture: 1
     - _EnableScanlines: 1
+    - _ExtraDistortionDuration: 1
+    - _FadeDuration: 1
+    - _GlitchIntensity: 0.1
     - _NumberOfScanlines: 4.91
+    - _PostFadeDistortionDuration: 1
+    - _PreFadeDistortionDuration: 1
+    - _Randomness: 0.1
     - _ScanlineIntensity: 0.25
-    - _ScanlineOpacity: 1.04
-    - _ScanlineSpeed: 0.1
-    - _ScanlineTileY: 5
+    - _ScanlineOpacity: 1.5
+    - _ScanlineSpeed: 0.05
+    - _ScanlineTile: 1
+    - _ScanlineTileY: 1.83
+    - _SyncWithTextureSettings: 1
+    - _TextureFadeDuration: 1
+    - _TextureFadeInterval: 2
+    - _TextureSwitchInterval: 5
     m_Colors:
-    - _BaseEmissionColor: {r: 0.9718811, g: 1, b: 0.8726415, a: 1}
+    - _BaseEmissionColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
     - _EmissionColor: {r: 0.88439727, g: 1, b: 0.7137255, a: 1}
     - _ScanlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ScanlineEmissionColor: {r: 0, g: 1, b: 0.8575506, a: 1}
+    - _ScanlineEmission: {r: 1, g: 1, b: 1, a: 1}
+    - _ScanlineEmissionColor: {r: 0, g: 0.82301146, b: 0.9245283, a: 1}
