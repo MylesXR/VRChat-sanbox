@@ -39,7 +39,6 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
             Debug.Log("[BarbarianThrowAxe] OnEnable called");
             hasBeenEnabled = true;
         }
-        
     }
 
     private void Start()
@@ -91,7 +90,7 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
         {
             Debug.Log("[BarbarianThrowAxe] Local player owns the axe, throwing it");
             transform.parent = null;
-            Vector3 throwDirection = (playerHead.forward + Vector3.up).normalized;
+            Vector3 throwDirection = playerHead.forward; // Only forward direction
 
             axeRigidbody.isKinematic = false;
             axeRigidbody.AddForce(throwDirection * force, ForceMode.Impulse);
@@ -119,7 +118,7 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
         transform.parent = null;
         transform.position = syncedHeadPosition;
         transform.rotation = syncedHeadRotation;
-        Vector3 throwDirection = (syncedHeadRotation * Vector3.forward + Vector3.up).normalized;
+        Vector3 throwDirection = syncedHeadRotation * Vector3.forward; // Only forward direction
 
         axeRigidbody.isKinematic = false;
         axeRigidbody.AddForce(throwDirection * syncedThrowForce, ForceMode.Impulse);
