@@ -5,24 +5,37 @@ using VRC.Udon;
 
 public class VRC_Head_Attachment : UdonSharpBehaviour
 {
-    public GameObject modelToAttach; // The model you want to attach
+    public GameObject Tag; // The object to attach to the head
+    public float heightOffset = 0.55f; // Public variable to adjust the height in the Inspector
+
+    Vector3 initTagPos;
+    private int playerId;
 
     void Start()
     {
-        VRCPlayerApi playerApi = Networking.LocalPlayer; // Get the local player
-
-        if (playerApi != null && modelToAttach != null)
+        initTagPos = Tag.transform.position;
+        if (Networking.LocalPlayer != null)
         {
-            // Get the head tracking data position and rotation
-            Vector3 headPosition = playerApi.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).position;
-            Quaternion headRotation = playerApi.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).rotation;
+            Debug.Log("Local player is not null");
+        }
 
-            // Set the model's position and rotation to match the head's
-            modelToAttach.transform.position = headPosition;
-            modelToAttach.transform.rotation = headRotation;
+        playerId = VRCPlayerApi.GetPlayerId(Networking.LocalPlayer);
+    }
 
-            // Optionally, you can add an offset if needed
-            // modelToAttach.transform.position += new Vector3(0, 0.2f, 0); // Example offset upwards
+    void Update()
+    {
+        if (VRCPlayerApi.GetPlayerById(playerId) != null)
+        {
+            Vector3 pos = VRCPlayerApi.GetPlayerById(playerId).GetBonePosition(HumanBodyBones.Head);
+
+            // Apply the height offset here
+            pos = new Vector3(pos.x, pos.y + heightOffset, pos.z);
+
+            Tag.transform.position = pos;
+        }
+        else
+        {
+            Tag.transform.position = initTagPos;
         }
     }
 }
