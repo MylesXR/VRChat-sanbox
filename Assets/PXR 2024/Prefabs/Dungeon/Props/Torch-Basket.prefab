@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 452897429}
   - component: {fileID: 452897430}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 64
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &452897429
 Transform:
@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 452897428}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.27001953, z: 0}
+  m_LocalPosition: {x: 0, y: 0.581, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 274143698704346449}
@@ -42,7 +42,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0.62740344, b: 0.3254717, a: 1}
+  m_Color: {r: 1, g: 0.6495071, b: 0.32549024, a: 1}
   m_Intensity: 2
   m_Range: 7
   m_SpotAngle: 30
@@ -102,12 +102,12 @@ GameObject:
   m_Component:
   - component: {fileID: 274143698704346449}
   - component: {fileID: 3933113317584427719}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Torch-Basket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &274143698704346449
 Transform:
@@ -162,12 +162,12 @@ GameObject:
   - component: {fileID: 1634480068671445244}
   - component: {fileID: 1634480068672248030}
   - component: {fileID: 1634480068673346078}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Medieval_IronFixtures_LargeTorch_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1634480068671445244
 Transform:
@@ -241,12 +241,12 @@ GameObject:
   - component: {fileID: 6453170899750249170}
   - component: {fileID: 5926061905577887236}
   - component: {fileID: 3299032094789379539}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Medieval_IronFixtures_LargeTorch_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6453170899750249170
 Transform:
@@ -320,12 +320,12 @@ GameObject:
   - component: {fileID: 4152814152069856108}
   - component: {fileID: 9048482892066470894}
   - component: {fileID: 7950982745678666707}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Medieval_IronFixtures_LargeTorch_Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4152814152069856108
 Transform:
@@ -381,8 +381,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2160786565056903435, guid: a30204394f8251f4fb87b70857a6086e,
         type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2160786565056903435, guid: a30204394f8251f4fb87b70857a6086e,
+        type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 80
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 3789641610657917482, guid: a30204394f8251f4fb87b70857a6086e,
         type: 3}
