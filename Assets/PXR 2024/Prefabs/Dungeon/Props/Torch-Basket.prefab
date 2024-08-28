@@ -82,7 +82,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 274143698704346449}
   - component: {fileID: 3933113317584427719}
   m_Layer: 0
-  m_Name: Medieval_IronFixtures_LargeTorch
+  m_Name: Torch-Basket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -369,6 +369,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 274143698704346449}
     m_Modifications:
+    - target: {fileID: 1843475832355152418, guid: a30204394f8251f4fb87b70857a6086e,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2160786565056903435, guid: a30204394f8251f4fb87b70857a6086e,
         type: 3}
       propertyPath: m_Name
