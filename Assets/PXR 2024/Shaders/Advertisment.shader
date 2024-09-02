@@ -14,6 +14,7 @@
         [Range(5, 30)] _TextureSwitchInterval("Texture Switch Interval (s)", Float) = 10.0
         [Range(0.1, 1.0)] _TextureFadeDuration("Texture Fade Duration (s)", Float) = 0.5
         [Toggle] _SyncWithTextureSettings("Sync with Texture Settings", Float) = 0.0
+        [Toggle] _ReverseTextureOrder("Reverse Texture Order", Float) = 0.0  // New toggle for reversing texture order
 
         [Header(Scanline Settings)]
         [Space(10)]
@@ -66,6 +67,7 @@
             float _EnableDistortion;
             float _EnableMultiTexture;
             float _SyncWithTextureSettings;
+            float _ReverseTextureOrder;  // New variable for reversing texture order
 
             struct Input
             {
@@ -77,30 +79,58 @@
             {
                 float switchTime = fmod(_Time.y, _TextureSwitchInterval * 4.0);
 
-                // Base texture selection
+                // Determine the order of texture switching
+                bool reverse = _ReverseTextureOrder > 0.5;
                 fixed4 currentTexColor;
                 fixed4 nextTexColor;
+
                 if (_EnableMultiTexture > 0.5)
                 {
-                    if (switchTime < _TextureSwitchInterval)
+                    if (!reverse)
                     {
-                        currentTexColor = tex2D(_Texture1, IN.uv_Texture1);
-                        nextTexColor = tex2D(_Texture2, IN.uv_Texture1);
-                    }
-                    else if (switchTime < _TextureSwitchInterval * 2.0)
-                    {
-                        currentTexColor = tex2D(_Texture2, IN.uv_Texture1);
-                        nextTexColor = tex2D(_Texture3, IN.uv_Texture1);
-                    }
-                    else if (switchTime < _TextureSwitchInterval * 3.0)
-                    {
-                        currentTexColor = tex2D(_Texture3, IN.uv_Texture1);
-                        nextTexColor = tex2D(_Texture4, IN.uv_Texture1);
+                        if (switchTime < _TextureSwitchInterval)
+                        {
+                            currentTexColor = tex2D(_Texture1, IN.uv_Texture1);
+                            nextTexColor = tex2D(_Texture2, IN.uv_Texture1);
+                        }
+                        else if (switchTime < _TextureSwitchInterval * 2.0)
+                        {
+                            currentTexColor = tex2D(_Texture2, IN.uv_Texture1);
+                            nextTexColor = tex2D(_Texture3, IN.uv_Texture1);
+                        }
+                        else if (switchTime < _TextureSwitchInterval * 3.0)
+                        {
+                            currentTexColor = tex2D(_Texture3, IN.uv_Texture1);
+                            nextTexColor = tex2D(_Texture4, IN.uv_Texture1);
+                        }
+                        else
+                        {
+                            currentTexColor = tex2D(_Texture4, IN.uv_Texture1);
+                            nextTexColor = tex2D(_Texture1, IN.uv_Texture1);
+                        }
                     }
                     else
                     {
-                        currentTexColor = tex2D(_Texture4, IN.uv_Texture1);
-                        nextTexColor = tex2D(_Texture1, IN.uv_Texture1);
+                        if (switchTime < _TextureSwitchInterval)
+                        {
+                            currentTexColor = tex2D(_Texture4, IN.uv_Texture1);
+                            nextTexColor = tex2D(_Texture3, IN.uv_Texture1);
+                        }
+                        else if (switchTime < _TextureSwitchInterval * 2.0)
+                        {
+                            currentTexColor = tex2D(_Texture3, IN.uv_Texture1);
+                            nextTexColor = tex2D(_Texture2, IN.uv_Texture1);
+                        }
+                        else if (switchTime < _TextureSwitchInterval * 3.0)
+                        {
+                            currentTexColor = tex2D(_Texture2, IN.uv_Texture1);
+                            nextTexColor = tex2D(_Texture1, IN.uv_Texture1);
+                        }
+                        else
+                        {
+                            currentTexColor = tex2D(_Texture1, IN.uv_Texture1);
+                            nextTexColor = tex2D(_Texture4, IN.uv_Texture1);
+                        }
                     }
 
                     // Apply the texture switching effect
