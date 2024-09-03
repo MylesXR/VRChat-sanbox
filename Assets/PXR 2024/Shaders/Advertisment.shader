@@ -5,6 +5,7 @@
         [Header(Main Texture Settings)]
         _Texture1("Main Texture", 2D) = "white" {}
         _BaseEmissionColor("Base Emission Color", Color) = (1, 1, 1, 1)
+        [Range(0.0, 10.0)] _EmissionIntensity("Emission Intensity", Float) = 1.0  // New property for emission intensity
 
         [Space(10)]
         [Toggle] _EnableMultiTexture("Enable Multi-Texture", Float) = 0.0
@@ -14,7 +15,7 @@
         [Range(5, 30)] _TextureSwitchInterval("Texture Switch Interval (s)", Float) = 10.0
         [Range(0.1, 1.0)] _TextureFadeDuration("Texture Fade Duration (s)", Float) = 0.5
         [Toggle] _SyncWithTextureSettings("Sync with Texture Settings", Float) = 0.0
-        [Toggle] _ReverseTextureOrder("Reverse Texture Order", Float) = 0.0  // New toggle for reversing texture order
+        [Toggle] _ReverseTextureOrder("Reverse Texture Order", Float) = 0.0
 
         [Header(Scanline Settings)]
         [Space(10)]
@@ -60,6 +61,7 @@
             float _DistortionIntensity;
             float _DistortionSpeed;
             float _DistortionScale;
+            float _EmissionIntensity;  // New variable for emission intensity
             fixed4 _ScanlineColor;
             fixed4 _ScanlineEmissionColor;
             fixed4 _BaseEmissionColor;
@@ -67,7 +69,7 @@
             float _EnableDistortion;
             float _EnableMultiTexture;
             float _SyncWithTextureSettings;
-            float _ReverseTextureOrder;  // New variable for reversing texture order
+            float _ReverseTextureOrder;
 
             struct Input
             {
@@ -138,13 +140,13 @@
                     fixed4 baseColor = lerp(currentTexColor, nextTexColor, fadeFactor);
 
                     o.Albedo = baseColor.rgb;
-                    o.Emission = baseColor.rgb * _BaseEmissionColor.rgb;
+                    o.Emission = baseColor.rgb * _BaseEmissionColor.rgb * _EmissionIntensity;  // Apply emission intensity
                 }
                 else
                 {
                     currentTexColor = tex2D(_Texture1, IN.uv_Texture1);
                     o.Albedo = currentTexColor.rgb;
-                    o.Emission = currentTexColor.rgb * _BaseEmissionColor.rgb;
+                    o.Emission = currentTexColor.rgb * _BaseEmissionColor.rgb * _EmissionIntensity;  // Apply emission intensity
                 }
 
                 // Ensure the scanlines are only applied when enabled
