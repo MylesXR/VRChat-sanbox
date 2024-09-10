@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!64 &3235682671399846904
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2447265805125929021}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6050383349193149247, guid: df64f2489389bb54e80e25fa2bdcf627, type: 3}
 --- !u!1 &7416384110667065504
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3129886727224867093}
+  - component: {fileID: 6874455613167685676}
   m_Layer: 0
   m_Name: Mesh Parent
   m_TagString: Untagged
@@ -76,6 +63,33 @@ Transform:
   m_Father: {fileID: 7901454094111945242}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &6874455613167685676
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9077143032593911392}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 1.7030945, y: 15.619085, z: -0.01512146}
+  m_Size: 31.23817
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.75288147
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3446902488203301087}
+  - screenRelativeHeight: 0.49826497
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3067080698140165541}
+  - screenRelativeHeight: 0.027111445
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 7008977982909156244}
+  m_Enabled: 1
 --- !u!1001 &3258080111730161004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -166,19 +180,37 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: df64f2489389bb54e80e25fa2bdcf627,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 4294967279
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4742473837712756890, guid: df64f2489389bb54e80e25fa2bdcf627,
+        type: 3}
+      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
+      value: 0.30912232
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4742473837712756890, guid: df64f2489389bb54e80e25fa2bdcf627, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: df64f2489389bb54e80e25fa2bdcf627, type: 3}
---- !u!1 &2447265805125929021 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: df64f2489389bb54e80e25fa2bdcf627,
-    type: 3}
-  m_PrefabInstance: {fileID: 3258080111730161004}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3079828706228540039 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: df64f2489389bb54e80e25fa2bdcf627,
+    type: 3}
+  m_PrefabInstance: {fileID: 3258080111730161004}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3446902488203301087 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -9015400419400849997, guid: df64f2489389bb54e80e25fa2bdcf627,
+    type: 3}
+  m_PrefabInstance: {fileID: 3258080111730161004}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3067080698140165541 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8671835854141198135, guid: df64f2489389bb54e80e25fa2bdcf627,
+    type: 3}
+  m_PrefabInstance: {fileID: 3258080111730161004}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7008977982909156244 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5508996145216847608, guid: df64f2489389bb54e80e25fa2bdcf627,
     type: 3}
   m_PrefabInstance: {fileID: 3258080111730161004}
   m_PrefabAsset: {fileID: 0}
