@@ -71,12 +71,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
     {
         int playerIndex = player.playerId % maxPlayers;
 
-        if (playerPotionPools[playerIndex] != null)
-        {
-            debugMenu.Log($"Potion pool already assigned to player {player.displayName} (ID: {player.playerId})");
-            return;
-        }
-
         if (playerIndex >= playerPotionPools.Length)
         {
             debugMenu.LogError("Player index exceeds potion pool array length.");
@@ -90,18 +84,8 @@ public class InteractableObjectManager : UdonSharpBehaviour
             return;
         }
 
-        foreach (GameObject potion in pool.Pool)
-        {
-            if (potion != null)
-            {
-                potion.SetActive(false);
-            }
-            else
-            {
-                debugMenu.Log("Found a null potion in the pool.");
-            }
-        }
-
+        // Ensure the correct owner is assigned to the pool for this player
+        Networking.SetOwner(player, pool.gameObject);
         debugMenu.Log($"Assigned potion pool to player {player.displayName} (ID: {player.playerId}) at index {playerIndex}");
     }
 
