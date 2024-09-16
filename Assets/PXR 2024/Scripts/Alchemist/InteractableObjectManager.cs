@@ -17,8 +17,15 @@ public class InteractableObjectManager : UdonSharpBehaviour
     public int HerbsCollected = 10;
     public int FlowersCollected = 10;
     public int GemstonesCollected = 10;
-    public int PotionWallBreakerCollected = 0;
-    public bool CraftPotionWallBreaker;
+    public int MushroomsCollected = 10;
+    public int BerriesCollected = 10;
+    public int SticksCollected = 10;
+    public int PotionWallBreakingCollected = 10;
+    public int PotionWaterWalkingCollected = 10;
+    public int PotionSuperJumpingCollected = 10;
+    public bool CraftPotionWallBreaking;
+    public bool CraftPotionSuperJumping;
+    public bool CraftPotionWaterWalking;
 
     #endregion
 
@@ -28,7 +35,12 @@ public class InteractableObjectManager : UdonSharpBehaviour
     [SerializeField] TextMeshProUGUI HerbsText;
     [SerializeField] TextMeshProUGUI FlowersText;
     [SerializeField] TextMeshProUGUI GemstonesText;
-    [SerializeField] TextMeshProUGUI PotionWallBreakerText;
+    [SerializeField] TextMeshProUGUI MushroomsText;
+    [SerializeField] TextMeshProUGUI BerriesText;
+    [SerializeField] TextMeshProUGUI SticksText;
+    [SerializeField] TextMeshProUGUI PotionWallBreakingText;
+    [SerializeField] TextMeshProUGUI PotionWaterWalkingText;
+    [SerializeField] TextMeshProUGUI PotionSuperJumpingText;
 
     #endregion
 
@@ -136,8 +148,23 @@ public class InteractableObjectManager : UdonSharpBehaviour
         if (GemstonesText != null)
             GemstonesText.text = $"{GemstonesCollected}";
 
-        if (PotionWallBreakerText != null)
-            PotionWallBreakerText.text = $"{PotionWallBreakerCollected}";
+        if (MushroomsText != null)
+            MushroomsText.text = $"{MushroomsCollected}";
+
+        if (BerriesText != null)
+            BerriesText.text = $"{BerriesCollected}";
+
+        if (SticksText != null)
+            SticksText.text = $"{SticksCollected}";
+
+        if (PotionWallBreakingText != null)
+            PotionWallBreakingText.text = $"{PotionWallBreakingCollected}";
+
+        if (PotionWaterWalkingText != null)
+            PotionWaterWalkingText.text = $"{PotionWaterWalkingCollected}";
+
+        if (PotionSuperJumpingText != null)
+            PotionSuperJumpingText.text = $"{PotionSuperJumpingCollected}";
     }
 
     public GameObject GetObjectToDestroy()
@@ -145,7 +172,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
         debugMenu.Log("Returning breakable object.");
         return BreakableObject;
     }
-
+     
     #region Increment Collected Items
 
     public void IncrementHerbsCollected()
@@ -166,34 +193,105 @@ public class InteractableObjectManager : UdonSharpBehaviour
         UpdateUI();
     }
 
-    public void IncrementPotionWallBreakerCollected()
+    public void IncrementMushroomsCollected()
     {
-        PotionWallBreakerCollected++;
+        MushroomsCollected++;
         UpdateUI();
     }
+
+    public void IncrementBerriesCollected()
+    {
+        BerriesCollected++;
+        UpdateUI();
+    }
+
+    public void IncrementSticksCollected()
+    {
+        SticksCollected++;
+        UpdateUI();
+    }
+
+    public void IncrementPotionWallBreakerCollected()
+    {
+        PotionWallBreakingCollected++;
+        UpdateUI();
+    }
+
+    public void IncrementPotionWaterWalkingCollected()
+    {
+        PotionWaterWalkingCollected++;
+        UpdateUI();
+    }
+
+    public void IncrementPotionSuperJumpingCollected()
+    {
+        PotionSuperJumpingCollected++;
+        UpdateUI();
+    }
+
 
     #endregion
 
     #region Can Craft Wall Breaker Potion
 
-    public void CanCraftPotionWallBreaker()
+    public void CanCraftPotionWallBreaking()
     {
-        if (HerbsCollected >= 1 && FlowersCollected >= 1 && GemstonesCollected >= 1)
+        if (HerbsCollected >= 2 && FlowersCollected >= 2 && GemstonesCollected >= 1)
         {
-            HerbsCollected--;
-            FlowersCollected--;
+            HerbsCollected -= 2;
+            FlowersCollected -= 2;
             GemstonesCollected--;
 
             UpdateUI();
-            CraftPotionWallBreaker = true;
+            CraftPotionWallBreaking = true;
             debugMenu.Log("Potion Wall Breaker crafted.");
         }
         else
         {
-            CraftPotionWallBreaker = false;
-            debugMenu.Log("Not enough resources to craft Potion Wall Breaker.");
+            CraftPotionWallBreaking = false;
+            debugMenu.Log("Not enough resources to craft the Potion Wall Breaker.");
         }
     }
+
+    public void CanCraftPotionSuperJumping()
+    {
+        if (HerbsCollected >= 2 && FlowersCollected >= 3 && SticksCollected >= 2)
+        {
+            HerbsCollected -= 2;
+            FlowersCollected -= 3;
+            SticksCollected -= 2;
+
+            UpdateUI();
+            CraftPotionSuperJumping = true;
+            debugMenu.Log("Potion Super Jump crafted.");
+        }
+        else
+        {
+            CraftPotionSuperJumping = false;
+            debugMenu.Log("Not enough resources to craft Potion Super Jump.");
+        }
+    }
+
+    public void CanCraftPotionWaterWalking()
+    {
+        if (MushroomsCollected >= 3 && HerbsCollected >= 2 && GemstonesCollected >= 2 && SticksCollected >= 3)
+        {
+            MushroomsCollected -= 3;
+            HerbsCollected -= 2;
+            GemstonesCollected -= 2;
+            SticksCollected -= 3;
+
+            UpdateUI();
+            CraftPotionWaterWalking = true;
+            debugMenu.Log("Potion Water Walk crafted.");
+        }
+        else
+        {
+            CraftPotionWaterWalking = false;
+            debugMenu.Log("Not enough resources to craft Potion Water Walk.");
+        }
+    }
+
 
     #endregion
 }

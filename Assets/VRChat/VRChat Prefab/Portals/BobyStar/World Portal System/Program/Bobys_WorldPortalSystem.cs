@@ -70,12 +70,12 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     }
 
 
-    public void CraftWallBreakerPotion()
+    public void CraftWallBreakingPotion()
     {
-        IOM.CanCraftPotionWallBreaker();
-        if (IOM.CraftPotionWallBreaker)
+        IOM.CanCraftPotionWallBreaking();
+        if (IOM.CraftPotionWallBreaking)
         {
-            IOM.PotionWallBreakerCollected++;
+            IOM.PotionWallBreakingCollected++;
             IOM.UpdateUI();
             debugMenu.Log("WALL BREAKER POTION CRAFTED");
         }
@@ -87,9 +87,9 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
     }
 
-    public void SpawnWallBreakerPotion()
+    public void SpawnWallBreakingPotion()
     {
-        if (IOM.PotionWallBreakerCollected >= 1)
+        if (IOM.PotionWallBreakingCollected >= 1)
         {
             VRCObjectPool playerPotionPool = IOM.GetPlayerPotionPool(Networking.LocalPlayer.playerId);
 
@@ -129,7 +129,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
                 }
 
                 ExecutePotionSpawnLogic(spawnedPotion);
-                SendCustomNetworkEvent(NetworkEventTarget.All, nameof(NetworkSpawnWallBreakerPotion));
+                SendCustomNetworkEvent(NetworkEventTarget.All, nameof(NetworkSpawnWallBreakingPotion));
             }
             else
             {
@@ -144,7 +144,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
     }
 
-    public void NetworkSpawnWallBreakerPotion()
+    public void NetworkSpawnWallBreakingPotion()
     {
         VRCObjectPool playerPotionPool = IOM.GetPlayerPotionPool(Networking.LocalPlayer.playerId);
 
@@ -229,7 +229,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             potionHandler.SetShouldDestroy(false);
         }
 
-        IOM.PotionWallBreakerCollected--;
+        IOM.PotionWallBreakingCollected--;
         IOM.UpdateUI();
         debugMenu.Log("WALL BREAKER POTION SPAWNED");
     }
@@ -258,13 +258,13 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         if (Networking.IsOwner(gameObject))
         {
             debugMenu.Log($"Player {Networking.LocalPlayer.displayName} is the owner, spawning potion.");
-            SpawnWallBreakerPotion();
+            SpawnWallBreakingPotion();
         }
         else
         {
             debugMenu.Log($"Player {Networking.LocalPlayer.displayName} is not the owner, requesting ownership.");
             Networking.SetOwner(Networking.LocalPlayer, gameObject);
-            SpawnWallBreakerPotion();
+            SpawnWallBreakingPotion();
         }
     }
 
