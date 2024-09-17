@@ -13,6 +13,8 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     [UdonSynced] public bool isKinematic = true;
     [UdonSynced] public bool shouldDestroy = false;
 
+    public InteractableObjectTracker IOT;
+
     public void SetObjectToDestroy(GameObject target)
     {
         objectToDestroy = target;
@@ -41,7 +43,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
             if (debugMenu != null)
             {
-                debugMenu.Log("Potion Rigidbody settings updated: isKinematic = " + isKinematic);
+                debugMenu.Log("Potion Rigidbody settings updated after deserialization: isKinematic = " + isKinematic);
             }
         }
     }
@@ -61,7 +63,15 @@ public class PotionCollisionHandler : UdonSharpBehaviour
                 {
                     debugMenu.Log("Potion collided with the destroyable object: " + objectToDestroy.name);
                 }
-                Destroy(objectToDestroy);
+                if(IOT.ItemType == "PotionWallBreaking")
+                {
+                    Destroy(objectToDestroy);
+                }
+                else
+                {
+                    return;
+                }
+                
             }
 
             TriggerPotionBreakEffect();
@@ -74,17 +84,17 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public void SetKinematicState(bool state)
     {
         isKinematic = state;
-        RequestSerialization();  // Sync the kinematic state over the network
-        UpdateKinematicState();  // Apply the kinematic state immediately on the local potion
+        RequestSerialization();
+        UpdateKinematicState();
     }
 
     public void SetShouldDestroy(bool state)
     {
         shouldDestroy = state;
-        RequestSerialization();  // Sync the destruction state over the network
+        RequestSerialization();
         if (state)
         {
-            DestroyPotion();  // Apply destruction immediately if needed
+            DestroyPotion();
         }
     }
 
@@ -93,13 +103,13 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         if (potionBreakVFX != null)
         {
             GameObject vfxInstance = Instantiate(potionBreakVFX, transform.position, Quaternion.identity);
-            Destroy(vfxInstance, 5f);  // Destroy the VFX instance after a few seconds
+            Destroy(vfxInstance, 5f);
         }
     }
 
     public void TriggerPotionBreakEffectNetworked()
     {
-        TriggerPotionBreakEffect();  // Trigger the break effect on the networked clients
+        TriggerPotionBreakEffect();
     }
 
     private void DestroyPotion()
@@ -108,22 +118,22 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         {
             debugMenu.Log("Destroying potion.");
         }
-        gameObject.SetActive(false);  // Deactivate the potion instead of destroying it
+        gameObject.SetActive(false); // Deactivate the object instead of destroying it
     }
 
     public void DestroyPotionNetworked()
     {
-        DestroyPotion();  // Destroy the potion on all networked clients
+        DestroyPotion();
     }
 
     public override void OnPickup()
     {
-        SetKinematicState(true);  // When picked up, set to kinematic
+        SetKinematicState(true);
     }
 
     public override void OnDrop()
     {
-        SetKinematicState(false);  // When dropped, allow it to be non-kinematic
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(UpdateKinematicState));  // Sync the state with other players
+        SetKinematicState(false);
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(UpdateKinematicState));
     }
 }
