@@ -69,10 +69,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         PopUpMessagePotionAlreadySpawned.SetActive(false);
     }
 
-
-
-
-    // Crafting Potions
     // Crafting Potions
     public void CraftWallBreakingPotion()
     {
