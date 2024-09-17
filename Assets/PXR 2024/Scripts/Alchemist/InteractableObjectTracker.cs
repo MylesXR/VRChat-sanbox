@@ -6,29 +6,23 @@ using VRC.Udon.Common.Interfaces;
 
 public class InteractableObjectTracker : UdonSharpBehaviour
 {
-    [Space(5)]
-    [Header("Interactable Items")]
+    [Space(5)][Header("Interactable Items")]
     [SerializeField] GameObject Herb;
     [SerializeField] GameObject Flower;
     [SerializeField] GameObject Gemstone;
-    [SerializeField] GameObject Item4;
-    [SerializeField] GameObject Item5;
-    [SerializeField] GameObject Item6;
-    [SerializeField] GameObject Item7;
-    [SerializeField] GameObject Item8;
+    [SerializeField] GameObject Mushroom;
+    [SerializeField] GameObject Berry;
+    [SerializeField] GameObject Stick;
 
-    [Space(5)]
-    [Header("Potions")]
-    [Space(10)]
+    [Space(5)][Header("Potions")][Space(10)]
     [SerializeField] GameObject PotionWallBreaker;
-    [SerializeField] GameObject Potion2;
-    [SerializeField] GameObject Potion3;
-    [SerializeField] GameObject Potion4;
+    [SerializeField] GameObject PotionSuperJumping;
+    [SerializeField] GameObject PotionWaterWalking;
     Rigidbody PotionWallBreakerRB;
+    Rigidbody PotionSuperJumpingRB;
+    Rigidbody PotionWaterWalkingRB;
 
-    [Space(5)]
-    [Header("Item Management")]
-    [Space(10)]
+    [Space(5)][Header("Item Management")][Space(10)]
     public string ItemType;
     public InteractableObjectManager IOM; //must be public
 
@@ -41,18 +35,40 @@ public class InteractableObjectTracker : UdonSharpBehaviour
 
     void Start()
     {
+        // Wall Breaker Potion Rigidbody Setup
         if (PotionWallBreaker != null)
         {
             PotionWallBreakerRB = PotionWallBreaker.GetComponent<Rigidbody>();
-            if (ItemType == "PotionWallBreaker" && PotionWallBreakerRB != null)
+            if (ItemType == "PotionWallBreaking" && PotionWallBreakerRB != null)
             {
                 PotionWallBreakerRB.isKinematic = true;
+            }
+        }
+
+        // Super Jumping Potion Rigidbody Setup
+        if (PotionSuperJumping != null)
+        {
+            PotionSuperJumpingRB = PotionSuperJumping.GetComponent<Rigidbody>();
+            if (ItemType == "PotionSuperJumping" && PotionSuperJumpingRB != null)
+            {
+                PotionSuperJumpingRB.isKinematic = true;
+            }
+        }
+
+        // Water Walking Potion Rigidbody Setup
+        if (PotionWaterWalking != null)
+        {
+            PotionWaterWalkingRB = PotionWaterWalking.GetComponent<Rigidbody>();
+            if (ItemType == "PotionWaterWalking" && PotionWaterWalkingRB != null)
+            {
+                PotionWaterWalkingRB.isKinematic = true;
             }
         }
     }
 
     public override void OnPickup()
     {
+        // Handle item pickups
         if (ItemType == "Herb")
         {
             HandleItemPickup(Herb);
@@ -68,7 +84,24 @@ public class InteractableObjectTracker : UdonSharpBehaviour
             HandleItemPickup(Gemstone);
             IOM.IncrementGemstonesCollected();
         }
-        else if (ItemType == "PotionWallBreaker")
+        else if (ItemType == "Mushroom")
+        {
+            HandleItemPickup(Mushroom);
+            IOM.IncrementMushroomsCollected();
+        }
+        else if (ItemType == "Berry")
+        {
+            HandleItemPickup(Berry);
+            IOM.IncrementBerriesCollected();
+        }
+        else if (ItemType == "Stick")
+        {
+            HandleItemPickup(Stick);
+            IOM.IncrementSticksCollected();
+        }
+
+        // Handle potion pickups
+        else if (ItemType == "PotionWallBreaking")
         {
             if (PotionWallBreakerRB != null)
             {
@@ -77,7 +110,26 @@ public class InteractableObjectTracker : UdonSharpBehaviour
                 ShowRadiusIndicatorOnPickup();
             }
         }
+        else if (ItemType == "PotionSuperJumping")
+        {
+            if (PotionSuperJumpingRB != null)
+            {
+                PotionSuperJumpingRB.isKinematic = false;
+                DestroyVisualIndicators();
+                ShowRadiusIndicatorOnPickup();
+            }
+        }
+        else if (ItemType == "PotionWaterWalking")
+        {
+            if (PotionWaterWalkingRB != null)
+            {
+                PotionWaterWalkingRB.isKinematic = false;
+                DestroyVisualIndicators();
+                ShowRadiusIndicatorOnPickup();
+            }
+        }
     }
+
 
     private void HandleItemPickup(GameObject item)
     {

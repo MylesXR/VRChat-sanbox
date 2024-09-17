@@ -41,7 +41,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
             if (debugMenu != null)
             {
-                debugMenu.Log("Potion Rigidbody settings updated after deserialization: isKinematic = " + isKinematic);
+                debugMenu.Log("Potion Rigidbody settings updated: isKinematic = " + isKinematic);
             }
         }
     }
@@ -74,17 +74,17 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public void SetKinematicState(bool state)
     {
         isKinematic = state;
-        RequestSerialization();
-        UpdateKinematicState();
+        RequestSerialization();  // Sync the kinematic state over the network
+        UpdateKinematicState();  // Apply the kinematic state immediately on the local potion
     }
 
     public void SetShouldDestroy(bool state)
     {
         shouldDestroy = state;
-        RequestSerialization();
+        RequestSerialization();  // Sync the destruction state over the network
         if (state)
         {
-            DestroyPotion();
+            DestroyPotion();  // Apply destruction immediately if needed
         }
     }
 
@@ -93,13 +93,13 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         if (potionBreakVFX != null)
         {
             GameObject vfxInstance = Instantiate(potionBreakVFX, transform.position, Quaternion.identity);
-            Destroy(vfxInstance, 5f);
+            Destroy(vfxInstance, 5f);  // Destroy the VFX instance after a few seconds
         }
     }
 
     public void TriggerPotionBreakEffectNetworked()
     {
-        TriggerPotionBreakEffect();
+        TriggerPotionBreakEffect();  // Trigger the break effect on the networked clients
     }
 
     private void DestroyPotion()
@@ -108,22 +108,22 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         {
             debugMenu.Log("Destroying potion.");
         }
-        gameObject.SetActive(false); // Deactivate the object instead of destroying it
+        gameObject.SetActive(false);  // Deactivate the potion instead of destroying it
     }
 
     public void DestroyPotionNetworked()
     {
-        DestroyPotion();
+        DestroyPotion();  // Destroy the potion on all networked clients
     }
 
     public override void OnPickup()
     {
-        SetKinematicState(true);
+        SetKinematicState(true);  // When picked up, set to kinematic
     }
 
     public override void OnDrop()
     {
-        SetKinematicState(false);
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(UpdateKinematicState));
+        SetKinematicState(false);  // When dropped, allow it to be non-kinematic
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(UpdateKinematicState));  // Sync the state with other players
     }
 }

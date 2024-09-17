@@ -45,10 +45,13 @@ public class InteractableObjectManager : UdonSharpBehaviour
     #endregion
 
     [Space(5)][Header("Potions")][Space(10)]
-    [SerializeField] private VRCObjectPool[] playerPotionPools; // Set this in the Unity Inspector
-    private int maxPlayers = 20;
+    //[SerializeField] private VRCObjectPool[] playerPotionPools; // Set this in the Unity Inspector
+    [SerializeField] private VRCObjectPool[] wallBreakerPotionPool;
+    [SerializeField] private VRCObjectPool[] superJumpPotionPool;
+    [SerializeField] private VRCObjectPool[] waterWalkingPotionPool;
 
 
+    private int maxPlayers = 100;
     public GameObject BreakableObject;
 
 
@@ -62,8 +65,20 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     #endregion
 
+    public VRCObjectPool GetWallBreakerPotionPool(int playerIndex)
+    {
+        return wallBreakerPotionPool[playerIndex];
+    }
 
+    public VRCObjectPool GetSuperJumpPotionPool(int playerIndex)
+    {
+        return superJumpPotionPool[playerIndex];
+    }
 
+    public VRCObjectPool GetWaterWalkingPotionPool(int playerIndex)
+    {
+        return waterWalkingPotionPool[playerIndex];
+    }
 
     private void Start()
     {
@@ -72,6 +87,18 @@ public class InteractableObjectManager : UdonSharpBehaviour
         UpdateUI();
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         base.OnPlayerJoined(player);
@@ -79,47 +106,69 @@ public class InteractableObjectManager : UdonSharpBehaviour
         AssignPotionPool(player);
     }
 
+
+
+
     private void AssignPotionPool(VRCPlayerApi player)
     {
         int playerIndex = player.playerId % maxPlayers;
 
-        if (playerIndex >= playerPotionPools.Length)
+        if (playerIndex >= wallBreakerPotionPool.Length)
         {
             debugMenu.LogError("Player index exceeds potion pool array length.");
             return;
         }
 
-        VRCObjectPool pool = playerPotionPools[playerIndex];
-        if (pool == null)
+        // Assign Wall Breaker Potion Pool
+        VRCObjectPool wallBreakerPool = GetWallBreakerPotionPool(playerIndex);
+        if (wallBreakerPool != null)
         {
-            debugMenu.LogError($"Potion pool at index {playerIndex} is null.");
-            return;
+            Networking.SetOwner(player, wallBreakerPool.gameObject);
+            debugMenu.Log($"Assigned Wall Breaker potion pool to player {player.displayName}.");
         }
 
-        // Ensure the correct owner is assigned to the pool for this player
-        Networking.SetOwner(player, pool.gameObject);
-        debugMenu.Log($"Assigned potion pool to player {player.displayName} (ID: {player.playerId}) at index {playerIndex}");
+        // Assign Super Jump Potion Pool
+        VRCObjectPool superJumpPool = GetSuperJumpPotionPool(playerIndex);
+        if (superJumpPool != null)
+        {
+            Networking.SetOwner(player, superJumpPool.gameObject);
+            debugMenu.Log($"Assigned Super Jump potion pool to player {player.displayName}.");
+        }
+
+        // Assign Water Walking Potion Pool
+        VRCObjectPool waterWalkingPool = GetWaterWalkingPotionPool(playerIndex);
+        if (waterWalkingPool != null)
+        {
+            Networking.SetOwner(player, waterWalkingPool.gameObject);
+            debugMenu.Log($"Assigned Water Walking potion pool to player {player.displayName}.");
+        }
     }
 
-    public VRCObjectPool GetPlayerPotionPool(int playerId)
+    public VRCObjectPool GetPlayerPotionPool(int playerId, string potionType)
     {
         int playerIndex = playerId % maxPlayers;
-        if (playerIndex >= playerPotionPools.Length)
+
+        if (playerIndex >= wallBreakerPotionPool.Length)
         {
             debugMenu.LogError("Player index exceeds potion pool array length.");
             return null;
         }
 
-        VRCObjectPool pool = playerPotionPools[playerIndex];
-        if (pool != null)
+        switch (potionType)
         {
-            debugMenu.Log($"Retrieved potion pool for player ID {playerId} at index {playerIndex}");
-            return pool;
+            case "SuperJump":
+                return superJumpPotionPool[playerIndex];
+            case "WaterWalk":
+                return waterWalkingPotionPool[playerIndex];
+            case "WallBreaker":
+                return wallBreakerPotionPool[playerIndex];
+            default:
+                debugMenu.LogError("Invalid potion type.");
+                return null;
         }
-
-        debugMenu.LogError($"No potion pool found for player {playerId} at index {playerIndex}");
-        return null;
     }
+
+
 
     private void OnEnable()
     {
@@ -211,7 +260,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
         UpdateUI();
     }
 
-    public void IncrementPotionWallBreakerCollected()
+    public void IncrementPotionWallBreakingCollected()
     {
         PotionWallBreakingCollected++;
         UpdateUI();
@@ -232,7 +281,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     #endregion
 
-    #region Can Craft Wall Breaker Potion
+    #region Can Craft Potions
 
     public void CanCraftPotionWallBreaking()
     {
@@ -255,9 +304,9 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     public void CanCraftPotionSuperJumping()
     {
-        if (HerbsCollected >= 2 && FlowersCollected >= 3 && SticksCollected >= 2)
+        if (BerriesCollected >= 2 && FlowersCollected >= 3 && SticksCollected >= 2)
         {
-            HerbsCollected -= 2;
+            BerriesCollected -= 2;
             FlowersCollected -= 3;
             SticksCollected -= 2;
 
@@ -274,12 +323,13 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     public void CanCraftPotionWaterWalking()
     {
-        if (MushroomsCollected >= 3 && HerbsCollected >= 2 && GemstonesCollected >= 2 && SticksCollected >= 3)
+        if (MushroomsCollected >= 3 && SticksCollected >= 3 && BerriesCollected >= 2 && GemstonesCollected >= 2)
         {
             MushroomsCollected -= 3;
-            HerbsCollected -= 2;
-            GemstonesCollected -= 2;
             SticksCollected -= 3;
+            BerriesCollected -= 2;
+            GemstonesCollected -= 2;
+            
 
             UpdateUI();
             CraftPotionWaterWalking = true;
@@ -291,7 +341,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
             debugMenu.Log("Not enough resources to craft Potion Water Walk.");
         }
     }
-
 
     #endregion
 }
