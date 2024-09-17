@@ -59,9 +59,11 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     //These methods have to be outside of the code below for some reason or it will ERROR
     public void AlchemistClass() { ClassType = "Alchemist"; }
     public void BarbarianClass() { ClassType = "Barbarian"; }
-    public void ExplorerClass() { ClassType = "Explorer"; }
+    public void ExplorerClass() { ClassType = "Explorer"; } 
+     
 
-   
+
+
     public void HidePopupMessage()
     {
         PopUpMessageCrafting.SetActive(false);
@@ -368,6 +370,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         if (potionHandler != null)
         {
             potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
+            potionHandler.SetObjectToActivate(IOM.GetObjectToActivate());
             potionHandler.SetKinematicState(false);
             potionHandler.SetShouldDestroy(false);
         }
@@ -1007,8 +1010,10 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
                 Debug.LogWarning("Unknown class type.");
                 break;
         }
-        // End of added methods for Attendee Menu
+
         
+        // End of added methods for Attendee Menu
+
 
         MenuPickupCollider.size = new Vector3(.025f, 1, .025f);
         MenuPickupCollider.center = Vector3.right * .525f * (MenuPickupSide.value == 1 ? 1 : -1);
@@ -1033,6 +1038,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         Menu.transform.GetChild(0).gameObject.SetActive(true);
 
         _RefreshOptionsList();
+        
     }
 
     public void _ForceSummonMenuFront()

@@ -53,6 +53,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     private int maxPlayers = 100;
     public GameObject BreakableObject;
+    public GameObject WaterWalkingObject;
 
 
     #region Debugging
@@ -86,6 +87,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
         debugMenu.Log("Game Started");
         UpdateUI();
     }
+
 
 
 
@@ -221,7 +223,13 @@ public class InteractableObjectManager : UdonSharpBehaviour
         debugMenu.Log("Returning breakable object.");
         return BreakableObject;
     }
-     
+
+    public GameObject GetObjectToActivate()
+    {
+        debugMenu.Log("setting object active perhaps");
+        return WaterWalkingObject;
+    }
+
     #region Increment Collected Items
 
     public void IncrementHerbsCollected()

@@ -64,6 +64,11 @@ public class InteractableObjectTracker : UdonSharpBehaviour
                 PotionWaterWalkingRB.isKinematic = true;
             }
         }
+
+
+
+
+
     }
 
     public override void OnPickup()

@@ -7,13 +7,24 @@ using VRC.Udon.Common.Interfaces;
 public class PotionCollisionHandler : UdonSharpBehaviour
 {
     [SerializeField] GameObject potionBreakVFX;
+    
     private GameObject objectToDestroy;
+    private GameObject objectToActivate;
+
+    private VRCPlayerApi localPlayer;
     public DebugMenu debugMenu;
 
     [UdonSynced] public bool isKinematic = true;
     [UdonSynced] public bool shouldDestroy = false;
 
     public InteractableObjectTracker IOT;
+    public bool SuperJumpEnabled = false;
+  
+
+    private void Start()
+    {
+        localPlayer = Networking.LocalPlayer;
+    }
 
     public void SetObjectToDestroy(GameObject target)
     {
@@ -21,6 +32,15 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         if (debugMenu != null)
         {
             debugMenu.Log("Object to destroy set to: " + objectToDestroy.name);
+        }
+    }
+
+    public void SetObjectToActivate(GameObject target)
+    {
+        objectToActivate = target;  // Assign the object to activate
+        if (debugMenu != null)
+        {
+            debugMenu.Log("Object to activate set to: " + objectToActivate.name);
         }
     }
 
@@ -59,26 +79,72 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         {
             if (collision.gameObject == objectToDestroy)
             {
-                if (debugMenu != null)
-                {
-                    debugMenu.Log("Potion collided with the destroyable object: " + objectToDestroy.name);
-                }
+
                 if(IOT.ItemType == "PotionWallBreaking")
                 {
                     Destroy(objectToDestroy);
+                    if (debugMenu != null)
+                    {
+                        debugMenu.Log("Potion collided with the destroyable object: " + objectToDestroy.name);
+                    }
                 }
-                else
-                {
-                    return;
-                }
-                
             }
 
-            TriggerPotionBreakEffect();
-            SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffectNetworked));
-            SetShouldDestroy(true);
-            SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
+            if (IOT.ItemType == "PotionSuperJumping")
+            {
+
+                ActivateSuperJump();
+            }
+
+            if (IOT.ItemType == "PotionWaterWalking")
+            {
+                if (objectToActivate != null)
+                {
+                    objectToActivate.SetActive(true);  // Activate the object
+                    if (debugMenu != null)
+                    {
+                        debugMenu.Log("Water Walking Potion has activated the object: " + objectToActivate.name);
+                    }
+                }
+            }
+
+            TriggerVFXandDestroy();
         }
+    }
+
+
+
+
+
+
+   
+    public void ActivateSuperJump()
+    {
+        SuperJumpEnabled = true;
+        localPlayer.SetJumpImpulse(20);
+        SendCustomEventDelayedSeconds(nameof(DeactivateSuperJump), 20f);
+    }
+
+    public void DeactivateSuperJump()
+    {
+        SuperJumpEnabled = false;
+        localPlayer.SetJumpImpulse(3);
+    }
+
+
+
+
+
+
+
+
+
+    public void TriggerVFXandDestroy ()
+    {
+        TriggerPotionBreakEffect();
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffectNetworked));
+        SetShouldDestroy(true);
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
     }
 
     public void SetKinematicState(bool state)
