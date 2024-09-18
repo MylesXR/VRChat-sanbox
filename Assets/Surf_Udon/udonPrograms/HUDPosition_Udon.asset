@@ -1,0 +1,190 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f11136daadff0b44ac2278a314682ab, type: 3}
+  m_Name: HUDPosition_Udon
+  m_EditorClassIdentifier: 
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 6da5f7c519c5cfb40b66d566cbdde30c,
+    type: 2}
+  udonAssembly: ".data_start\r\n\r\n    \r\n    __instance_0: %UnityEngineTransform,
+    this\r\n    __position_0: %UnityEngineVector3, null\r\n    __rotation_0: %UnityEngineQuaternion,
+    null\r\n    __TrackingData_0: %VRCSDKBaseVRCPlayerApiTrackingData, null\r\n   
+    __TrackingData_1: %VRCSDKBaseVRCPlayerApiTrackingData, null\r\n    __instance_1:
+    %VRCSDKBaseVRCPlayerApi, null\r\n    __tt_0: %VRCSDKBaseVRCPlayerApiTrackingDataType,
+    null\r\n    PlayerLocal: %VRCSDKBaseVRCPlayerApi, null\r\n\r\n.data_end\r\n\r\n.code_start\r\n\r\n   
+    .export _lateUpdate\r\n    \r\n    _lateUpdate:\r\n    \r\n        PUSH, PlayerLocal\r\n       
+    PUSH, __instance_1\r\n        COPY\r\n        PUSH, __instance_1\r\n        PUSH,
+    __tt_0\r\n        PUSH, __TrackingData_0\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApi.__GetTrackingData__VRCSDKBaseVRCPlayerApiTrackingDataType__VRCSDKBaseVRCPlayerApiTrackingData\"\r\n       
+    PUSH, __TrackingData_0\r\n        PUSH, __position_0\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApiTrackingData.__get_position__UnityEngineVector3\"\r\n       
+    PUSH, PlayerLocal\r\n        PUSH, __instance_1\r\n        COPY\r\n        PUSH,
+    __TrackingData_0\r\n        PUSH, __TrackingData_1\r\n        COPY\r\n       
+    PUSH, __TrackingData_0\r\n        PUSH, __rotation_0\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApiTrackingData.__get_rotation__UnityEngineQuaternion\"\r\n       
+    PUSH, __instance_0\r\n        PUSH, __position_0\r\n        PUSH, __rotation_0\r\n       
+    EXTERN, \"UnityEngineTransform.__SetPositionAndRotation__UnityEngineVector3_UnityEngineQuaternion__SystemVoid\"\r\n       
+    JUMP, 0xFFFFFFFC\r\n    \r\n    .export _start\r\n    \r\n    _start:\r\n   
+    \r\n        PUSH, PlayerLocal\r\n        EXTERN, \"VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi\"\r\n       
+    JUMP, 0xFFFFFFFC\r\n    \r\n\r\n.code_end\r\n"
+  assemblyError: 
+  graphData:
+    name: 
+    description: 
+    nodes:
+    - fullName: VRCSDKBaseVRCPlayerApiTrackingData.__get_position__UnityEngineVector3
+      uid: 7fbfa4ee-c6fc-4019-990f-2900ecd1ffcf
+      position: {x: 40, y: 40}
+      nodeUIDs:
+      - 3b69f7b9-27b4-4cb1-8aaf-bce5a9d1d575|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: VRC.SDKBase.VRCPlayerApi+TrackingData, VRCSDKBase, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null|{"position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":0.0}}
+    - fullName: UnityEngineTransform.__SetPositionAndRotation__UnityEngineVector3_UnityEngineQuaternion__SystemVoid
+      uid: cefcacfe-71b9-4df3-ac86-2ad69e037302
+      position: {x: 200, y: -40}
+      nodeUIDs:
+      - 
+      - 7fbfa4ee-c6fc-4019-990f-2900ecd1ffcf|0
+      - be719ff2-b670-4ef7-ac44-a6272a5fd32e|0
+      flowUIDs:
+      - 
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null|{"x":0.0,"y":0.0,"z":0.0}
+      - unityObjectValue: {fileID: 0}
+        stringValue: UnityEngine.Quaternion, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null|{"x":0.0,"y":0.0,"z":0.0,"w":0.0}
+    - fullName: VRCSDKBaseVRCPlayerApiTrackingData.__get_rotation__UnityEngineQuaternion
+      uid: be719ff2-b670-4ef7-ac44-a6272a5fd32e
+      position: {x: 40, y: 120}
+      nodeUIDs:
+      - 3b69f7b9-27b4-4cb1-8aaf-bce5a9d1d575|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: VRC.SDKBase.VRCPlayerApi+TrackingData, VRCSDKBase, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null|{"position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":0.0}}
+    - fullName: Event_LateUpdate
+      uid: 7306dadb-2310-4b47-ae1c-cdc0aed6e097
+      position: {x: 20, y: -40}
+      nodeUIDs: []
+      flowUIDs:
+      - cefcacfe-71b9-4df3-ac86-2ad69e037302
+      nodeValues: []
+    - fullName: Event_Start
+      uid: a7360572-3586-4d0b-b931-da0083b6c473
+      position: {x: -20, y: -340}
+      nodeUIDs: []
+      flowUIDs:
+      - 123cad25-59c1-470f-9ba1-ccf8ab9fa2c7
+      nodeValues: []
+    - fullName: Variable_VRCSDKBaseVRCPlayerApi
+      uid: b3cddca2-f4ff-4a3c-a29e-58e9c04aba63
+      position: {x: 0, y: 0}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|PlayerLocal
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: Get_Variable
+      uid: 58923e1c-7214-41da-bc79-fcd98fc1830c
+      position: {x: -440, y: 40}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|b3cddca2-f4ff-4a3c-a29e-58e9c04aba63
+    - fullName: Set_Variable
+      uid: 123cad25-59c1-470f-9ba1-ccf8ab9fa2c7
+      position: {x: 100, y: -300}
+      nodeUIDs:
+      - 
+      - e8b51ce3-b68f-4c40-a1f9-4ed22ba1505e|0
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|b3cddca2-f4ff-4a3c-a29e-58e9c04aba63
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|b3cddca2-f4ff-4a3c-a29e-58e9c04aba63
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi
+      uid: e8b51ce3-b68f-4c40-a1f9-4ed22ba1505e
+      position: {x: -80, y: -240}
+      nodeUIDs: []
+      flowUIDs: []
+      nodeValues: []
+    - fullName: VRCSDKBaseVRCPlayerApi.__GetTrackingData__VRCSDKBaseVRCPlayerApiTrackingDataType__VRCSDKBaseVRCPlayerApiTrackingData
+      uid: 3b69f7b9-27b4-4cb1-8aaf-bce5a9d1d575
+      position: {x: -220, y: 40}
+      nodeUIDs:
+      - 58923e1c-7214-41da-bc79-fcd98fc1830c|0
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: VRC.SDKBase.VRCPlayerApi+TrackingDataType, VRCSDKBase, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null|Head
+    updateOrder: 0
+  graphElementData:
+  - type: 3
+    uid: 5390e701-e379-45dc-bdc6-28710ca9a11e
+    jsonData: '{"uid":"5390e701-e379-45dc-bdc6-28710ca9a11e","layout":{"serializedVersion":"2","x":-140.0,"y":240.0,"width":494.0,"height":247.0},"title":"At
+      the end of every frame we get the player''s view position & rotation and set
+      that as the HUD''s current position & rotation. We do this late in the frame
+      so the player''s position is already calculated. This is necessary so the HUD
+      doesn''t disappear for a frame when the player is teleported","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 3
+    uid: ff6b5916-49b5-4cfa-915d-37836422f4cb
+    jsonData: '{"uid":"ff6b5916-49b5-4cfa-915d-37836422f4cb","layout":{"serializedVersion":"2","x":-580.0,"y":-380.0,"width":386.00006103515627,"height":215.0},"title":"This
+      program sets the HUD to the player''s view position. Its super simple","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 5
+    uid: 11deda30-8b08-43ff-8220-cff0eb7f89a1
+    jsonData: '{"visible":true,"layout":{"serializedVersion":"2","x":10.0,"y":130.0,"width":185.0,"height":113.0}}'
+  - type: 4
+    uid: fe1ba442-21b2-4192-a9b7-74dfdc05adfb
+    jsonData: '{"visible":true,"layout":{"serializedVersion":"2","x":10.0,"y":20.0,"width":0.0,"height":0.0}}'
+  - type: 2
+    uid: 472cdb93-9329-44ef-a3f9-20024e337c25
+    jsonData: '{"uid":"472cdb93-9329-44ef-a3f9-20024e337c25","layout":{"serializedVersion":"2","x":-100.0,"y":-400.0,"width":393.0,"height":273.0},"containedElements":["a7360572-3586-4d0b-b931-da0083b6c473","123cad25-59c1-470f-9ba1-ccf8ab9fa2c7","e8b51ce3-b68f-4c40-a1f9-4ed22ba1505e"],"title":"OnStart
+      - Set PlayerLocal","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 2
+    uid: 311c9ed7-03db-41dd-8710-1a5c15ec9326
+    jsonData: '{"uid":"311c9ed7-03db-41dd-8710-1a5c15ec9326","layout":{"serializedVersion":"2","x":-460.0,"y":-100.0,"width":939.0,"height":325.0},"containedElements":["7fbfa4ee-c6fc-4019-990f-2900ecd1ffcf","cefcacfe-71b9-4df3-ac86-2ad69e037302","be719ff2-b670-4ef7-ac44-a6272a5fd32e","7306dadb-2310-4b47-ae1c-cdc0aed6e097","58923e1c-7214-41da-bc79-fcd98fc1830c","3b69f7b9-27b4-4cb1-8aaf-bce5a9d1d575"],"title":"LateUpdate
+      - Move HUD to head","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  viewTransform:
+    position: {x: 854, y: 549}
+    scale: 0.8695652
+  version: 1.0.0
+  showAssembly: 0

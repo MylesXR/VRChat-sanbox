@@ -1,0 +1,256 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f11136daadff0b44ac2278a314682ab, type: 3}
+  m_Name: KnifeReset_Udon
+  m_EditorClassIdentifier: 
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 06b5e99f82bc1684ba009478772f95ef,
+    type: 2}
+  udonAssembly: ".data_start\r\n\r\n    .export Knives\r\n    \r\n    __index_0:
+    %SystemInt32, null\r\n    __condition_0: %SystemBoolean, null\r\n    __Boolean_0:
+    %SystemBoolean, null\r\n    __instance_1: %VRCSDK3ComponentsVRCPickup, null\r\n   
+    __player_0: %VRCSDKBaseVRCPlayerApi, null\r\n    __obj_0: %UnityEngineGameObject,
+    this\r\n    __instance_4: %VRCUdonUdonBehaviour, this\r\n    __eventName_0: %SystemString,
+    null\r\n    __instance_5: %UnityEngineGameObject, this\r\n    __type_0: %SystemType,
+    null\r\n    __instance_3: %VRCSDK3ComponentsVRCPickup, null\r\n    __instance_2:
+    %VRCSDK3ComponentsVRCPickupArray, null\r\n    __Int32_0: %SystemInt32, null\r\n   
+    __start_0: %SystemInt32, null\r\n    __end_0: %SystemInt32, null\r\n    __step_0:
+    %SystemInt32, null\r\n    __instance_0: %VRCSDK3ComponentsVRCPickupArray, null\r\n   
+    __Type_0: %SystemType, null\r\n    __String_0: %SystemString, null\r\n    Knives:
+    %VRCSDK3ComponentsVRCPickupArray, null\r\n\r\n.data_end\r\n\r\n.code_start\r\n\r\n   
+    .export _interact\r\n    \r\n    _interact:\r\n    \r\n        PUSH, Knives\r\n       
+    PUSH, __instance_0\r\n        COPY\r\n        PUSH, __instance_0\r\n        PUSH,
+    __end_0\r\n        EXTERN, \"VRCSDK3ComponentsVRCPickupArray.__get_Length__SystemInt32\"\r\n       
+    PUSH, __start_0\r\n        PUSH, __index_0\r\n        COPY\r\n        PUSH, __index_0\r\n       
+    PUSH, __end_0\r\n        PUSH, __condition_0\r\n        EXTERN, \"SystemInt32.__op_LessThan__SystemInt32_SystemInt32__SystemBoolean\"\r\n       
+    PUSH, __condition_0\r\n        JUMP_IF_FALSE, 0x00000278\r\n        PUSH, Knives\r\n       
+    PUSH, __instance_2\r\n        COPY\r\n        PUSH, Knives\r\n        PUSH, __instance_0\r\n       
+    COPY\r\n        PUSH, __index_0\r\n        PUSH, __Int32_0\r\n        COPY\r\n       
+    PUSH, __instance_2\r\n        PUSH, __Int32_0\r\n        PUSH, __instance_1\r\n       
+    EXTERN, \"VRCSDK3ComponentsVRCPickupArray.__Get__SystemInt32__VRCSDK3ComponentsVRCPickup\"\r\n       
+    PUSH, __instance_1\r\n        PUSH, __Boolean_0\r\n        EXTERN, \"VRCSDK3ComponentsVRCPickup.__get_IsHeld__SystemBoolean\"\r\n       
+    PUSH, __Boolean_0\r\n        JUMP_IF_FALSE, 0x000000FC\r\n        JUMP, 0x00000250\r\n       
+    PUSH, __player_0\r\n        EXTERN, \"VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi\"\r\n       
+    PUSH, Knives\r\n        PUSH, __instance_2\r\n        COPY\r\n        PUSH, Knives\r\n       
+    PUSH, __instance_0\r\n        COPY\r\n        PUSH, __index_0\r\n        PUSH,
+    __Int32_0\r\n        COPY\r\n        PUSH, __instance_1\r\n        PUSH, __instance_3\r\n       
+    COPY\r\n        PUSH, __instance_1\r\n        PUSH, __obj_0\r\n        EXTERN,
+    \"VRCSDK3ComponentsVRCPickup.__get_gameObject__UnityEngineGameObject\"\r\n       
+    PUSH, __player_0\r\n        PUSH, __obj_0\r\n        EXTERN, \"VRCSDKBaseNetworking.__SetOwner__VRCSDKBaseVRCPlayerApi_UnityEngineGameObject__SystemVoid\"\r\n       
+    PUSH, Knives\r\n        PUSH, __instance_2\r\n        COPY\r\n        PUSH, Knives\r\n       
+    PUSH, __instance_0\r\n        COPY\r\n        PUSH, __index_0\r\n        PUSH,
+    __Int32_0\r\n        COPY\r\n        PUSH, __instance_1\r\n        PUSH, __instance_3\r\n       
+    COPY\r\n        PUSH, __obj_0\r\n        PUSH, __instance_5\r\n        COPY\r\n       
+    PUSH, __Type_0\r\n        PUSH, __type_0\r\n        COPY\r\n        PUSH, __obj_0\r\n       
+    PUSH, __type_0\r\n        PUSH, __instance_4\r\n        EXTERN, \"UnityEngineGameObject.__GetComponent__SystemType__UnityEngineComponent\"\r\n       
+    PUSH, __String_0\r\n        PUSH, __eventName_0\r\n        COPY\r\n        PUSH,
+    __instance_4\r\n        PUSH, __eventName_0\r\n        EXTERN, \"VRCUdonCommonInterfacesIUdonEventReceiver.__SendCustomEvent__SystemString__SystemVoid\"\r\n       
+    PUSH, __index_0\r\n        PUSH, __step_0\r\n        PUSH, __index_0\r\n       
+    EXTERN, \"SystemInt32.__op_Addition__SystemInt32_SystemInt32__SystemInt32\"\r\n       
+    JUMP, 0x00000040\r\n        JUMP, 0xFFFFFFFC\r\n    \r\n\r\n.code_end\r\n"
+  assemblyError: 
+  graphData:
+    name: 
+    description: 
+    nodes:
+    - fullName: Event_Interact
+      uid: 3aa99762-4c74-4ce0-af90-1c36109475f6
+      position: {x: 480, y: 620}
+      nodeUIDs: []
+      flowUIDs:
+      - bcb96b37-627b-4eed-8be9-a7431c9bf4d4
+      nodeValues: []
+    - fullName: For
+      uid: bcb96b37-627b-4eed-8be9-a7431c9bf4d4
+      position: {x: 620, y: 620}
+      nodeUIDs:
+      - 
+      - b1d418de-1e53-4742-ad79-2e50ad31c339|0
+      - 
+      flowUIDs:
+      - ad6c4ad1-9e1f-469e-9c60-f2529c73e438
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|1
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|1
+    - fullName: Branch
+      uid: ad6c4ad1-9e1f-469e-9c60-f2529c73e438
+      position: {x: 1020, y: 620}
+      nodeUIDs:
+      - fde51f94-4011-4eb4-802c-eff343bafa62|0
+      flowUIDs:
+      - 
+      - 4ad0e80c-0de2-4c6c-a57a-15c2c2387309
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: VRCSDK3ComponentsVRCPickup.__get_IsHeld__SystemBoolean
+      uid: fde51f94-4011-4eb4-802c-eff343bafa62
+      position: {x: 900, y: 760}
+      nodeUIDs:
+      - 6f506058-b31a-40a5-a172-20d55a7f5365|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Variable_VRCSDK3ComponentsVRCPickupArray
+      uid: 9b89db0f-a642-41a5-b0d0-9e86aa4b39a4
+      position: {x: 0, y: 0}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Knives
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|True
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: Get_Variable
+      uid: 13ac5eec-f150-4ee4-a643-f98826cd7681
+      position: {x: 260, y: 820}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|9b89db0f-a642-41a5-b0d0-9e86aa4b39a4
+    - fullName: VRCSDK3ComponentsVRCPickupArray.__get_Length__SystemInt32
+      uid: b1d418de-1e53-4742-ad79-2e50ad31c339
+      position: {x: 460, y: 740}
+      nodeUIDs:
+      - 13ac5eec-f150-4ee4-a643-f98826cd7681|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCSDK3ComponentsVRCPickupArray.__Get__SystemInt32__VRCSDK3ComponentsVRCPickup
+      uid: 6f506058-b31a-40a5-a172-20d55a7f5365
+      position: {x: 700, y: 820}
+      nodeUIDs:
+      - 13ac5eec-f150-4ee4-a643-f98826cd7681|0
+      - bcb96b37-627b-4eed-8be9-a7431c9bf4d4|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+    - fullName: VRCSDK3ComponentsVRCPickup.__get_gameObject__UnityEngineGameObject
+      uid: 98ed1bb5-beb2-442c-a1e9-2b810cf5a9f2
+      position: {x: 1060, y: 900}
+      nodeUIDs:
+      - 6f506058-b31a-40a5-a172-20d55a7f5365|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCSDKBaseNetworking.__SetOwner__VRCSDKBaseVRCPlayerApi_UnityEngineGameObject__SystemVoid
+      uid: 4ad0e80c-0de2-4c6c-a57a-15c2c2387309
+      position: {x: 1280, y: 640}
+      nodeUIDs:
+      - 65b6ffcb-833d-4231-8162-09e6451b8f24|0
+      - 98ed1bb5-beb2-442c-a1e9-2b810cf5a9f2|0
+      flowUIDs:
+      - d58fdfcc-8602-4265-8966-1c4ec03b2fa0
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi
+      uid: 65b6ffcb-833d-4231-8162-09e6451b8f24
+      position: {x: 1080, y: 740}
+      nodeUIDs: []
+      flowUIDs: []
+      nodeValues: []
+    - fullName: UnityEngineGameObject.__GetComponent__SystemType__UnityEngineComponent
+      uid: 43bac646-8923-4d8c-93b2-4169939a3a76
+      position: {x: 1460, y: 880}
+      nodeUIDs:
+      - 98ed1bb5-beb2-442c-a1e9-2b810cf5a9f2|0
+      - 0eedeca7-300f-4c10-92aa-f98b54ea23a4|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Type_VRCUdonCommonInterfacesIUdonEventReceiver
+      uid: 0eedeca7-300f-4c10-92aa-f98b54ea23a4
+      position: {x: 1200, y: 1000}
+      nodeUIDs: []
+      flowUIDs: []
+      nodeValues: []
+    - fullName: VRCUdonCommonInterfacesIUdonEventReceiver.__SendCustomEvent__SystemString__SystemVoid
+      uid: d58fdfcc-8602-4265-8966-1c4ec03b2fa0
+      position: {x: 1660, y: 640}
+      nodeUIDs:
+      - 43bac646-8923-4d8c-93b2-4169939a3a76|0
+      - 956328d9-03ae-4622-b1b3-22b3b1fd9334|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Const_SystemString
+      uid: 956328d9-03ae-4622-b1b3-22b3b1fd9334
+      position: {x: 1400, y: 760}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|_Respawn
+    updateOrder: 0
+  graphElementData:
+  - type: 3
+    uid: 51340823-9e93-4a6a-ad7c-321004b3861c
+    jsonData: '{"uid":"51340823-9e93-4a6a-ad7c-321004b3861c","layout":{"serializedVersion":"2","x":1080.0,"y":60.0,"width":624.0,"height":227.0},"title":"This
+      program controls the logic of putting the knives back in their default position
+      when pressed. If a player is currently holding a knife then it won''t be reset","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 3
+    uid: b91af9f1-8bbc-4c9e-bc8d-451f93c4c35f
+    jsonData: '{"uid":"b91af9f1-8bbc-4c9e-bc8d-451f93c4c35f","layout":{"serializedVersion":"2","x":380.0,"y":340.0,"width":643.0128173828125,"height":202.3805694580078},"title":"''For''
+      is a loop that can be used to easily perform the same operation on every instance
+      in an array (an array is just a list of stuff). In this case, the operation
+      we''re doing is testing whether a knife is being held. If its not, then we
+      take ownership of it and put it back to its default position","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 5
+    uid: 11deda30-8b08-43ff-8220-cff0eb7f89a1
+    jsonData: '{"visible":true,"layout":{"serializedVersion":"2","x":11.0,"y":130.0,"width":206.0,"height":100.0}}'
+  - type: 4
+    uid: fe1ba442-21b2-4192-a9b7-74dfdc05adfb
+    jsonData: '{"visible":true,"layout":{"serializedVersion":"2","x":10.0,"y":20.0,"width":0.0,"height":0.0}}'
+  - type: 2
+    uid: 95cb07b9-9250-48d2-9a03-07157d739549
+    jsonData: '{"uid":"95cb07b9-9250-48d2-9a03-07157d739549","layout":{"serializedVersion":"2","x":240.0,"y":560.0,"width":1641.0,"height":547.0},"containedElements":["3aa99762-4c74-4ce0-af90-1c36109475f6","bcb96b37-627b-4eed-8be9-a7431c9bf4d4","ad6c4ad1-9e1f-469e-9c60-f2529c73e438","fde51f94-4011-4eb4-802c-eff343bafa62","13ac5eec-f150-4ee4-a643-f98826cd7681","b1d418de-1e53-4742-ad79-2e50ad31c339","6f506058-b31a-40a5-a172-20d55a7f5365","98ed1bb5-beb2-442c-a1e9-2b810cf5a9f2","4ad0e80c-0de2-4c6c-a57a-15c2c2387309","65b6ffcb-833d-4231-8162-09e6451b8f24","43bac646-8923-4d8c-93b2-4169939a3a76","0eedeca7-300f-4c10-92aa-f98b54ea23a4","d58fdfcc-8602-4265-8966-1c4ec03b2fa0","956328d9-03ae-4622-b1b3-22b3b1fd9334"],"title":"Knife
+      array test","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  viewTransform:
+    position: {x: 12, y: -3}
+    scale: 0.8695652
+  version: 1.0.0
+  showAssembly: 0

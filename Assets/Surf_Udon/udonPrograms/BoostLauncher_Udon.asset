@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f11136daadff0b44ac2278a314682ab, type: 3}
+  m_Name: BoostLauncher_Udon
+  m_EditorClassIdentifier: 
+  serializedUdonProgramAsset: {fileID: 11400000, guid: e2d330690b805c84dbd6513008870af5,
+    type: 2}
+  udonAssembly: ".data_start\r\n\r\n    .export Velocity\r\n    \r\n    __Boolean_0:
+    %SystemBoolean, null\r\n    __VRCPlayerApi_0: %VRCSDKBaseVRCPlayerApi, null\r\n   
+    onPlayerTriggerEnterPlayer: %VRCSDKBaseVRCPlayerApi, null\r\n    __instance_0:
+    %VRCSDKBaseVRCPlayerApi, null\r\n    __velocity_0: %UnityEngineVector3, null\r\n   
+    __Vector3_0: %UnityEngineVector3, null\r\n    __Vector3_1: %UnityEngineVector3,
+    null\r\n    __instance_1: %VRCSDKBaseVRCPlayerApi, null\r\n    Velocity: %UnityEngineVector3,
+    null\r\n\r\n.data_end\r\n\r\n.code_start\r\n\r\n    .export _onPlayerTriggerEnter\r\n   
+    \r\n    _onPlayerTriggerEnter:\r\n    \r\n        PUSH, onPlayerTriggerEnterPlayer\r\n       
+    PUSH, __VRCPlayerApi_0\r\n        COPY\r\n        PUSH, __VRCPlayerApi_0\r\n       
+    PUSH, __Boolean_0\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApi.__get_isLocal__SystemBoolean\"\r\n       
+    PUSH, __Boolean_0\r\n        JUMP_IF_FALSE, 0x000000B8\r\n        PUSH, __instance_0\r\n       
+    EXTERN, \"VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi\"\r\n       
+    PUSH, __instance_0\r\n        PUSH, __instance_1\r\n        COPY\r\n        PUSH,
+    __instance_0\r\n        PUSH, __Vector3_0\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApi.__GetVelocity__UnityEngineVector3\"\r\n       
+    PUSH, __Vector3_0\r\n        PUSH, Velocity\r\n        PUSH, __velocity_0\r\n       
+    EXTERN, \"UnityEngineVector3.__op_Addition__UnityEngineVector3_UnityEngineVector3__UnityEngineVector3\"\r\n       
+    PUSH, __instance_0\r\n        PUSH, __velocity_0\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApi.__SetVelocity__UnityEngineVector3__SystemVoid\"\r\n       
+    JUMP, 0x000000B8\r\n        JUMP, 0xFFFFFFFC\r\n    \r\n\r\n.code_end\r\n"
+  assemblyError: 
+  graphData:
+    name: 
+    description: 
+    nodes:
+    - fullName: Variable_UnityEngineVector3
+      uid: 72455e97-5248-434b-b04b-1d237f49b41c
+      position: {x: -120, y: -1560}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null|{"x":0.0,"y":5.0,"z":0.0}
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Velocity
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|True
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: Branch
+      uid: 93505a11-d7b9-41e5-be5d-b586fe5c5b65
+      position: {x: -580, y: -200}
+      nodeUIDs:
+      - 358df556-addf-4da1-b564-5d9631e246d3|0
+      flowUIDs:
+      - 1aecc0b2-f729-420d-84fa-cf76f2de25e2
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: Event_OnPlayerTriggerEnter
+      uid: fc27ad10-161f-4dee-98d9-0d6a8a5e120a
+      position: {x: -840, y: -200}
+      nodeUIDs: []
+      flowUIDs:
+      - 93505a11-d7b9-41e5-be5d-b586fe5c5b65
+      nodeValues: []
+    - fullName: VRCSDKBaseVRCPlayerApi.__get_isLocal__SystemBoolean
+      uid: 358df556-addf-4da1-b564-5d9631e246d3
+      position: {x: -720, y: -80}
+      nodeUIDs:
+      - fc27ad10-161f-4dee-98d9-0d6a8a5e120a|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCSDKBaseVRCPlayerApi.__SetVelocity__UnityEngineVector3__SystemVoid
+      uid: 1aecc0b2-f729-420d-84fa-cf76f2de25e2
+      position: {x: 140, y: -200}
+      nodeUIDs:
+      - 0ee3e174-8f65-4329-8494-b1880f8912f9|0
+      - 1dad2959-ad1c-4ba2-929b-dc4dba2c325a|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null|{"x":0.0,"y":0.0,"z":0.0}
+    - fullName: VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi
+      uid: 0ee3e174-8f65-4329-8494-b1880f8912f9
+      position: {x: -440, y: -120}
+      nodeUIDs: []
+      flowUIDs: []
+      nodeValues: []
+    - fullName: VRCSDKBaseVRCPlayerApi.__GetVelocity__UnityEngineVector3
+      uid: 29c156d6-a47f-48fa-b6ea-40c801b19078
+      position: {x: -240, y: -20}
+      nodeUIDs:
+      - 0ee3e174-8f65-4329-8494-b1880f8912f9|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: UnityEngineVector3.__op_Addition__UnityEngineVector3_UnityEngineVector3__UnityEngineVector3
+      uid: 1dad2959-ad1c-4ba2-929b-dc4dba2c325a
+      position: {x: -60, y: -0}
+      nodeUIDs:
+      - 29c156d6-a47f-48fa-b6ea-40c801b19078|0
+      - ab400d5c-67fc-4aa8-9629-2abab8f76c19|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null|{"x":0.0,"y":0.0,"z":0.0}
+      - unityObjectValue: {fileID: 0}
+        stringValue: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null|{"x":0.0,"y":0.0,"z":0.0}
+    - fullName: Get_Variable
+      uid: ab400d5c-67fc-4aa8-9629-2abab8f76c19
+      position: {x: -240, y: 80}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|72455e97-5248-434b-b04b-1d237f49b41c
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    updateOrder: 0
+  graphElementData:
+  - type: 3
+    uid: 2bbddd84-12d2-4dea-8b26-d9e405b84d01
+    jsonData: '{"uid":"2bbddd84-12d2-4dea-8b26-d9e405b84d01","layout":{"serializedVersion":"2","x":-480.0,"y":-600.0,"width":482.7779846191406,"height":320.92498779296877},"title":"This
+      program is for simply adding velocity directly to the player without anything
+      fancy","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 5
+    uid: aaf4eb05-77df-4c8e-a187-be5762a235fe
+    jsonData: '{"visible":true,"layout":{"serializedVersion":"2","x":10.0,"y":130.0,"width":223.0,"height":159.0}}'
+  - type: 4
+    uid: fe1ba442-21b2-4192-a9b7-74dfdc05adfb
+    jsonData: '{"visible":true,"layout":{"serializedVersion":"2","x":10.0,"y":20.0,"width":0.0,"height":0.0}}'
+  - type: 2
+    uid: 85898820-c07c-459a-b7d1-4ad0942cb09a
+    jsonData: '{"uid":"85898820-c07c-459a-b7d1-4ad0942cb09a","layout":{"serializedVersion":"2","x":-860.0,"y":-260.0,"width":1204.0,"height":445.0},"containedElements":["93505a11-d7b9-41e5-be5d-b586fe5c5b65","fc27ad10-161f-4dee-98d9-0d6a8a5e120a","358df556-addf-4da1-b564-5d9631e246d3","1aecc0b2-f729-420d-84fa-cf76f2de25e2","0ee3e174-8f65-4329-8494-b1880f8912f9","29c156d6-a47f-48fa-b6ea-40c801b19078","1dad2959-ad1c-4ba2-929b-dc4dba2c325a","ab400d5c-67fc-4aa8-9629-2abab8f76c19"],"title":"Add
+      velocity","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  viewTransform:
+    position: {x: 1069, y: 564}
+    scale: 0.7561437
+  version: 1.0.0
+  showAssembly: 0
