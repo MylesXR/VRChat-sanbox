@@ -1,0 +1,372 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f11136daadff0b44ac2278a314682ab, type: 3}
+  m_Name: Knife_Udon
+  m_EditorClassIdentifier: 
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 869f6478c2d8e2c428ce2be64926f912,
+    type: 2}
+  udonAssembly: ".data_start\r\n\r\n    .export KnifeLogic\r\n    \r\n    __instance_0:
+    %VRCUdonUdonBehaviour, this\r\n    __eventName_0: %SystemString, null\r\n   
+    __instance_1: %VRCUdonUdonBehaviour, this\r\n    __eventName_1: %SystemString,
+    null\r\n    __instance_2: %VRCUdonUdonBehaviour, this\r\n    __eventName_2: %SystemString,
+    null\r\n    __instance_3: %VRCSDK3ComponentsVRCObjectSync, null\r\n    __instance_4:
+    %VRCSDK3ComponentsVRCObjectSync, null\r\n    __instance_5: %UnityEngineGameObject,
+    this\r\n    __type_0: %SystemType, null\r\n    __GameObject_0: %UnityEngineGameObject,
+    this\r\n    __Type_0: %SystemType, null\r\n    __instance_6: %VRCUdonUdonBehaviour,
+    this\r\n    __eventName_3: %SystemString, null\r\n    KnifeLogic: %VRCUdonUdonBehaviour,
+    this\r\n    ThisObjSync: %VRCSDK3ComponentsVRCObjectSync, null\r\n\r\n.data_end\r\n\r\n.code_start\r\n\r\n   
+    .export _onPickupUseDown\r\n    \r\n    _onPickupUseDown:\r\n    \r\n       
+    PUSH, KnifeLogic\r\n        PUSH, __instance_0\r\n        COPY\r\n        PUSH,
+    __instance_0\r\n        PUSH, __eventName_0\r\n        EXTERN, \"VRCUdonCommonInterfacesIUdonEventReceiver.__SendCustomEvent__SystemString__SystemVoid\"\r\n       
+    JUMP, 0xFFFFFFFC\r\n    \r\n    .export _onDrop\r\n    \r\n    _onDrop:\r\n   
+    \r\n        PUSH, KnifeLogic\r\n        PUSH, __instance_1\r\n        COPY\r\n       
+    PUSH, __instance_1\r\n        PUSH, __eventName_1\r\n        EXTERN, \"VRCUdonCommonInterfacesIUdonEventReceiver.__SendCustomEvent__SystemString__SystemVoid\"\r\n       
+    JUMP, 0xFFFFFFFC\r\n    \r\n    .export _onPickup\r\n    \r\n    _onPickup:\r\n   
+    \r\n        PUSH, KnifeLogic\r\n        PUSH, __instance_2\r\n        COPY\r\n       
+    PUSH, __instance_2\r\n        PUSH, __eventName_2\r\n        EXTERN, \"VRCUdonCommonInterfacesIUdonEventReceiver.__SendCustomEvent__SystemString__SystemVoid\"\r\n       
+    JUMP, 0xFFFFFFFC\r\n    \r\n    .export _Respawn\r\n    \r\n    _Respawn:\r\n   
+    \r\n        PUSH, ThisObjSync\r\n        PUSH, __instance_3\r\n        COPY\r\n       
+    PUSH, __instance_3\r\n        EXTERN, \"VRCSDK3ComponentsVRCObjectSync.__FlagDiscontinuity__SystemVoid\"\r\n       
+    PUSH, ThisObjSync\r\n        PUSH, __instance_4\r\n        COPY\r\n        PUSH,
+    __instance_4\r\n        EXTERN, \"VRCSDK3ComponentsVRCObjectSync.__Respawn__SystemVoid\"\r\n       
+    JUMP, 0xFFFFFFFC\r\n    \r\n    .export _start\r\n    \r\n    _start:\r\n   
+    \r\n        PUSH, __GameObject_0\r\n        PUSH, __instance_5\r\n        COPY\r\n       
+    PUSH, __Type_0\r\n        PUSH, __type_0\r\n        COPY\r\n        PUSH, __instance_5\r\n       
+    PUSH, __type_0\r\n        PUSH, ThisObjSync\r\n        EXTERN, \"UnityEngineGameObject.__GetComponent__SystemType__UnityEngineComponent\"\r\n       
+    JUMP, 0xFFFFFFFC\r\n    \r\n    .export _CooldownOff\r\n    \r\n    _CooldownOff:\r\n   
+    \r\n        PUSH, KnifeLogic\r\n        PUSH, __instance_6\r\n        COPY\r\n       
+    PUSH, __instance_6\r\n        PUSH, __eventName_3\r\n        EXTERN, \"VRCUdonCommonInterfacesIUdonEventReceiver.__SendCustomEvent__SystemString__SystemVoid\"\r\n       
+    JUMP, 0xFFFFFFFC\r\n    \r\n\r\n.code_end\r\n"
+  assemblyError: 
+  graphData:
+    name: 
+    description: 
+    nodes:
+    - fullName: Event_OnPickupUseDown
+      uid: f9b816b1-110d-4fa5-a840-f0087cf907b7
+      position: {x: -120, y: 100}
+      nodeUIDs: []
+      flowUIDs:
+      - 117362ab-d26e-45c1-a5f0-a0c91054dabb
+      nodeValues: []
+    - fullName: Event_OnDrop
+      uid: cc85fa56-d841-47b3-af8f-333a3e38a957
+      position: {x: 400, y: 100}
+      nodeUIDs: []
+      flowUIDs:
+      - 06a8550b-2747-4865-a9ec-50ec9e5a6a81
+      nodeValues: []
+    - fullName: Event_OnPickup
+      uid: 7ce39fb3-6591-4fbe-b481-c5d8e41cc6e4
+      position: {x: -720, y: 100}
+      nodeUIDs: []
+      flowUIDs:
+      - 2cd6815c-b2b9-48fb-b440-65a61e7084c0
+      nodeValues: []
+    - fullName: Event_Custom
+      uid: 99a33602-d66a-44f7-84e9-f459b8c91fcc
+      position: {x: 100, y: -420}
+      nodeUIDs:
+      - 
+      flowUIDs:
+      - f485039a-1b51-47c8-a1eb-02f711a70394
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|_Respawn
+    - fullName: Variable_VRCUdonCommonInterfacesIUdonEventReceiver
+      uid: 42d3ff78-8331-435b-a649-e71033dd00f5
+      position: {x: 730, y: -620}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|KnifeLogic
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|True
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: Get_Variable
+      uid: 7084c4d9-f981-4190-9958-9cea654bfe05
+      position: {x: -180, y: 200}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|42d3ff78-8331-435b-a649-e71033dd00f5
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCUdonCommonInterfacesIUdonEventReceiver.__SendCustomEvent__SystemString__SystemVoid
+      uid: 117362ab-d26e-45c1-a5f0-a0c91054dabb
+      position: {x: 100, y: 100}
+      nodeUIDs:
+      - 7084c4d9-f981-4190-9958-9cea654bfe05|0
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|_Use
+    - fullName: Event_Start
+      uid: a2f387bc-dac8-47e4-8180-56e94ccb03d9
+      position: {x: -380, y: -420}
+      nodeUIDs: []
+      flowUIDs:
+      - 8b88158e-b867-4505-a929-dc12af8d4057
+      nodeValues: []
+    - fullName: UnityEngineGameObject.__GetComponent__SystemType__UnityEngineComponent
+      uid: 1ff4949d-5f8b-4b69-b495-bee42efd5ecf
+      position: {x: -460, y: -320}
+      nodeUIDs:
+      - 790f7659-2894-41ee-baf5-571d80061960|0
+      - bbdcc917-d3c2-40ea-bff8-456243b0078a|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Type_VRCSDK3ComponentsVRCObjectSync
+      uid: bbdcc917-d3c2-40ea-bff8-456243b0078a
+      position: {x: -700, y: -240}
+      nodeUIDs: []
+      flowUIDs: []
+      nodeValues: []
+    - fullName: Const_This
+      uid: 790f7659-2894-41ee-baf5-571d80061960
+      position: {x: -600, y: -320}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Variable_VRCSDK3ComponentsVRCObjectSync
+      uid: afce2a43-ef9e-4a4f-95d0-fad0040671e4
+      position: {x: 0, y: 0}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|ThisObjSync
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: Set_Variable
+      uid: 8b88158e-b867-4505-a929-dc12af8d4057
+      position: {x: -220, y: -420}
+      nodeUIDs:
+      - 
+      - 1ff4949d-5f8b-4b69-b495-bee42efd5ecf|0
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|afce2a43-ef9e-4a4f-95d0-fad0040671e4
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: VRCSDK3ComponentsVRCObjectSync.__FlagDiscontinuity__SystemVoid
+      uid: f485039a-1b51-47c8-a1eb-02f711a70394
+      position: {x: 300, y: -420}
+      nodeUIDs:
+      - 26f62663-a240-4176-8baf-46183c81ee7b|0
+      flowUIDs:
+      - 65111d00-9c76-4590-b23c-7dd64d97fb9c
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: 26f62663-a240-4176-8baf-46183c81ee7b
+      position: {x: 40, y: -320}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|afce2a43-ef9e-4a4f-95d0-fad0040671e4
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCSDK3ComponentsVRCObjectSync.__Respawn__SystemVoid
+      uid: 65111d00-9c76-4590-b23c-7dd64d97fb9c
+      position: {x: 480, y: -420}
+      nodeUIDs:
+      - 26f62663-a240-4176-8baf-46183c81ee7b|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCUdonCommonInterfacesIUdonEventReceiver.__SendCustomEvent__SystemString__SystemVoid
+      uid: 2cd6815c-b2b9-48fb-b440-65a61e7084c0
+      position: {x: -480, y: 100}
+      nodeUIDs:
+      - 22db55e4-90a5-41d9-a18c-4c5afdd78618|0
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|_PickedUp
+    - fullName: Get_Variable
+      uid: 22db55e4-90a5-41d9-a18c-4c5afdd78618
+      position: {x: -740, y: 200}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|42d3ff78-8331-435b-a649-e71033dd00f5
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: c7f94511-b1a9-4d0a-970f-d4974b8c7e97
+      position: {x: 380, y: 200}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|42d3ff78-8331-435b-a649-e71033dd00f5
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCUdonCommonInterfacesIUdonEventReceiver.__SendCustomEvent__SystemString__SystemVoid
+      uid: 06a8550b-2747-4865-a9ec-50ec9e5a6a81
+      position: {x: 620, y: 100}
+      nodeUIDs:
+      - c7f94511-b1a9-4d0a-970f-d4974b8c7e97
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|_Dropped
+    - fullName: Event_Custom
+      uid: a50b3f94-e0ac-49e9-9722-50fff0ae9651
+      position: {x: -280, y: 600}
+      nodeUIDs:
+      - 
+      flowUIDs:
+      - 248cfe66-b500-4ed7-9d6e-67ea2ed0c99a
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|_CooldownOff
+    - fullName: VRCUdonCommonInterfacesIUdonEventReceiver.__SendCustomEvent__SystemString__SystemVoid
+      uid: 248cfe66-b500-4ed7-9d6e-67ea2ed0c99a
+      position: {x: -40, y: 600}
+      nodeUIDs:
+      - 7643c054-c4d7-43a8-a5ba-66f7cba83336
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|_CooldownOff
+    - fullName: Get_Variable
+      uid: 7643c054-c4d7-43a8-a5ba-66f7cba83336
+      position: {x: -300, y: 700}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|42d3ff78-8331-435b-a649-e71033dd00f5
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    updateOrder: 0
+  graphElementData:
+  - type: 2
+    uid: e9a30558-b915-4ae4-9456-275c05687b80
+    jsonData: '{"uid":"e9a30558-b915-4ae4-9456-275c05687b80","layout":{"serializedVersion":"2","x":-760.0,"y":40.0,"width":549.0,"height":265.0},"containedElements":["36edc929-4f44-444f-b7ca-e52c68f08647","000aaef5-9f44-4a86-a774-ba663a85e10c","7ce39fb3-6591-4fbe-b481-c5d8e41cc6e4","497fd6fb-05f4-48e9-a20b-a68207d953a2","7e7c28fd-a159-45a6-830d-cc255cb9124e","2cd6815c-b2b9-48fb-b440-65a61e7084c0","22db55e4-90a5-41d9-a18c-4c5afdd78618"],"title":"OnPickup","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 2
+    uid: a4acd69f-d1e5-4968-a79f-388d91ef47ce
+    jsonData: '{"uid":"a4acd69f-d1e5-4968-a79f-388d91ef47ce","layout":{"serializedVersion":"2","x":360.0,"y":40.0,"width":506.0,"height":267.0},"containedElements":["d21ca759-6d7c-42f8-9e43-877d51e3165e","a2c73200-19d5-4bab-934f-52e520d874ec","40140c57-473a-4cc0-abca-e26fdf4366ac","cc85fa56-d841-47b3-af8f-333a3e38a957","06a8550b-2747-4865-a9ec-50ec9e5a6a81","c7f94511-b1a9-4d0a-970f-d4974b8c7e97"],"title":"OnDrop","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 2
+    uid: fae520f6-feee-4a91-b973-a6e8c74b5261
+    jsonData: '{"uid":"fae520f6-feee-4a91-b973-a6e8c74b5261","layout":{"serializedVersion":"2","x":20.0,"y":-480.0,"width":620.0,"height":267.0},"containedElements":["0ba5af2b-4adf-4022-ba79-76aa4729341c","410dc997-8246-4228-bb81-86e17f665002","99a33602-d66a-44f7-84e9-f459b8c91fcc","f485039a-1b51-47c8-a1eb-02f711a70394","26f62663-a240-4176-8baf-46183c81ee7b","65111d00-9c76-4590-b23c-7dd64d97fb9c"],"title":"Reset
+      position/rotation","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 3
+    uid: 9ce75284-c05f-4bed-9ec7-b6d9cec3e00d
+    jsonData: '{"uid":"9ce75284-c05f-4bed-9ec7-b6d9cec3e00d","layout":{"serializedVersion":"2","x":100.0,"y":-620.0,"width":435.99981689453127,"height":131.99989318847657},"title":"This
+      event is fired from the ResetButton and will put the knife back in its default
+      position and rotation","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 3
+    uid: 006e3fad-b9d7-4d01-9a00-d0680e30b167
+    jsonData: '{"uid":"006e3fad-b9d7-4d01-9a00-d0680e30b167","layout":{"serializedVersion":"2","x":-1380.0,"y":280.0,"width":476.65643310546877,"height":338.86383056640627},"title":"This
+      program handles the inputs for the knife pickups and feeds them into the KnifeLogic.
+      The reason this is split into two different programs is because UdonBehaviors
+      with ObjectSync can only be synced as Continuous. So to save some network performance
+      we handle the syncing of the knife spin animations on a Manual UdonBehavior","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 5
+    uid: f213e412-73a3-4168-8303-0384da464db8
+    jsonData: '{"visible":true,"layout":{"serializedVersion":"2","x":11.0,"y":130.0,"width":252.0,"height":359.0}}'
+  - type: 4
+    uid: fe1ba442-21b2-4192-a9b7-74dfdc05adfb
+    jsonData: '{"visible":true,"layout":{"serializedVersion":"2","x":10.0,"y":20.0,"width":0.0,"height":0.0}}'
+  - type: 2
+    uid: a287bebe-a1e1-4e8d-936c-76a6b53cf638
+    jsonData: '{"uid":"a287bebe-a1e1-4e8d-936c-76a6b53cf638","layout":{"serializedVersion":"2","x":-720.0,"y":-480.0,"width":706.0,"height":346.0},"containedElements":["a2f387bc-dac8-47e4-8180-56e94ccb03d9","8b88158e-b867-4505-a929-dc12af8d4057","1ff4949d-5f8b-4b69-b495-bee42efd5ecf","bbdcc917-d3c2-40ea-bff8-456243b0078a","790f7659-2894-41ee-baf5-571d80061960"],"title":"OnStart
+      - Set ObjectSync component","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 2
+    uid: d67c08d9-01ba-4c81-a34b-3fafc3b37f15
+    jsonData: '{"uid":"d67c08d9-01ba-4c81-a34b-3fafc3b37f15","layout":{"serializedVersion":"2","x":-200.0,"y":40.0,"width":556.0,"height":267.0},"containedElements":["f9b816b1-110d-4fa5-a840-f0087cf907b7","117362ab-d26e-45c1-a5f0-a0c91054dabb","7084c4d9-f981-4190-9958-9cea654bfe05"],"title":"OnUseDown","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 2
+    uid: 58c5560f-62ba-4dde-a983-0b45c3461172
+    jsonData: '{"uid":"58c5560f-62ba-4dde-a983-0b45c3461172","layout":{"serializedVersion":"2","x":-320.0,"y":540.0,"width":565.0,"height":265.0},"containedElements":["248cfe66-b500-4ed7-9d6e-67ea2ed0c99a","7643c054-c4d7-43a8-a5ba-66f7cba83336","a50b3f94-e0ac-49e9-9722-50fff0ae9651"],"title":"Disable
+      Cooldown","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 3
+    uid: 561b41ad-3b33-4d8e-b7f4-bd2fbf589c41
+    jsonData: '{"uid":"561b41ad-3b33-4d8e-b7f4-bd2fbf589c41","layout":{"serializedVersion":"2","x":-700.0,"y":-620.0,"width":589.150146484375,"height":128.55003356933595},"title":"On
+      Start we grab the ObjectSync component off of the knife so we can respawn the
+      knife later","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 3
+    uid: 643c6dbb-55fb-42d2-abc4-0466c763f77b
+    jsonData: '{"uid":"643c6dbb-55fb-42d2-abc4-0466c763f77b","layout":{"serializedVersion":"2","x":-1040.0,"y":-40.0,"width":467.882568359375,"height":139.1875},"title":"These
+      three events are fed into the KnifeLogic program","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  - type: 3
+    uid: dc9f068e-0e7d-4b63-828b-91467657a763
+    jsonData: '{"uid":"dc9f068e-0e7d-4b63-828b-91467657a763","layout":{"serializedVersion":"2","x":-700.0,"y":420.0,"width":467.2500305175781,"height":159.60000610351563},"title":"This
+      event is fired from the Knife Reset state on the animator which we then feed
+      directly into the KnifeLogic as well","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
+  viewTransform:
+    position: {x: 722, y: 598}
+    scale: 0.8695652
+  version: 1.0.0
+  showAssembly: 0
