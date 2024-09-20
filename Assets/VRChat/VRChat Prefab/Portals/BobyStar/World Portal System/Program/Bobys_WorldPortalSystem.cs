@@ -38,10 +38,11 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     [Space(5)][Header("Interactable Items")][Space(10)]
     [SerializeField] Transform PotionsSpawnPoint;
-    [SerializeField] GameObject BreakableObject; 
     [SerializeField] InteractableObjectManager IOM;
 
     #endregion
+
+    #region Debugging and Other
 
     [UdonSynced] private Vector3 syncedPotionPosition;
     [UdonSynced] private Quaternion syncedPotionRotation;
@@ -54,14 +55,14 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     #endregion
 
-    // Start of Added methods for Attendee Menu
+    #endregion
+
+    // Ebd of Added methods for Attendee Menu
 
     //These methods have to be outside of the code below for some reason or it will ERROR
     public void AlchemistClass() { ClassType = "Alchemist"; }
     public void BarbarianClass() { ClassType = "Barbarian"; }
     public void ExplorerClass() { ClassType = "Explorer"; } 
-     
-
 
 
     public void HidePopupMessage()

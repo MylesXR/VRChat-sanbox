@@ -52,7 +52,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
 
     private int maxPlayers = 100;
-    public GameObject BreakableObject;
+    public GameObject[] BreakableObjects;
     public GameObject WaterWalkingObject;
 
 
@@ -218,10 +218,26 @@ public class InteractableObjectManager : UdonSharpBehaviour
             PotionSuperJumpingText.text = $"{PotionSuperJumpingCollected}";
     }
 
-    public GameObject GetObjectToDestroy()
+    public GameObject GetObjectToDestroy(int index = 0)
     {
-        debugMenu.Log("Returning breakable object.");
-        return BreakableObject;
+        if (index >= 0 && index < BreakableObjects.Length && BreakableObjects[index] != null)
+        {
+            debugMenu.Log($"Returning breakable object at index {index}: {BreakableObjects[index].name}");
+            return BreakableObjects[index];
+        }
+
+        // If the index is out of bounds or the object is null, return the first non-null object
+        foreach (var obj in BreakableObjects)
+        {
+            if (obj != null)
+            {
+                debugMenu.Log($"Returning first available breakable object: {obj.name}");
+                return obj;
+            }
+        }
+
+        debugMenu.LogWarning("No valid breakable object found.");
+        return null; // No valid object found
     }
 
     public GameObject GetObjectToActivate()
