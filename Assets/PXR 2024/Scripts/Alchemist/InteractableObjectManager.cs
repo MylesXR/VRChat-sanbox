@@ -13,7 +13,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     #region Inventory Items
 
-    [Space(5)][Header("Inventory Items")][Space(10)]
+    [Space(5)][Header("Inventory Item Amounts")][Space(10)]
     public int HerbsCollected = 10;
     public int FlowersCollected = 10;
     public int GemstonesCollected = 10;
@@ -23,9 +23,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
     public int PotionWallBreakingCollected = 10;
     public int PotionWaterWalkingCollected = 10;
     public int PotionSuperJumpingCollected = 10;
-    public bool CraftPotionWallBreaking;
-    public bool CraftPotionSuperJumping;
-    public bool CraftPotionWaterWalking;
 
     #endregion
 
@@ -44,21 +41,29 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     #endregion
 
-    [Space(5)][Header("Potions")][Space(10)]
-    //[SerializeField] private VRCObjectPool[] playerPotionPools; // Set this in the Unity Inspector
+    #region Potions
+
+    [Space(5)][Header("Potion Pools")][Space(10)]
     [SerializeField] private VRCObjectPool[] wallBreakerPotionPool;
     [SerializeField] private VRCObjectPool[] superJumpPotionPool;
     [SerializeField] private VRCObjectPool[] waterWalkingPotionPool;
 
-
-    private int maxPlayers = 100;
+    [Space(5)][Header("Potion Objects")][Space(10)]  
     public GameObject[] BreakableObjects;
+    [Space(10)]
     public GameObject WaterWalkingObject;
+    [Space(10)]
+    [SerializeField] private int maxPlayers = 100;
+    [Space(10)]
+    public bool CraftPotionWallBreaking;
+    public bool CraftPotionSuperJumping;
+    public bool CraftPotionWaterWalking;
 
+    #endregion
 
     #region Debugging
 
-    [Space(5)][Header("Debug Text")][Space(10)]
+    [Space(5)][Header("Debugging")][Space(10)]
     [SerializeField] private DebugMenu debugMenu;
     private VRCPlayerApi localPlayer;
 
@@ -66,20 +71,11 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     #endregion
 
-    public VRCObjectPool GetWallBreakerPotionPool(int playerIndex)
-    {
-        return wallBreakerPotionPool[playerIndex];
-    }
+    public VRCObjectPool GetWallBreakerPotionPool(int playerIndex) { return wallBreakerPotionPool[playerIndex]; }
 
-    public VRCObjectPool GetSuperJumpPotionPool(int playerIndex)
-    {
-        return superJumpPotionPool[playerIndex];
-    }
+    public VRCObjectPool GetSuperJumpPotionPool(int playerIndex) { return superJumpPotionPool[playerIndex]; }
 
-    public VRCObjectPool GetWaterWalkingPotionPool(int playerIndex)
-    {
-        return waterWalkingPotionPool[playerIndex];
-    }
+    public VRCObjectPool GetWaterWalkingPotionPool(int playerIndex) { return waterWalkingPotionPool[playerIndex]; }
 
     private void Start()
     {
@@ -88,28 +84,12 @@ public class InteractableObjectManager : UdonSharpBehaviour
         UpdateUI();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         base.OnPlayerJoined(player);
         debugMenu.Log($"Player joined: {player.displayName}, ID: {player.playerId}");
         AssignPotionPool(player);
     }
-
-
-
 
     private void AssignPotionPool(VRCPlayerApi player)
     {
@@ -170,8 +150,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
         }
     }
 
-
-
     private void OnEnable()
     {
         if (localPlayer != null && localPlayer.isLocal)
@@ -179,14 +157,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
             Networking.SetOwner(localPlayer, gameObject);
         }
     }
-
-
-
-
-
-
-
-
 
     public void UpdateUI()
     {
@@ -367,4 +337,5 @@ public class InteractableObjectManager : UdonSharpBehaviour
     }
 
     #endregion
+
 }
