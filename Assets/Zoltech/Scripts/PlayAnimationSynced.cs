@@ -22,4 +22,8 @@ public class PlayAnimationSynced : UdonSharpBehaviour
     {
         animator.SetTrigger("PlayAnimation");
     }
+    public override void Interact()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "AnimationPlay");
+    }
 }
