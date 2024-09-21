@@ -121,7 +121,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public void ActivateSuperJump()
     {
         SuperJumpEnabled = true;
-        localPlayer.SetJumpImpulse(20);
+        localPlayer.SetJumpImpulse(15);
         SendCustomEventDelayedSeconds(nameof(DeactivateSuperJump), 10f);
     }
 
