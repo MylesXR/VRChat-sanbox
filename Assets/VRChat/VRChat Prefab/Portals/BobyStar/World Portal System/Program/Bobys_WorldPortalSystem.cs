@@ -426,7 +426,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         potion.transform.position = syncedPotionPosition;
         potion.transform.rotation = syncedPotionRotation;
         potion.SetActive(true);
-        debugMenu.Log($"Potion transform set to position: {syncedPotionPosition}, rotation: {syncedPotionRotation}");
+       // debugMenu.Log($"Potion transform set to position: {syncedPotionPosition}, rotation: {syncedPotionRotation}");
     }
 
     private void AddActivePotion(GameObject potion)
