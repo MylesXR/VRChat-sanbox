@@ -1,6 +1,7 @@
 ﻿
 using UdonSharp;
 using UnityEngine;
+using VRC.SDK3.Components;
 using VRC.SDKBase;
 using VRC.Udon;
 
@@ -12,30 +13,28 @@ public class AlchemistObjectManager : UdonSharpBehaviour
     void Start()
     {
         isAlchemist = false;
-        ToggleBarbarianObjects();
+        ToggleAlchemistObjects();
     }
 
-    public void SetAsBarbarian()
+    public void SetAsAlchemist()
     {
         isAlchemist = true;
-        ToggleBarbarianObjects();
+        ToggleAlchemistObjects();
     }
 
-    public void SetAsNotBarbarian()
+    public void SetAsNotAlchemist()
     {
         isAlchemist = false;
-        ToggleBarbarianObjects();
+        ToggleAlchemistObjects();
     }
 
-    public void ToggleBarbarianObjects()
+    public void ToggleAlchemistObjects()
     {
+
         foreach (GameObject obj in alchemistObjects)
         {
-            Collider collider = obj.GetComponent<Collider>();
-            if (collider != null)
-            {
-                collider.enabled = isAlchemist;
-            }
+            VRCPickup vrcPickup = obj.GetComponent<VRCPickup>();
+            vrcPickup.pickupable = isAlchemist;
         }
     } 
 }
