@@ -8,6 +8,7 @@ public class MeshBreak : UdonSharpBehaviour
     public Rigidbody[] rbs;
     public bool[] isBroken;
     public int breakerLayer; // The layer to identify the breaker
+    public Animator animator;
 
     void Start()
     {
@@ -33,10 +34,16 @@ public class MeshBreak : UdonSharpBehaviour
     {
         if (other.gameObject.layer == breakerLayer)
         {
-            for (int i = 0; i < isBroken.Length; i++)
-            {
-                isBroken[i] = true;
-            }
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "AnimationPlay");
+
+        }
+    }
+    public void AnimationPlay()
+    {
+        animator.SetTrigger("PlayAnimation");
+        for (int i = 0; i < isBroken.Length; i++)
+        {
+            isBroken[i] = true;
         }
     }
 }
