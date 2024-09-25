@@ -9,6 +9,21 @@ public class Player_Trigger_Zone_Manager : UdonSharpBehaviour
     public GameObject[] objectsToActivate; // Objects to activate when puzzle is complete
     public GameObject[] objectsToDeactivate; // Objects to deactivate when puzzle is complete
 
+    public Animator MrSoupsGoldenLadleAnimator;
+
+
+    void Start()
+    {
+        if (MrSoupsGoldenLadleAnimator == null)
+        {
+            Debug.LogError("Animator not assigned!");
+            return;
+        }
+
+        // Disable the animator at the start so nothing plays automatically
+        MrSoupsGoldenLadleAnimator.enabled = false;
+    }
+
     public void OnPlateActivated()
     {
         if (AllPlatesActivated())
@@ -60,6 +75,18 @@ public class Player_Trigger_Zone_Manager : UdonSharpBehaviour
                 obj.SetActive(false);
                 Debug.Log("Deactivated object: " + obj.name);
             }
+        }
+
+        // Start the animation sequence when the puzzle is complete
+        if (MrSoupsGoldenLadleAnimator != null)
+        {
+            MrSoupsGoldenLadleAnimator.enabled = true; // Enable the Animator
+            MrSoupsGoldenLadleAnimator.Play("Mr-Soups-Golden-Ladle-Cage"); // Start the animation
+            Debug.Log("Started Mr-Soups-Golden-Ladle animation.");
+        }
+        else
+        {
+            Debug.LogError("Animator not assigned!");
         }
     }
 }
