@@ -1403,8 +1403,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4786456244624373975}
   - component: {fileID: 5983058299808541005}
-  - component: {fileID: 6700178384729946979}
   - component: {fileID: 3724226443734488803}
+  - component: {fileID: 6700178384729946979}
   - component: {fileID: 2507415860763669207}
   m_Layer: 0
   m_Name: Barbarian-Breakable_Metal-Beam
@@ -1463,27 +1463,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 0.5, z: 0.5}
+  m_Size: {x: 6, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0.02}
---- !u!95 &6700178384729946979
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5271243688532075117}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0425ef4e8b3a33940a08b5b5c1fcf772, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &3724226443734488803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1534,6 +1515,25 @@ MonoBehaviour:
   isBroken: 
   breakerLayer: 24
   animator: {fileID: 6700178384729946979}
+--- !u!95 &6700178384729946979
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5271243688532075117}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0425ef4e8b3a33940a08b5b5c1fcf772, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &2507415860763669207
 MonoBehaviour:
   m_ObjectHideFlags: 0
