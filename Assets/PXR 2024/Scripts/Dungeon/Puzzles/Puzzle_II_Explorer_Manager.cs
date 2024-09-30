@@ -6,6 +6,7 @@ using VRC.Udon;
 public class Puzzle_II_Explorer_Manager : UdonSharpBehaviour
 {
     public Puzzle_II_Explorer_TriggerZone[] pressurePlates; // Array of all pressure plates
+    public Animator[] animators; // Array of animators to trigger animations
 
     // This method is called whenever a plate status changes
     public void UpdatePlateStatus()
@@ -24,15 +25,39 @@ public class Puzzle_II_Explorer_Manager : UdonSharpBehaviour
 
         if (puzzleComplete)
         {
-            // All plates have the correct objects, puzzle is complete
-            CheckPuzzleStatus();
+            Debug.Log("Puzzle is complete! Triggering the animations.");
+            TriggerPuzzleComplete(); // Trigger the puzzle completion logic
         }
     }
 
-    public void CheckPuzzleStatus()
+    // Method to handle puzzle completion
+    public void TriggerPuzzleComplete()
     {
-        // Code to trigger when puzzle is completed
-        Debug.LogWarning("Puzzle is complete! Triggering the next sequence.");
-        // Place the next sequence of code here to trigger other events
+        // Broadcast the event to all clients to play the animations
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayCompletionAnimations");
+    }
+
+    // This method will be called across all clients to play all animations
+    public void PlayCompletionAnimations()
+    {
+        if (animators != null && animators.Length > 0)
+        {
+            foreach (Animator anim in animators)
+            {
+                if (anim != null)
+                {
+                    anim.SetTrigger("PlayAnimation"); // Make sure each Animator has a trigger called "PlayAnimation"
+                    Debug.Log("Animation triggered for: " + anim.gameObject.name);
+                }
+                else
+                {
+                    Debug.LogError("One of the animators in the array is not assigned.");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("Animators array is empty or not assigned.");
+        }
     }
 }
