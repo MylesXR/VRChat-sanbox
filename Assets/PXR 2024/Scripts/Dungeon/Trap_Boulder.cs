@@ -2,7 +2,9 @@
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
+using VRC.Udon.Common.Interfaces;
 
+[UdonBehaviourSyncMode(BehaviourSyncMode.Manual)] // Manual sync for networking
 public class Trap_Boulder : UdonSharpBehaviour
 {
     [SerializeField] private GameObject boulderPrefab;  // The boulder prefab to instantiate
@@ -12,6 +14,8 @@ public class Trap_Boulder : UdonSharpBehaviour
 
     private GameObject[] spawnedBoulders = new GameObject[10]; // Array to track instantiated boulders
     private int boulderCount = 0;
+
+    [UdonSynced] private int syncedBoulderCount = 0; // Synced boulder count
 
     private void Start()
     {
@@ -31,10 +35,24 @@ public class Trap_Boulder : UdonSharpBehaviour
         }
     }
 
-    // Public function to be called from a button press in VRChat
+    // Public function to be called from a button press in VRChat to instantiate a boulder
     public void InstantiateBoulder()
     {
         if (boulderPrefab != null && spawnLocation != null && boulderCount < spawnedBoulders.Length)
+        {
+            // Ensure the local player owns the boulder before instantiating it
+            SendCustomNetworkEvent(NetworkEventTarget.All, "NetworkInstantiateBoulder");
+        }
+        else
+        {
+            Debug.LogError("Instantiation failed: Boulder prefab or spawn location is not set, or maximum boulders reached.");
+        }
+    }
+
+    // Networked method to instantiate boulder
+    public void NetworkInstantiateBoulder()
+    {
+        if (boulderPrefab != null && spawnLocation != null && syncedBoulderCount < spawnedBoulders.Length)
         {
             // Instantiate the boulder
             GameObject newBoulder = VRCInstantiate(boulderPrefab);
@@ -53,12 +71,9 @@ public class Trap_Boulder : UdonSharpBehaviour
                 Debug.LogError("No UdonBehaviour found on the spawned boulder prefab.");
             }
 
-            spawnedBoulders[boulderCount] = newBoulder;
-            boulderCount++;
-        }
-        else
-        {
-            Debug.LogError("Instantiation failed: Boulder prefab or spawn location is not set, or maximum boulders reached.");
+            spawnedBoulders[syncedBoulderCount] = newBoulder;
+            syncedBoulderCount++;
+            RequestSerialization(); // Sync the boulder count across the network
         }
     }
 
@@ -96,7 +111,7 @@ public class Trap_Boulder : UdonSharpBehaviour
             {
                 Debug.LogWarning("Local player is owner, destroying boulder.");
                 Destroy(boulder); // Destroy the boulder locally
-                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "NetworkDestroyBoulder"); // Trigger destruction across the network
+                SendCustomNetworkEvent(NetworkEventTarget.All, "NetworkDestroyBoulder"); // Trigger destruction across the network
             }
             else
             {
@@ -112,24 +127,29 @@ public class Trap_Boulder : UdonSharpBehaviour
     // Networked destruction method
     public void NetworkDestroyBoulder()
     {
-        // This function doesn't need to do anything specific in this case
-        // since the boulder destruction is handled by DestroyBoulder
-        // The event just ensures synchronization across the network
+        // Loop through all boulders and destroy them across the network
+        for (int i = 0; i < syncedBoulderCount; i++)
+        {
+            if (spawnedBoulders[i] != null)
+            {
+                Destroy(spawnedBoulders[i]); // Destroy each boulder
+                spawnedBoulders[i] = null;
+            }
+        }
+        syncedBoulderCount = 0; // Reset the synced boulder count
+        RequestSerialization(); // Sync the state
+        Debug.LogWarning("Boulder destroyed across the network.");
     }
 
     // Backup function to destroy all spawned boulders
     public void DestroyAllBoulders()
     {
-        for (int i = 0; i < boulderCount; i++)
-        {
-            if (spawnedBoulders[i] != null)
-            {
-                Networking.SetOwner(Networking.LocalPlayer, spawnedBoulders[i]); // Ensure the local player owns the object
-                Destroy(spawnedBoulders[i]); // Destroy the boulder locally
-                spawnedBoulders[i] = null;
-            }
-        }
-        boulderCount = 0; // Reset the boulder count
-        Debug.LogWarning("All boulders destroyed.");
+        SendCustomNetworkEvent(NetworkEventTarget.All, "NetworkDestroyBoulder"); // Destroy all boulders across the network
+    }
+
+    public override void OnDeserialization()
+    {
+        // Sync the boulder count and ensure everything is properly networked
+        Debug.LogWarning("Synced boulder count: " + syncedBoulderCount);
     }
 }
