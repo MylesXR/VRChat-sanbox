@@ -2,45 +2,71 @@
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
+using VRC.Udon.Common.Interfaces;
 
+[UdonBehaviourSyncMode(BehaviourSyncMode.Manual)] // Manual sync for networking
 public class Player_Trigger_Zone_Manager : UdonSharpBehaviour
 {
     public Player_Trigger_Zone[] triggerZones; // Array of all the trigger zones in the puzzle
-    public GameObject[] objectsToActivate; // Objects to activate when puzzle is complete
-    public GameObject[] objectsToDeactivate; // Objects to deactivate when puzzle is complete
+    public Animator MrSoupsGoldenLadleAnimator; // Animator controlling the animation
 
-    public Animator MrSoupsGoldenLadleAnimator;
-
+    [UdonSynced] private bool puzzleComplete = false; // Sync the puzzle state across all players
+    private int totalPlayers; // Total number of players
+    private int playersInTrigger = 0; // Number of players currently in the trigger
 
     void Start()
     {
         if (MrSoupsGoldenLadleAnimator == null)
         {
-            Debug.LogError("Animator not assigned!");
+            Debug.LogWarning("Animator not assigned!");
             return;
         }
 
-        // Disable the animator at the start so nothing plays automatically
-        MrSoupsGoldenLadleAnimator.enabled = false;
+        totalPlayers = VRCPlayerApi.GetPlayerCount(); // Get the number of players in the instance
     }
 
+    // Call this when a player activates a trigger zone
     public void OnPlateActivated()
     {
+        Debug.LogWarning("A trigger zone was activated.");
         if (AllPlatesActivated())
         {
-            Debug.Log("All trigger zones activated. Puzzle complete!");
-            CompletePuzzle(); // Complete the puzzle when all plates are activated
-        }
-        else
-        {
-            Debug.Log("A trigger zone was activated, but the puzzle is not yet complete.");
+            Debug.LogWarning("All trigger zones activated. Puzzle complete!");
+            if (!puzzleComplete)
+            {
+                SendCustomNetworkEvent(NetworkEventTarget.All, "CompletePuzzle"); // Broadcast completion to all
+            }
         }
     }
 
+    // Call this when a player deactivates a trigger zone
     public void OnPlateDeactivated()
     {
-        Debug.Log("A trigger zone was deactivated. Puzzle incomplete.");
-        // Optional: Add logic here if something needs to happen when a plate is deactivated
+        Debug.LogWarning("A trigger zone was deactivated.");
+    }
+
+    // Call this method when a player enters a trigger zone
+    public void OnPlayerEnterTriggerZone()
+    {
+        playersInTrigger++;
+        Debug.LogWarning(playersInTrigger + " out of " + totalPlayers + " players are in the trigger.");
+
+        // Check if all players are in the trigger zones
+        if (playersInTrigger >= totalPlayers)
+        {
+            Debug.LogWarning("All players are in the trigger zones.");
+            if (!puzzleComplete)
+            {
+                SendCustomNetworkEvent(NetworkEventTarget.All, "CompletePuzzle"); // Trigger puzzle completion for all
+            }
+        }
+    }
+
+    // Call this method when a player exits a trigger zone
+    public void OnPlayerExitTriggerZone()
+    {
+        playersInTrigger--;
+        Debug.LogWarning(playersInTrigger + " players are still in the trigger.");
     }
 
     private bool AllPlatesActivated()
@@ -55,38 +81,42 @@ public class Player_Trigger_Zone_Manager : UdonSharpBehaviour
         return true; // All trigger zones are activated
     }
 
-    private void CompletePuzzle()
+    // This is called via SendCustomNetworkEvent across all clients
+    public void CompletePuzzle()
     {
-        // Activate specified objects
-        foreach (GameObject obj in objectsToActivate)
+        if (!puzzleComplete)
         {
-            if (obj != null)
-            {
-                obj.SetActive(true);
-                Debug.Log("Activated object: " + obj.name);
-            }
+            puzzleComplete = true; // Mark the puzzle as complete
+            RequestSerialization(); // Sync the puzzle state across all players
+            PlayAnimation(); // Trigger animation for all players
         }
+    }
 
-        // Deactivate specified objects
-        foreach (GameObject obj in objectsToDeactivate)
-        {
-            if (obj != null)
-            {
-                obj.SetActive(false);
-                Debug.Log("Deactivated object: " + obj.name);
-            }
-        }
-
-        // Start the animation sequence when the puzzle is complete
+    // Trigger the animation using SendCustomNetworkEvent and SetTrigger, as per your working example
+    public void PlayAnimation()
+    {
         if (MrSoupsGoldenLadleAnimator != null)
         {
-            MrSoupsGoldenLadleAnimator.enabled = true; // Enable the Animator
-            MrSoupsGoldenLadleAnimator.Play("Mr-Soups-Golden-Ladle-Cage"); // Start the animation
-            Debug.Log("Started Mr-Soups-Golden-Ladle animation.");
+            SendCustomNetworkEvent(NetworkEventTarget.All, "TriggerAnimation"); // Send event to all players to play the animation
         }
-        else
+    }
+
+    // This method is triggered by SendCustomNetworkEvent to set the animation trigger
+    public void TriggerAnimation()
+    {
+        if (MrSoupsGoldenLadleAnimator != null)
         {
-            Debug.LogError("Animator not assigned!");
+            MrSoupsGoldenLadleAnimator.SetTrigger("PlayAnimation"); // Set the trigger for the animation
+            Debug.LogWarning("Triggered Mr-Soups-Golden-Ladle animation.");
+        }
+    }
+
+    public override void OnDeserialization()
+    {
+        // If the puzzle is complete but the animation hasn't played, ensure it plays for late joiners
+        if (puzzleComplete)
+        {
+            PlayAnimation();
         }
     }
 }
