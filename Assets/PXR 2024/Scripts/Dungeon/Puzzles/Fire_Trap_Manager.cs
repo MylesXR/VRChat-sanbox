@@ -5,35 +5,58 @@ using VRC.Udon;
 
 public class Fire_Trap_Manager : UdonSharpBehaviour
 {
-    public GameObject[] FireTraps;
+    public GameObject[] FireTraps; // Array of fire traps
+
+    [UdonSynced] // Synced variable to track if traps are disabled across all players
+    private bool areTrapsDisabled = false;
+
+    private void Start()
+    {
+        // Ensure traps are in the correct state at the start
+        UpdateFireTrapStates();
+    }
 
     public override void Interact()
     {
-        // Send the network event to all players to disable the fire traps
-        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "DisableFireTraps");
-    }
-
-    // This method will be called across all clients
-    public void DisableFireTraps()
-    {
-        if (FireTraps == null || FireTraps.Length == 0)
+        // Ensure we are the owner of the object before making changes
+        if (!Networking.IsOwner(gameObject))
         {
-            Debug.LogError("FireTraps array is not set or is empty.");
-            return;
+            Networking.SetOwner(Networking.LocalPlayer, gameObject);
         }
 
-        // Loop through the FireTraps array and disable each fire trap
+        // Toggle the fire traps and sync the state across the network
+        ToggleFireTraps();
+
+        // Request to sync the updated state across all clients
+        RequestSerialization();
+
+        // Call the update function on all clients
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UpdateFireTrapStates");
+    }
+
+    // Method to toggle fire traps
+    private void ToggleFireTraps()
+    {
+        // Flip the boolean state to enable/disable the traps
+        areTrapsDisabled = !areTrapsDisabled;
+    }
+
+    // Update the state of fire traps for all clients
+    public void UpdateFireTrapStates()
+    {
         for (int i = 0; i < FireTraps.Length; i++)
         {
             if (FireTraps[i] != null)
             {
-                FireTraps[i].SetActive(false);
-                Debug.LogWarning($"FireTrap at index {i} disabled.");
-            }
-            else
-            {
-                Debug.LogWarning($"FireTrap at index {i} is null.");
+                // Set each fire trap active or inactive based on the synced state
+                FireTraps[i].SetActive(!areTrapsDisabled);
             }
         }
+    }
+
+    public override void OnDeserialization()
+    {
+        // When the object state is deserialized, update the traps for all players
+        UpdateFireTrapStates();
     }
 }
