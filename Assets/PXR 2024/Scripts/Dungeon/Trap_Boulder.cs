@@ -7,6 +7,7 @@ public class Trap_Boulder : UdonSharpBehaviour
 {
     [SerializeField] private GameObject boulderPrefab;  // The boulder prefab to instantiate
     [SerializeField] private Transform spawnLocation;   // The location where the boulder will be instantiated
+    [SerializeField] private Transform teleportDestination;  // The teleport destination to assign to the spawned boulder
     public string correctObjectName;
 
     private GameObject[] spawnedBoulders = new GameObject[10]; // Array to track instantiated boulders
@@ -23,6 +24,11 @@ public class Trap_Boulder : UdonSharpBehaviour
         {
             Debug.LogError("Spawn location is not assigned!");
         }
+
+        if (teleportDestination == null)
+        {
+            Debug.LogError("Teleport destination is not assigned!");
+        }
     }
 
     // Public function to be called from a button press in VRChat
@@ -30,8 +36,23 @@ public class Trap_Boulder : UdonSharpBehaviour
     {
         if (boulderPrefab != null && spawnLocation != null && boulderCount < spawnedBoulders.Length)
         {
+            // Instantiate the boulder
             GameObject newBoulder = VRCInstantiate(boulderPrefab);
             newBoulder.transform.SetPositionAndRotation(spawnLocation.position, spawnLocation.rotation);
+
+            // Now, get the UdonBehaviour component from the spawned boulder and set the "Destination" variable
+            UdonBehaviour boulderUdon = newBoulder.GetComponent<UdonBehaviour>();
+            if (boulderUdon != null)
+            {
+                // Set the "Destination" variable in the Udon graph
+                boulderUdon.SetProgramVariable("Destination", teleportDestination);
+                Debug.LogWarning("Set 'Destination' on boulder to: " + teleportDestination.name);
+            }
+            else
+            {
+                Debug.LogError("No UdonBehaviour found on the spawned boulder prefab.");
+            }
+
             spawnedBoulders[boulderCount] = newBoulder;
             boulderCount++;
         }
@@ -51,10 +72,16 @@ public class Trap_Boulder : UdonSharpBehaviour
         }
 
         // Check if the object entering the trigger has the correct name
+        Debug.LogWarning("Trigger entered by: " + other.gameObject.name);
+
         if (other.gameObject.name == correctObjectName)
         {
-            Debug.Log("Correct object in Trigger: " + other.gameObject.name);
+            Debug.LogWarning("Correct object in Trigger: " + other.gameObject.name);
             DestroyBoulder(other.gameObject);  // Destroy the boulder
+        }
+        else
+        {
+            Debug.LogWarning("Incorrect object in Trigger: " + other.gameObject.name);
         }
     }
 
@@ -63,9 +90,18 @@ public class Trap_Boulder : UdonSharpBehaviour
     {
         if (boulder != null)
         {
+            Debug.LogWarning("Attempting to destroy boulder: " + boulder.name);
             Networking.SetOwner(Networking.LocalPlayer, boulder); // Ensure the local player owns the object
-            Destroy(boulder); // Destroy the boulder locally
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "NetworkDestroyBoulder"); // Trigger destruction across the network
+            if (Networking.IsOwner(boulder))
+            {
+                Debug.LogWarning("Local player is owner, destroying boulder.");
+                Destroy(boulder); // Destroy the boulder locally
+                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "NetworkDestroyBoulder"); // Trigger destruction across the network
+            }
+            else
+            {
+                Debug.LogError("Local player is not the owner of the boulder: " + boulder.name);
+            }
         }
         else
         {
@@ -94,6 +130,6 @@ public class Trap_Boulder : UdonSharpBehaviour
             }
         }
         boulderCount = 0; // Reset the boulder count
-        Debug.Log("All boulders destroyed.");
+        Debug.LogWarning("All boulders destroyed.");
     }
 }
