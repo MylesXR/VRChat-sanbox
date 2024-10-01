@@ -5,6 +5,9 @@ using VRC.Udon;
 
 public class Fire_Trap_Button_Manager : UdonSharpBehaviour
 {
+    [Space(5)]
+    [Header("Arrays To Fill")]
+    [Space(10)]
     public GameObject[] correctPattern; // Array to define the correct button order
     public GameObject[] objectsToDeactivate; // Array of objects to deactivate/reactivate upon pattern check
 
@@ -24,23 +27,46 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
     private int currentIndex; // Tracks the current position in the player's pattern
     private bool puzzleComplete = false; // Tracks if the puzzle is complete
 
-    private bool isFlashing = false; // Tracks if flashing is in progress
+    // Networked variable to track if flashing is active (so it syncs across all clients)
+    private bool isFlashing = false;
     private int flashDuringResetCount; // Local flash count for the reset period
     private int remainingFlashes; // Local flash count to track remaining flashes during reset
     private bool flashToggle; // Toggles between base and incorrect material
+    private VRCPlayerApi localPlayer;
 
 
-
+    // Synced variables for networking
+    [UdonSynced(UdonSyncMode.None)] private Material currentMaterial; // Current material applied (synced)
+    [UdonSynced(UdonSyncMode.None)] private bool isObjectActive;  // Whether objects are active (synced)
+    [UdonSynced(UdonSyncMode.None)] private bool isFlashingSynced; // Whether flashing is active (synced)
 
 
     void Start()
     {
+        localPlayer = Networking.LocalPlayer;
+
         playerPattern = new GameObject[maxGuesses]; // Initialize the player's pattern array
         if (backgroundMesh != null)
         {
             baseMaterial = backgroundMesh.material; // Store the base material of the background mesh
         }
         ResetPattern(); // Reset the pattern at the start
+    }
+
+    public override void Interact()
+    {
+        // Check if the current player owns the puzzle or if there is no owner (i.e., puzzle is free to interact with)
+        if (Networking.IsOwner(localPlayer, gameObject) || Networking.GetOwner(gameObject) == null)
+        {
+            // If no owner or current player is the owner, assign ownership and start interaction
+            Networking.SetOwner(localPlayer, gameObject); // Set the player as the owner
+            Debug.LogWarning("You are now the owner of the puzzle.");
+            RegisterButtonPress(null); // Trigger puzzle interaction
+        }
+        else
+        {
+            Debug.LogWarning("Puzzle is currently owned by another player.");
+        }
     }
 
     public void RegisterButtonPress(GameObject button)
@@ -158,12 +184,23 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
 
     public void StartFlashingEffect()
     {
-        if (!isFlashing)
+        // Only the owner of the object can start the flashing
+        if (Networking.IsOwner(localPlayer, gameObject))
         {
-            Debug.LogWarning("Starting flashing effect.");
-            isFlashing = true; // Set flashing state
-            flashToggle = true; // Initialize the toggle for flashing materials
-            FlashDuringReset(); // Start the flashing loop
+            if (!isFlashing)
+            {
+                Debug.LogWarning("Starting flashing effect.");
+                isFlashingSynced = true; // Sync the flashing state across network
+                RequestSerialization();  // Notify the network
+
+                flashToggle = true; // Initialize the toggle for flashing materials
+                FlashDuringReset(); // Start the flashing loop
+            }
+        }
+        else
+        {
+            // If another player triggered it, sync the state across the network
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(StartFlashingEffect));
         }
     }
 
@@ -171,8 +208,10 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
     {
         if (remainingFlashes <= 0)
         {
-            // Stop flashing and revert to base material when the reset is done
-            isFlashing = false;
+            // Stop flashing and revert to base material at the end
+            isFlashingSynced = false; // Stop sync when flashing is done
+            RequestSerialization();  // Notify the network that flashing has stopped
+
             ChangeMeshMaterial(baseMaterial);
             Debug.LogWarning("Flashing complete. Puzzle is ready for reset.");
             return;
@@ -181,25 +220,19 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         // Alternate between incorrect and base material using the flashToggle variable
         if (flashToggle)
         {
-            ChangeMeshMaterial(incorrectMaterial); // Set to incorrect material
+            ChangeMeshMaterial(incorrectMaterial);
         }
         else
         {
-            ChangeMeshMaterial(baseMaterial); // Set to base material
+            ChangeMeshMaterial(baseMaterial);
         }
 
-        // Toggle the flashToggle for the next iteration
-        flashToggle = !flashToggle;
-
-        // Log the remaining flashes
-        Debug.LogWarning("Flashing material. Remaining flashes: " + remainingFlashes);
-
-        // Decrement the flash count
+        flashToggle = !flashToggle;  // Toggle the material for next flash
         remainingFlashes--;
 
-        // Continue flashing after the interval
         SendCustomEventDelayedSeconds(nameof(FlashDuringReset), flashInterval);
     }
+
 
 
     public void FlashMaterial()
@@ -296,15 +329,43 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
 
     public void ResetPuzzle()
     {
-        Debug.LogWarning("Puzzle is resetting...");
+        // Ensure that localPlayer is assigned properly before attempting to reset ownership
+        if (localPlayer == null)
+        {
+            localPlayer = Networking.LocalPlayer;
+        }
 
-        // Reset the pattern for a new attempt
-        ResetPattern();
+        if (Networking.IsOwner(localPlayer, gameObject))
+        {
+            Debug.LogWarning("Puzzle is resetting...");
 
-        // Reactivate any objects that were deactivated
-        ReactivateObjects();
+            // Reset puzzle logic (this only happens on the owner)
+            ResetPattern();
+            ReactivateObjects();
+            ChangeMeshMaterial(baseMaterial);
 
-        // Ensure the base material is shown after reset
-        ChangeMeshMaterial(baseMaterial);
+            // Reset ownership so others can interact
+            var masterPlayer = VRCPlayerApi.GetPlayerById(1); // Assign ownership to the master player
+            if (masterPlayer != null && gameObject != null)
+            {
+                Networking.SetOwner(masterPlayer, gameObject);  // Assign ownership back to the master player
+                Debug.LogWarning("Puzzle ownership has been reset to the master player. Another player can now interact.");
+            }
+            else
+            {
+                Debug.LogError("Failed to reset ownership because masterPlayer or gameObject is null.");
+            }
+        }
+    }
+
+
+    public override void OnDeserialization()
+    {
+        // This method is called whenever networked variables are updated on any client
+        if (isFlashingSynced && !isFlashing)
+        {
+            // If a networked player started flashing, we should follow along
+            StartFlashingEffect();
+        }
     }
 }
