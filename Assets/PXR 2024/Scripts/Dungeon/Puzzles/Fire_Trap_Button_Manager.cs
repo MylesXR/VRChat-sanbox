@@ -17,9 +17,13 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
     public float guessMaterialDuration = 0.25f; // Duration to show guess material before reverting (configurable in Inspector)
     public float resetDelay = 5f; // Delay in seconds before resetting the puzzle (configurable in Inspector)
 
+    public int flashCount = 3; // Number of flashes when the pattern is wrong
+    public float flashInterval = 0.2f; // Interval between flashes
+
     private GameObject[] playerPattern; // Array to store the player's input pattern
     private int currentIndex; // Tracks the current position in the player's pattern
     private bool puzzleComplete = false; // Tracks if the puzzle is complete
+    private bool isFlashing = false; // Tracks if flashing is in progress
 
     void Start()
     {
@@ -113,18 +117,17 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
 
     private void HandleIncorrectPattern()
     {
-        ChangeMeshMaterial(incorrectMaterial); // Show incorrect material immediately when the pattern is wrong
-        Debug.LogWarning("Incorrect pattern processed. Puzzle will reset.");
+        Debug.LogWarning("Incorrect pattern processed. Puzzle will flash and then reset.");
+
+        // Start flashing effect before resetting
+        StartFlashingEffect();
         SendCustomEventDelayedSeconds(nameof(ResetPuzzle), resetDelay); // Reset the puzzle after the reset delay
     }
 
-    private void ShowGuessMaterial()
+    public void ShowGuessMaterial()
     {
         // Change to guess material for the configured duration
-        Debug.LogWarning("Changing to guess material.");
         ChangeMeshMaterial(guessMaterial);
-
-        // Log the time when the material is set
         Debug.LogWarning("Guess material set. Will revert after " + guessMaterialDuration + " seconds.");
 
         // Revert back to base material after guess duration
@@ -136,20 +139,56 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         // Only revert to base material if the puzzle is not complete (if it's complete, keep it green)
         if (!puzzleComplete)
         {
-            Debug.LogWarning("Reverting to base material.");
             ChangeMeshMaterial(baseMaterial); // Revert to the base material after showing guess material
-        }
-        else
-        {
-            Debug.LogWarning("Puzzle is complete, not reverting material.");
         }
     }
 
-    private void ChangeMeshMaterial(Material newMaterial)
+    public void StartFlashingEffect()
+    {
+        if (!isFlashing)
+        {
+            Debug.LogWarning("Starting flash effect for incorrect pattern.");
+            isFlashing = true; // Set flashing state
+            flashCount = 3; // Reset flash count
+            FlashMaterial(); // Start the flashing effect, no argument needed
+        }
+    }
+
+    public void FlashMaterial()
+    {
+        // Alternate between incorrect material and base material
+        if (backgroundMesh.material == incorrectMaterial)
+        {
+            ChangeMeshMaterial(baseMaterial);
+        }
+        else
+        {
+            ChangeMeshMaterial(incorrectMaterial);
+        }
+
+        // Log the flash action
+        Debug.LogWarning("Flashing material. Remaining flashes: " + flashCount);
+
+        flashCount--;
+
+        // Continue flashing until flashCount is zero
+        if (flashCount > 0)
+        {
+            SendCustomEventDelayedSeconds(nameof(FlashMaterial), flashInterval);
+        }
+        else
+        {
+            // Stop flashing and revert to base material at the end
+            isFlashing = false;
+            ChangeMeshMaterial(baseMaterial);
+            Debug.LogWarning("Flashing complete, reverting to base material.");
+        }
+    }
+
+    public void ChangeMeshMaterial(Material newMaterial)
     {
         if (backgroundMesh != null)
         {
-            Debug.LogWarning("Changing material to: " + newMaterial.name);
             backgroundMesh.material = newMaterial; // Change the material immediately
         }
         else
@@ -198,14 +237,12 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
 
     private void ResetPattern()
     {
-        Debug.LogWarning("Resetting player pattern and guesses.");
         currentIndex = 0; // Reset the index to start checking from the beginning
         for (int i = 0; i < playerPattern.Length; i++)
         {
             playerPattern[i] = null; // Initialize the pattern with nulls
         }
         puzzleComplete = false; // Reset puzzle completion status
-        Debug.LogWarning("Pattern reset. Ready for the next attempt.");
     }
 
     public void ResetPuzzle()
