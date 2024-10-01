@@ -23,7 +23,15 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
     private GameObject[] playerPattern; // Array to store the player's input pattern
     private int currentIndex; // Tracks the current position in the player's pattern
     private bool puzzleComplete = false; // Tracks if the puzzle is complete
+
     private bool isFlashing = false; // Tracks if flashing is in progress
+    private int flashDuringResetCount; // Local flash count for the reset period
+    private int remainingFlashes; // Local flash count to track remaining flashes during reset
+    private bool flashToggle; // Toggles between base and incorrect material
+
+
+
+
 
     void Start()
     {
@@ -117,11 +125,16 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
 
     private void HandleIncorrectPattern()
     {
-        Debug.LogWarning("Incorrect pattern processed. Puzzle will flash and then reset.");
+        Debug.LogWarning("Incorrect pattern detected. Flashing will start during reset.");
 
-        // Start flashing effect before resetting
+        // Initialize remaining flashes with the value set in Inspector
+        remainingFlashes = flashCount;
+
+        // Ensure the flashing effect starts
         StartFlashingEffect();
-        SendCustomEventDelayedSeconds(nameof(ResetPuzzle), resetDelay); // Reset the puzzle after the reset delay
+
+        // Reset the puzzle after the flashing and reset delay
+        SendCustomEventDelayedSeconds(nameof(ResetPuzzle), resetDelay);
     }
 
     public void ShowGuessMaterial()
@@ -147,12 +160,47 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
     {
         if (!isFlashing)
         {
-            Debug.LogWarning("Starting flash effect for incorrect pattern.");
+            Debug.LogWarning("Starting flashing effect.");
             isFlashing = true; // Set flashing state
-            flashCount = 3; // Reset flash count
-            FlashMaterial(); // Start the flashing effect, no argument needed
+            flashToggle = true; // Initialize the toggle for flashing materials
+            FlashDuringReset(); // Start the flashing loop
         }
     }
+
+    public void FlashDuringReset()
+    {
+        if (remainingFlashes <= 0)
+        {
+            // Stop flashing and revert to base material when the reset is done
+            isFlashing = false;
+            ChangeMeshMaterial(baseMaterial);
+            Debug.LogWarning("Flashing complete. Puzzle is ready for reset.");
+            return;
+        }
+
+        // Alternate between incorrect and base material using the flashToggle variable
+        if (flashToggle)
+        {
+            ChangeMeshMaterial(incorrectMaterial); // Set to incorrect material
+        }
+        else
+        {
+            ChangeMeshMaterial(baseMaterial); // Set to base material
+        }
+
+        // Toggle the flashToggle for the next iteration
+        flashToggle = !flashToggle;
+
+        // Log the remaining flashes
+        Debug.LogWarning("Flashing material. Remaining flashes: " + remainingFlashes);
+
+        // Decrement the flash count
+        remainingFlashes--;
+
+        // Continue flashing after the interval
+        SendCustomEventDelayedSeconds(nameof(FlashDuringReset), flashInterval);
+    }
+
 
     public void FlashMaterial()
     {
@@ -190,6 +238,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         if (backgroundMesh != null)
         {
             backgroundMesh.material = newMaterial; // Change the material immediately
+            backgroundMesh.material = backgroundMesh.material;
         }
         else
         {
@@ -247,9 +296,15 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
 
     public void ResetPuzzle()
     {
-        Debug.LogWarning("Resetting the puzzle.");
-        ResetPattern(); // Reset the pattern for a new attempt
-        ReactivateObjects(); // Reactivate any objects that were deactivated
-        ChangeMeshMaterial(baseMaterial); // Revert to the base material after reset
+        Debug.LogWarning("Puzzle is resetting...");
+
+        // Reset the pattern for a new attempt
+        ResetPattern();
+
+        // Reactivate any objects that were deactivated
+        ReactivateObjects();
+
+        // Ensure the base material is shown after reset
+        ChangeMeshMaterial(baseMaterial);
     }
 }
