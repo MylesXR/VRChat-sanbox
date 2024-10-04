@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -7,9 +6,13 @@ using VRC.Udon;
 public class BreakableObject : UdonSharpBehaviour
 {
     public Rigidbody[] rbs;
-    public Collider sphereCollider; // Reference to the animated sphere's collider
+    public Collider[] objectColliders; // Reference to the colliders of the objects that will break
+    public Collider animationCollider; // Reference to the collider used for the animation, set in Inspector
     public int breakerLayer; // The layer to identify the breaker
+    public int afterBreakLayer; // The new layer after the object breaks, set in Inspector
     public Animator animator;
+    public float deactivationTime = 5.0f; // Time in seconds before objects get deactivated
+    public float layerChangeDelay = 1.0f; // Delay in seconds before changing to the after-break layer, adjustable in Inspector
 
     void Start()
     {
@@ -20,7 +23,18 @@ public class BreakableObject : UdonSharpBehaviour
             rb.isKinematic = true; // Disable physics interactions
             rb.useGravity = false; // Disable gravity initially
         }
-        sphereCollider.enabled = true; // Ensure the collider is enabled at the start
+
+        // Ensure all object colliders are enabled at the start
+        foreach (Collider col in objectColliders)
+        {
+            col.enabled = true;
+        }
+
+        // Ensure the animation collider is enabled at the start
+        if (animationCollider != null)
+        {
+            animationCollider.enabled = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,6 +52,12 @@ public class BreakableObject : UdonSharpBehaviour
         animator.enabled = true;
         animator.SetTrigger("PlayAnimation");
 
+        // Disable the animation collider once the explosion happens
+        if (animationCollider != null)
+        {
+            animationCollider.enabled = false;
+        }
+
         // Delay physics activation for stability in VRChat builds
         SendCustomEventDelayedSeconds("EnablePhysics", 0.5f); // Adjust delay as needed
     }
@@ -50,13 +70,31 @@ public class BreakableObject : UdonSharpBehaviour
             rb.useGravity = true;   // Re-enable gravity
         }
 
-        // Disable the collider after the animation is complete
-        SendCustomEventDelayedSeconds("DisableCollider", 2.0f); // Adjust delay based on animation length
+        // Change the colliders' layers after a delay
+        SendCustomEventDelayedSeconds("ChangeLayerAfterDelay", layerChangeDelay);
+
+        // Set objects to inactive after a delay
+        SendCustomEventDelayedSeconds("DeactivateObjects", deactivationTime);
     }
 
-    public void DisableCollider()
+    public void ChangeLayerAfterDelay()
     {
-        sphereCollider.enabled = false; // Disable the collider
-        Debug.LogWarning("Collider disabled after explosion.");
+        // Change the colliders to the after-break layer
+        foreach (Collider col in objectColliders)
+        {
+            col.gameObject.layer = afterBreakLayer; // Change to the new layer after breaking
+        }
+
+        Debug.LogWarning("Colliders' layers changed to after-break layer after delay.");
+    }
+
+    public void DeactivateObjects()
+    {
+        foreach (Collider col in objectColliders)
+        {
+            col.gameObject.SetActive(false); // Set the objects inactive after breaking
+        }
+
+        Debug.LogWarning("Exploded objects have been set inactive.");
     }
 }
