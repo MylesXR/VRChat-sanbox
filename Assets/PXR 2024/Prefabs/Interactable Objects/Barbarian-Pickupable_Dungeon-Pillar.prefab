@@ -67,13 +67,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3304812658150953353}
-  m_LocalRotation: {x: 0.00000006004947, y: 0.7071065, z: 0.7071071, w: 0.0000000714945}
-  m_LocalPosition: {x: 0.057, y: 0, z: -0.729}
+  m_LocalRotation: {x: 3.5131675e-11, y: -0.70710635, z: -0.7071073, w: 0.000000014901158}
+  m_LocalPosition: {x: -0.85, y: -0.055, z: -0.966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3535653575843447180}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 270, y: 0, z: -179.99998}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: -180.00002}
 --- !u!1 &4204948755768498998
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,14 +217,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MomentumTransferMethod: 0
-  DisallowTheft: 0
+  DisallowTheft: 1
   ExactGun: {fileID: 0}
   ExactGrip: {fileID: 1299691083746646804}
   allowManipulationWhenEquipped: 0
   orientation: 1
   AutoHold: 0
   InteractionText: 
-  UseText: Use
+  UseText: Pickup Object
   useEventBroadcastType: 0
   UseDownEventName: 
   UseUpEventName: 
@@ -235,7 +235,7 @@ MonoBehaviour:
   ThrowVelocityBoostScale: 1
   currentlyHeldBy: {fileID: 0}
   pickupable: 1
-  proximity: 40
+  proximity: 25
 --- !u!114 &3986823817183301273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,9 +258,9 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 7898925710917854163}
-  targetObject: {fileID: 4390887439325481213}
-  objectCollider1: {fileID: 4828612521140487115}
-  objectCollider2: {fileID: 9080687902320919279}
+  pickupObject: {fileID: 4204948755768498998}
+  pickupCollider: {fileID: 9080687902320919279}
+  meshCollider: {fileID: 4828612521140487115}
 --- !u!114 &7898925710917854163
 MonoBehaviour:
   m_ObjectHideFlags: 0

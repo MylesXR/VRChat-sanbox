@@ -5,41 +5,35 @@ using VRC.Udon;
 
 public class VRC_ToggleObjectOnPickup : UdonSharpBehaviour
 {
-    public GameObject targetObject;  // The object that will be toggled on and off
-    public Collider objectCollider1; // First collider to be disabled/enabled
-    public Collider objectCollider2; // Second collider to be disabled/enabled 
+    public GameObject pickupObject;  // The object that will be toggled on and off
+    public Collider pickupCollider;  // First collider to be disabled/enabled
+    public Collider meshCollider;    // Second collider to be disabled/enabled
 
     public override void OnPickup()
     {
-        if (targetObject != null)
+        if (pickupCollider != null)
         {
-            // Disable the entire object and its colliders when picked up
-            targetObject.SetActive(false);
-            if (objectCollider1 != null)
-            {
-                objectCollider1.enabled = false;
-            }
-            if (objectCollider2 != null)
-            {
-                objectCollider2.enabled = false;
-            }
-        } 
+            // Disable the collider when picked up
+            pickupCollider.enabled = false;
+        }
+        if (meshCollider != null)
+        {
+            // Disable the second collider when picked up
+            meshCollider.enabled = false;
+        }
     }
 
     public override void OnDrop()
     {
-        if (targetObject != null)
+        if (pickupCollider != null)
         {
-            // Re-enable the entire object and its colliders when dropped
-            targetObject.SetActive(true);
-            if (objectCollider1 != null)
-            {
-                objectCollider1.enabled = true;
-            }
-            if (objectCollider2 != null)
-            {
-                objectCollider2.enabled = true;
-            }
+            // Re-enable the collider when dropped
+            pickupCollider.enabled = true;
         }
-    } 
+        if (meshCollider != null)
+        {
+            // Re-enable the second collider when dropped
+            meshCollider.enabled = true;
+        }
+    }
 }
