@@ -7,116 +7,104 @@ using VRC.Udon.Common.Interfaces;
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)] // Manual sync for networking
 public class Player_Trigger_Zone_Manager : UdonSharpBehaviour
 {
-    public Player_Trigger_Zone[] triggerZones; // Array of all the trigger zones in the puzzle
-    public Animator MrSoupsGoldenLadleAnimator; // Animator controlling the animation
+    public Player_Trigger_Zone[] triggerZones; // Array of all the trigger zones
+    public Animator MrSoupsGoldenLadleAnimator; // Animator for the animation
 
-    [UdonSynced] private bool puzzleComplete = false; // Sync the puzzle state across all players
-    private int totalPlayers; // Total number of players
-    private int playersInTrigger = 0; // Number of players currently in the trigger
+    public int requiredPlayers; // Set the number of players required to complete the puzzle
+    public int requiredTriggers; // Set the number of triggers required to complete the puzzle
+
+    [UdonSynced] private int syncedPlayersInTrigger = 0; // Synced count of players in trigger zones
+    [UdonSynced] private bool puzzleComplete = false; // Sync puzzle state across all players
+    private int localPlayersInTrigger = 0; // Local count of players currently in the trigger zones
 
     void Start()
     {
-        if (MrSoupsGoldenLadleAnimator == null)
-        {
-            Debug.LogWarning("Animator not assigned!");
-            return;
-        }
-
-        totalPlayers = VRCPlayerApi.GetPlayerCount(); // Get the number of players in the instance
+        Debug.LogWarning("Total trigger zones in scene: " + triggerZones.Length);
+        Debug.LogWarning("Required players to complete puzzle: " + requiredPlayers);
+        Debug.LogWarning("Required triggers to complete puzzle: " + requiredTriggers);
     }
 
-    // Call this when a player activates a trigger zone
+    // Call this when a player activates a trigger
     public void OnPlateActivated()
     {
-        Debug.LogWarning("A trigger zone was activated.");
+        localPlayersInTrigger++;
+        Debug.LogWarning("Local player entered trigger zone. Local players in trigger: " + localPlayersInTrigger);
+
+        // If enough players are in triggers, sync this event across all players
         if (AllPlatesActivated())
         {
-            Debug.LogWarning("All trigger zones activated. Puzzle complete!");
             if (!puzzleComplete)
             {
-                SendCustomNetworkEvent(NetworkEventTarget.All, "CompletePuzzle"); // Broadcast completion to all
+                SendCustomNetworkEvent(NetworkEventTarget.All, "CompletePuzzle"); // Broadcast puzzle completion
             }
         }
     }
 
-    // Call this when a player deactivates a trigger zone
+    // Call this when a player deactivates a trigger
     public void OnPlateDeactivated()
     {
-        Debug.LogWarning("A trigger zone was deactivated.");
-    }
+        localPlayersInTrigger--;
+        Debug.LogWarning("Local player left trigger zone. Local players in trigger: " + localPlayersInTrigger);
 
-    // Call this method when a player enters a trigger zone
-    public void OnPlayerEnterTriggerZone()
-    {
-        playersInTrigger++;
-        Debug.LogWarning(playersInTrigger + " out of " + totalPlayers + " players are in the trigger.");
-
-        // Check if all players are in the trigger zones
-        if (playersInTrigger >= totalPlayers)
+        // If puzzle was complete but a player leaves, reset the puzzle
+        if (puzzleComplete)
         {
-            Debug.LogWarning("All players are in the trigger zones.");
-            if (!puzzleComplete)
-            {
-                SendCustomNetworkEvent(NetworkEventTarget.All, "CompletePuzzle"); // Trigger puzzle completion for all
-            }
+            puzzleComplete = false;
+            RequestSerialization(); // Sync the reset state across the network
+            Debug.LogWarning("Puzzle reset because a player left a trigger zone.");
         }
     }
 
-    // Call this method when a player exits a trigger zone
-    public void OnPlayerExitTriggerZone()
-    {
-        playersInTrigger--;
-        Debug.LogWarning(playersInTrigger + " players are still in the trigger.");
-    }
-
+    // Check if all plates are activated and the correct number of players are in their triggers
     private bool AllPlatesActivated()
     {
+        int activatedTriggers = 0;
+
+        // Count how many triggers have players in them
         foreach (Player_Trigger_Zone zone in triggerZones)
         {
-            if (!zone.IsPlayerOnPlate())
+            if (zone.IsPlayerOnPlate())
             {
-                return false; // Return false if any trigger zone is not activated
+                activatedTriggers++;
             }
         }
-        return true; // All trigger zones are activated
+
+        Debug.LogWarning("Triggers activated: " + activatedTriggers);
+
+        // Ensure the required number of triggers and players are present
+        return activatedTriggers >= requiredTriggers && localPlayersInTrigger >= requiredPlayers;
     }
 
-    // This is called via SendCustomNetworkEvent across all clients
+    // Complete the puzzle and sync it across the network
     public void CompletePuzzle()
     {
         if (!puzzleComplete)
         {
             puzzleComplete = true; // Mark the puzzle as complete
-            RequestSerialization(); // Sync the puzzle state across all players
-            PlayAnimation(); // Trigger animation for all players
+            syncedPlayersInTrigger = localPlayersInTrigger; // Sync the number of players in trigger zones
+            RequestSerialization(); // Sync the state across players
+            PlayAnimation(); // Trigger the animation
+            Debug.LogWarning("Puzzle completed and synced.");
         }
     }
 
-    // Trigger the animation using SendCustomNetworkEvent and SetTrigger, as per your working example
+    // Trigger the animation
     public void PlayAnimation()
     {
         if (MrSoupsGoldenLadleAnimator != null)
         {
-            SendCustomNetworkEvent(NetworkEventTarget.All, "TriggerAnimation"); // Send event to all players to play the animation
-        }
-    }
-
-    // This method is triggered by SendCustomNetworkEvent to set the animation trigger
-    public void TriggerAnimation()
-    {
-        if (MrSoupsGoldenLadleAnimator != null)
-        {
-            MrSoupsGoldenLadleAnimator.SetTrigger("PlayAnimation"); // Set the trigger for the animation
-            Debug.LogWarning("Triggered Mr-Soups-Golden-Ladle animation.");
+            MrSoupsGoldenLadleAnimator.SetTrigger("PlayAnimation"); // Play the animation
+            Debug.LogWarning("Playing Mr-Soups-Golden-Ladle animation.");
         }
     }
 
     public override void OnDeserialization()
     {
-        // If the puzzle is complete but the animation hasn't played, ensure it plays for late joiners
+        // Ensure late joiners also see the animation if the puzzle is complete
         if (puzzleComplete)
         {
             PlayAnimation();
+            Debug.LogWarning("Deserialization triggered: Playing animation for late joiners.");
         }
     }
 }
