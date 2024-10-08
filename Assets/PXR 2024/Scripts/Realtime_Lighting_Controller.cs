@@ -2,49 +2,94 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using VRC.SDKBase;
+using VRC.Udon;
 
 public class Realtime_Lighting_Controller : UdonSharpBehaviour
 {
-    public GameObject spotlight; // Assign your spotlight GameObject in the Inspector (which has the Light component).
+    #region Variables
 
+    [Space(5)][Header("UI Elements")][Space(10)]   
     public Slider sliderHorizontalRotation; // Slider to control horizontal panning (left-right)
     public Slider sliderVerticalRotation;   // Slider to control vertical tilting (forward-back)
-
     public Image lightStatusImage; // Image to reflect the on/off status of the light
     public Image lightColorImage;  // Image to reflect the light's color
-    public Color lightOnColor = Color.green; // Color when the light is on
-    public Color lightOffColor = Color.red;  // Color when the light is off
-
     public TextMeshProUGUI rangeText;     // Text to display the range
     public TextMeshProUGUI intensityText; // Text to display the intensity
     public TextMeshProUGUI angleText;     // Text to display the spot angle
 
+
+    [Space(5)][Header("Game Objects")][Space(10)]
+    public GameObject spotlight; // Spotlight GameObject
     public Color[] buttonColors;    // Array of colors assigned in the Inspector
     public Image[] buttonImages;    // Array of button images assigned in the Inspector
 
+    [UdonSynced] private float syncedHorizontalRotation;
+    [UdonSynced] private float syncedVerticalRotation;
+
+    private Color lightOnColor = Color.green; // Color when the light is on
+    private Color lightOffColor = Color.red;  // Color when the light is off
     private float minVerticalAngle = -60f;  // Minimum vertical tilt (up-down, forward-back)
     private float maxVerticalAngle = 60f;   // Maximum vertical tilt (up-down, forward-back)
     private float minHorizontalAngle = -60f; // Minimum horizontal panning (left-right)
     private float maxHorizontalAngle = 60f;  // Maximum horizontal panning (left-right)
-
     private float lastHorizontalValue = 0f;
     private float lastVerticalValue = 0f;
-
     private Light spotlightLight;
+    private Quaternion initialRotation; // To store the original rotation of the spotlight
+
+    #endregion
+
+    #region Start and Update
 
     void Start()
     {
         spotlightLight = spotlight.GetComponent<Light>();
-        Debug.Log("[Lighting Controller] Starting...");
+        lastHorizontalValue = sliderHorizontalRotation.value;
+        lastVerticalValue = sliderVerticalRotation.value;
 
-        // Initialize button colors and images
+        // Save the initial rotation of the spotlight
+        initialRotation = spotlight.transform.localRotation;
+
+        // Set the spotlight's rotation to match the initial slider values
+        ApplyInitialRotationFromSliders();
+
         InitializeButtonColors();
-
-        // Ensure the light status image is correct at the start of the game
         UpdateLightStatusImage();
-
-        // Update the text values at the start of the game
         UpdateUIValues();
+    }
+
+    void Update()
+    {
+        // Only trigger network sync when values actually change
+        if (Mathf.Abs(sliderHorizontalRotation.value - lastHorizontalValue) > 0.01f)
+        {
+            syncedHorizontalRotation = sliderHorizontalRotation.value;
+            RequestSerialization();  // Sync across the network
+            lastHorizontalValue = sliderHorizontalRotation.value;
+        }
+
+        if (Mathf.Abs(sliderVerticalRotation.value - lastVerticalValue) > 0.01f)
+        {
+            syncedVerticalRotation = sliderVerticalRotation.value;
+            RequestSerialization();  // Sync across the network
+            lastVerticalValue = sliderVerticalRotation.value;
+        }
+
+        // Apply the synced values to rotate the spotlight only when necessary
+        ApplyRotation();
+    }
+
+    #endregion
+
+    #region Update UI Elements 
+
+    private void UpdateUIValues()
+    {
+        rangeText.text = Mathf.FloorToInt(spotlightLight.range).ToString();
+        intensityText.text = Mathf.FloorToInt(spotlightLight.intensity).ToString();
+        angleText.text = Mathf.FloorToInt(spotlightLight.spotAngle).ToString();
+        Debug.Log("[Lighting Controller] UI values updated.");
     }
 
     void InitializeButtonColors()
@@ -76,31 +121,6 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
         }
     }
 
-    void Update()
-    {
-        if (sliderHorizontalRotation.value != lastHorizontalValue || sliderVerticalRotation.value != lastVerticalValue)
-        {
-            UpdateRotation();
-            lastHorizontalValue = sliderHorizontalRotation.value;
-            lastVerticalValue = sliderVerticalRotation.value;
-        }
-    }
-
-    private void UpdateRotation()
-    {
-        float horizontalRotation = Mathf.Lerp(minHorizontalAngle, maxHorizontalAngle, sliderHorizontalRotation.value);
-        float verticalRotation = Mathf.Lerp(minVerticalAngle, maxVerticalAngle, sliderVerticalRotation.value);
-        spotlight.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0f);
-    }
-
-    public void ToggleSpotlight()
-    {
-        spotlightLight.enabled = !spotlightLight.enabled;
-        Debug.Log("[Lighting Controller] Spotlight toggled: " + (spotlightLight.enabled ? "On" : "Off"));
-
-        UpdateLightStatusImage();
-    }
-
     private void UpdateLightStatusImage()
     {
         if (spotlightLight.enabled)
@@ -115,18 +135,100 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
         Debug.Log("[Lighting Controller] Light status image color updated.");
     }
 
-    // Functions to change the light color and button image based on the button index
-    public void SetColor_0() { ChangeLightColor(0); }
-    public void SetColor_1() { ChangeLightColor(1); }
-    public void SetColor_2() { ChangeLightColor(2); }
-    public void SetColor_3() { ChangeLightColor(3); }
-    public void SetColor_4() { ChangeLightColor(4); }
-    public void SetColor_5() { ChangeLightColor(5); }
-    public void SetColor_6() { ChangeLightColor(6); }
-    public void SetColor_7() { ChangeLightColor(7); }
-    public void SetColor_8() { ChangeLightColor(8); }
+    public override void OnDeserialization()
+    {
+        ApplyRotation();
+    }
 
-    // Function to change the light color and button image
+    #endregion
+
+    #region Light Rotation
+
+    public void RotateHorizontal_Networked()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "RotateHorizontal");
+    }
+
+    public void RotateVertical_Networked()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "RotateVertical");
+    }
+
+    public void RotateHorizontal()
+    {
+        float horizontalRotation = Mathf.Lerp(minHorizontalAngle, maxHorizontalAngle, sliderHorizontalRotation.value);
+        spotlight.transform.localRotation = Quaternion.Euler(spotlight.transform.localRotation.eulerAngles.x, horizontalRotation, 0f);
+        lastHorizontalValue = sliderHorizontalRotation.value;
+    }
+
+    public void RotateVertical()
+    {
+        float verticalRotation = Mathf.Lerp(minVerticalAngle, maxVerticalAngle, sliderVerticalRotation.value);
+        spotlight.transform.localRotation = Quaternion.Euler(verticalRotation, spotlight.transform.localRotation.eulerAngles.y, 0f);
+        lastVerticalValue = sliderVerticalRotation.value;
+    }
+
+    public void ApplyRotation_Networked()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ApplyRotationl");
+    }
+
+    public void ApplyRotation()
+    {
+        // Retain the original rotation on all axes except for the horizontal and vertical
+        float horizontalRotation = Mathf.Lerp(minHorizontalAngle, maxHorizontalAngle, syncedHorizontalRotation);
+        float verticalRotation = Mathf.Lerp(minVerticalAngle, maxVerticalAngle, syncedVerticalRotation);
+
+        // Apply only horizontal (Y) and vertical (X) rotations, and preserve the initial rotation's Z-axis
+        Quaternion newRotation = Quaternion.Euler(verticalRotation, horizontalRotation, initialRotation.eulerAngles.z);
+
+        // Apply the new rotation, ensuring we keep the original rotation on the Z axis
+        spotlight.transform.localRotation = newRotation;
+    }
+
+    private void ApplyInitialRotationFromSliders()
+    {
+        // Set the initial rotation based on the slider values
+        float horizontalRotation = Mathf.Lerp(minHorizontalAngle, maxHorizontalAngle, sliderHorizontalRotation.value);
+        float verticalRotation = Mathf.Lerp(minVerticalAngle, maxVerticalAngle, sliderVerticalRotation.value);
+
+        // Apply the rotation based on initial slider values
+        Quaternion initialSliderRotation = Quaternion.Euler(verticalRotation, horizontalRotation, initialRotation.eulerAngles.z);
+        spotlight.transform.localRotation = initialSliderRotation;
+
+        // Update synced values to start with the correct rotation
+        syncedHorizontalRotation = sliderHorizontalRotation.value;
+        syncedVerticalRotation = sliderVerticalRotation.value;
+
+        // Sync the starting rotation across the network
+        RequestSerialization();
+    }
+
+    #endregion
+
+    #region Light Colour
+
+    // Button click functions that trigger networked color change events
+    public void SetColor_0_Networked() { SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ChangeLightColor_0"); }
+    public void SetColor_1_Networked() { SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ChangeLightColor_1"); }
+    public void SetColor_2_Networked() { SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ChangeLightColor_2"); }
+    public void SetColor_3_Networked() { SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ChangeLightColor_3"); }
+    public void SetColor_4_Networked() { SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ChangeLightColor_4"); }
+    public void SetColor_5_Networked() { SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ChangeLightColor_5"); }
+    public void SetColor_6_Networked() { SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ChangeLightColor_6"); }
+    public void SetColor_7_Networked() { SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ChangeLightColor_7"); }
+    public void SetColor_8_Networked() { SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ChangeLightColor_8"); }
+
+    public void ChangeLightColor_0() { ChangeLightColor(0); }
+    public void ChangeLightColor_1() { ChangeLightColor(1); }
+    public void ChangeLightColor_2() { ChangeLightColor(2); }
+    public void ChangeLightColor_3() { ChangeLightColor(3); }
+    public void ChangeLightColor_4() { ChangeLightColor(4); }
+    public void ChangeLightColor_5() { ChangeLightColor(5); }
+    public void ChangeLightColor_6() { ChangeLightColor(6); }
+    public void ChangeLightColor_7() { ChangeLightColor(7); }
+    public void ChangeLightColor_8() { ChangeLightColor(8); }
+
     private void ChangeLightColor(int index)
     {
         if (index >= 0 && index < buttonColors.Length && index < buttonImages.Length)
@@ -153,6 +255,20 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
         }
     }
 
+    #endregion
+
+    #region Light Intensity
+
+    public void IncreaseIntensity_Networked()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "IncreaseIntensity");
+    }
+
+    public void DecreaseIntensity_Networked()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "DecreaseIntensity");
+    }
+
     public void IncreaseIntensity()
     {
         spotlightLight.intensity += 1f;
@@ -165,6 +281,20 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
         spotlightLight.intensity -= 1f;
         UpdateUIValues();
         Debug.Log("[Lighting Controller] Intensity decreased to: " + spotlightLight.intensity);
+    }
+
+    #endregion
+
+    #region Light Angle
+
+    public void IncreaseSpotAngle_Networked()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "IncreaseSpotAngle");
+    }
+
+    public void DecreaseSpotAngle_Networked()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "DecreaseSpotAngle");
     }
 
     public void IncreaseSpotAngle()
@@ -181,6 +311,21 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
         Debug.Log("[Lighting Controller] Spot angle decreased to: " + spotlightLight.spotAngle);
     }
 
+    #endregion
+
+    #region Light Range
+
+    public void IncreaseRange_Networked()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "IncreaseRange");
+    }
+
+
+    public void DecreaseRange_Networked()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "DecreaseRange");
+    }
+
     public void IncreaseRange()
     {
         spotlightLight.range += 1f;
@@ -195,11 +340,22 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
         Debug.Log("[Lighting Controller] Range decreased to: " + spotlightLight.range);
     }
 
-    private void UpdateUIValues()
+    #endregion
+
+    #region Light Toggle
+
+    public void ToggleSpotlight_Networked()
     {
-        rangeText.text = Mathf.FloorToInt(spotlightLight.range).ToString();
-        intensityText.text = Mathf.FloorToInt(spotlightLight.intensity).ToString();
-        angleText.text = Mathf.FloorToInt(spotlightLight.spotAngle).ToString();
-        Debug.Log("[Lighting Controller] UI values updated.");
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ToggleSpotlight");
     }
+
+    public void ToggleSpotlight()
+    {
+        spotlightLight.enabled = !spotlightLight.enabled;
+        Debug.Log("[Lighting Controller] Spotlight toggled: " + (spotlightLight.enabled ? "On" : "Off"));
+
+        UpdateLightStatusImage();
+    }
+
+    #endregion
 }
