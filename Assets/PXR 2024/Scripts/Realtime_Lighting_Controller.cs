@@ -1,24 +1,26 @@
 ﻿using UdonSharp;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
-using TMPro; // For working with TextMeshPro text components
-using UnityEngine.UI; // For working with UI Image components
+using TMPro;
+using UnityEngine.UI;
 
 public class Realtime_Lighting_Controller : UdonSharpBehaviour
 {
     public GameObject spotlight; // Assign your spotlight GameObject in the Inspector (which has the Light component).
 
-    public UnityEngine.UI.Slider sliderHorizontalRotation; // Slider to control horizontal panning (left-right)
-    public UnityEngine.UI.Slider sliderVerticalRotation;   // Slider to control vertical tilting (forward-back)
+    public Slider sliderHorizontalRotation; // Slider to control horizontal panning (left-right)
+    public Slider sliderVerticalRotation;   // Slider to control vertical tilting (forward-back)
 
-    public Image lightStatusImage; // Image to reflect the on/off status of the light (set in the Inspector)
+    public Image lightStatusImage; // Image to reflect the on/off status of the light
+    public Image lightColorImage;  // Image to reflect the light's color
     public Color lightOnColor = Color.green; // Color when the light is on
     public Color lightOffColor = Color.red;  // Color when the light is off
 
     public TextMeshProUGUI rangeText;     // Text to display the range
     public TextMeshProUGUI intensityText; // Text to display the intensity
     public TextMeshProUGUI angleText;     // Text to display the spot angle
+
+    public Color[] buttonColors;    // Array of colors assigned in the Inspector
+    public Image[] buttonImages;    // Array of button images assigned in the Inspector
 
     private float minVerticalAngle = -60f;  // Minimum vertical tilt (up-down, forward-back)
     private float maxVerticalAngle = 60f;   // Maximum vertical tilt (up-down, forward-back)
@@ -28,8 +30,16 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
     private float lastHorizontalValue = 0f;
     private float lastVerticalValue = 0f;
 
+    private Light spotlightLight;
+
     void Start()
     {
+        spotlightLight = spotlight.GetComponent<Light>();
+        Debug.Log("[Lighting Controller] Starting...");
+
+        // Initialize button colors and images
+        InitializeButtonColors();
+
         // Ensure the light status image is correct at the start of the game
         UpdateLightStatusImage();
 
@@ -37,9 +47,37 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
         UpdateUIValues();
     }
 
+    void InitializeButtonColors()
+    {
+        if (buttonColors.Length != buttonImages.Length)
+        {
+            Debug.LogError("[Lighting Controller] Button color array and button image array size mismatch!");
+            return;
+        }
+
+        // Set the initial color for each button's image based on the color array
+        for (int i = 0; i < buttonImages.Length; i++)
+        {
+            if (buttonImages[i] != null)
+            {
+                Color buttonColor = buttonColors[i];
+
+                // Ensure the alpha value is fully opaque
+                buttonColor.a = 1f;
+
+                // Assign the color to the button image
+                buttonImages[i].color = buttonColor;
+                Debug.Log("[Lighting Controller] Initialized button " + i + " color to: " + buttonColors[i]);
+            }
+            else
+            {
+                Debug.LogError("[Lighting Controller] Button image at index " + i + " is null!");
+            }
+        }
+    }
+
     void Update()
     {
-        // Only update if the sliders are being moved (i.e., values change)
         if (sliderHorizontalRotation.value != lastHorizontalValue || sliderVerticalRotation.value != lastVerticalValue)
         {
             UpdateRotation();
@@ -50,97 +88,118 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
 
     private void UpdateRotation()
     {
-        // Horizontal panning (left-right movement) mapped from -60 to +60 degrees
         float horizontalRotation = Mathf.Lerp(minHorizontalAngle, maxHorizontalAngle, sliderHorizontalRotation.value);
-
-        // Vertical tilting (forward-back movement), mapped from -60 to +60 degrees
         float verticalRotation = Mathf.Lerp(minVerticalAngle, maxVerticalAngle, sliderVerticalRotation.value);
-
-        // Apply the panning (left-right) to the Y-axis and tilting (up-down) to the X-axis
         spotlight.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0f);
     }
 
-    // Function to toggle the spotlight on/off and change the image color
     public void ToggleSpotlight()
     {
-        Light spotlightLight = spotlight.GetComponent<Light>(); // Get the Light component from the spotlight GameObject
-        spotlightLight.enabled = !spotlightLight.enabled; // Toggle the Light component
+        spotlightLight.enabled = !spotlightLight.enabled;
+        Debug.Log("[Lighting Controller] Spotlight toggled: " + (spotlightLight.enabled ? "On" : "Off"));
 
-        // Update the color of the image based on the spotlight state
         UpdateLightStatusImage();
     }
 
-    // Function to update the light status image color based on the light's state
     private void UpdateLightStatusImage()
     {
-        Light spotlightLight = spotlight.GetComponent<Light>();
-
         if (spotlightLight.enabled)
         {
-            lightStatusImage.color = lightOnColor; // Set to "on" color
+            lightStatusImage.color = lightOnColor;
         }
         else
         {
-            lightStatusImage.color = lightOffColor; // Set to "off" color
+            lightStatusImage.color = lightOffColor;
+        }
+
+        Debug.Log("[Lighting Controller] Light status image color updated.");
+    }
+
+    // Functions to change the light color and button image based on the button index
+    public void SetColor_0() { ChangeLightColor(0); }
+    public void SetColor_1() { ChangeLightColor(1); }
+    public void SetColor_2() { ChangeLightColor(2); }
+    public void SetColor_3() { ChangeLightColor(3); }
+    public void SetColor_4() { ChangeLightColor(4); }
+    public void SetColor_5() { ChangeLightColor(5); }
+    public void SetColor_6() { ChangeLightColor(6); }
+    public void SetColor_7() { ChangeLightColor(7); }
+    public void SetColor_8() { ChangeLightColor(8); }
+
+    // Function to change the light color and button image
+    private void ChangeLightColor(int index)
+    {
+        if (index >= 0 && index < buttonColors.Length && index < buttonImages.Length)
+        {
+            Color newColor = buttonColors[index];
+
+            // Change the light color of the spotlight
+            spotlightLight.color = newColor;
+
+            // Ensure the alpha value of the button image remains 1 (fully opaque)
+            newColor.a = 1f;
+
+            // Update the UI image (sprite on the button) to reflect the new light color
+            buttonImages[index].color = newColor;
+
+            // Update the light color image in the menu to reflect the new color
+            lightColorImage.color = newColor;
+
+            Debug.Log("[Lighting Controller] Light and image color updated to: " + newColor);
+        }
+        else
+        {
+            Debug.LogWarning("[Lighting Controller] Invalid button index or missing button image: " + index);
         }
     }
 
-    // Function to increase the intensity of the spotlight by 1
     public void IncreaseIntensity()
     {
-        Light spotlightLight = spotlight.GetComponent<Light>();
-        spotlightLight.intensity += 1f; // Increase intensity by 1
-        UpdateUIValues(); // Update the text display
+        spotlightLight.intensity += 1f;
+        UpdateUIValues();
+        Debug.Log("[Lighting Controller] Intensity increased to: " + spotlightLight.intensity);
     }
 
-    // Function to decrease the intensity of the spotlight by 1
     public void DecreaseIntensity()
     {
-        Light spotlightLight = spotlight.GetComponent<Light>();
-        spotlightLight.intensity -= 1f; // Decrease intensity by 1
-        UpdateUIValues(); // Update the text display
+        spotlightLight.intensity -= 1f;
+        UpdateUIValues();
+        Debug.Log("[Lighting Controller] Intensity decreased to: " + spotlightLight.intensity);
     }
 
-    // Function to increase the spot angle of the spotlight by 1
     public void IncreaseSpotAngle()
     {
-        Light spotlightLight = spotlight.GetComponent<Light>();
-        spotlightLight.spotAngle = Mathf.Min(spotlightLight.spotAngle + 1f, 179f); // Increase spot angle by 1, max at 179 degrees
-        UpdateUIValues(); // Update the text display
+        spotlightLight.spotAngle = Mathf.Min(spotlightLight.spotAngle + 1f, 179f);
+        UpdateUIValues();
+        Debug.Log("[Lighting Controller] Spot angle increased to: " + spotlightLight.spotAngle);
     }
 
-    // Function to decrease the spot angle of the spotlight by 1
     public void DecreaseSpotAngle()
     {
-        Light spotlightLight = spotlight.GetComponent<Light>();
-        spotlightLight.spotAngle = Mathf.Max(spotlightLight.spotAngle - 1f, 1f); // Decrease spot angle by 1, min at 1 degree
-        UpdateUIValues(); // Update the text display
+        spotlightLight.spotAngle = Mathf.Max(spotlightLight.spotAngle - 1f, 1f);
+        UpdateUIValues();
+        Debug.Log("[Lighting Controller] Spot angle decreased to: " + spotlightLight.spotAngle);
     }
 
-    // Function to increase the range of the spotlight by 1
     public void IncreaseRange()
     {
-        Light spotlightLight = spotlight.GetComponent<Light>();
-        spotlightLight.range += 1f; // Increase range by 1
-        UpdateUIValues(); // Update the text display
+        spotlightLight.range += 1f;
+        UpdateUIValues();
+        Debug.Log("[Lighting Controller] Range increased to: " + spotlightLight.range);
     }
 
-    // Function to decrease the range of the spotlight by 1
     public void DecreaseRange()
     {
-        Light spotlightLight = spotlight.GetComponent<Light>();
-        spotlightLight.range = Mathf.Max(spotlightLight.range - 1f, 0f); // Decrease range by 1, min at 0
-        UpdateUIValues(); // Update the text display
+        spotlightLight.range = Mathf.Max(spotlightLight.range - 1f, 0f);
+        UpdateUIValues();
+        Debug.Log("[Lighting Controller] Range decreased to: " + spotlightLight.range);
     }
 
-    // Function to update the UI text for range, intensity, and angle
     private void UpdateUIValues()
     {
-        Light spotlightLight = spotlight.GetComponent<Light>();
-
-        // Update text values by setting them directly using .text
-        rangeText.text = "Range: " + spotlightLight.range.ToString();
-        intensityText.text = "Intensity: " + spotlightLight.intensity.ToString();
-        angleText.text = "Spot Angle: " + spotlightLight.spotAngle.ToString();
+        rangeText.text = Mathf.FloorToInt(spotlightLight.range).ToString();
+        intensityText.text = Mathf.FloorToInt(spotlightLight.intensity).ToString();
+        angleText.text = Mathf.FloorToInt(spotlightLight.spotAngle).ToString();
+        Debug.Log("[Lighting Controller] UI values updated.");
     }
 }
