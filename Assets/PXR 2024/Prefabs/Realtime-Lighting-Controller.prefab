@@ -1856,7 +1856,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5660008972385201983}
   - component: {fileID: 5660008972385201982}
-  - component: {fileID: 5660008972385201981}
   m_Layer: 0
   m_Name: Slider (Rotation Horizontal)
   m_TagString: Untagged
@@ -1935,19 +1934,18 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &5660008972385201981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5660008972385201968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1533785930, guid: 661092b4961be7145bfbe56e1e62337b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+      m_Calls:
+      - m_Target: {fileID: 5660008972433091234}
+        m_MethodName: SendCustomEvent
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: OnHorizontalSliderChanged
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5660008972387043828
 GameObject:
   m_ObjectHideFlags: 0
@@ -2416,7 +2414,6 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 5660008972433091234}
-  spotlight: {fileID: 0}
   sliderHorizontalRotation: {fileID: 5660008972385201982}
   sliderVerticalRotation: {fileID: 5660008972584285014}
   lightStatusImage: {fileID: 5660008971951939510}
@@ -2424,6 +2421,7 @@ MonoBehaviour:
   rangeText: {fileID: 5660008972669979227}
   intensityText: {fileID: 5660008972988513664}
   angleText: {fileID: 5660008973957321351}
+  spotlight: {fileID: 0}
   buttonColors:
   - {r: 1, g: 1, b: 1, a: 0}
   - {r: 0.98068714, g: 1, b: 0.48584908, a: 0}
@@ -2688,7 +2686,18 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5660008972433091234}
+        m_MethodName: SendCustomEvent
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: OnVerticalSliderChanged
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5660008972601247204
 GameObject:
   m_ObjectHideFlags: 0

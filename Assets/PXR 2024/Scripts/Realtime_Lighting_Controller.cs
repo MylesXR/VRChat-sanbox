@@ -26,6 +26,7 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
 
     [UdonSynced] private float syncedHorizontalRotation;
     [UdonSynced] private float syncedVerticalRotation;
+    [UdonSynced] private bool isInteracting = false;  // Track if the slider is currently being interacted with
 
     private Color lightOnColor = Color.green; // Color when the light is on
     private Color lightOffColor = Color.red;  // Color when the light is off
@@ -37,6 +38,7 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
     private float lastVerticalValue = 0f;
     private Light spotlightLight;
     private Quaternion initialRotation; // To store the original rotation of the spotlight
+    private VRCPlayerApi localPlayer;
 
     #endregion
 
@@ -44,6 +46,12 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
 
     void Start()
     {
+        localPlayer = Networking.LocalPlayer;  // Ensure localPlayer is set
+        if (localPlayer == null)
+        {
+            Debug.LogError("[Lighting Controller] Local player is null!");
+        }
+
         spotlightLight = spotlight.GetComponent<Light>();
         lastHorizontalValue = sliderHorizontalRotation.value;
         lastVerticalValue = sliderVerticalRotation.value;
@@ -61,24 +69,109 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
 
     void Update()
     {
-        // Only trigger network sync when values actually change
-        if (Mathf.Abs(sliderHorizontalRotation.value - lastHorizontalValue) > 0.01f)
+        // Only the owner should be able to sync and move the sliders
+        if (Networking.IsOwner(localPlayer, gameObject))
         {
-            syncedHorizontalRotation = sliderHorizontalRotation.value;
-            RequestSerialization();  // Sync across the network
-            lastHorizontalValue = sliderHorizontalRotation.value;
+            // If the player is interacting with the slider
+            if (isInteracting)
+            {
+                // Sync when horizontal slider values change
+                if (Mathf.Abs(sliderHorizontalRotation.value - lastHorizontalValue) > 0.01f)
+                {
+                    syncedHorizontalRotation = sliderHorizontalRotation.value;
+                    RequestSerialization();  // Sync across the network
+                    lastHorizontalValue = sliderHorizontalRotation.value;
+                }
+
+                // Sync when vertical slider values change
+                if (Mathf.Abs(sliderVerticalRotation.value - lastVerticalValue) > 0.01f)
+                {
+                    syncedVerticalRotation = sliderVerticalRotation.value;
+                    RequestSerialization();  // Sync across the network
+                    lastVerticalValue = sliderVerticalRotation.value;
+                }
+            }
+
+            // When the player lets go of the slider, relinquish ownership
+            if (!IsPlayerInteractingWithSlider())
+            {
+                RelinquishOwnership(); // Release ownership when no longer interacting
+            }
         }
 
-        if (Mathf.Abs(sliderVerticalRotation.value - lastVerticalValue) > 0.01f)
-        {
-            syncedVerticalRotation = sliderVerticalRotation.value;
-            RequestSerialization();  // Sync across the network
-            lastVerticalValue = sliderVerticalRotation.value;
-        }
+        // Update the slider values regardless of ownership to keep everything in sync
+        sliderHorizontalRotation.value = syncedHorizontalRotation;
+        sliderVerticalRotation.value = syncedVerticalRotation;
 
-        // Apply the synced values to rotate the spotlight only when necessary
+        // Apply the synced values to rotate the spotlight
         ApplyRotation();
     }
+
+
+
+
+    #endregion
+
+    #region Ownership Management
+
+    private void TakeOwnershipIfNecessary()
+    {
+        if (!isInteracting)
+        {
+            isInteracting = true;
+            Networking.SetOwner(localPlayer, gameObject);  // Transfer ownership to the interacting player
+            RequestSerialization();  // Sync interaction state across the network
+            Debug.Log("[Lighting Controller] Ownership taken by: " + localPlayer.displayName);
+        }
+    }
+
+    private void RelinquishOwnership()
+    {
+        if (isInteracting && Networking.IsOwner(localPlayer, gameObject))
+        {
+            isInteracting = false;  // Mark interaction as stopped
+            RequestSerialization();  // Sync interaction state across the network
+            Debug.Log("[Lighting Controller] Ownership relinquished.");
+        }
+    }
+
+    public void OnHorizontalSliderChanged()
+    {
+        TakeOwnershipIfNecessary();
+        syncedHorizontalRotation = sliderHorizontalRotation.value;
+        RequestSerialization();  // Sync across the network
+    }
+
+    public void OnVerticalSliderChanged()
+    {
+        TakeOwnershipIfNecessary();
+        syncedVerticalRotation = sliderVerticalRotation.value;
+        RequestSerialization();  // Sync across the network
+    }
+
+    public void ReleaseInteraction()
+    {
+        RelinquishOwnership();
+    }
+
+    public void OnBeginDrag()
+    {
+        TakeOwnershipIfNecessary();
+    }
+
+    public void OnEndDrag()
+    {
+        RelinquishOwnership();
+    }
+
+    public bool IsPlayerInteractingWithSlider()
+    {
+        // Use the isInteracting variable to determine if the player is currently interacting with the slider
+        return isInteracting;
+    }
+
+
+
 
     #endregion
 
