@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using VRC.SDKBase;
 using VRC.Udon;
 
+[UdonBehaviourSyncMode(BehaviourSyncMode.Manual)] // Manual sync for controlled networking
 public class Realtime_Lighting_Controller : UdonSharpBehaviour
 {
     #region Variables
@@ -14,10 +15,11 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
     public Slider sliderVerticalRotation;   // Slider to control vertical tilting (forward-back)
     public Image lightStatusImage; // Image to reflect the on/off status of the light
     public Image lightColorImage;  // Image to reflect the light's color
+    public Image ownershipButtonImage;
+    public TextMeshProUGUI ownerDisplayText;  // Text to display the current owner's name
     public TextMeshProUGUI rangeText;     // Text to display the range
     public TextMeshProUGUI intensityText; // Text to display the intensity
     public TextMeshProUGUI angleText;     // Text to display the spot angle
-
 
     [Space(5)][Header("Game Objects")][Space(10)]
     public GameObject spotlight; // Spotlight GameObject
@@ -46,22 +48,17 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
 
     void Start()
     {
-        localPlayer = Networking.LocalPlayer;  // Ensure localPlayer is set
-        if (localPlayer == null)
-        {
-            Debug.LogError("[Lighting Controller] Local player is null!");
-        }
-
         spotlightLight = spotlight.GetComponent<Light>();
         lastHorizontalValue = sliderHorizontalRotation.value;
         lastVerticalValue = sliderVerticalRotation.value;
-
-        // Save the initial rotation of the spotlight
         initialRotation = spotlight.transform.localRotation;
+        ownershipButtonImage.color = lightOffColor;
+        ownerDisplayText.text = "Owner: " + Networking.LocalPlayer.displayName;
+        sliderHorizontalRotation.interactable = false;
+        sliderVerticalRotation.interactable = false;
 
-        // Set the spotlight's rotation to match the initial slider values
+        UpdateUIValues();
         ApplyInitialRotationFromSliders();
-
         InitializeButtonColors();
         UpdateLightStatusImage();
         UpdateUIValues();
@@ -69,44 +66,96 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
 
     void Update()
     {
-        // Only the owner should be able to sync and move the sliders
-        if (Networking.IsOwner(localPlayer, gameObject))
+        // Only the owner should be able to interact with the sliders
+        if (Networking.IsOwner(Networking.LocalPlayer, gameObject))
         {
-            // If the player is interacting with the slider
-            if (isInteracting)
-            {
-                // Sync when horizontal slider values change
-                if (Mathf.Abs(sliderHorizontalRotation.value - lastHorizontalValue) > 0.01f)
-                {
-                    syncedHorizontalRotation = sliderHorizontalRotation.value;
-                    RequestSerialization();  // Sync across the network
-                    lastHorizontalValue = sliderHorizontalRotation.value;
-                }
+            sliderHorizontalRotation.interactable = true;
+            sliderVerticalRotation.interactable = true;
 
-                // Sync when vertical slider values change
-                if (Mathf.Abs(sliderVerticalRotation.value - lastVerticalValue) > 0.01f)
-                {
-                    syncedVerticalRotation = sliderVerticalRotation.value;
-                    RequestSerialization();  // Sync across the network
-                    lastVerticalValue = sliderVerticalRotation.value;
-                }
+            // Sync horizontal slider value if changed
+            if (Mathf.Abs(sliderHorizontalRotation.value - syncedHorizontalRotation) > 0.01f)
+            {
+                syncedHorizontalRotation = sliderHorizontalRotation.value;
+                RequestSerialization();  // Sync across the network
             }
 
-            // When the player lets go of the slider, relinquish ownership
-            if (!IsPlayerInteractingWithSlider())
+            // Sync vertical slider value if changed
+            if (Mathf.Abs(sliderVerticalRotation.value - syncedVerticalRotation) > 0.01f)
             {
-                RelinquishOwnership(); // Release ownership when no longer interacting
+                syncedVerticalRotation = sliderVerticalRotation.value;
+                RequestSerialization();  // Sync across the network
             }
         }
+        else
+        {
+            // Non-owners just see the current synced values from the network
+            sliderHorizontalRotation.value = syncedHorizontalRotation;
+            sliderVerticalRotation.value = syncedVerticalRotation;
 
-        // Update the slider values regardless of ownership to keep everything in sync
-        sliderHorizontalRotation.value = syncedHorizontalRotation;
-        sliderVerticalRotation.value = syncedVerticalRotation;
+            // Ensure sliders are disabled for non-owners
+            sliderHorizontalRotation.interactable = false;
+            sliderVerticalRotation.interactable = false;
+        }
 
         // Apply the synced values to rotate the spotlight
         ApplyRotation();
     }
 
+    public override void OnPlayerJoined(VRCPlayerApi player)
+    {
+        // Request ownership, slider values, and light settings from the current owner
+        RequestSerialization();
+        Debug.Log("[Lighting Controller] Player joined, ownership and settings requested.");
+    }
+
+
+
+    #endregion
+
+    #region Slider Interaction
+
+    public void OnHorizontalSliderChanged()
+    {
+        MaintainOwnership(); // Ensure ownership is maintained
+
+        // Update the synced horizontal rotation value
+        syncedHorizontalRotation = sliderHorizontalRotation.value;
+        RequestSerialization();  // Sync across the network
+        ApplyRotation();
+    }
+
+    public void OnVerticalSliderChanged()
+    {
+        MaintainOwnership(); // Ensure ownership is maintained
+
+        // Update the synced vertical rotation value
+        syncedVerticalRotation = sliderVerticalRotation.value;
+        RequestSerialization();  // Sync across the network
+        ApplyRotation();
+    }
+
+
+
+
+
+
+
+
+    void DisableSliderInteractionForOthers()
+    {
+        if (!Networking.IsOwner(Networking.LocalPlayer, gameObject))
+        {
+            sliderHorizontalRotation.interactable = false;
+            sliderVerticalRotation.interactable = false;
+            Debug.Log("[Lighting Controller] Sliders disabled for non-owner: " + Networking.LocalPlayer.displayName);
+        }
+        else
+        {
+            sliderHorizontalRotation.interactable = true;
+            sliderVerticalRotation.interactable = true;
+            Debug.Log("[Lighting Controller] Sliders enabled for owner: " + Networking.LocalPlayer.displayName);
+        }
+    }
 
 
 
@@ -114,60 +163,86 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
 
     #region Ownership Management
 
-    private void TakeOwnershipIfNecessary()
+    public void TakeOwnershipButtonPressed()
     {
-        if (!isInteracting)
+        if (!Networking.IsOwner(Networking.LocalPlayer, gameObject))
         {
-            isInteracting = true;
-            Networking.SetOwner(localPlayer, gameObject);  // Transfer ownership to the interacting player
-            RequestSerialization();  // Sync interaction state across the network
-            Debug.Log("[Lighting Controller] Ownership taken by: " + localPlayer.displayName);
+            Networking.SetOwner(Networking.LocalPlayer, gameObject);
+            Debug.Log("[Lighting Controller] Ownership transferred to: " + Networking.LocalPlayer.displayName);
+
+            // Serialize the ownership state across the network
+            RequestSerialization();
+            UpdateOwnershipUI();
         }
     }
 
-    private void RelinquishOwnership()
+    public void RelinquishOwnershipButtonPressed()
     {
-        if (isInteracting && Networking.IsOwner(localPlayer, gameObject))
+        if (Networking.IsOwner(Networking.LocalPlayer, gameObject))
         {
-            isInteracting = false;  // Mark interaction as stopped
-            RequestSerialization();  // Sync interaction state across the network
-            Debug.Log("[Lighting Controller] Ownership relinquished.");
+            Debug.Log("[Lighting Controller] Ownership relinquished by: " + Networking.LocalPlayer.displayName);
+
+            // Disable interaction since no owner is assigned
+            sliderHorizontalRotation.interactable = false;
+            sliderVerticalRotation.interactable = false;
+
+            // Update UI to reflect "No Owner"
+            ownerDisplayText.text = "No Owner";
+            ownershipButtonImage.color = Color.red;
+
+            // Sync the relinquishment across the network
+            RequestSerialization();
         }
     }
 
-    public void OnHorizontalSliderChanged()
+
+    public void UpdateOwnershipUI()
     {
-        TakeOwnershipIfNecessary();
-        syncedHorizontalRotation = sliderHorizontalRotation.value;
-        RequestSerialization();  // Sync across the network
+        if (Networking.IsOwner(Networking.LocalPlayer, gameObject))
+        {
+            // If the local player owns it, display their name and allow interaction
+            ownerDisplayText.text = "Owner: " + Networking.LocalPlayer.displayName;
+            ownershipButtonImage.color = Color.green;  // Green for ownership
+            sliderHorizontalRotation.interactable = true;
+            sliderVerticalRotation.interactable = true;
+        }
+        else
+        {
+            // If no one owns it or another player owns it, show "No Owner" and disable interaction
+            ownerDisplayText.text = "No Owner";
+            ownershipButtonImage.color = Color.red;    // Red for no ownership
+            sliderHorizontalRotation.interactable = false;
+            sliderVerticalRotation.interactable = false;
+        }
+
+        Debug.Log("[Lighting Controller] Ownership UI updated.");
     }
 
-    public void OnVerticalSliderChanged()
+    public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
     {
-        TakeOwnershipIfNecessary();
-        syncedVerticalRotation = sliderVerticalRotation.value;
-        RequestSerialization();  // Sync across the network
+        Debug.Log("[Lighting Controller] Ownership transferred to: " + newOwner.displayName);
+
+        // Update the UI after ownership transfer for all players
+        UpdateOwnershipUI();
     }
 
-    public void ReleaseInteraction()
+    public override void OnDeserialization()
     {
-        RelinquishOwnership();
+        // Apply synced settings and ownership state
+        ApplyRotation();
+        UpdateOwnershipUI();
+        Debug.Log("[Lighting Controller] State synchronized after deserialization.");
     }
 
-    public void OnBeginDrag()
-    {
-        TakeOwnershipIfNecessary();
-    }
 
-    public void OnEndDrag()
-    {
-        RelinquishOwnership();
-    }
 
-    public bool IsPlayerInteractingWithSlider()
+    void MaintainOwnership()
     {
-        // Use the isInteracting variable to determine if the player is currently interacting with the slider
-        return isInteracting;
+        if (!Networking.IsOwner(Networking.LocalPlayer, gameObject))
+        {
+            Networking.SetOwner(Networking.LocalPlayer, gameObject);
+            Debug.Log("[Lighting Controller] Ensuring ownership remains with: " + Networking.LocalPlayer.displayName);
+        }
     }
 
 
@@ -228,11 +303,6 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
         Debug.Log("[Lighting Controller] Light status image color updated.");
     }
 
-    public override void OnDeserialization()
-    {
-        ApplyRotation();
-    }
-
     #endregion
 
     #region Light Rotation
@@ -281,21 +351,18 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
 
     private void ApplyInitialRotationFromSliders()
     {
-        // Set the initial rotation based on the slider values
         float horizontalRotation = Mathf.Lerp(minHorizontalAngle, maxHorizontalAngle, sliderHorizontalRotation.value);
         float verticalRotation = Mathf.Lerp(minVerticalAngle, maxVerticalAngle, sliderVerticalRotation.value);
-
-        // Apply the rotation based on initial slider values
         Quaternion initialSliderRotation = Quaternion.Euler(verticalRotation, horizontalRotation, initialRotation.eulerAngles.z);
         spotlight.transform.localRotation = initialSliderRotation;
 
-        // Update synced values to start with the correct rotation
         syncedHorizontalRotation = sliderHorizontalRotation.value;
         syncedVerticalRotation = sliderVerticalRotation.value;
 
-        // Sync the starting rotation across the network
         RequestSerialization();
     }
+
+
 
     #endregion
 
