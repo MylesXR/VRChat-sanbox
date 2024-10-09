@@ -116,32 +116,29 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
 
     public void OnHorizontalSliderChanged()
     {
-        EnsureOwnership(); // Ensure ownership stays locked during slider movement
-        MaintainOwnership();
-        syncedHorizontalRotation = sliderHorizontalRotation.value;
-        RequestSerialization();  // Sync the value across the network
-        ApplyRotation();
+        // Ensure ownership is maintained ONLY if you already own it
+        if (Networking.IsOwner(Networking.LocalPlayer, gameObject))
+        {
+            syncedHorizontalRotation = sliderHorizontalRotation.value;
+            RequestSerialization();  // Sync the value across the network
+            ApplyRotation();
+        }
     }
 
     public void OnVerticalSliderChanged()
     {
-        EnsureOwnership(); // Ensure ownership stays locked during slider movement
-        MaintainOwnership();
-        syncedVerticalRotation = sliderVerticalRotation.value;
-        RequestSerialization();  // Sync the value across the network
-        ApplyRotation();
-    }
-
-
-
-    void EnsureOwnership()
-    {
-        if (!Networking.IsOwner(Networking.LocalPlayer, gameObject))
+        // Ensure ownership is maintained ONLY if you already own it
+        if (Networking.IsOwner(Networking.LocalPlayer, gameObject))
         {
-            Networking.SetOwner(Networking.LocalPlayer, gameObject);
-            Debug.Log("[Lighting Controller] Ownership secured by: " + Networking.LocalPlayer.displayName);
+            syncedVerticalRotation = sliderVerticalRotation.value;
+            RequestSerialization();  // Sync the value across the network
+            ApplyRotation();
         }
     }
+
+
+
+
 
 
 
@@ -248,16 +245,6 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
         Debug.Log("[Lighting Controller] State synchronized after deserialization.");
     }
 
-
-
-    void MaintainOwnership()
-    {
-        if (!Networking.IsOwner(Networking.LocalPlayer, gameObject))
-        {
-            Networking.SetOwner(Networking.LocalPlayer, gameObject);
-            Debug.Log("[Lighting Controller] Ensuring ownership remains with: " + Networking.LocalPlayer.displayName);
-        }
-    }
 
 
 

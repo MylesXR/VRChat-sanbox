@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!382020655 &-2591188584078272957
+--- !u!382020655 &-8706041114606442924
 PluginBuildInfo:
   m_RuntimePlugins:
   - Unity.Burst.Unsafe
@@ -70,24 +70,11 @@ PluginBuildInfo:
   - Unity.Plastic.Antlr3.Runtime
   - Serilog.Sinks.Unity3D
   - lz4x64Plastic
---- !u!1126 &-2395732592228296215
-PackedAssets:
-  m_File: 4
-  m_ShortPath: CAB-272ad1682f08ca2319d24b4ddad3876a
-  m_Overhead: 4096
-  m_Contents:
-  - fileID: 1
-    classID: 142
-    packedSize: 104
-    offset: 4096
-    sourceAssetGUID: 00000000000000000000000000000000
-    buildTimeAssetPath: AssetBundle Object
-  - fileID: 2
-    classID: 290
-    packedSize: 120
-    offset: 4200
-    sourceAssetGUID: 00000000000000000000000000000000
-    buildTimeAssetPath: 'Built-in AssetBundleManifest: AssetBundleManifest'
+--- !u!641289076 &-5173634530525888818
+AudioBuildInfo:
+  m_IsAudioDisabled: 0
+  m_AudioClipCount: 0
+  m_AudioMixerCount: 0
 --- !u!1125 &1
 BuildReport:
   m_ObjectHideFlags: 0
@@ -98,7 +85,7 @@ BuildReport:
   m_Summary:
     buildStartTime:
       serializedVersion: 2
-      ticks: 638640364544272437
+      ticks: 638640369703919736
     buildGUID: 00000000000000000000000000000000
     platformName: Win64
     platformGroupName: Standalone
@@ -106,9 +93,9 @@ BuildReport:
     assetBundleOptions: 32
     outputPath: C:/Users/cole/AppData/Local/Temp/DefaultCompany/VRChat-sandbox/scene-standalonewindows64-lighting
       prototype.vrcw
-    crc: 4159771416
-    totalSize: 515986
-    totalTimeTicks: 100656112
+    crc: 3752973313
+    totalSize: 516379
+    totalTimeTicks: 103001277
     totalErrors: 0
     totalWarnings: 0
     buildType: 1
@@ -125,12 +112,12 @@ BuildReport:
       Prototype.sharedAssets
     role: SharedAssets
     id: 1
-    totalSize: 2505808
+    totalSize: 2506224
   - path: C:/Users/cole/Documents/Single Thread Theatre/PXR/PXR 2024/Unity Projects/VR
       Chat Sandbox/VRChat-sandbox/scene-standalonewindows64-lighting prototype.vrcw
     role: AssetBundle
     id: 2
-    totalSize: 512244
+    totalSize: 512639
   - path: C:/Users/cole/Documents/Single Thread Theatre/PXR/PXR 2024/Unity Projects/VR
       Chat Sandbox/VRChat-sandbox/scene-standalonewindows64-lighting prototype.vrcw.manifest
     role: AssetBundleTextManifest
@@ -150,79 +137,65 @@ BuildReport:
       Chat Sandbox/VRChat-sandbox/VRChat-sandbox.manifest
     role: AssetBundleTextManifest
     id: 6
-    totalSize: 177
+    totalSize: 175
   m_BuildSteps:
   - stepName: Build Asset Bundles
-    durationTicks: 100656112
+    durationTicks: 103001277
     depth: 0
     messages: []
   - stepName: Calculate asset bundles to be built
-    durationTicks: 21123
+    durationTicks: 30531
     depth: 1
     messages: []
   - stepName: Compile scripts
-    durationTicks: 30979111
+    durationTicks: 31202173
     depth: 1
     messages: []
   - stepName: Build player
-    durationTicks: 26106565
+    durationTicks: 26739549
     depth: 1
     messages: []
   - stepName: Prepare assets for target platform
-    durationTicks: 2264691
+    durationTicks: 2286982
     depth: 2
     messages: []
   - stepName: Building scenes
-    durationTicks: 6911542
+    durationTicks: 6985690
     depth: 2
     messages: []
   - stepName: Building scene Assets/PXR 2024/Scenes/Character prototype/Lighting
       Prototype.unity
-    durationTicks: 6900321
+    durationTicks: 6973973
     depth: 3
     messages: []
   - stepName: Writing asset files
-    durationTicks: 796737
+    durationTicks: 828957
     depth: 2
     messages: []
   - stepName: Packaging assets - archive:/BuildPlayer-Lighting Prototype/BuildPlayer-Lighting
       Prototype.sharedAssets
-    durationTicks: 763315
+    durationTicks: 806417
     depth: 3
     messages: []
   - stepName: Creating compressed player package
-    durationTicks: 2966045
+    durationTicks: 2910173
     depth: 2
     messages: []
   - stepName: Postprocess built player
-    durationTicks: 15706
+    durationTicks: 43012
     depth: 2
     messages: []
   m_Appendices:
-  - {fileID: 3031024624102023219}
-  - {fileID: 7641066959433559222}
-  - {fileID: -2591188584078272957}
-  - {fileID: 3064444393265003033}
-  - {fileID: -2395732592228296215}
---- !u!668709126 &3031024624102023219
-BuiltAssetBundleInfoSet:
-  bundleInfos:
-  - bundleName: scene-standalonewindows64-lighting prototype.vrcw
-    bundleArchiveFile: 2
-    packagedFileIndices: 0000000001000000
-  - bundleName: VRChat-sandbox
-    bundleArchiveFile: 5
-    packagedFileIndices: 04000000
---- !u!641289076 &3064444393265003033
-AudioBuildInfo:
-  m_IsAudioDisabled: 0
-  m_AudioClipCount: 0
-  m_AudioMixerCount: 0
---- !u!1126 &7641066959433559222
+  - {fileID: 9117281572313778997}
+  - {fileID: 561859095514095012}
+  - {fileID: -8706041114606442924}
+  - {fileID: -5173634530525888818}
+  - {fileID: 5937422567189811293}
+--- !u!1126 &561859095514095012
 PackedAssets:
   m_File: 1
   m_ShortPath: BuildPlayer-Lighting Prototype.sharedAssets
-  m_Overhead: 79561
+  m_Overhead: 79557
   m_Contents:
   - fileID: 1
     classID: 150
@@ -482,39 +455,66 @@ PackedAssets:
     buildTimeAssetPath: Assets/PXR 2024/Textures/Sprites/Circle_Sprite.png
   - fileID: 43
     classID: 114
-    packedSize: 13940
+    packedSize: 14360
     offset: 2456352
     sourceAssetGUID: cfd26c10d39c3b34ca13fad743766858
     buildTimeAssetPath: Assets/SerializedUdonPrograms/cd6eaff77bf585a40bdf24c31cfeddf3.asset
   - fileID: 44
     classID: 114
     packedSize: 2120
-    offset: 2470296
+    offset: 2470712
     sourceAssetGUID: 79a641b5ad02b554da7d9ba51655bee6
     buildTimeAssetPath: Assets/SerializedUdonPrograms/dfbf04249324c8741a8f464efb2442b2.asset
   - fileID: 45
     classID: 114
     packedSize: 1152
-    offset: 2472416
+    offset: 2472832
     sourceAssetGUID: 2e498d1c8094910479dc3e1b768306a4
     buildTimeAssetPath: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
       SDF - Fallback.asset
   - fileID: 46
     classID: 114
     packedSize: 27760
-    offset: 2473568
+    offset: 2473984
     sourceAssetGUID: 8f586378b4e144a9851e7b34d9b748ee
     buildTimeAssetPath: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
       SDF.asset
   - fileID: 47
     classID: 114
     packedSize: 2828
-    offset: 2501328
+    offset: 2501744
     sourceAssetGUID: c8f5d66fab586c34591bd821ced691ec
     buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/566cc00e27d5822449529a3785eae366.asset
   - fileID: 48
     classID: 114
     packedSize: 1648
-    offset: 2504160
+    offset: 2504576
     sourceAssetGUID: 0fd7002b0eff9e742a37b094d66b3917
     buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/c8df303ceb45ae84f85a11591f741734.asset
+--- !u!1126 &5937422567189811293
+PackedAssets:
+  m_File: 4
+  m_ShortPath: CAB-272ad1682f08ca2319d24b4ddad3876a
+  m_Overhead: 4096
+  m_Contents:
+  - fileID: 1
+    classID: 142
+    packedSize: 104
+    offset: 4096
+    sourceAssetGUID: 00000000000000000000000000000000
+    buildTimeAssetPath: AssetBundle Object
+  - fileID: 2
+    classID: 290
+    packedSize: 120
+    offset: 4200
+    sourceAssetGUID: 00000000000000000000000000000000
+    buildTimeAssetPath: 'Built-in AssetBundleManifest: AssetBundleManifest'
+--- !u!668709126 &9117281572313778997
+BuiltAssetBundleInfoSet:
+  bundleInfos:
+  - bundleName: scene-standalonewindows64-lighting prototype.vrcw
+    bundleArchiveFile: 2
+    packagedFileIndices: 0000000001000000
+  - bundleName: VRChat-sandbox
+    bundleArchiveFile: 5
+    packagedFileIndices: 04000000
