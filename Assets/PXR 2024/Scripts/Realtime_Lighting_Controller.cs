@@ -116,28 +116,32 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
 
     public void OnHorizontalSliderChanged()
     {
-        MaintainOwnership(); // Ensure ownership is maintained
-
-        // Update the synced horizontal rotation value
+        EnsureOwnership(); // Ensure ownership stays locked during slider movement
+        MaintainOwnership();
         syncedHorizontalRotation = sliderHorizontalRotation.value;
-        RequestSerialization();  // Sync across the network
+        RequestSerialization();  // Sync the value across the network
         ApplyRotation();
     }
 
     public void OnVerticalSliderChanged()
     {
-        MaintainOwnership(); // Ensure ownership is maintained
-
-        // Update the synced vertical rotation value
+        EnsureOwnership(); // Ensure ownership stays locked during slider movement
+        MaintainOwnership();
         syncedVerticalRotation = sliderVerticalRotation.value;
-        RequestSerialization();  // Sync across the network
+        RequestSerialization();  // Sync the value across the network
         ApplyRotation();
     }
 
 
 
-
-
+    void EnsureOwnership()
+    {
+        if (!Networking.IsOwner(Networking.LocalPlayer, gameObject))
+        {
+            Networking.SetOwner(Networking.LocalPlayer, gameObject);
+            Debug.Log("[Lighting Controller] Ownership secured by: " + Networking.LocalPlayer.displayName);
+        }
+    }
 
 
 
@@ -200,7 +204,7 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
     {
         if (Networking.IsOwner(Networking.LocalPlayer, gameObject))
         {
-            // If the local player owns it, display their name and allow interaction
+            // If the local player owns it, show their name and set the ownership status
             ownerDisplayText.text = "Owner: " + Networking.LocalPlayer.displayName;
             ownershipButtonImage.color = Color.green;  // Green for ownership
             sliderHorizontalRotation.interactable = true;
@@ -208,14 +212,24 @@ public class Realtime_Lighting_Controller : UdonSharpBehaviour
         }
         else
         {
-            // If no one owns it or another player owns it, show "No Owner" and disable interaction
-            ownerDisplayText.text = "No Owner";
-            ownershipButtonImage.color = Color.red;    // Red for no ownership
+            VRCPlayerApi currentOwner = Networking.GetOwner(gameObject);
+            if (currentOwner != null)
+            {
+                // If someone else owns it, show their name and disable sliders
+                ownerDisplayText.text = "Owner: " + currentOwner.displayName;
+                ownershipButtonImage.color = Color.red;  // Red for non-ownership
+            }
+            else
+            {
+                // No owner, disable sliders and show "No Owner"
+                ownerDisplayText.text = "No Owner";
+                ownershipButtonImage.color = Color.red;
+            }
             sliderHorizontalRotation.interactable = false;
             sliderVerticalRotation.interactable = false;
         }
 
-        Debug.Log("[Lighting Controller] Ownership UI updated.");
+        Debug.Log("[Lighting Controller] Ownership UI updated for all players.");
     }
 
     public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
