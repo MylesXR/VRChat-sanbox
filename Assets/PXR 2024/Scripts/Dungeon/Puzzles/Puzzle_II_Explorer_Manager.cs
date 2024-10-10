@@ -7,10 +7,21 @@ public class Puzzle_II_Explorer_Manager : UdonSharpBehaviour
 {
     public Puzzle_II_Explorer_TriggerZone[] pressurePlates; // Array of all pressure plates
     public Animator[] animators; // Array of animators to trigger animations
+    private VRCPlayerApi localPlayer;
+
+    private void Start()
+    {
+        localPlayer = Networking.LocalPlayer;
+    }
 
     // This method is called whenever a plate status changes
     public void UpdatePlateStatus()
     {
+        if (!Networking.IsOwner(gameObject)) // Ensure the owner controls network updates
+        {
+            Networking.SetOwner(localPlayer, gameObject); // Take ownership of the object before modifying state
+        }
+
         bool puzzleComplete = true;
 
         // Check if all pressure plates have the correct objects
@@ -25,7 +36,7 @@ public class Puzzle_II_Explorer_Manager : UdonSharpBehaviour
 
         if (puzzleComplete)
         {
-            Debug.Log("Puzzle is complete! Triggering the animations.");
+            Debug.LogWarning("Puzzle is complete! Triggering the animations.");
             TriggerPuzzleComplete(); // Trigger the puzzle completion logic
         }
     }
@@ -47,7 +58,7 @@ public class Puzzle_II_Explorer_Manager : UdonSharpBehaviour
                 if (anim != null)
                 {
                     anim.SetTrigger("PlayAnimation"); // Make sure each Animator has a trigger called "PlayAnimation"
-                    Debug.Log("Animation triggered for: " + anim.gameObject.name);
+                    Debug.LogWarning("Animation triggered for: " + anim.gameObject.name);
                 }
                 else
                 {
