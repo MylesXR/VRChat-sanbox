@@ -30,8 +30,15 @@ public class ToggleMenuIfStaff : UdonSharpBehaviour
     }
     public void SetStaff()
     {
-        isAttendee = false;
-        isStaff = true;
+        VRCPlayerApi player = Networking.LocalPlayer;
+        foreach (string user in whitelistedUsers)
+        {
+            if (user == player.displayName)
+            {
+                isAttendee = false;
+                isStaff = true;
+            }
+        }
     }
     public void SetStaffBarbarian()
     {
