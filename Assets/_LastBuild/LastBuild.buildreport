@@ -10,7 +10,7 @@ BuildReport:
   m_Summary:
     buildStartTime:
       serializedVersion: 2
-      ticks: 638639261533132432
+      ticks: 638642122167433274
     buildGUID: 00000000000000000000000000000000
     platformName: Android
     platformGroupName: Android
@@ -18,9 +18,9 @@ BuildReport:
     assetBundleOptions: 32
     outputPath: C:/Users/myles/AppData/Local/Temp/DefaultCompany/VRChat-sandbox/scene-android-launch
       party tavern world.vrcw
-    crc: 1996720392
-    totalSize: 37031001
-    totalTimeTicks: 585075229
+    crc: 1460726039
+    totalSize: 49667256
+    totalTimeTicks: 447335258
     totalErrors: 0
     totalWarnings: 2
     buildType: 1
@@ -30,51 +30,56 @@ BuildReport:
       party tavern world
     role: Scene
     id: 0
-    totalSize: 25130716
+    totalSize: 28805704
   - path: C:/VRChat-sandbox/scene-android-launch party tavern world.vrcw/BuildPlayer-launch
       party tavern world.sharedAssets
     role: SharedAssets
     id: 1
-    totalSize: 51390752
+    totalSize: 79844364
+  - path: C:/VRChat-sandbox/scene-android-launch party tavern world.vrcw/BuildPlayer-launch
+      party tavern world.resource
+    role: StreamingResourceFile
+    id: 2
+    totalSize: 36256
   - path: C:/VRChat-sandbox/scene-android-launch party tavern world.vrcw
     role: AssetBundle
-    id: 2
-    totalSize: 37027760
+    id: 3
+    totalSize: 49660439
   - path: C:/VRChat-sandbox/scene-android-launch party tavern world.vrcw.manifest
     role: AssetBundleTextManifest
-    id: 3
-    totalSize: 2009
+    id: 4
+    totalSize: 5585
   - path: C:/VRChat-sandbox/VRChat-sandbox/CAB-272ad1682f08ca2319d24b4ddad3876a
     role: ResourcesFile
-    id: 4
+    id: 5
     totalSize: 4312
   - path: C:/VRChat-sandbox/VRChat-sandbox
     role: ManifestAssetBundle
-    id: 5
+    id: 6
     totalSize: 1060
   - path: C:/VRChat-sandbox/VRChat-sandbox.manifest
     role: AssetBundleTextManifest
-    id: 6
+    id: 7
     totalSize: 172
   m_BuildSteps:
   - stepName: Build Asset Bundles
-    durationTicks: 585075229
+    durationTicks: 447335258
     depth: 0
     messages: []
   - stepName: Calculate asset bundles to be built
-    durationTicks: 1600976
+    durationTicks: 1314597
     depth: 1
     messages: []
   - stepName: Compile scripts
-    durationTicks: 93049555
+    durationTicks: 47803135
     depth: 1
     messages: []
   - stepName: Build player
-    durationTicks: 362218275
+    durationTicks: 311571237
     depth: 1
     messages: []
   - stepName: Prepare assets for target platform
-    durationTicks: 6306887
+    durationTicks: 3110144
     depth: 2
     messages:
     - type: 2
@@ -86,48 +91,40 @@ BuildReport:
         performance severely. You can change the mobile quality settings in 'Project
         Settings -> Quality Settings'.
   - stepName: Building scenes
-    durationTicks: 16729125
+    durationTicks: 62497355
     depth: 2
     messages: []
   - stepName: Building scene Assets/PXR 2024/Scenes/launch party tavern world.unity
-    durationTicks: 16711017
+    durationTicks: 62478145
     depth: 3
     messages: []
   - stepName: Writing asset files
-    durationTicks: 215823082
+    durationTicks: 81214641
     depth: 2
     messages: []
   - stepName: Packaging assets - archive:/BuildPlayer-launch party tavern world/BuildPlayer-launch
       party tavern world.sharedAssets
-    durationTicks: 215790500
+    durationTicks: 81148021
     depth: 3
     messages: []
   - stepName: Creating compressed player package
-    durationTicks: 84197470
+    durationTicks: 137784567
     depth: 2
     messages: []
   - stepName: Postprocess built player
-    durationTicks: 45390
+    durationTicks: 51796
     depth: 2
     messages: []
   m_Appendices:
-  - {fileID: 3967409902031820607}
-  - {fileID: 8490866055137671751}
-  - {fileID: 8662756258261378363}
-  - {fileID: 5372915841680444371}
-  - {fileID: 4202108927430764490}
---- !u!668709126 &3967409902031820607
-BuiltAssetBundleInfoSet:
-  bundleInfos:
-  - bundleName: scene-android-launch party tavern world.vrcw
-    bundleArchiveFile: 2
-    packagedFileIndices: 0000000001000000
-  - bundleName: VRChat-sandbox
-    bundleArchiveFile: 5
-    packagedFileIndices: 04000000
---- !u!1126 &4202108927430764490
+  - {fileID: 7260519634419206510}
+  - {fileID: 3010695336410882303}
+  - {fileID: 9074645138780523786}
+  - {fileID: 735501460128165971}
+  - {fileID: 1101459686024046893}
+  - {fileID: 150874617734541336}
+--- !u!1126 &150874617734541336
 PackedAssets:
-  m_File: 4
+  m_File: 5
   m_ShortPath: CAB-272ad1682f08ca2319d24b4ddad3876a
   m_Overhead: 4096
   m_Contents:
@@ -143,945 +140,7 @@ PackedAssets:
     offset: 4200
     sourceAssetGUID: 00000000000000000000000000000000
     buildTimeAssetPath: 'Built-in AssetBundleManifest: AssetBundleManifest'
---- !u!641289076 &5372915841680444371
-AudioBuildInfo:
-  m_IsAudioDisabled: 0
-  m_AudioClipCount: 0
-  m_AudioMixerCount: 0
---- !u!1126 &8490866055137671751
-PackedAssets:
-  m_File: 1
-  m_ShortPath: BuildPlayer-launch party tavern world.sharedAssets
-  m_Overhead: 89735
-  m_Contents:
-  - fileID: 1
-    classID: 150
-    packedSize: 37
-    offset: 90128
-    sourceAssetGUID: 00000000000000000000000000000000
-    buildTimeAssetPath: 
-  - fileID: 2
-    classID: 142
-    packedSize: 184
-    offset: 90168
-    sourceAssetGUID: 00000000000000000000000000000000
-    buildTimeAssetPath: 
-  - fileID: 3
-    classID: 21
-    packedSize: 896
-    offset: 90352
-    sourceAssetGUID: 503cd8ac30e609a4499ed9b776c0c386
-    buildTimeAssetPath: Assets/PXR 2024/assets/tavern repair, uv, windows 2.fbx
-  - fileID: 4
-    classID: 21
-    packedSize: 1052
-    offset: 91248
-    sourceAssetGUID: 0000000000000000f000000000000000
-    buildTimeAssetPath: Resources/unity_builtin_extra
-  - fileID: 5
-    classID: 21
-    packedSize: 252
-    offset: 92304
-    sourceAssetGUID: 0000000000000000f000000000000000
-    buildTimeAssetPath: Resources/unity_builtin_extra
-  - fileID: 6
-    classID: 21
-    packedSize: 944
-    offset: 92560
-    sourceAssetGUID: 256141358e62df8408d8cc056729441f
-    buildTimeAssetPath: Assets/3RD Party/AstrofishGames/DETAILED_MedievalMarkets/DETAILED_Medieval/Materials/MDungeons_Crates.mat
-  - fileID: 7
-    classID: 21
-    packedSize: 476
-    offset: 93504
-    sourceAssetGUID: 690263f9154a4409a4de771bf495cc0a
-    buildTimeAssetPath: Assets/3RD Party/Multistory Dungeons 2/Textures/Materials/Candle_Fire_FX_Material_03.mat
-  - fileID: 8
-    classID: 21
-    packedSize: 936
-    offset: 93984
-    sourceAssetGUID: 131a70dfece960a4db25f459a95d0114
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Materials/Props/M_Firewood.mat
-  - fileID: 9
-    classID: 21
-    packedSize: 1316
-    offset: 94920
-    sourceAssetGUID: 776a569a571f1c4449f127a7c1331c45
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Materials/Trees/M_TreeLarge_BB_03.mat
-  - fileID: 10
-    classID: 21
-    packedSize: 1384
-    offset: 96240
-    sourceAssetGUID: 4863f36fbf7fbe740b49709e27b56f6e
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Materials/Trees/M_TreeLarge_Bark.mat
-  - fileID: 11
-    classID: 21
-    packedSize: 2276
-    offset: 97624
-    sourceAssetGUID: 256a7f8f4f010c545bf70c9bee77efde
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Materials/Trees/M_TreeLarge_Leaves.mat
-  - fileID: 12
-    classID: 21
-    packedSize: 1020
-    offset: 99904
-    sourceAssetGUID: cdb07c4c2fd55a74a898dd5ff9669370
-    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Materials/House/Glass_Fade.mat
-  - fileID: 13
-    classID: 21
-    packedSize: 3532
-    offset: 100928
-    sourceAssetGUID: 93295296fd466c7479e197c150a84332
-    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Textures/VFX/Fire/Fire.mat
-  - fileID: 14
-    classID: 21
-    packedSize: 3536
-    offset: 104464
-    sourceAssetGUID: 679bd3c792db83442a02c055546c2ceb
-    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Textures/VFX/Fire/Smoke.mat
-  - fileID: 15
-    classID: 21
-    packedSize: 624
-    offset: 108000
-    sourceAssetGUID: c0f812e319954d6428d58e2199bac044
-    buildTimeAssetPath: Assets/PXR 2024/Materials/Dungeon/Dungeon-Chain-Single-MAT.mat
-  - fileID: 16
-    classID: 21
-    packedSize: 892
-    offset: 108624
-    sourceAssetGUID: 13ca04547b120254a9689d4d2ee48e3a
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist Character Prototype/Materials/brown.mat
-  - fileID: 17
-    classID: 21
-    packedSize: 964
-    offset: 109520
-    sourceAssetGUID: d657435148523ad4aa5286523d5b2711
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Fabric Types/Fabric Red Curtain/Fabric
-      Red Curtain.mat
-  - fileID: 18
-    classID: 21
-    packedSize: 972
-    offset: 110488
-    sourceAssetGUID: 199050fece4c6da49b03f3452a728757
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Metal Types/Metal Galvanized Rough/Metal
-      Galvanized Rough.mat
-  - fileID: 19
-    classID: 21
-    packedSize: 932
-    offset: 111464
-    sourceAssetGUID: 11f93787f2184544b9cec65ae0f4e815
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Plaster Types/Rough Plaster/Rough
-      Plaster tavern.mat
-  - fileID: 20
-    classID: 21
-    packedSize: 940
-    offset: 112400
-    sourceAssetGUID: 35c515f409d81954f976e6219b397273
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Roof Types/Roof Shingles Wood/Roof
-      Shingles Wood tavern.mat
-  - fileID: 21
-    classID: 21
-    packedSize: 940
-    offset: 113344
-    sourceAssetGUID: dc6ec512b18ec344d8065ad3a49d5378
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Stone Types/Stone base surface/Stone
-      Base Surface tavern.mat
-  - fileID: 22
-    classID: 21
-    packedSize: 916
-    offset: 114288
-    sourceAssetGUID: af444d02e4761874bb9b99a4331ef0ef
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Oak/Wood Oak 1.mat
-  - fileID: 23
-    classID: 21
-    packedSize: 968
-    offset: 115208
-    sourceAssetGUID: 04ebb4e0c0d7bac48970c1288b38f9cd
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Oak/Wood Oak hobbit
-      1.mat
-  - fileID: 24
-    classID: 21
-    packedSize: 964
-    offset: 116176
-    sourceAssetGUID: e96b9c73cf72a45408487b317c74831f
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Oak/Wood Oak tavern.mat
-  - fileID: 25
-    classID: 21
-    packedSize: 932
-    offset: 117144
-    sourceAssetGUID: a3da14bf82f05134da01221dda15dfdd
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/Wood
-      Planks Rough 2.mat
-  - fileID: 26
-    classID: 21
-    packedSize: 936
-    offset: 118080
-    sourceAssetGUID: 23e350a31ed8d374385fb1600dd48e1c
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/Wood
-      Planks Rough tavern.mat
-  - fileID: 27
-    classID: 21
-    packedSize: 936
-    offset: 119016
-    sourceAssetGUID: b9345c5476595d74b805cd00dace6b11
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/Wood
-      Planks hobbit house.mat
-  - fileID: 28
-    classID: 21
-    packedSize: 932
-    offset: 119952
-    sourceAssetGUID: 44ee917f313768842ac19620520d21bf
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/Wood Rough
-      hobbit 2.mat
-  - fileID: 29
-    classID: 21
-    packedSize: 968
-    offset: 120888
-    sourceAssetGUID: 77c1b9d123f1d834ebe53b650f0ca5c5
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/Wood Rough
-      tavern small pieces.mat
-  - fileID: 30
-    classID: 21
-    packedSize: 932
-    offset: 121856
-    sourceAssetGUID: 0f45832c41549744c968c09796303918
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/Wood Rough
-      tavern.mat
-  - fileID: 31
-    classID: 21
-    packedSize: 896
-    offset: 122792
-    sourceAssetGUID: aaf667fcceb57c344aba862ae75670fb
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/flags tavern.mat
-  - fileID: 32
-    classID: 21
-    packedSize: 892
-    offset: 123688
-    sourceAssetGUID: f7bd468c373aecd45a88e80fed373842
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/Guitar/guitar.mat
-  - fileID: 33
-    classID: 21
-    packedSize: 908
-    offset: 124584
-    sourceAssetGUID: 8f84fe3273df6224786cc9e1b830219d
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/barrel/barel
-      tavern.mat
-  - fileID: 34
-    classID: 21
-    packedSize: 900
-    offset: 125496
-    sourceAssetGUID: b41ef6b5e4eab1541abc475a8b2936e6
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/beer mug hundle/beer
-      mug handle.mat
-  - fileID: 35
-    classID: 21
-    packedSize: 896
-    offset: 126400
-    sourceAssetGUID: e4ca8a130830a7d469c99686d237cfc4
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/bottle label/bottle
-      label.mat
-  - fileID: 36
-    classID: 21
-    packedSize: 900
-    offset: 127296
-    sourceAssetGUID: a783c3741e1fd6740a5d296a387b5372
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/bottle label/bottle
-      skinny.mat
-  - fileID: 37
-    classID: 21
-    packedSize: 896
-    offset: 128200
-    sourceAssetGUID: 566b2c2c6e0db604ca453a64113c88b5
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/candle white/candle
-      white.mat
-  - fileID: 38
-    classID: 21
-    packedSize: 904
-    offset: 129096
-    sourceAssetGUID: 6c57a842df6eec04393c035f246f928c
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/lantern/lantern.mat
-  - fileID: 39
-    classID: 21
-    packedSize: 908
-    offset: 130000
-    sourceAssetGUID: 99555ee289f65954e9bef2a2c2804e62
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/stool table/New
-      Material.mat
-  - fileID: 40
-    classID: 21
-    packedSize: 956
-    offset: 130912
-    sourceAssetGUID: 58605111b34737041a0257d553ed9690
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/table cloth/table
-      cloth.mat
-  - fileID: 41
-    classID: 21
-    packedSize: 896
-    offset: 131872
-    sourceAssetGUID: 28fb20060d9870841bb1b5ff39b75b3b
-    buildTimeAssetPath: Assets/PXR 2024/assets/log stairs/log stairs.mat
-  - fileID: 42
-    classID: 21
-    packedSize: 908
-    offset: 132768
-    sourceAssetGUID: 6aae9479f61908449b5a402fc48ab669
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/BottleClear_Tavern.fbx
-  - fileID: 43
-    classID: 28
-    packedSize: 158564
-    offset: 133680
-    sourceAssetGUID: 00023e3baf7a9d3458c25f4b87a18bc2
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Plaster Types/Rough Plaster/TexturesCom_Plaster_Rough_1K_normal.tif
-  - fileID: 44
-    classID: 28
-    packedSize: 158548
-    offset: 292248
-    sourceAssetGUID: 0103cb456503c8d4ba432f0ca1c22b68
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Props/T_Firewood_01_Base_N.png
-  - fileID: 45
-    classID: 28
-    packedSize: 626404
-    offset: 450800
-    sourceAssetGUID: 0110f8674e98a8c45a6e939882259ba8
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Foliage/T_Leaves_Clump_02.png
-  - fileID: 46
-    classID: 28
-    packedSize: 349696
-    offset: 1077208
-    sourceAssetGUID: 02d87ed2ad029424c9a4cf98163593b9
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/TexturesCom_Wood_PlanksOld3_3.5x3.5_1K_normal.tif
-  - fileID: 47
-    classID: 28
-    packedSize: 626396
-    offset: 1426904
-    sourceAssetGUID: 0806afd92667cd04d954cb1966ab2d61
-    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Textures/House/Glass/Glass_01_MS.tga
-  - fileID: 48
-    classID: 28
-    packedSize: 158568
-    offset: 2053304
-    sourceAssetGUID: 0d3b2ba1836d60f43ba091e5f2745c1d
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Plaster Types/Rough Plaster/TexturesCom_Plaster_Rough_1K_smoothness.png
-  - fileID: 49
-    classID: 28
-    packedSize: 158576
-    offset: 2211872
-    sourceAssetGUID: 231fd794af9986b4b9f7ba67e0b6c554
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Roof Types/Roof Shingles Wood/TexturesCom_Roofing_WoodPlanks2_512_smoothness.png
-  - fileID: 50
-    classID: 28
-    packedSize: 158548
-    offset: 2370448
-    sourceAssetGUID: 24d8542dc25e66e4d9cd080f71cd0cba
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Props/T_Firewood_01_Base_E.png
-  - fileID: 51
-    classID: 28
-    packedSize: 158560
-    offset: 2529000
-    sourceAssetGUID: 2a8b8391394ff654492fb8e18707a416
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/lantern/Lantern_Tavern_LanternMAT_Normal.png
-  - fileID: 52
-    classID: 28
-    packedSize: 158588
-    offset: 2687560
-    sourceAssetGUID: 30cd970c2f324db4d908e5092d53d919
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/bottle label/BottleClearSkinny_Tavern_BottleClearSkinny_Tavern_BaseColor.png
-  - fileID: 53
-    classID: 28
-    packedSize: 158580
-    offset: 2846152
-    sourceAssetGUID: 3ab3de3b6c47f9e48b2a1926d2af9a06
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/TexturesCom_Wood_PlanksOld3_3.5x3.5_1K_smoothness.png
-  - fileID: 54
-    classID: 28
-    packedSize: 158548
-    offset: 3004736
-    sourceAssetGUID: 3c008c76ced99a5438f3d32bd563325f
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Props/T_Firewood_01_Base_C.png
-  - fileID: 55
-    classID: 28
-    packedSize: 158564
-    offset: 3163288
-    sourceAssetGUID: 41618c682f17e5b4aa256f0ae84ef351
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/TexturesCom_Wood_Rough_1K_smoothness.png
-  - fileID: 56
-    classID: 28
-    packedSize: 158564
-    offset: 3321856
-    sourceAssetGUID: 46d92974d286e54409f4d0b9ce30786c
-    buildTimeAssetPath: Assets/PXR 2024/assets/log stairs/LogStairs_01_paint_LogStairs_01_AO.png
-  - fileID: 57
-    classID: 28
-    packedSize: 626416
-    offset: 3480424
-    sourceAssetGUID: 4b691b7fddd787e44af3995f5173a0de
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/TexturesCom_Wood_Rough_1K_albedo.tif
-  - fileID: 58
-    classID: 28
-    packedSize: 158556
-    offset: 4106840
-    sourceAssetGUID: 4d9639e49b8059d42b0bf7f591333121
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Dungeon (All Textures)/Webs, Chains,
-      Iron Bars/Chain-Single.png
-  - fileID: 59
-    classID: 28
-    packedSize: 158572
-    offset: 4265400
-    sourceAssetGUID: 4ef0afc487d719c46be5ef5435800705
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/table cloth/ClothLong_Tavern_ClothLong_TavernMAT_Normal.png
-  - fileID: 60
-    classID: 28
-    packedSize: 40212
-    offset: 4423976
-    sourceAssetGUID: 597f6c7dd0fab7641a14faddd2b5e2ce
-    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/Lightmap-2_comp_dir.png
-  - fileID: 61
-    classID: 28
-    packedSize: 315108
-    offset: 4464192
-    sourceAssetGUID: 5dbcf4dddbf281f4f9e49ca37cec8b7d
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Dungeon (All Textures)/Webs, Chains,
-      Iron Bars/moss-overlay-texture.png
-  - fileID: 62
-    classID: 28
-    packedSize: 626432
-    offset: 4779304
-    sourceAssetGUID: 62bd676f0ef98ea41b654aaa9d3400f8
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/stool table/Stool_Table_Tavern_Stool_Bar_TavernMAT_Normal.png
-  - fileID: 63
-    classID: 28
-    packedSize: 626428
-    offset: 5405736
-    sourceAssetGUID: 643242fc377710b42a5efe1b3ea45215
-    buildTimeAssetPath: Assets/PXR 2024/assets/log stairs/LogStairs_01_paint_LogStairs_01_AlbedoTran.png
-  - fileID: 64
-    classID: 28
-    packedSize: 626424
-    offset: 6032168
-    sourceAssetGUID: 6935d3bb7a32fd44ab59657fce21462c
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/barrel/Barrel_Tavern_Barrel_TavernMAT_Normal.png
-  - fileID: 65
-    classID: 28
-    packedSize: 626432
-    offset: 6658592
-    sourceAssetGUID: 6aab70b9754ea954b9e2513c0edbf7c6
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/stool table/Stool_Table_Tavern_Stool_Bar_TavernMAT_BaseColor.png
-  - fileID: 66
-    classID: 28
-    packedSize: 158584
-    offset: 7285024
-    sourceAssetGUID: 71dba3a565d1c814a9194fe15ed86107
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/beer mug hundle/BeerMugHandle_Tavern_BeerMugHandle_TavernMAT_BaseColor.png
-  - fileID: 67
-    classID: 28
-    packedSize: 626408
-    offset: 7443608
-    sourceAssetGUID: 72825322c6da73745bbc14af474c341c
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Fabric Types/Fabric Red Curtain/Fabric016_1K-JPG_Color.jpg
-  - fileID: 68
-    classID: 28
-    packedSize: 158568
-    offset: 8070016
-    sourceAssetGUID: 76f36b31cac6d3040a577e881bb56166
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/Guitar/Guitar_Tavern_Guitar_TavernMAT_BaseColor.png
-  - fileID: 69
-    classID: 28
-    packedSize: 158568
-    offset: 8228584
-    sourceAssetGUID: 82bb67ade06bdf54a9f0b0404e365997
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Roof Types/Roof Shingles Wood/TexturesCom_Roofing_WoodPlanks2_512_ao.tif
-  - fileID: 70
-    classID: 28
-    packedSize: 626396
-    offset: 8387152
-    sourceAssetGUID: 82f18b357f6e3444ebf905dc1d248cc9
-    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Textures/House/Glass/Glass_01_N.tga
-  - fileID: 71
-    classID: 28
-    packedSize: 626412
-    offset: 9013552
-    sourceAssetGUID: 8568822b898cdd340b007115423298d9
-    buildTimeAssetPath: Assets/3RD Party/AstrofishGames/DETAILED_MedievalMarkets/DETAILED_Medieval/Materials/MDungeons_Crates_LD_NORMAL.tif
-  - fileID: 72
-    classID: 28
-    packedSize: 626416
-    offset: 9639968
-    sourceAssetGUID: 85b7709376163d1479d7dec98dd5ee2a
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/TexturesCom_Wood_Rough_1K_normal.tif
-  - fileID: 73
-    classID: 28
-    packedSize: 9961652
-    offset: 10266384
-    sourceAssetGUID: 87b4e805faeb359459af85745daaa1d6
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Trees/T_TreeLarge_Bark_C.png
-  - fileID: 74
-    classID: 28
-    packedSize: 626424
-    offset: 20228040
-    sourceAssetGUID: 8a0b518f063abe64ca8d7027cc58a308
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Oak/TexturesCom_Wood_OakVeneer2_2K_albedo.tif
-  - fileID: 75
-    classID: 28
-    packedSize: 626424
-    offset: 20854464
-    sourceAssetGUID: 8bc6de22c4cc14a43a95d351a36ea0db
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Stone Types/Stone base surface/TexturesCom_Stone_BaseSurface1_1K_normal.tif
-  - fileID: 76
-    classID: 28
-    packedSize: 158568
-    offset: 21480888
-    sourceAssetGUID: 8e140887566eaf04bb2661955d4a003b
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Metal Types/Metal Galvanized Rough/TexturesCom_Metal_Galvanized_1K_albedo.tif
-  - fileID: 77
-    classID: 28
-    packedSize: 40216
-    offset: 21639456
-    sourceAssetGUID: 8f814e09d74fe3c4abcc36d442e12ef2
-    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/Lightmap-2_comp_light.exr
-  - fileID: 78
-    classID: 28
-    packedSize: 158536
-    offset: 21679672
-    sourceAssetGUID: 91e9c50ae787d28499703dca35221195
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Oak/smooth.tif
-  - fileID: 79
-    classID: 28
-    packedSize: 2497828
-    offset: 21838208
-    sourceAssetGUID: 949abee06dfab7645b56e6a5b65f0688
-    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/Lightmap-0_comp_dir.png
-  - fileID: 80
-    classID: 28
-    packedSize: 158560
-    offset: 24336040
-    sourceAssetGUID: 960530c403753c84f83ee203bc259930
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Plaster Types/Rough Plaster/TexturesCom_Plaster_Rough_1K_ao.tif
-  - fileID: 81
-    classID: 28
-    packedSize: 2497836
-    offset: 24494600
-    sourceAssetGUID: 9b9fc26ef11d42b4fa345951ec9508fb
-    buildTimeAssetPath: Assets/3RD Party/AstrofishGames/DETAILED_MedievalMarkets/DETAILED_Medieval/Materials/MDungeons_Crates_LD_ALBEDO.tif
-  - fileID: 82
-    classID: 28
-    packedSize: 2497832
-    offset: 26992440
-    sourceAssetGUID: a14086ef4db26be4d83ca44bf358006a
-    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/Lightmap-1_comp_light.exr
-  - fileID: 83
-    classID: 28
-    packedSize: 158572
-    offset: 29490272
-    sourceAssetGUID: a158ed87cc9ede343b4ad7ff9f5a596a
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/TexturesCom_Wood_PlanksOld3_3.5x3.5_1K_ao.tif
-  - fileID: 84
-    classID: 28
-    packedSize: 349696
-    offset: 29648848
-    sourceAssetGUID: a90ddf3d7380a0c4ca7395f81552430d
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/TexturesCom_Wood_PlanksOld3_3.5x3.5_1K_albedo.tif
-  - fileID: 85
-    classID: 28
-    packedSize: 626396
-    offset: 29998544
-    sourceAssetGUID: a9761ee1ba838824abd95befccf5024f
-    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Textures/House/Glass/Glass_01_A.tga
-  - fileID: 86
-    classID: 28
-    packedSize: 158536
-    offset: 30624944
-    sourceAssetGUID: aa6df7d2bc6575b4cbe1b6117eef3730
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Stone Types/Stone base surface/smooth.tif
-  - fileID: 87
-    classID: 28
-    packedSize: 158564
-    offset: 30783480
-    sourceAssetGUID: adde7042ff053984eb5d9a1c64dda77e
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Plaster Types/Rough Plaster/TexturesCom_Plaster_Rough_1K_albedo.tif
-  - fileID: 88
-    classID: 28
-    packedSize: 158588
-    offset: 30942048
-    sourceAssetGUID: af5cfd6058aa9ea4db419881d2b8e9a2
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/bottle label/BottleLabel_Tavern_BottleLabel_Tavern_Label_MAT_BaseColor.png
-  - fileID: 89
-    classID: 28
-    packedSize: 626424
-    offset: 31100640
-    sourceAssetGUID: b3eb87cf041210843a6e626c9e0254c1
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/barrel/Barrel_Tavern_Barrel_TavernMAT_BaseColor.png
-  - fileID: 90
-    classID: 28
-    packedSize: 2497832
-    offset: 31727064
-    sourceAssetGUID: bc3d113aae1bd684b909de13cc599c1d
-    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/Lightmap-0_comp_light.exr
-  - fileID: 91
-    classID: 28
-    packedSize: 626404
-    offset: 34224896
-    sourceAssetGUID: bd7c1337949f3374ebe47e9855ce2fdd
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Trees/T_TrreeLarge_03_BB.png
-  - fileID: 92
-    classID: 28
-    packedSize: 626408
-    offset: 34851304
-    sourceAssetGUID: c7d466b6e3b56e94e9a57a04dcbcc9a7
-    buildTimeAssetPath: Assets/3RD Party/AstrofishGames/DETAILED_MedievalMarkets/DETAILED_Medieval/Materials/MDungeons_Crates_LD_MRAO.tif
-  - fileID: 93
-    classID: 28
-    packedSize: 158572
-    offset: 35477712
-    sourceAssetGUID: ca13fabc3fc11564b837c5a88a8a6035
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Roof Types/Roof Shingles Wood/TexturesCom_Roofing_WoodPlanks2_512_normal.tif
-  - fileID: 94
-    classID: 28
-    packedSize: 158572
-    offset: 35636288
-    sourceAssetGUID: ceeda69457c3ab84d9f2d581917097e1
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Roof Types/Roof Shingles Wood/TexturesCom_Roofing_WoodPlanks2_512_albedo.tif
-  - fileID: 95
-    classID: 28
-    packedSize: 40204
-    offset: 35794864
-    sourceAssetGUID: d5c189d1879805542bfc315efacf4db4
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/SharedResources/Textures/Utility/T_Noise_02.png
-  - fileID: 96
-    classID: 28
-    packedSize: 626388
-    offset: 35835072
-    sourceAssetGUID: d98f02cfbc9d6c846a38553daf97c0c9
-    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Textures/VFX/Fire/Fire.psd
-  - fileID: 97
-    classID: 28
-    packedSize: 158548
-    offset: 36461464
-    sourceAssetGUID: dda3bc0ddc3e53f4cac867fe8e96373a
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Props/T_Firewood_01_Base_R.png
-  - fileID: 98
-    classID: 28
-    packedSize: 158556
-    offset: 36620016
-    sourceAssetGUID: deb22581ef2a647418582d998b140c8e
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Fabric Types/Fabric Red Curtain/Fabric016_1K-JPG_NormalGL.jpg
-  - fileID: 99
-    classID: 28
-    packedSize: 158564
-    offset: 36778576
-    sourceAssetGUID: e27240909c285434f9e37ad6c9c159ee
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/Flag_Tavern_Flag_TavernMAT_BaseColor.png
-  - fileID: 100
-    classID: 28
-    packedSize: 158564
-    offset: 36937144
-    sourceAssetGUID: eb7d97c60fc7374409f6057508b23d3b
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/lantern/Lantern_Tavern_LanternMAT_BaseColor.png
-  - fileID: 101
-    classID: 28
-    packedSize: 2497828
-    offset: 37095712
-    sourceAssetGUID: ee196ec833101784682a2f713e355d14
-    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/Lightmap-1_comp_dir.png
-  - fileID: 102
-    classID: 28
-    packedSize: 626424
-    offset: 39593544
-    sourceAssetGUID: ef089128c5a2fef49b2c772325bdadcf
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Stone Types/Stone base surface/TexturesCom_Stone_BaseSurface1_1K_albedo.tif
-  - fileID: 103
-    classID: 28
-    packedSize: 158556
-    offset: 40219968
-    sourceAssetGUID: f6e8f2505a43c794bb4a76d3496e8466
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/TexturesCom_Wood_Rough_1K_ao.tif
-  - fileID: 104
-    classID: 28
-    packedSize: 158548
-    offset: 40378528
-    sourceAssetGUID: fa9528801bfb4b5f9474b939048aacdb
-    buildTimeAssetPath: Assets/3RD Party/Multistory Dungeons 2/Textures/FX_Candle_Fire_MD_01.psd
-  - fileID: 105
-    classID: 28
-    packedSize: 158572
-    offset: 40537080
-    sourceAssetGUID: fc1a55a63897e8445ab1fcaf6beb820c
-    buildTimeAssetPath: Assets/PXR 2024/Textures/Metal Types/Metal Galvanized Rough/TexturesCom_Metal_Galvanized_1K_smoothness.png
-  - fileID: 106
-    classID: 43
-    packedSize: 6668
-    offset: 40695656
-    sourceAssetGUID: 80f2fb516e90efe40a44fd587cd3eacc
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/Candle_low.fbx
-  - fileID: 107
-    classID: 43
-    packedSize: 51640
-    offset: 40702328
-    sourceAssetGUID: 600d9bab5e15db64c9fbd0e60370cb2f
-    buildTimeAssetPath: Assets/PXR 2024/assets/log stairs/Log_Stairs.fbx
-  - fileID: 108
-    classID: 43
-    packedSize: 18928
-    offset: 40753968
-    sourceAssetGUID: 7a3e340695b3bdb439001e81d626c910
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/BottleLabel_Tavern.fbx
-  - fileID: 109
-    classID: 43
-    packedSize: 21896
-    offset: 40772896
-    sourceAssetGUID: 41a91ac2b8694bd468c3be64d421025f
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/CandleHolderBig_Tavern.fbx
-  - fileID: 110
-    classID: 43
-    packedSize: 3476
-    offset: 40794792
-    sourceAssetGUID: 6ff93dc0b2293e548be47dbb0c8de865
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/tavern doors.fbx
-  - fileID: 111
-    classID: 43
-    packedSize: 39480
-    offset: 40798272
-    sourceAssetGUID: 6ff93dc0b2293e548be47dbb0c8de865
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/tavern doors.fbx
-  - fileID: 112
-    classID: 43
-    packedSize: 896
-    offset: 40837752
-    sourceAssetGUID: 085fb028a8048e941af8e368da65a20f
-    buildTimeAssetPath: Assets/PXR 2024/Meshes/Dungeon/Dungeon-Chain-Single.fbx
-  - fileID: 113
-    classID: 43
-    packedSize: 18148
-    offset: 40838648
-    sourceAssetGUID: 6aae9479f61908449b5a402fc48ab669
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/BottleClear_Tavern.fbx
-  - fileID: 114
-    classID: 43
-    packedSize: 6220
-    offset: 40856800
-    sourceAssetGUID: 503cd8ac30e609a4499ed9b776c0c386
-    buildTimeAssetPath: Assets/PXR 2024/assets/tavern repair, uv, windows 2.fbx
-  - fileID: 115
-    classID: 43
-    packedSize: 15148
-    offset: 40863024
-    sourceAssetGUID: 47e88fd0d4ccbc0439b7933edbf622fc
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/Table_Tavern.fbx
-  - fileID: 116
-    classID: 43
-    packedSize: 610924
-    offset: 40878176
-    sourceAssetGUID: b87bdddc58b64524a99a2d9cd8021c84
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Meshes/Trees/SM_TreeLarge_03_Unity.fbx
-  - fileID: 117
-    classID: 43
-    packedSize: 432184
-    offset: 41489104
-    sourceAssetGUID: b87bdddc58b64524a99a2d9cd8021c84
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Meshes/Trees/SM_TreeLarge_03_Unity.fbx
-  - fileID: 118
-    classID: 43
-    packedSize: 292992
-    offset: 41921288
-    sourceAssetGUID: b87bdddc58b64524a99a2d9cd8021c84
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Meshes/Trees/SM_TreeLarge_03_Unity.fbx
-  - fileID: 119
-    classID: 43
-    packedSize: 22500
-    offset: 42214280
-    sourceAssetGUID: b87bdddc58b64524a99a2d9cd8021c84
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Meshes/Trees/SM_TreeLarge_03_Unity.fbx
-  - fileID: 120
-    classID: 43
-    packedSize: 39480
-    offset: 42236784
-    sourceAssetGUID: 6ff93dc0b2293e548be47dbb0c8de865
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/tavern doors.fbx
-  - fileID: 121
-    classID: 43
-    packedSize: 1398256
-    offset: 42276264
-    sourceAssetGUID: 503cd8ac30e609a4499ed9b776c0c386
-    buildTimeAssetPath: Assets/PXR 2024/assets/tavern repair, uv, windows 2.fbx
-  - fileID: 122
-    classID: 43
-    packedSize: 2368456
-    offset: 43674520
-    sourceAssetGUID: 503cd8ac30e609a4499ed9b776c0c386
-    buildTimeAssetPath: Assets/PXR 2024/assets/tavern repair, uv, windows 2.fbx
-  - fileID: 123
-    classID: 43
-    packedSize: 39404
-    offset: 46042976
-    sourceAssetGUID: d6494a1ea70b486488fa650e451408b6
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/BeerMugHandle_Tavern.fbx
-  - fileID: 124
-    classID: 43
-    packedSize: 15320
-    offset: 46082384
-    sourceAssetGUID: 281c779b76018f243b7544e6546a1e76
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/BottleClearSkinny_Tavern.fbx
-  - fileID: 125
-    classID: 43
-    packedSize: 442392
-    offset: 46097704
-    sourceAssetGUID: 503cd8ac30e609a4499ed9b776c0c386
-    buildTimeAssetPath: Assets/PXR 2024/assets/tavern repair, uv, windows 2.fbx
-  - fileID: 126
-    classID: 43
-    packedSize: 98204
-    offset: 46540096
-    sourceAssetGUID: c451c19295a845c48b919a3b9ef96afa
-    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/Lantern_Tavern.fbx
-  - fileID: 127
-    classID: 48
-    packedSize: 44368
-    offset: 46638304
-    sourceAssetGUID: 0000000000000000f000000000000000
-    buildTimeAssetPath: Resources/unity_builtin_extra
-  - fileID: 128
-    classID: 48
-    packedSize: 251104
-    offset: 46682672
-    sourceAssetGUID: 0000000000000000f000000000000000
-    buildTimeAssetPath: Resources/unity_builtin_extra
-  - fileID: 129
-    classID: 48
-    packedSize: 2864800
-    offset: 46933776
-    sourceAssetGUID: 0000000000000000f000000000000000
-    buildTimeAssetPath: Resources/unity_builtin_extra
-  - fileID: 130
-    classID: 48
-    packedSize: 17800
-    offset: 49798576
-    sourceAssetGUID: 0000000000000000f000000000000000
-    buildTimeAssetPath: Resources/unity_builtin_extra
-  - fileID: 131
-    classID: 48
-    packedSize: 10388
-    offset: 49816376
-    sourceAssetGUID: 0000000000000000f000000000000000
-    buildTimeAssetPath: Resources/unity_builtin_extra
-  - fileID: 132
-    classID: 48
-    packedSize: 10284
-    offset: 49826768
-    sourceAssetGUID: 0000000000000000f000000000000000
-    buildTimeAssetPath: Resources/unity_builtin_extra
-  - fileID: 133
-    classID: 48
-    packedSize: 267888
-    offset: 49837056
-    sourceAssetGUID: 3183693b08ea2c3498466aeab483a701
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/SharedResources/Shaders/Foliage/PA_TreeWind_CustomLighting.shader
-  - fileID: 134
-    classID: 48
-    packedSize: 138608
-    offset: 50104944
-    sourceAssetGUID: 7121c27d1ff05474f83853cfc435b266
-    buildTimeAssetPath: Assets/PXR 2024/Shaders/Double-Sided-Faces-Transparency.shader
-  - fileID: 135
-    classID: 48
-    packedSize: 368124
-    offset: 50243552
-    sourceAssetGUID: 92a542d49c0d1d0478c243e758b81084
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/SharedResources/Shaders/Deprecated/Dreamscape_Surface.shader
-  - fileID: 136
-    classID: 48
-    packedSize: 357444
-    offset: 50611680
-    sourceAssetGUID: 9e462be833276004095a6c0ca5194f33
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/SharedResources/Shaders/Deprecated/Dreamscape_Surface_Coverage.shader
-  - fileID: 137
-    classID: 48
-    packedSize: 346928
-    offset: 50969128
-    sourceAssetGUID: b28029cc52e10a0419b31f0b9b1bbc2d
-    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/SharedResources/Shaders/Deprecated/Dreamscape_FoliageBillboard.shader
-  - fileID: 138
-    classID: 89
-    packedSize: 63264
-    offset: 51316056
-    sourceAssetGUID: 929bb3349439ad147a6972e05c0fb5ea
-    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/ReflectionProbe-0.exr
-  - fileID: 139
-    classID: 91
-    packedSize: 644
-    offset: 51379320
-    sourceAssetGUID: 206bcd08037b27c4f820d51154cd9c4f
-    buildTimeAssetPath: Assets/PXR 2024/Animations/tavern doors.controller
-  - fileID: 140
-    classID: 115
-    packedSize: 100
-    offset: 89408
-    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
-    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
-  - fileID: 141
-    classID: 115
-    packedSize: 96
-    offset: 89512
-    sourceAssetGUID: 4ecd63eff847044b68db9453ce219299
-    buildTimeAssetPath: Packages/com.vrchat.base/Runtime/VRCSDK/Plugins/VRCCore-Editor.dll
-  - fileID: 142
-    classID: 115
-    packedSize: 108
-    offset: 89608
-    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
-    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
-  - fileID: 143
-    classID: 115
-    packedSize: 88
-    offset: 89720
-    sourceAssetGUID: 45115577ef41a5b4ca741ed302693907
-    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/Udon/UdonBehaviour.cs
-  - fileID: 144
-    classID: 115
-    packedSize: 128
-    offset: 89808
-    sourceAssetGUID: bf61d954ecb803046953c666facfb904
-    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/Udon/ProgramSources/SerializedUdonProgramAsset.cs
-  - fileID: 145
-    classID: 115
-    packedSize: 92
-    offset: 89936
-    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
-    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
-  - fileID: 146
-    classID: 115
-    packedSize: 92
-    offset: 90032
-    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
-    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
-  - fileID: 147
-    classID: 258
-    packedSize: 40
-    offset: 51379968
-    sourceAssetGUID: 08f6b6dbc2f290640a17bb276c705f58
-    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/LightingData.asset
-  - fileID: 148
-    classID: 114
-    packedSize: 4704
-    offset: 51380008
-    sourceAssetGUID: 7597a17f1e3052a48b344f9f01cfe5dd
-    buildTimeAssetPath: Assets/SerializedUdonPrograms/2c60a27678821064f955ff4b987da2f5.asset
-  - fileID: 149
-    classID: 114
-    packedSize: 1560
-    offset: 51384712
-    sourceAssetGUID: b4d1cd8c79d574642955ca285fb2e927
-    buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/4715e20276be3b141a6a216230cab4e9.asset
-  - fileID: 150
-    classID: 114
-    packedSize: 2828
-    offset: 51386272
-    sourceAssetGUID: c8f5d66fab586c34591bd821ced691ec
-    buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/566cc00e27d5822449529a3785eae366.asset
-  - fileID: 151
-    classID: 114
-    packedSize: 1648
-    offset: 51389104
-    sourceAssetGUID: 0fd7002b0eff9e742a37b094d66b3917
-    buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/c8df303ceb45ae84f85a11591f741734.asset
---- !u!382020655 &8662756258261378363
+--- !u!382020655 &735501460128165971
 PluginBuildInfo:
   m_RuntimePlugins:
   - Unity.Burst.Unsafe
@@ -1152,3 +211,2839 @@ PluginBuildInfo:
   - Unity.Plastic.Antlr3.Runtime
   - Serilog.Sinks.Unity3D
   - lz4x64Plastic
+--- !u!641289076 &1101459686024046893
+AudioBuildInfo:
+  m_IsAudioDisabled: 0
+  m_AudioClipCount: 4
+  m_AudioMixerCount: 0
+--- !u!1126 &3010695336410882303
+PackedAssets:
+  m_File: 1
+  m_ShortPath: BuildPlayer-launch party tavern world.sharedAssets
+  m_Overhead: 144667
+  m_Contents:
+  - fileID: 1
+    classID: 150
+    packedSize: 145
+    offset: 147576
+    sourceAssetGUID: 00000000000000000000000000000000
+    buildTimeAssetPath: 
+  - fileID: 2
+    classID: 142
+    packedSize: 184
+    offset: 147728
+    sourceAssetGUID: 00000000000000000000000000000000
+    buildTimeAssetPath: 
+  - fileID: 3
+    classID: 21
+    packedSize: 1748
+    offset: 147912
+    sourceAssetGUID: 8d65906fce781454d9bcf94d92410637
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/BebasNeue-Regular SDF.asset
+  - fileID: 4
+    classID: 21
+    packedSize: 1760
+    offset: 149664
+    sourceAssetGUID: f4cfb74bad28aef40af7fd5134cb1d2d
+    buildTimeAssetPath: Assets/MarbleRace/Fonts/NotoSans-Regular SDF.asset
+  - fileID: 5
+    classID: 21
+    packedSize: 896
+    offset: 151424
+    sourceAssetGUID: 503cd8ac30e609a4499ed9b776c0c386
+    buildTimeAssetPath: Assets/PXR 2024/assets/tavern repair, uv, windows 2.fbx
+  - fileID: 6
+    classID: 21
+    packedSize: 1052
+    offset: 152320
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 7
+    classID: 21
+    packedSize: 252
+    offset: 153376
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 8
+    classID: 21
+    packedSize: 292
+    offset: 153632
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 9
+    classID: 21
+    packedSize: 944
+    offset: 153928
+    sourceAssetGUID: 256141358e62df8408d8cc056729441f
+    buildTimeAssetPath: Assets/3RD Party/AstrofishGames/DETAILED_MedievalMarkets/DETAILED_Medieval/Materials/MDungeons_Crates.mat
+  - fileID: 10
+    classID: 21
+    packedSize: 476
+    offset: 154872
+    sourceAssetGUID: 690263f9154a4409a4de771bf495cc0a
+    buildTimeAssetPath: Assets/3RD Party/Multistory Dungeons 2/Textures/Materials/Candle_Fire_FX_Material_03.mat
+  - fileID: 11
+    classID: 21
+    packedSize: 936
+    offset: 155352
+    sourceAssetGUID: 131a70dfece960a4db25f459a95d0114
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Materials/Props/M_Firewood.mat
+  - fileID: 12
+    classID: 21
+    packedSize: 1316
+    offset: 156288
+    sourceAssetGUID: 776a569a571f1c4449f127a7c1331c45
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Materials/Trees/M_TreeLarge_BB_03.mat
+  - fileID: 13
+    classID: 21
+    packedSize: 1384
+    offset: 157608
+    sourceAssetGUID: 4863f36fbf7fbe740b49709e27b56f6e
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Materials/Trees/M_TreeLarge_Bark.mat
+  - fileID: 14
+    classID: 21
+    packedSize: 2276
+    offset: 158992
+    sourceAssetGUID: 256a7f8f4f010c545bf70c9bee77efde
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Materials/Trees/M_TreeLarge_Leaves.mat
+  - fileID: 15
+    classID: 21
+    packedSize: 912
+    offset: 161272
+    sourceAssetGUID: d8e54409253e17b4dbc96298a48dc950
+    buildTimeAssetPath: Assets/3RD Party/SciFi Warehouse Kit/Art/Materials/singlethread
+      red.mat
+  - fileID: 16
+    classID: 21
+    packedSize: 1020
+    offset: 162184
+    sourceAssetGUID: cdb07c4c2fd55a74a898dd5ff9669370
+    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Materials/House/Glass_Fade.mat
+  - fileID: 17
+    classID: 21
+    packedSize: 3532
+    offset: 163208
+    sourceAssetGUID: 93295296fd466c7479e197c150a84332
+    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Textures/VFX/Fire/Fire.mat
+  - fileID: 18
+    classID: 21
+    packedSize: 3536
+    offset: 166744
+    sourceAssetGUID: 679bd3c792db83442a02c055546c2ceb
+    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Textures/VFX/Fire/Smoke.mat
+  - fileID: 19
+    classID: 21
+    packedSize: 904
+    offset: 170280
+    sourceAssetGUID: 2926729c38d0a814ca04791e4b56f9d7
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Courses/Checkerboard/Checker.mat
+  - fileID: 20
+    classID: 21
+    packedSize: 904
+    offset: 171184
+    sourceAssetGUID: 040c3925b03a5534e8dd190c67c92ddb
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Courses/Elevator/Elevator.mat
+  - fileID: 21
+    classID: 21
+    packedSize: 908
+    offset: 172088
+    sourceAssetGUID: 0f5292ca2c1c70049bac38dce0715f08
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Courses/Wall/Wall.mat
+  - fileID: 22
+    classID: 21
+    packedSize: 908
+    offset: 173000
+    sourceAssetGUID: 6f8fcf2fdf4830e47ae4b3d5e738bfd1
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Courses/Wood/wood.mat
+  - fileID: 23
+    classID: 21
+    packedSize: 912
+    offset: 173912
+    sourceAssetGUID: 2db0985e4485634439a18686acd21f3d
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Courses/Wood/woodends.mat
+  - fileID: 24
+    classID: 21
+    packedSize: 904
+    offset: 174824
+    sourceAssetGUID: d518574684a7d1440b2cfa854173d4e6
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Among/Among.mat
+  - fileID: 25
+    classID: 21
+    packedSize: 912
+    offset: 175728
+    sourceAssetGUID: ebd27574b872a164ebe42bc20f8c4c2b
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Beach/Beach.mat
+  - fileID: 26
+    classID: 21
+    packedSize: 904
+    offset: 176640
+    sourceAssetGUID: 371408272249aa1408d71730bd316758
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Eight/Marble.mat
+  - fileID: 27
+    classID: 21
+    packedSize: 908
+    offset: 177544
+    sourceAssetGUID: 57e6348c22d834f469072962b6d805ed
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Eye/Eye.mat
+  - fileID: 28
+    classID: 21
+    packedSize: 904
+    offset: 178456
+    sourceAssetGUID: 1c1a8df16bc7bb041970d6a1b84b0529
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Horse/Horse.mat
+  - fileID: 29
+    classID: 21
+    packedSize: 904
+    offset: 179360
+    sourceAssetGUID: 1a9ba9c0ab4b1c943906e68c2b621b58
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Pride/Pride.mat
+  - fileID: 30
+    classID: 21
+    packedSize: 624
+    offset: 180264
+    sourceAssetGUID: c0f812e319954d6428d58e2199bac044
+    buildTimeAssetPath: Assets/PXR 2024/Materials/Dungeon/Dungeon-Chain-Single-MAT.mat
+  - fileID: 31
+    classID: 21
+    packedSize: 908
+    offset: 180888
+    sourceAssetGUID: 19b888c4105a8d744b7c1081e81b0508
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/pxr orange.mat
+  - fileID: 32
+    classID: 21
+    packedSize: 908
+    offset: 181800
+    sourceAssetGUID: 3733677adc283c04689fe8b6ffb27bcd
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/pxr purple.mat
+  - fileID: 33
+    classID: 21
+    packedSize: 976
+    offset: 182712
+    sourceAssetGUID: 4a897f0c964a5594a8efc33f6fc57e63
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/Materials/FB_IMG_1726237330410 - RodneyVRamsey.mat
+  - fileID: 34
+    classID: 21
+    packedSize: 892
+    offset: 183688
+    sourceAssetGUID: 13ca04547b120254a9689d4d2ee48e3a
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist Character Prototype/Materials/brown.mat
+  - fileID: 35
+    classID: 21
+    packedSize: 964
+    offset: 184584
+    sourceAssetGUID: d657435148523ad4aa5286523d5b2711
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Fabric Types/Fabric Red Curtain/Fabric
+      Red Curtain.mat
+  - fileID: 36
+    classID: 21
+    packedSize: 972
+    offset: 185552
+    sourceAssetGUID: 199050fece4c6da49b03f3452a728757
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Metal Types/Metal Galvanized Rough/Metal
+      Galvanized Rough.mat
+  - fileID: 37
+    classID: 21
+    packedSize: 932
+    offset: 186528
+    sourceAssetGUID: 11f93787f2184544b9cec65ae0f4e815
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Plaster Types/Rough Plaster/Rough
+      Plaster tavern.mat
+  - fileID: 38
+    classID: 21
+    packedSize: 940
+    offset: 187464
+    sourceAssetGUID: 35c515f409d81954f976e6219b397273
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Roof Types/Roof Shingles Wood/Roof
+      Shingles Wood tavern.mat
+  - fileID: 39
+    classID: 21
+    packedSize: 940
+    offset: 188408
+    sourceAssetGUID: dc6ec512b18ec344d8065ad3a49d5378
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Stone Types/Stone base surface/Stone
+      Base Surface tavern.mat
+  - fileID: 40
+    classID: 21
+    packedSize: 916
+    offset: 189352
+    sourceAssetGUID: af444d02e4761874bb9b99a4331ef0ef
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Oak/Wood Oak 1.mat
+  - fileID: 41
+    classID: 21
+    packedSize: 968
+    offset: 190272
+    sourceAssetGUID: 04ebb4e0c0d7bac48970c1288b38f9cd
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Oak/Wood Oak hobbit
+      1.mat
+  - fileID: 42
+    classID: 21
+    packedSize: 964
+    offset: 191240
+    sourceAssetGUID: e96b9c73cf72a45408487b317c74831f
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Oak/Wood Oak tavern.mat
+  - fileID: 43
+    classID: 21
+    packedSize: 932
+    offset: 192208
+    sourceAssetGUID: a3da14bf82f05134da01221dda15dfdd
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/Wood
+      Planks Rough 2.mat
+  - fileID: 44
+    classID: 21
+    packedSize: 936
+    offset: 193144
+    sourceAssetGUID: 23e350a31ed8d374385fb1600dd48e1c
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/Wood
+      Planks Rough tavern.mat
+  - fileID: 45
+    classID: 21
+    packedSize: 936
+    offset: 194080
+    sourceAssetGUID: b9345c5476595d74b805cd00dace6b11
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/Wood
+      Planks hobbit house.mat
+  - fileID: 46
+    classID: 21
+    packedSize: 932
+    offset: 195016
+    sourceAssetGUID: 44ee917f313768842ac19620520d21bf
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/Wood Rough
+      hobbit 2.mat
+  - fileID: 47
+    classID: 21
+    packedSize: 968
+    offset: 195952
+    sourceAssetGUID: 77c1b9d123f1d834ebe53b650f0ca5c5
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/Wood Rough
+      tavern small pieces.mat
+  - fileID: 48
+    classID: 21
+    packedSize: 932
+    offset: 196920
+    sourceAssetGUID: 0f45832c41549744c968c09796303918
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/Wood Rough
+      tavern.mat
+  - fileID: 49
+    classID: 21
+    packedSize: 896
+    offset: 197856
+    sourceAssetGUID: aaf667fcceb57c344aba862ae75670fb
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/flags tavern.mat
+  - fileID: 50
+    classID: 21
+    packedSize: 892
+    offset: 198752
+    sourceAssetGUID: f7bd468c373aecd45a88e80fed373842
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/Guitar/guitar.mat
+  - fileID: 51
+    classID: 21
+    packedSize: 908
+    offset: 199648
+    sourceAssetGUID: 8f84fe3273df6224786cc9e1b830219d
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/barrel/barel
+      tavern.mat
+  - fileID: 52
+    classID: 21
+    packedSize: 900
+    offset: 200560
+    sourceAssetGUID: b41ef6b5e4eab1541abc475a8b2936e6
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/beer mug hundle/beer
+      mug handle.mat
+  - fileID: 53
+    classID: 21
+    packedSize: 896
+    offset: 201464
+    sourceAssetGUID: e4ca8a130830a7d469c99686d237cfc4
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/bottle label/bottle
+      label.mat
+  - fileID: 54
+    classID: 21
+    packedSize: 900
+    offset: 202360
+    sourceAssetGUID: a783c3741e1fd6740a5d296a387b5372
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/bottle label/bottle
+      skinny.mat
+  - fileID: 55
+    classID: 21
+    packedSize: 896
+    offset: 203264
+    sourceAssetGUID: 566b2c2c6e0db604ca453a64113c88b5
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/candle white/candle
+      white.mat
+  - fileID: 56
+    classID: 21
+    packedSize: 904
+    offset: 204160
+    sourceAssetGUID: 6c57a842df6eec04393c035f246f928c
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/lantern/lantern.mat
+  - fileID: 57
+    classID: 21
+    packedSize: 908
+    offset: 205064
+    sourceAssetGUID: 99555ee289f65954e9bef2a2c2804e62
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/stool table/New
+      Material.mat
+  - fileID: 58
+    classID: 21
+    packedSize: 956
+    offset: 205976
+    sourceAssetGUID: 58605111b34737041a0257d553ed9690
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/table cloth/table
+      cloth.mat
+  - fileID: 59
+    classID: 21
+    packedSize: 680
+    offset: 206936
+    sourceAssetGUID: 5f9bbf478c2b961468f0472188c111fb
+    buildTimeAssetPath: Assets/USharpVideo/Materials/UIMaterial.mat
+  - fileID: 60
+    classID: 21
+    packedSize: 1036
+    offset: 207616
+    sourceAssetGUID: f9f0ca4e1c93d7c449df855cc90deab0
+    buildTimeAssetPath: Assets/USharpVideo/Materials/VideoScreen.mat
+  - fileID: 61
+    classID: 21
+    packedSize: 532
+    offset: 208656
+    sourceAssetGUID: b04036ed328527c4fb87475b533c5d24
+    buildTimeAssetPath: Assets/VRChat/VRChat Prefab/Portals/BobyStar/World Portal
+      System/Materials/WPS_PreviewCam.mat
+  - fileID: 62
+    classID: 21
+    packedSize: 544
+    offset: 209192
+    sourceAssetGUID: 45d14fa8a4740b14c83b14174d0e4b37
+    buildTimeAssetPath: Assets/VRChat/VRChat Prefab/Portals/BobyStar/World Portal
+      System/Materials/WPS_PreviewPortal_Avaliable.mat
+  - fileID: 63
+    classID: 21
+    packedSize: 548
+    offset: 209736
+    sourceAssetGUID: ac68b8ea830ee864aadc7c982db6a11d
+    buildTimeAssetPath: Assets/VRChat/VRChat Prefab/Portals/BobyStar/World Portal
+      System/Materials/WPS_PreviewPortal_Unavaliable.mat
+  - fileID: 64
+    classID: 21
+    packedSize: 588
+    offset: 210288
+    sourceAssetGUID: b2e38499902c41e4c9c755dfae0bb70c
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/debugblue.mat
+  - fileID: 65
+    classID: 21
+    packedSize: 588
+    offset: 210880
+    sourceAssetGUID: 7ac63c43f9fdbae4bb9c2771ae82e10f
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/debuggreen.mat
+  - fileID: 66
+    classID: 21
+    packedSize: 584
+    offset: 211472
+    sourceAssetGUID: 5804f53cb47a4b34c9d7cd328b0468ff
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/debugred.mat
+  - fileID: 67
+    classID: 21
+    packedSize: 588
+    offset: 212056
+    sourceAssetGUID: 966d8d02718b03a4bbb4b7e0da485d5b
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/debugwhite.mat
+  - fileID: 68
+    classID: 21
+    packedSize: 588
+    offset: 212648
+    sourceAssetGUID: e2bfa595a10e1d849b6e3ccf5edd5ad2
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/GripRimlight.mat
+  - fileID: 69
+    classID: 21
+    packedSize: 1492
+    offset: 213240
+    sourceAssetGUID: 65217d7aaacc2d845b035422b9e0e267
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/GroundRubberPublic.mat
+  - fileID: 70
+    classID: 21
+    packedSize: 940
+    offset: 214736
+    sourceAssetGUID: adbb3a0bc35f85f4ca2cec1b006f45b7
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/TargetBoardWATL.mat
+  - fileID: 71
+    classID: 21
+    packedSize: 924
+    offset: 215680
+    sourceAssetGUID: fd9b557c35cc6454b837e57759bfafdc
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/ThrownAxe.mat
+  - fileID: 72
+    classID: 21
+    packedSize: 596
+    offset: 216608
+    sourceAssetGUID: 29f7a0c6d8f0856499b18f032982951a
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/beeraxe/beeraxecup.mat
+  - fileID: 73
+    classID: 21
+    packedSize: 600
+    offset: 217208
+    sourceAssetGUID: 564d331ef35fd174d9a645ccca8a5a7e
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/beeraxe/beeraxesingle.mat
+  - fileID: 74
+    classID: 21
+    packedSize: 596
+    offset: 217808
+    sourceAssetGUID: 365c7a49a37077d4e9a45cc54c10a446
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/linepaint.mat
+  - fileID: 75
+    classID: 21
+    packedSize: 596
+    offset: 218408
+    sourceAssetGUID: 7863eb8c5f044104e9b69cb43a2c888f
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/targetpaint.mat
+  - fileID: 76
+    classID: 21
+    packedSize: 136
+    offset: 219008
+    sourceAssetGUID: 6cb934e9a1d9ea6448040aad7dbeac81
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/Udon/Fonts/fontawesome-webfont.ttf
+  - fileID: 77
+    classID: 21
+    packedSize: 136
+    offset: 219144
+    sourceAssetGUID: e3265ab4bf004d28a9537516768c1c75
+    buildTimeAssetPath: Assets/TextMesh Pro/Fonts/LiberationSans.ttf
+  - fileID: 78
+    classID: 21
+    packedSize: 2004
+    offset: 219280
+    sourceAssetGUID: 2e498d1c8094910479dc3e1b768306a4
+    buildTimeAssetPath: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
+      SDF - Fallback.asset
+  - fileID: 79
+    classID: 21
+    packedSize: 944
+    offset: 221288
+    sourceAssetGUID: 8f586378b4e144a9851e7b34d9b748ee
+    buildTimeAssetPath: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
+      SDF.asset
+  - fileID: 80
+    classID: 21
+    packedSize: 900
+    offset: 222232
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 81
+    classID: 21
+    packedSize: 1752
+    offset: 223136
+    sourceAssetGUID: 489ac19dc7a766441889da10c423ac83
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/Capture it SDF.asset
+  - fileID: 82
+    classID: 21
+    packedSize: 908
+    offset: 224888
+    sourceAssetGUID: 6aae9479f61908449b5a402fc48ab669
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/BottleClear_Tavern.fbx
+  - fileID: 83
+    classID: 28
+    packedSize: 1048692
+    offset: 225800
+    sourceAssetGUID: 489ac19dc7a766441889da10c423ac83
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/Capture it SDF.asset
+  - fileID: 84
+    classID: 28
+    packedSize: 21952
+    offset: 1274496
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 85
+    classID: 28
+    packedSize: 5564
+    offset: 1296448
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 86
+    classID: 28
+    packedSize: 5568
+    offset: 1302016
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 87
+    classID: 28
+    packedSize: 5576
+    offset: 1307584
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 88
+    classID: 28
+    packedSize: 5564
+    offset: 1313160
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 89
+    classID: 28
+    packedSize: 158564
+    offset: 1318728
+    sourceAssetGUID: 00023e3baf7a9d3458c25f4b87a18bc2
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Plaster Types/Rough Plaster/TexturesCom_Plaster_Rough_1K_normal.tif
+  - fileID: 90
+    classID: 28
+    packedSize: 158548
+    offset: 1477296
+    sourceAssetGUID: 0103cb456503c8d4ba432f0ca1c22b68
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Props/T_Firewood_01_Base_N.png
+  - fileID: 91
+    classID: 28
+    packedSize: 626404
+    offset: 1635848
+    sourceAssetGUID: 0110f8674e98a8c45a6e939882259ba8
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Foliage/T_Leaves_Clump_02.png
+  - fileID: 92
+    classID: 28
+    packedSize: 349696
+    offset: 2262256
+    sourceAssetGUID: 02d87ed2ad029424c9a4cf98163593b9
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/TexturesCom_Wood_PlanksOld3_3.5x3.5_1K_normal.tif
+  - fileID: 93
+    classID: 28
+    packedSize: 7852
+    offset: 2611952
+    sourceAssetGUID: 062a26ce01cb86642a4a5e558355d208
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/PauseIcon.png
+  - fileID: 94
+    classID: 28
+    packedSize: 40224
+    offset: 2619808
+    sourceAssetGUID: 0664efb4239ba63428767af4378f4e4b
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Among/Marbel_marble_AlbedoTransparency.png
+  - fileID: 95
+    classID: 28
+    packedSize: 626396
+    offset: 2660032
+    sourceAssetGUID: 0806afd92667cd04d954cb1966ab2d61
+    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Textures/House/Glass/Glass_01_MS.tga
+  - fileID: 96
+    classID: 28
+    packedSize: 7856
+    offset: 3286432
+    sourceAssetGUID: 0b57367304e0c224fab0e9eef953ee44
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/VolumeHighIcon.png
+  - fileID: 97
+    classID: 28
+    packedSize: 158568
+    offset: 3294288
+    sourceAssetGUID: 0d3b2ba1836d60f43ba091e5f2745c1d
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Plaster Types/Rough Plaster/TexturesCom_Plaster_Rough_1K_smoothness.png
+  - fileID: 98
+    classID: 28
+    packedSize: 14836
+    offset: 3452856
+    sourceAssetGUID: 1ebbd05939cf91d44a45b2f42960504e
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/WoodBoardTarget_WoodBoardTarget_MetallicSmoothness.png
+  - fileID: 99
+    classID: 28
+    packedSize: 158576
+    offset: 3467696
+    sourceAssetGUID: 231fd794af9986b4b9f7ba67e0b6c554
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Roof Types/Roof Shingles Wood/TexturesCom_Roofing_WoodPlanks2_512_smoothness.png
+  - fileID: 100
+    classID: 28
+    packedSize: 158548
+    offset: 3626272
+    sourceAssetGUID: 24d8542dc25e66e4d9cd080f71cd0cba
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Props/T_Firewood_01_Base_E.png
+  - fileID: 101
+    classID: 28
+    packedSize: 626400
+    offset: 3784824
+    sourceAssetGUID: 253ae3915519f594d83d2a01ec6ced22
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/rubbermatfree.png
+  - fileID: 102
+    classID: 28
+    packedSize: 626400
+    offset: 4411224
+    sourceAssetGUID: 25d9265c7044c354893024482aac9b6c
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Courses/Wood/Wood_Ends_normal.png
+  - fileID: 103
+    classID: 28
+    packedSize: 7856
+    offset: 5037624
+    sourceAssetGUID: 2a2f709a85fb9604cb69ee3540c9d618
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/VolumeLowIcon.png
+  - fileID: 104
+    classID: 28
+    packedSize: 158560
+    offset: 5045480
+    sourceAssetGUID: 2a8b8391394ff654492fb8e18707a416
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/lantern/Lantern_Tavern_LanternMAT_Normal.png
+  - fileID: 105
+    classID: 28
+    packedSize: 7848
+    offset: 5204040
+    sourceAssetGUID: 2e770eb7fde325548bf15dea94681504
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/LockIcon.png
+  - fileID: 106
+    classID: 28
+    packedSize: 158588
+    offset: 5211888
+    sourceAssetGUID: 30cd970c2f324db4d908e5092d53d919
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/bottle label/BottleClearSkinny_Tavern_BottleClearSkinny_Tavern_BaseColor.png
+  - fileID: 107
+    classID: 28
+    packedSize: 40212
+    offset: 5370480
+    sourceAssetGUID: 31478f97a3a281c419a5dbc15f2c74f1
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Beach/Marbel_marble_Normal.png
+  - fileID: 108
+    classID: 28
+    packedSize: 10620
+    offset: 5410696
+    sourceAssetGUID: 329975811e346ce48acc41a7f9be9d36
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/beeraxe/beeraxecup.psd
+  - fileID: 109
+    classID: 28
+    packedSize: 14824
+    offset: 5421320
+    sourceAssetGUID: 33f5f51870d0f4d479a1b6b611385e26
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/ThrownAxe_AxeMaterial_MetallicSmoothness.png
+  - fileID: 110
+    classID: 28
+    packedSize: 58088
+    offset: 5436144
+    sourceAssetGUID: 34b12cf183cdcf842827459a56c7e0cd
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/WoodBoardTarget_WoodBoardTarget_Normal.png
+  - fileID: 111
+    classID: 28
+    packedSize: 626404
+    offset: 5494232
+    sourceAssetGUID: 382212522aaff65428a1687ac94fee04
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Courses/Wood/Wood_Grain_basecolor.png
+  - fileID: 112
+    classID: 28
+    packedSize: 40224
+    offset: 6120640
+    sourceAssetGUID: 39a1a256a87827b4e8edccded563f509
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Pride/Marbel_marble_AlbedoTransparency.png
+  - fileID: 113
+    classID: 28
+    packedSize: 158580
+    offset: 6160864
+    sourceAssetGUID: 3ab3de3b6c47f9e48b2a1926d2af9a06
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/TexturesCom_Wood_PlanksOld3_3.5x3.5_1K_smoothness.png
+  - fileID: 114
+    classID: 28
+    packedSize: 158548
+    offset: 6319448
+    sourceAssetGUID: 3c008c76ced99a5438f3d32bd563325f
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Props/T_Firewood_01_Base_C.png
+  - fileID: 115
+    classID: 28
+    packedSize: 40200
+    offset: 6478000
+    sourceAssetGUID: 406f0525e645ac3418439e17ee379dff
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Courses/Elevator/UpArrow.png
+  - fileID: 116
+    classID: 28
+    packedSize: 158564
+    offset: 6518200
+    sourceAssetGUID: 41618c682f17e5b4aa256f0ae84ef351
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/TexturesCom_Wood_Rough_1K_smoothness.png
+  - fileID: 117
+    classID: 28
+    packedSize: 626416
+    offset: 6676768
+    sourceAssetGUID: 4b691b7fddd787e44af3995f5173a0de
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/TexturesCom_Wood_Rough_1K_albedo.tif
+  - fileID: 118
+    classID: 28
+    packedSize: 158556
+    offset: 7303184
+    sourceAssetGUID: 4d9639e49b8059d42b0bf7f591333121
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Dungeon (All Textures)/Webs, Chains,
+      Iron Bars/Chain-Single.png
+  - fileID: 119
+    classID: 28
+    packedSize: 184
+    offset: 7461744
+    sourceAssetGUID: 4dad25043fe81c248ad7e73f84bac76b
+    buildTimeAssetPath: Assets/VRChat/VRChat Prefab/Portals/BobyStar/World Portal
+      System/Textures/WPS_PortalPreview_Colors.png
+  - fileID: 120
+    classID: 28
+    packedSize: 158572
+    offset: 7461928
+    sourceAssetGUID: 4ef0afc487d719c46be5ef5435800705
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/table cloth/ClothLong_Tavern_ClothLong_TavernMAT_Normal.png
+  - fileID: 121
+    classID: 28
+    packedSize: 1398292
+    offset: 7620504
+    sourceAssetGUID: 5668c1e641378f141b039130d488c172
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/WoodBoardTarget_WoodBoardTarget_AlbedoTransparency.png
+  - fileID: 122
+    classID: 28
+    packedSize: 349668
+    offset: 9018800
+    sourceAssetGUID: 597f6c7dd0fab7641a14faddd2b5e2ce
+    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/Lightmap-2_comp_dir.png
+  - fileID: 123
+    classID: 28
+    packedSize: 315108
+    offset: 9368472
+    sourceAssetGUID: 5dbcf4dddbf281f4f9e49ca37cec8b7d
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Dungeon (All Textures)/Webs, Chains,
+      Iron Bars/moss-overlay-texture.png
+  - fileID: 124
+    classID: 28
+    packedSize: 158536
+    offset: 9683584
+    sourceAssetGUID: 60c121fbc9725f84a89930a0c0728fb9
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Horse/horse.png
+  - fileID: 125
+    classID: 28
+    packedSize: 626432
+    offset: 9842120
+    sourceAssetGUID: 62bd676f0ef98ea41b654aaa9d3400f8
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/stool table/Stool_Table_Tavern_Stool_Bar_TavernMAT_Normal.png
+  - fileID: 126
+    classID: 28
+    packedSize: 158540
+    offset: 10468552
+    sourceAssetGUID: 631eaac2aad82d640a015ba880e4367d
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/targetpaint.psd
+  - fileID: 127
+    classID: 28
+    packedSize: 626424
+    offset: 10627096
+    sourceAssetGUID: 6935d3bb7a32fd44ab59657fce21462c
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/barrel/Barrel_Tavern_Barrel_TavernMAT_Normal.png
+  - fileID: 128
+    classID: 28
+    packedSize: 7856
+    offset: 11253520
+    sourceAssetGUID: 699edcd6cfca9c14781e41a83a5f47ec
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/VolumeMuteIcon.png
+  - fileID: 129
+    classID: 28
+    packedSize: 626432
+    offset: 11261376
+    sourceAssetGUID: 6aab70b9754ea954b9e2513c0edbf7c6
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/stool table/Stool_Table_Tavern_Stool_Bar_TavernMAT_BaseColor.png
+  - fileID: 130
+    classID: 28
+    packedSize: 108
+    offset: 11887808
+    sourceAssetGUID: 6cb934e9a1d9ea6448040aad7dbeac81
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/Udon/Fonts/fontawesome-webfont.ttf
+  - fileID: 131
+    classID: 28
+    packedSize: 144
+    offset: 11887920
+    sourceAssetGUID: 6d2f27a7346fe2a4688c06f0d6f62f47
+    buildTimeAssetPath: Assets/VRChat/VRChat Prefab/Portals/BobyStar/World Portal
+      System/Textures/WPS_PreviewRay.png
+  - fileID: 132
+    classID: 28
+    packedSize: 40224
+    offset: 11888064
+    sourceAssetGUID: 70ffa9e171b302e4c9048069686b7e04
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Beach/Marbel_marble_AlbedoTransparency.png
+  - fileID: 133
+    classID: 28
+    packedSize: 158584
+    offset: 11928288
+    sourceAssetGUID: 71dba3a565d1c814a9194fe15ed86107
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/beer mug hundle/BeerMugHandle_Tavern_BeerMugHandle_TavernMAT_BaseColor.png
+  - fileID: 134
+    classID: 28
+    packedSize: 626408
+    offset: 12086872
+    sourceAssetGUID: 72825322c6da73745bbc14af474c341c
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Fabric Types/Fabric Red Curtain/Fabric016_1K-JPG_Color.jpg
+  - fileID: 135
+    classID: 28
+    packedSize: 158568
+    offset: 12713280
+    sourceAssetGUID: 76f36b31cac6d3040a577e881bb56166
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/Guitar/Guitar_Tavern_Guitar_TavernMAT_BaseColor.png
+  - fileID: 136
+    classID: 28
+    packedSize: 626404
+    offset: 12871848
+    sourceAssetGUID: 8247270337e6f0844912b7b5af8772bb
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Courses/Wood/Wood_Ends_basecolor.png
+  - fileID: 137
+    classID: 28
+    packedSize: 158568
+    offset: 13498256
+    sourceAssetGUID: 82bb67ade06bdf54a9f0b0404e365997
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Roof Types/Roof Shingles Wood/TexturesCom_Roofing_WoodPlanks2_512_ao.tif
+  - fileID: 138
+    classID: 28
+    packedSize: 626396
+    offset: 13656824
+    sourceAssetGUID: 82f18b357f6e3444ebf905dc1d248cc9
+    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Textures/House/Glass/Glass_01_N.tga
+  - fileID: 139
+    classID: 28
+    packedSize: 626412
+    offset: 14283224
+    sourceAssetGUID: 8568822b898cdd340b007115423298d9
+    buildTimeAssetPath: Assets/3RD Party/AstrofishGames/DETAILED_MedievalMarkets/DETAILED_Medieval/Materials/MDungeons_Crates_LD_NORMAL.tif
+  - fileID: 140
+    classID: 28
+    packedSize: 626416
+    offset: 14909640
+    sourceAssetGUID: 85b7709376163d1479d7dec98dd5ee2a
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/TexturesCom_Wood_Rough_1K_normal.tif
+  - fileID: 141
+    classID: 28
+    packedSize: 9961652
+    offset: 15536056
+    sourceAssetGUID: 87b4e805faeb359459af85745daaa1d6
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Trees/T_TreeLarge_Bark_C.png
+  - fileID: 142
+    classID: 28
+    packedSize: 626424
+    offset: 25497712
+    sourceAssetGUID: 8a0b518f063abe64ca8d7027cc58a308
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Oak/TexturesCom_Wood_OakVeneer2_2K_albedo.tif
+  - fileID: 143
+    classID: 28
+    packedSize: 626424
+    offset: 26124136
+    sourceAssetGUID: 8bc6de22c4cc14a43a95d351a36ea0db
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Stone Types/Stone base surface/TexturesCom_Stone_BaseSurface1_1K_normal.tif
+  - fileID: 144
+    classID: 28
+    packedSize: 158568
+    offset: 26750560
+    sourceAssetGUID: 8e140887566eaf04bb2661955d4a003b
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Metal Types/Metal Galvanized Rough/TexturesCom_Metal_Galvanized_1K_albedo.tif
+  - fileID: 145
+    classID: 28
+    packedSize: 349672
+    offset: 26909128
+    sourceAssetGUID: 8f814e09d74fe3c4abcc36d442e12ef2
+    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/Lightmap-2_comp_light.exr
+  - fileID: 146
+    classID: 28
+    packedSize: 158536
+    offset: 27258800
+    sourceAssetGUID: 91e9c50ae787d28499703dca35221195
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Oak/smooth.tif
+  - fileID: 147
+    classID: 28
+    packedSize: 5592548
+    offset: 27417336
+    sourceAssetGUID: 949abee06dfab7645b56e6a5b65f0688
+    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/Lightmap-0_comp_dir.png
+  - fileID: 148
+    classID: 28
+    packedSize: 158560
+    offset: 33009888
+    sourceAssetGUID: 960530c403753c84f83ee203bc259930
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Plaster Types/Rough Plaster/TexturesCom_Plaster_Rough_1K_ao.tif
+  - fileID: 149
+    classID: 28
+    packedSize: 2497836
+    offset: 33168448
+    sourceAssetGUID: 9b9fc26ef11d42b4fa345951ec9508fb
+    buildTimeAssetPath: Assets/3RD Party/AstrofishGames/DETAILED_MedievalMarkets/DETAILED_Medieval/Materials/MDungeons_Crates_LD_ALBEDO.tif
+  - fileID: 150
+    classID: 28
+    packedSize: 158556
+    offset: 35666288
+    sourceAssetGUID: 9ba22028e5c63e149be3a8d663e716a2
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/ThrownAxe_AxeMaterial_Normal.png
+  - fileID: 151
+    classID: 28
+    packedSize: 5592552
+    offset: 35824848
+    sourceAssetGUID: a14086ef4db26be4d83ca44bf358006a
+    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/Lightmap-1_comp_light.exr
+  - fileID: 152
+    classID: 28
+    packedSize: 158572
+    offset: 41417400
+    sourceAssetGUID: a158ed87cc9ede343b4ad7ff9f5a596a
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/TexturesCom_Wood_PlanksOld3_3.5x3.5_1K_ao.tif
+  - fileID: 153
+    classID: 28
+    packedSize: 40224
+    offset: 41575976
+    sourceAssetGUID: a8b6928f5fc434440a5766dbc42827bc
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Eye/Marbel_marble_AlbedoTransparency.png
+  - fileID: 154
+    classID: 28
+    packedSize: 349696
+    offset: 41616200
+    sourceAssetGUID: a90ddf3d7380a0c4ca7395f81552430d
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Planks Rough/TexturesCom_Wood_PlanksOld3_3.5x3.5_1K_albedo.tif
+  - fileID: 155
+    classID: 28
+    packedSize: 626396
+    offset: 41965896
+    sourceAssetGUID: a9761ee1ba838824abd95befccf5024f
+    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Textures/House/Glass/Glass_01_A.tga
+  - fileID: 156
+    classID: 28
+    packedSize: 158536
+    offset: 42592296
+    sourceAssetGUID: aa6df7d2bc6575b4cbe1b6117eef3730
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Stone Types/Stone base surface/smooth.tif
+  - fileID: 157
+    classID: 28
+    packedSize: 7848
+    offset: 42750832
+    sourceAssetGUID: aba612f742b6fd54bad52ffb4cd44f99
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/LoopIcon.png
+  - fileID: 158
+    classID: 28
+    packedSize: 158564
+    offset: 42758680
+    sourceAssetGUID: adde7042ff053984eb5d9a1c64dda77e
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Plaster Types/Rough Plaster/TexturesCom_Plaster_Rough_1K_albedo.tif
+  - fileID: 159
+    classID: 28
+    packedSize: 158588
+    offset: 42917248
+    sourceAssetGUID: af5cfd6058aa9ea4db419881d2b8e9a2
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/bottle label/BottleLabel_Tavern_BottleLabel_Tavern_Label_MAT_BaseColor.png
+  - fileID: 160
+    classID: 28
+    packedSize: 158540
+    offset: 43075840
+    sourceAssetGUID: b04854d1a1d4432438839648dc4e27fc
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/linepaint.psd
+  - fileID: 161
+    classID: 28
+    packedSize: 7852
+    offset: 43234384
+    sourceAssetGUID: b123dd9c318d33c469f08575ed5d0101
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/ReloadIcon.png
+  - fileID: 162
+    classID: 28
+    packedSize: 626400
+    offset: 43242240
+    sourceAssetGUID: b1c2db5ffbf2b2b4280bb43cb5839cc3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/beeraxe/beeraxepaint3.psd
+  - fileID: 163
+    classID: 28
+    packedSize: 626424
+    offset: 43868640
+    sourceAssetGUID: b3eb87cf041210843a6e626c9e0254c1
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/barrel/Barrel_Tavern_Barrel_TavernMAT_BaseColor.png
+  - fileID: 164
+    classID: 28
+    packedSize: 7848
+    offset: 44495064
+    sourceAssetGUID: bae40aa052ac7ed479e6d3444c2e5a75
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/PlayIcon.png
+  - fileID: 165
+    classID: 28
+    packedSize: 5592552
+    offset: 44502912
+    sourceAssetGUID: bc3d113aae1bd684b909de13cc599c1d
+    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/Lightmap-0_comp_light.exr
+  - fileID: 166
+    classID: 28
+    packedSize: 626404
+    offset: 50095464
+    sourceAssetGUID: bd7c1337949f3374ebe47e9855ce2fdd
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Trees/T_TrreeLarge_03_BB.png
+  - fileID: 167
+    classID: 28
+    packedSize: 626408
+    offset: 50721872
+    sourceAssetGUID: c7d466b6e3b56e94e9a57a04dcbcc9a7
+    buildTimeAssetPath: Assets/3RD Party/AstrofishGames/DETAILED_MedievalMarkets/DETAILED_Medieval/Materials/MDungeons_Crates_LD_MRAO.tif
+  - fileID: 168
+    classID: 28
+    packedSize: 158572
+    offset: 51348280
+    sourceAssetGUID: ca13fabc3fc11564b837c5a88a8a6035
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Roof Types/Roof Shingles Wood/TexturesCom_Roofing_WoodPlanks2_512_normal.tif
+  - fileID: 169
+    classID: 28
+    packedSize: 2497828
+    offset: 51506856
+    sourceAssetGUID: cde0a87e4f53a784a9b79e17f26a4a7a
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Courses/Wall/Wall_Plaster_normal.jpg
+  - fileID: 170
+    classID: 28
+    packedSize: 158572
+    offset: 54004688
+    sourceAssetGUID: ceeda69457c3ab84d9f2d581917097e1
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Roof Types/Roof Shingles Wood/TexturesCom_Roofing_WoodPlanks2_512_albedo.tif
+  - fileID: 171
+    classID: 28
+    packedSize: 7852
+    offset: 54163264
+    sourceAssetGUID: d26a5d7f84a7ab54c937b98e631663a1
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/UnlockIcon.png
+  - fileID: 172
+    classID: 28
+    packedSize: 40204
+    offset: 54171120
+    sourceAssetGUID: d5c189d1879805542bfc315efacf4db4
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/SharedResources/Textures/Utility/T_Noise_02.png
+  - fileID: 173
+    classID: 28
+    packedSize: 626388
+    offset: 54211328
+    sourceAssetGUID: d98f02cfbc9d6c846a38553daf97c0c9
+    buildTimeAssetPath: Assets/3RD Party/Steampunk_City/Textures/VFX/Fire/Fire.psd
+  - fileID: 174
+    classID: 28
+    packedSize: 158548
+    offset: 54837720
+    sourceAssetGUID: dda3bc0ddc3e53f4cac867fe8e96373a
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Textures/Props/T_Firewood_01_Base_R.png
+  - fileID: 175
+    classID: 28
+    packedSize: 158556
+    offset: 54996272
+    sourceAssetGUID: deb22581ef2a647418582d998b140c8e
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Fabric Types/Fabric Red Curtain/Fabric016_1K-JPG_NormalGL.jpg
+  - fileID: 176
+    classID: 28
+    packedSize: 2872
+    offset: 55154832
+    sourceAssetGUID: df13dd46759436b4abad9a76c831137a
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Courses/Checkerboard/Checker.png
+  - fileID: 177
+    classID: 28
+    packedSize: 158564
+    offset: 55157704
+    sourceAssetGUID: e27240909c285434f9e37ad6c9c159ee
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/Flag_Tavern_Flag_TavernMAT_BaseColor.png
+  - fileID: 178
+    classID: 28
+    packedSize: 108
+    offset: 55316272
+    sourceAssetGUID: e3265ab4bf004d28a9537516768c1c75
+    buildTimeAssetPath: Assets/TextMesh Pro/Fonts/LiberationSans.ttf
+  - fileID: 179
+    classID: 28
+    packedSize: 940
+    offset: 55316384
+    sourceAssetGUID: e5b174a8d905de44d938cdd3adf85546
+    buildTimeAssetPath: Assets/USharpVideo/Textures/BlackSwatch.png
+  - fileID: 180
+    classID: 28
+    packedSize: 7848
+    offset: 55317328
+    sourceAssetGUID: e6225dac30a73a347b7ff0bf743f639f
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/StopIcon.png
+  - fileID: 181
+    classID: 28
+    packedSize: 7856
+    offset: 55325176
+    sourceAssetGUID: eb116d1688b9cac4fb160c69bd6e9690
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/VolumeOffIcon.png
+  - fileID: 182
+    classID: 28
+    packedSize: 158564
+    offset: 55333032
+    sourceAssetGUID: eb7d97c60fc7374409f6057508b23d3b
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/textures/lantern/Lantern_Tavern_LanternMAT_BaseColor.png
+  - fileID: 183
+    classID: 28
+    packedSize: 5592548
+    offset: 55491600
+    sourceAssetGUID: ee196ec833101784682a2f713e355d14
+    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/Lightmap-1_comp_dir.png
+  - fileID: 184
+    classID: 28
+    packedSize: 626404
+    offset: 61084152
+    sourceAssetGUID: eeaf8e7601c6c0e4c86c36b57bad3269
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Courses/Wood/Wood_Grain_normal.png
+  - fileID: 185
+    classID: 28
+    packedSize: 158580
+    offset: 61710560
+    sourceAssetGUID: eef80c3988e38de41b2440a71683f65a
+    buildTimeAssetPath: Assets/PXR 2024/assets/FB_IMG_1726237330410 - RodneyVRamsey.png
+  - fileID: 186
+    classID: 28
+    packedSize: 626424
+    offset: 61869144
+    sourceAssetGUID: ef089128c5a2fef49b2c772325bdadcf
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Stone Types/Stone base surface/TexturesCom_Stone_BaseSurface1_1K_albedo.tif
+  - fileID: 187
+    classID: 28
+    packedSize: 7848
+    offset: 62495568
+    sourceAssetGUID: f16a414e2d147a94ab3d8a9e5ad2e28e
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/InfoIcon.png
+  - fileID: 188
+    classID: 28
+    packedSize: 40224
+    offset: 62503416
+    sourceAssetGUID: f25a4cadc0d259147a84ae9371243bed
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Eight/Marbel_marble_AlbedoTransparency.png
+  - fileID: 189
+    classID: 28
+    packedSize: 158556
+    offset: 62543640
+    sourceAssetGUID: f6e8f2505a43c794bb4a76d3496e8466
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Wood types/Wood Rough/TexturesCom_Wood_Rough_1K_ao.tif
+  - fileID: 190
+    classID: 28
+    packedSize: 158548
+    offset: 62702200
+    sourceAssetGUID: fa9528801bfb4b5f9474b939048aacdb
+    buildTimeAssetPath: Assets/3RD Party/Multistory Dungeons 2/Textures/FX_Candle_Fire_MD_01.psd
+  - fileID: 191
+    classID: 28
+    packedSize: 158572
+    offset: 62860752
+    sourceAssetGUID: fc1a55a63897e8445ab1fcaf6beb820c
+    buildTimeAssetPath: Assets/PXR 2024/Textures/Metal Types/Metal Galvanized Rough/TexturesCom_Metal_Galvanized_1K_smoothness.png
+  - fileID: 192
+    classID: 28
+    packedSize: 227832
+    offset: 63019328
+    sourceAssetGUID: fc5668857b6131c4f900eb500e1d747e
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/ThrownAxe_AxeMaterial_AlbedoTransparency.png
+  - fileID: 193
+    classID: 28
+    packedSize: 40212
+    offset: 63247160
+    sourceAssetGUID: fe7952025131bc04795af49f72774d59
+    buildTimeAssetPath: Assets/MarbleRace/Materials/Marbles/Eye/Marbel_marble_Normal.png
+  - fileID: 194
+    classID: 28
+    packedSize: 262264
+    offset: 63287376
+    sourceAssetGUID: 2e498d1c8094910479dc3e1b768306a4
+    buildTimeAssetPath: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
+      SDF - Fallback.asset
+  - fileID: 195
+    classID: 28
+    packedSize: 1048696
+    offset: 63549640
+    sourceAssetGUID: 8f586378b4e144a9851e7b34d9b748ee
+    buildTimeAssetPath: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
+      SDF.asset
+  - fileID: 196
+    classID: 28
+    packedSize: 524412
+    offset: 64598336
+    sourceAssetGUID: f4cfb74bad28aef40af7fd5134cb1d2d
+    buildTimeAssetPath: Assets/MarbleRace/Fonts/NotoSans-Regular SDF.asset
+  - fileID: 197
+    classID: 28
+    packedSize: 1048700
+    offset: 65122752
+    sourceAssetGUID: 8d65906fce781454d9bcf94d92410637
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/BebasNeue-Regular SDF.asset
+  - fileID: 198
+    classID: 43
+    packedSize: 13652
+    offset: 66171456
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 199
+    classID: 43
+    packedSize: 6660
+    offset: 66185112
+    sourceAssetGUID: 0569033ba63b9694eae8307e0a0f5c65
+    buildTimeAssetPath: Assets/mahu/axe-throwing/models/ThrownAxe.fbx
+  - fileID: 200
+    classID: 43
+    packedSize: 6668
+    offset: 66191776
+    sourceAssetGUID: 80f2fb516e90efe40a44fd587cd3eacc
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/Candle_low.fbx
+  - fileID: 201
+    classID: 43
+    packedSize: 10236
+    offset: 66198448
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 202
+    classID: 43
+    packedSize: 18928
+    offset: 66208688
+    sourceAssetGUID: 7a3e340695b3bdb439001e81d626c910
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/BottleLabel_Tavern.fbx
+  - fileID: 203
+    classID: 43
+    packedSize: 12360
+    offset: 66227616
+    sourceAssetGUID: a578638a418801842ae5e612515589bc
+    buildTimeAssetPath: Assets/MarbleRace/Models/Marble.fbx
+  - fileID: 204
+    classID: 43
+    packedSize: 14368
+    offset: 66239976
+    sourceAssetGUID: 0569033ba63b9694eae8307e0a0f5c65
+    buildTimeAssetPath: Assets/mahu/axe-throwing/models/ThrownAxe.fbx
+  - fileID: 205
+    classID: 43
+    packedSize: 5580
+    offset: 66254344
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 206
+    classID: 43
+    packedSize: 21896
+    offset: 66259928
+    sourceAssetGUID: 41a91ac2b8694bd468c3be64d421025f
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/props/CandleHolderBig_Tavern.fbx
+  - fileID: 207
+    classID: 43
+    packedSize: 7776
+    offset: 66281824
+    sourceAssetGUID: 50b44c1052aadfd4288cf7e947b42be2
+    buildTimeAssetPath: Assets/MarbleRace/Models/MarbelRun3.fbx
+  - fileID: 208
+    classID: 43
+    packedSize: 3476
+    offset: 66289600
+    sourceAssetGUID: 6ff93dc0b2293e548be47dbb0c8de865
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/tavern doors.fbx
+  - fileID: 209
+    classID: 43
+    packedSize: 39480
+    offset: 66293080
+    sourceAssetGUID: 6ff93dc0b2293e548be47dbb0c8de865
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/tavern doors.fbx
+  - fileID: 210
+    classID: 43
+    packedSize: 12804
+    offset: 66332560
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 211
+    classID: 43
+    packedSize: 3544
+    offset: 66345368
+    sourceAssetGUID: 50b44c1052aadfd4288cf7e947b42be2
+    buildTimeAssetPath: Assets/MarbleRace/Models/MarbelRun3.fbx
+  - fileID: 212
+    classID: 43
+    packedSize: 3544
+    offset: 66348912
+    sourceAssetGUID: 50b44c1052aadfd4288cf7e947b42be2
+    buildTimeAssetPath: Assets/MarbleRace/Models/MarbelRun3.fbx
+  - fileID: 213
+    classID: 43
+    packedSize: 896
+    offset: 66352456
+    sourceAssetGUID: 085fb028a8048e941af8e368da65a20f
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/Dungeon/Dungeon-Chain-Single.fbx
+  - fileID: 214
+    classID: 43
+    packedSize: 18148
+    offset: 66353352
+    sourceAssetGUID: 6aae9479f61908449b5a402fc48ab669
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/BottleClear_Tavern.fbx
+  - fileID: 215
+    classID: 43
+    packedSize: 6220
+    offset: 66371504
+    sourceAssetGUID: 503cd8ac30e609a4499ed9b776c0c386
+    buildTimeAssetPath: Assets/PXR 2024/assets/tavern repair, uv, windows 2.fbx
+  - fileID: 216
+    classID: 43
+    packedSize: 7284
+    offset: 66377728
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 217
+    classID: 43
+    packedSize: 15148
+    offset: 66385016
+    sourceAssetGUID: 47e88fd0d4ccbc0439b7933edbf622fc
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/Table_Tavern.fbx
+  - fileID: 218
+    classID: 43
+    packedSize: 16040
+    offset: 66400168
+    sourceAssetGUID: 50b44c1052aadfd4288cf7e947b42be2
+    buildTimeAssetPath: Assets/MarbleRace/Models/MarbelRun3.fbx
+  - fileID: 219
+    classID: 43
+    packedSize: 1624
+    offset: 66416208
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 220
+    classID: 43
+    packedSize: 1580
+    offset: 66417832
+    sourceAssetGUID: ebfddb4347a659d478b1132951b7f739
+    buildTimeAssetPath: Assets/mahu/axe-throwing/models/FloorMat.asset
+  - fileID: 221
+    classID: 43
+    packedSize: 632
+    offset: 66419416
+    sourceAssetGUID: 80b484d5e0c21f84dbbe798e0b8053d0
+    buildTimeAssetPath: Assets/mahu/axe-throwing/textures/Line.asset
+  - fileID: 222
+    classID: 43
+    packedSize: 610924
+    offset: 66420048
+    sourceAssetGUID: b87bdddc58b64524a99a2d9cd8021c84
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Meshes/Trees/SM_TreeLarge_03_Unity.fbx
+  - fileID: 223
+    classID: 43
+    packedSize: 432184
+    offset: 67030976
+    sourceAssetGUID: b87bdddc58b64524a99a2d9cd8021c84
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Meshes/Trees/SM_TreeLarge_03_Unity.fbx
+  - fileID: 224
+    classID: 43
+    packedSize: 292992
+    offset: 67463160
+    sourceAssetGUID: b87bdddc58b64524a99a2d9cd8021c84
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Meshes/Trees/SM_TreeLarge_03_Unity.fbx
+  - fileID: 225
+    classID: 43
+    packedSize: 22500
+    offset: 67756152
+    sourceAssetGUID: b87bdddc58b64524a99a2d9cd8021c84
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/DreamscapeMeadows/Meshes/Trees/SM_TreeLarge_03_Unity.fbx
+  - fileID: 226
+    classID: 43
+    packedSize: 9108
+    offset: 67778656
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 227
+    classID: 43
+    packedSize: 6992
+    offset: 67787768
+    sourceAssetGUID: d61c5e031c47a2848a95a28e25839279
+    buildTimeAssetPath: Assets/MarbleRace/Models/Courses.fbx
+  - fileID: 228
+    classID: 43
+    packedSize: 39480
+    offset: 67794760
+    sourceAssetGUID: 6ff93dc0b2293e548be47dbb0c8de865
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/tavern doors.fbx
+  - fileID: 229
+    classID: 43
+    packedSize: 5940
+    offset: 67834240
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 230
+    classID: 43
+    packedSize: 1398256
+    offset: 67840184
+    sourceAssetGUID: 503cd8ac30e609a4499ed9b776c0c386
+    buildTimeAssetPath: Assets/PXR 2024/assets/tavern repair, uv, windows 2.fbx
+  - fileID: 231
+    classID: 43
+    packedSize: 13596
+    offset: 69238440
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 232
+    classID: 43
+    packedSize: 2368456
+    offset: 69252040
+    sourceAssetGUID: 503cd8ac30e609a4499ed9b776c0c386
+    buildTimeAssetPath: Assets/PXR 2024/assets/tavern repair, uv, windows 2.fbx
+  - fileID: 233
+    classID: 43
+    packedSize: 39404
+    offset: 71620496
+    sourceAssetGUID: d6494a1ea70b486488fa650e451408b6
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/BeerMugHandle_Tavern.fbx
+  - fileID: 234
+    classID: 43
+    packedSize: 4020
+    offset: 71659904
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 235
+    classID: 43
+    packedSize: 6944
+    offset: 71663928
+    sourceAssetGUID: 50b44c1052aadfd4288cf7e947b42be2
+    buildTimeAssetPath: Assets/MarbleRace/Models/MarbelRun3.fbx
+  - fileID: 236
+    classID: 43
+    packedSize: 1624
+    offset: 71670872
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 237
+    classID: 43
+    packedSize: 9004
+    offset: 71672496
+    sourceAssetGUID: 2c49fa147634e9046a57f9fce045881d
+    buildTimeAssetPath: Assets/mahu/axe-throwing/models/WoodBoardTarget.fbx
+  - fileID: 238
+    classID: 43
+    packedSize: 1700
+    offset: 71681504
+    sourceAssetGUID: b7e6ca708b51acf47a2fe118b0b46c46
+    buildTimeAssetPath: Assets/mahu/axe-throwing/models/WoodBoardTargetFaceOnly.fbx
+  - fileID: 239
+    classID: 43
+    packedSize: 15320
+    offset: 71683208
+    sourceAssetGUID: 281c779b76018f243b7544e6546a1e76
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/BottleClearSkinny_Tavern.fbx
+  - fileID: 240
+    classID: 43
+    packedSize: 442392
+    offset: 71698528
+    sourceAssetGUID: 503cd8ac30e609a4499ed9b776c0c386
+    buildTimeAssetPath: Assets/PXR 2024/assets/tavern repair, uv, windows 2.fbx
+  - fileID: 241
+    classID: 43
+    packedSize: 98204
+    offset: 72140920
+    sourceAssetGUID: c451c19295a845c48b919a3b9ef96afa
+    buildTimeAssetPath: Assets/PXR 2024/assets/Top Town/tavern/Lantern_Tavern.fbx
+  - fileID: 242
+    classID: 43
+    packedSize: 8020
+    offset: 72239128
+    sourceAssetGUID: d61c5e031c47a2848a95a28e25839279
+    buildTimeAssetPath: Assets/MarbleRace/Models/Courses.fbx
+  - fileID: 243
+    classID: 43
+    packedSize: 7692
+    offset: 72247152
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 244
+    classID: 43
+    packedSize: 193364
+    offset: 72254848
+    sourceAssetGUID: a144828dccdb8a24c9985cd373420225
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/PXR 2024 logo with decimate.fbx
+  - fileID: 245
+    classID: 43
+    packedSize: 11100
+    offset: 72448216
+    sourceAssetGUID: 121586743900094428f8310c8c25ed4b
+    buildTimeAssetPath: Assets/PXR 2024/Meshes/LOGO/LOGO_SingleThreadTheatreCompany_C.fbx
+  - fileID: 246
+    classID: 43
+    packedSize: 4284
+    offset: 72459320
+    sourceAssetGUID: d61c5e031c47a2848a95a28e25839279
+    buildTimeAssetPath: Assets/MarbleRace/Models/Courses.fbx
+  - fileID: 247
+    classID: 43
+    packedSize: 7228
+    offset: 72463608
+    sourceAssetGUID: d61c5e031c47a2848a95a28e25839279
+    buildTimeAssetPath: Assets/MarbleRace/Models/Courses.fbx
+  - fileID: 248
+    classID: 48
+    packedSize: 44368
+    offset: 72470840
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 249
+    classID: 48
+    packedSize: 251104
+    offset: 72515208
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 250
+    classID: 48
+    packedSize: 3662712
+    offset: 72766312
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 251
+    classID: 48
+    packedSize: 17800
+    offset: 76429024
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 252
+    classID: 48
+    packedSize: 10388
+    offset: 76446824
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 253
+    classID: 48
+    packedSize: 10284
+    offset: 76457216
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 254
+    classID: 48
+    packedSize: 17468
+    offset: 76467504
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 255
+    classID: 48
+    packedSize: 25084
+    offset: 76484976
+    sourceAssetGUID: 2dcd9e0568e0a6f45b92c60ba2eb16a0
+    buildTimeAssetPath: Packages/com.vrchat.base/Runtime/VRCSDK/Sample Assets/Shaders/Mobile/VRChat-Mobile-Diffuse.shader
+  - fileID: 256
+    classID: 48
+    packedSize: 267888
+    offset: 76510064
+    sourceAssetGUID: 3183693b08ea2c3498466aeab483a701
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/SharedResources/Shaders/Foliage/PA_TreeWind_CustomLighting.shader
+  - fileID: 257
+    classID: 48
+    packedSize: 6136
+    offset: 76777952
+    sourceAssetGUID: 31ece31cfe1bd2b42b2ae265fbe31d10
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/PaintUnlitTransparent
+      1.shader
+  - fileID: 258
+    classID: 48
+    packedSize: 650248
+    offset: 76784088
+    sourceAssetGUID: 412ea878efbed224d97338aed34a773c
+    buildTimeAssetPath: Assets/USharpVideo/Shaders/StandardVideoEmissive.shader
+  - fileID: 259
+    classID: 48
+    packedSize: 80484
+    offset: 77434336
+    sourceAssetGUID: 4ba273c879c7ccb489361c6b969bcb9d
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/Ringlighttransparent.shader
+  - fileID: 260
+    classID: 48
+    packedSize: 5872
+    offset: 77514824
+    sourceAssetGUID: 508ae22e9bc9b6f468e5426838a43a96
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/PaintMultiplyTransparent.shader
+  - fileID: 261
+    classID: 48
+    packedSize: 15248
+    offset: 77520696
+    sourceAssetGUID: 5f8fef09682fab74fb7a29d783391edb
+    buildTimeAssetPath: Packages/com.vrchat.base/Runtime/VRCSDK/Sample Assets/Shaders/VRChat-Sprites-Default.shader
+  - fileID: 262
+    classID: 48
+    packedSize: 61720
+    offset: 77535944
+    sourceAssetGUID: 68e6db2ebdc24f95958faec2be5558d6
+    buildTimeAssetPath: Assets/TextMesh Pro/Shaders/TMP_SDF.shader
+  - fileID: 263
+    classID: 48
+    packedSize: 138608
+    offset: 77597664
+    sourceAssetGUID: 7121c27d1ff05474f83853cfc435b266
+    buildTimeAssetPath: Assets/PXR 2024/Shaders/Double-Sided-Faces-Transparency.shader
+  - fileID: 264
+    classID: 48
+    packedSize: 6404
+    offset: 77736272
+    sourceAssetGUID: 9200bec112b65ec4fbbbd33fa89c20f4
+    buildTimeAssetPath: Packages/com.vrchat.base/Runtime/VRCSDK/Sample Assets/Shaders/Mobile/VRChat-Mobile-Particle-Add.shader
+  - fileID: 265
+    classID: 48
+    packedSize: 368124
+    offset: 77742680
+    sourceAssetGUID: 92a542d49c0d1d0478c243e758b81084
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/SharedResources/Shaders/Deprecated/Dreamscape_Surface.shader
+  - fileID: 266
+    classID: 48
+    packedSize: 7628
+    offset: 78110808
+    sourceAssetGUID: 9d61949da4bd1b545b4fdacba6dfb5da
+    buildTimeAssetPath: Assets/USharpVideo/Shaders/UI-MerlinUI.shader
+  - fileID: 267
+    classID: 48
+    packedSize: 357444
+    offset: 78118440
+    sourceAssetGUID: 9e462be833276004095a6c0ca5194f33
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/SharedResources/Shaders/Deprecated/Dreamscape_Surface_Coverage.shader
+  - fileID: 268
+    classID: 48
+    packedSize: 20104
+    offset: 78475888
+    sourceAssetGUID: affc81f3d164d734d8f13053effb1c5c
+    buildTimeAssetPath: Packages/com.vrchat.base/Runtime/VRCSDK/Sample Assets/Shaders/Mobile/VRChat-Mobile-ToonLit.shader
+  - fileID: 269
+    classID: 48
+    packedSize: 346928
+    offset: 78495992
+    sourceAssetGUID: b28029cc52e10a0419b31f0b9b1bbc2d
+    buildTimeAssetPath: Assets/3RD Party/Polyart/PolyartStudio/SharedResources/Shaders/Deprecated/Dreamscape_FoliageBillboard.shader
+  - fileID: 270
+    classID: 48
+    packedSize: 48776
+    offset: 78842920
+    sourceAssetGUID: fe393ace9b354375a9cb14cdbbc28be4
+    buildTimeAssetPath: Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader
+  - fileID: 271
+    classID: 62
+    packedSize: 28
+    offset: 78891696
+    sourceAssetGUID: d6ab3e31f1711884c96e797205081c62
+    buildTimeAssetPath: Assets/MarbleRace/PhysicsMaterials/MarblePhysics.physicsMaterial2D
+  - fileID: 272
+    classID: 74
+    packedSize: 2340
+    offset: 78891728
+    sourceAssetGUID: 2440a0a4eda01e247ab2dc5f01bb9407
+    buildTimeAssetPath: Assets/MarbleRace/Animations/BetButton/BetNotPlaced.anim
+  - fileID: 273
+    classID: 74
+    packedSize: 2340
+    offset: 78894072
+    sourceAssetGUID: 6d734ed90d0deb549a80a0b3f84f9c6b
+    buildTimeAssetPath: Assets/MarbleRace/Animations/BetButton/BetPlaced.anim
+  - fileID: 274
+    classID: 74
+    packedSize: 2408
+    offset: 78896416
+    sourceAssetGUID: d37ce72cde728374389f60b0f70b28f5
+    buildTimeAssetPath: Assets/MarbleRace/Animations/BetScreen/BetScreenClosed.anim
+  - fileID: 275
+    classID: 74
+    packedSize: 2692
+    offset: 78898824
+    sourceAssetGUID: 78df8d2efd07a93408c081b00cfc5a62
+    buildTimeAssetPath: Assets/MarbleRace/Animations/BetScreen/BetScreenHidden.anim
+  - fileID: 276
+    classID: 74
+    packedSize: 2584
+    offset: 78901520
+    sourceAssetGUID: e6ad4234c1776fe4e829296fcaea178a
+    buildTimeAssetPath: Assets/MarbleRace/Animations/BetScreen/BetScreenOpen.anim
+  - fileID: 277
+    classID: 74
+    packedSize: 2416
+    offset: 78904104
+    sourceAssetGUID: 602b3497653041847b12747df9ddb54a
+    buildTimeAssetPath: Assets/MarbleRace/Animations/StartGameButton/StartGameButtonHidden.anim
+  - fileID: 278
+    classID: 74
+    packedSize: 2796
+    offset: 78906520
+    sourceAssetGUID: c0d3a88721a77b24aba1e3cfd8e99488
+    buildTimeAssetPath: Assets/MarbleRace/Animations/StartGameButton/StartGameButtonVisible.anim
+  - fileID: 279
+    classID: 74
+    packedSize: 2368
+    offset: 78909320
+    sourceAssetGUID: ea8077da5766357479dd3ebf31da098c
+    buildTimeAssetPath: Assets/USharpVideo/Animations/InterpTo0.anim
+  - fileID: 280
+    classID: 74
+    packedSize: 2368
+    offset: 78911688
+    sourceAssetGUID: 599105a1454742644906304ddb0562cd
+    buildTimeAssetPath: Assets/USharpVideo/Animations/InterpTo1.anim
+  - fileID: 281
+    classID: 74
+    packedSize: 2864
+    offset: 78914056
+    sourceAssetGUID: 6b22cd66ca95bcd468f2f47441c00582
+    buildTimeAssetPath: Assets/USharpVideo/Animations/ReloadRotate.anim
+  - fileID: 282
+    classID: 74
+    packedSize: 2376
+    offset: 78916920
+    sourceAssetGUID: 41d70c01ae4b8a544a723821db091097
+    buildTimeAssetPath: Assets/VRChat/VRChat Prefab/Portals/BobyStar/World Portal
+      System/Animation/WPS_PreviewRay_Anim.anim
+  - fileID: 283
+    classID: 74
+    packedSize: 2332
+    offset: 78919296
+    sourceAssetGUID: 506209f355059914e8efd852b4400865
+    buildTimeAssetPath: Assets/mahu/axe-throwing/helptext/off.anim
+  - fileID: 284
+    classID: 74
+    packedSize: 2828
+    offset: 78921632
+    sourceAssetGUID: 2e4e4281803a44048b181a7be9b26d3c
+    buildTimeAssetPath: Assets/mahu/axe-throwing/helptext/play.anim
+  - fileID: 285
+    classID: 74
+    packedSize: 2500
+    offset: 78924464
+    sourceAssetGUID: 0dc7ae190bc249f4990bf46d1614d11d
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/uihide.anim
+  - fileID: 286
+    classID: 74
+    packedSize: 2500
+    offset: 78926968
+    sourceAssetGUID: 32320f213ecc6fd4c8993be610b7b4a8
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/uishow.anim
+  - fileID: 287
+    classID: 83
+    packedSize: 164
+    offset: 78929472
+    sourceAssetGUID: 4c8e3b0e7c3ac1a4d8c09ac502a457d2
+    buildTimeAssetPath: Assets/mahu/axe-throwing/sfx/clang.mp3
+  - fileID: 288
+    classID: 83
+    packedSize: 168
+    offset: 78929640
+    sourceAssetGUID: 64539edecbfbe8b4da36924cd282996a
+    buildTimeAssetPath: Assets/mahu/axe-throwing/sfx/failsound.mp3
+  - fileID: 289
+    classID: 83
+    packedSize: 164
+    offset: 78929808
+    sourceAssetGUID: a21f01cb4195cfe4aa54c1b54293ebc3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/sfx/WoodChop.ogg
+  - fileID: 290
+    classID: 83
+    packedSize: 168
+    offset: 78929976
+    sourceAssetGUID: cffe904e61d48434886fb24c7be73bad
+    buildTimeAssetPath: Assets/MarbleRace/Audio/BallBounce.ogg
+  - fileID: 291
+    classID: 84
+    packedSize: 92
+    offset: 78930144
+    sourceAssetGUID: e7d6dc482e411c843840be6c87634302
+    buildTimeAssetPath: Assets/VRChat/VRChat Prefab/Portals/BobyStar/World Portal
+      System/Textures/WPS_PreviewCam.renderTexture
+  - fileID: 292
+    classID: 89
+    packedSize: 63264
+    offset: 78930240
+    sourceAssetGUID: 929bb3349439ad147a6972e05c0fb5ea
+    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/ReflectionProbe-0.exr
+  - fileID: 293
+    classID: 91
+    packedSize: 952
+    offset: 78993504
+    sourceAssetGUID: 10573c1fa69c99747a60c25652354f71
+    buildTimeAssetPath: Assets/MarbleRace/Animations/BetButton/BetButton.controller
+  - fileID: 294
+    classID: 91
+    packedSize: 1296
+    offset: 78994456
+    sourceAssetGUID: d5c63182ee54aaf4289b57497da8e632
+    buildTimeAssetPath: Assets/MarbleRace/Animations/BetScreen/BetScreen.controller
+  - fileID: 295
+    classID: 91
+    packedSize: 1096
+    offset: 78995752
+    sourceAssetGUID: 380c67c52136a0f43899398689dfe400
+    buildTimeAssetPath: Assets/MarbleRace/Animations/StartGameButton/StartGameButton.controller
+  - fileID: 296
+    classID: 91
+    packedSize: 644
+    offset: 78996848
+    sourceAssetGUID: 206bcd08037b27c4f820d51154cd9c4f
+    buildTimeAssetPath: Assets/PXR 2024/Animations/tavern doors.controller
+  - fileID: 297
+    classID: 91
+    packedSize: 840
+    offset: 78997496
+    sourceAssetGUID: 3508d1b4f8de760439c5a1dd8cebf4f6
+    buildTimeAssetPath: Assets/USharpVideo/Animations/ReloadButton.controller
+  - fileID: 298
+    classID: 91
+    packedSize: 1232
+    offset: 78998336
+    sourceAssetGUID: 43d010a9dfd9d934db896b3ca4f95eeb
+    buildTimeAssetPath: Assets/USharpVideo/Animations/SliderController.controller
+  - fileID: 299
+    classID: 91
+    packedSize: 444
+    offset: 78999568
+    sourceAssetGUID: 07c001c3c4471054b989351a5a458b8e
+    buildTimeAssetPath: Assets/VRChat/VRChat Prefab/Portals/BobyStar/World Portal
+      System/Animation/WPS_PreviewRay_Animator.controller
+  - fileID: 300
+    classID: 91
+    packedSize: 816
+    offset: 79000016
+    sourceAssetGUID: adfa6e1d85635a440b41c62b613b15cf
+    buildTimeAssetPath: Assets/mahu/axe-throwing/helptext/TextContainer.controller
+  - fileID: 301
+    classID: 91
+    packedSize: 1432
+    offset: 79000832
+    sourceAssetGUID: b6597b61264af4c44bdaa75fc3255e2f
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/UIAnimatorController.controller
+  - fileID: 302
+    classID: 115
+    packedSize: 120
+    offset: 143712
+    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
+  - fileID: 303
+    classID: 115
+    packedSize: 100
+    offset: 143832
+    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
+  - fileID: 304
+    classID: 115
+    packedSize: 120
+    offset: 143936
+    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
+  - fileID: 305
+    classID: 115
+    packedSize: 92
+    offset: 144056
+    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
+  - fileID: 306
+    classID: 115
+    packedSize: 96
+    offset: 144152
+    sourceAssetGUID: 4ecd63eff847044b68db9453ce219299
+    buildTimeAssetPath: Packages/com.vrchat.base/Runtime/VRCSDK/Plugins/VRCCore-Editor.dll
+  - fileID: 307
+    classID: 115
+    packedSize: 116
+    offset: 144248
+    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
+  - fileID: 308
+    classID: 115
+    packedSize: 116
+    offset: 144368
+    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
+  - fileID: 309
+    classID: 115
+    packedSize: 100
+    offset: 144488
+    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
+  - fileID: 310
+    classID: 115
+    packedSize: 108
+    offset: 144592
+    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
+  - fileID: 311
+    classID: 115
+    packedSize: 96
+    offset: 144704
+    sourceAssetGUID: 0cd44c1031e13a943bb63640046fad76
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/Layout/CanvasScaler.cs
+  - fileID: 312
+    classID: 115
+    packedSize: 96
+    offset: 144800
+    sourceAssetGUID: 1aa08ab6e0800fa44ae55d278d1423e3
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/ScrollRect.cs
+  - fileID: 313
+    classID: 115
+    packedSize: 92
+    offset: 144896
+    sourceAssetGUID: 27ce5d32713d91c4e8d5a6ec9e867dcc
+    buildTimeAssetPath: Assets/USharpVideo/Scripts/UI/UIStyler.cs
+  - fileID: 314
+    classID: 115
+    packedSize: 96
+    offset: 144992
+    sourceAssetGUID: 2a4db7a114972834c8e4117be1d82ba3
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/Scrollbar.cs
+  - fileID: 315
+    classID: 115
+    packedSize: 120
+    offset: 145088
+    sourceAssetGUID: 30649d3a9faa99c48a7b1166b86bf2a0
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/Layout/HorizontalLayoutGroup.cs
+  - fileID: 316
+    classID: 115
+    packedSize: 80
+    offset: 145208
+    sourceAssetGUID: 31a19414c41e5ae4aae2af33fee712f6
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/Mask.cs
+  - fileID: 317
+    classID: 115
+    packedSize: 112
+    offset: 145288
+    sourceAssetGUID: 3245ec927659c4140ac4f8d17403cc18
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/Layout/ContentSizeFitter.cs
+  - fileID: 318
+    classID: 115
+    packedSize: 96
+    offset: 145400
+    sourceAssetGUID: 3312d7739989d2b4e91e6319e9a96d76
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/RectMask2D.cs
+  - fileID: 319
+    classID: 115
+    packedSize: 92
+    offset: 145496
+    sourceAssetGUID: 447ea4bbd35f6a541adc230420ec00c2
+    buildTimeAssetPath: Assets/USharpVideo/Scripts/UI/UIStyle.cs
+  - fileID: 320
+    classID: 115
+    packedSize: 88
+    offset: 145592
+    sourceAssetGUID: 45115577ef41a5b4ca741ed302693907
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/Udon/UdonBehaviour.cs
+  - fileID: 321
+    classID: 115
+    packedSize: 88
+    offset: 145680
+    sourceAssetGUID: 4e29b1a8efbd4b44bb3f3716e73f07ff
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/Button.cs
+  - fileID: 322
+    classID: 115
+    packedSize: 112
+    offset: 145768
+    sourceAssetGUID: 59f8146938fff824cb5fd77236b75775
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/Layout/VerticalLayoutGroup.cs
+  - fileID: 323
+    classID: 115
+    packedSize: 80
+    offset: 145880
+    sourceAssetGUID: 5f7201a12d95ffc409449d95f23cf332
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/Text.cs
+  - fileID: 324
+    classID: 115
+    packedSize: 88
+    offset: 145960
+    sourceAssetGUID: 67db9e8f0e2ae9c40bc1e2b64352a6b4
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/Slider.cs
+  - fileID: 325
+    classID: 115
+    packedSize: 100
+    offset: 146048
+    sourceAssetGUID: 71c1514a6bd24e1e882cebbe1904ce04
+    buildTimeAssetPath: Packages/com.unity.textmeshpro/Scripts/Runtime/TMP_FontAsset.cs
+  - fileID: 326
+    classID: 115
+    packedSize: 108
+    offset: 146152
+    sourceAssetGUID: 785c8954a0e481d4692a9aef33de993c
+    buildTimeAssetPath: Assets/USharpVideo/Scripts/UI/UIStyleMarkup.cs
+  - fileID: 327
+    classID: 115
+    packedSize: 104
+    offset: 146264
+    sourceAssetGUID: 8a8695521f0d02e499659fee002a26c2
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/Layout/GridLayoutGroup.cs
+  - fileID: 328
+    classID: 115
+    packedSize: 88
+    offset: 146368
+    sourceAssetGUID: 9085046f02f69544eb97fd06b6048fe2
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/Toggle.cs
+  - fileID: 329
+    classID: 115
+    packedSize: 92
+    offset: 146456
+    sourceAssetGUID: 9541d86e2fd84c1d9990edf0852d74ab
+    buildTimeAssetPath: Packages/com.unity.textmeshpro/Scripts/Runtime/TextMeshPro.cs
+  - fileID: 330
+    classID: 115
+    packedSize: 128
+    offset: 146552
+    sourceAssetGUID: bf61d954ecb803046953c666facfb904
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/Udon/ProgramSources/SerializedUdonProgramAsset.cs
+  - fileID: 331
+    classID: 115
+    packedSize: 104
+    offset: 146680
+    sourceAssetGUID: d0b148fe25e99eb48b9724523833bab1
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/EventSystem/EventTrigger.cs
+  - fileID: 332
+    classID: 115
+    packedSize: 96
+    offset: 146784
+    sourceAssetGUID: d199490a83bb2b844b9695cbf13b01ef
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/InputField.cs
+  - fileID: 333
+    classID: 115
+    packedSize: 104
+    offset: 146880
+    sourceAssetGUID: dc42784cf147c0c48a680349fa168899
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/GraphicRaycaster.cs
+  - fileID: 334
+    classID: 115
+    packedSize: 88
+    offset: 146984
+    sourceAssetGUID: e19747de3f5aca642ab2be37e372fb86
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/VertexModifiers/Outline.cs
+  - fileID: 335
+    classID: 115
+    packedSize: 100
+    offset: 147072
+    sourceAssetGUID: f4688fdb7df04437aeb418b961361dc5
+    buildTimeAssetPath: Packages/com.unity.textmeshpro/Scripts/Runtime/TextMeshProUGUI.cs
+  - fileID: 336
+    classID: 115
+    packedSize: 88
+    offset: 147176
+    sourceAssetGUID: fe87c0e1cc204ed48ad3b37840f39efc
+    buildTimeAssetPath: Packages/com.unity.ugui/Runtime/UI/Core/Image.cs
+  - fileID: 337
+    classID: 115
+    packedSize: 92
+    offset: 147264
+    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
+  - fileID: 338
+    classID: 115
+    packedSize: 120
+    offset: 147360
+    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
+  - fileID: 339
+    classID: 115
+    packedSize: 92
+    offset: 147480
+    sourceAssetGUID: 661092b4961be7145bfbe56e1e62337b
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/VRCSDK/Plugins/VRCSDK3.dll
+  - fileID: 340
+    classID: 128
+    packedSize: 152930
+    offset: 79002264
+    sourceAssetGUID: 6cb934e9a1d9ea6448040aad7dbeac81
+    buildTimeAssetPath: Packages/com.vrchat.worlds/Runtime/Udon/Fonts/fontawesome-webfont.ttf
+  - fileID: 341
+    classID: 128
+    packedSize: 352462
+    offset: 79155200
+    sourceAssetGUID: e3265ab4bf004d28a9537516768c1c75
+    buildTimeAssetPath: Assets/TextMesh Pro/Fonts/LiberationSans.ttf
+  - fileID: 342
+    classID: 134
+    packedSize: 32
+    offset: 79507664
+    sourceAssetGUID: 917f16a6e0a48ba419295c68a7c21097
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/axemetal.physicMaterial
+  - fileID: 343
+    classID: 213
+    packedSize: 624
+    offset: 79507696
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 344
+    classID: 213
+    packedSize: 568
+    offset: 79508320
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 345
+    classID: 213
+    packedSize: 572
+    offset: 79508888
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 346
+    classID: 213
+    packedSize: 580
+    offset: 79509464
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 347
+    classID: 213
+    packedSize: 516
+    offset: 79510048
+    sourceAssetGUID: 0000000000000000f000000000000000
+    buildTimeAssetPath: Resources/unity_builtin_extra
+  - fileID: 348
+    classID: 213
+    packedSize: 696
+    offset: 79510568
+    sourceAssetGUID: 062a26ce01cb86642a4a5e558355d208
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/PauseIcon.png
+  - fileID: 349
+    classID: 213
+    packedSize: 1200
+    offset: 79511264
+    sourceAssetGUID: 0b57367304e0c224fab0e9eef953ee44
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/VolumeHighIcon.png
+  - fileID: 350
+    classID: 213
+    packedSize: 924
+    offset: 79512464
+    sourceAssetGUID: 2a2f709a85fb9604cb69ee3540c9d618
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/VolumeLowIcon.png
+  - fileID: 351
+    classID: 213
+    packedSize: 808
+    offset: 79513392
+    sourceAssetGUID: 2e770eb7fde325548bf15dea94681504
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/LockIcon.png
+  - fileID: 352
+    classID: 213
+    packedSize: 812
+    offset: 79514200
+    sourceAssetGUID: 699edcd6cfca9c14781e41a83a5f47ec
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/VolumeMuteIcon.png
+  - fileID: 353
+    classID: 213
+    packedSize: 432
+    offset: 79515016
+    sourceAssetGUID: 6d2f27a7346fe2a4688c06f0d6f62f47
+    buildTimeAssetPath: Assets/VRChat/VRChat Prefab/Portals/BobyStar/World Portal
+      System/Textures/WPS_PreviewRay.png
+  - fileID: 354
+    classID: 213
+    packedSize: 1020
+    offset: 79515448
+    sourceAssetGUID: aba612f742b6fd54bad52ffb4cd44f99
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/LoopIcon.png
+  - fileID: 355
+    classID: 213
+    packedSize: 964
+    offset: 79516472
+    sourceAssetGUID: b123dd9c318d33c469f08575ed5d0101
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/ReloadIcon.png
+  - fileID: 356
+    classID: 213
+    packedSize: 892
+    offset: 79517440
+    sourceAssetGUID: bae40aa052ac7ed479e6d3444c2e5a75
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/PlayIcon.png
+  - fileID: 357
+    classID: 213
+    packedSize: 696
+    offset: 79518336
+    sourceAssetGUID: d26a5d7f84a7ab54c937b98e631663a1
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/UnlockIcon.png
+  - fileID: 358
+    classID: 213
+    packedSize: 880
+    offset: 79519032
+    sourceAssetGUID: e6225dac30a73a347b7ff0bf743f639f
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/StopIcon.png
+  - fileID: 359
+    classID: 213
+    packedSize: 644
+    offset: 79519912
+    sourceAssetGUID: eb116d1688b9cac4fb160c69bd6e9690
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/VolumeOffIcon.png
+  - fileID: 360
+    classID: 213
+    packedSize: 2092
+    offset: 79520560
+    sourceAssetGUID: f16a414e2d147a94ab3d8a9e5ad2e28e
+    buildTimeAssetPath: Assets/USharpVideo/UI/Feather/InfoIcon.png
+  - fileID: 361
+    classID: 258
+    packedSize: 40
+    offset: 79522656
+    sourceAssetGUID: 08f6b6dbc2f290640a17bb276c705f58
+    buildTimeAssetPath: Assets/PXR 2024/Scenes/launch party tavern world/LightingData.asset
+  - fileID: 362
+    classID: 1
+    packedSize: 59
+    offset: 79522696
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 363
+    classID: 1
+    packedSize: 47
+    offset: 79522760
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 364
+    classID: 1
+    packedSize: 55
+    offset: 79522808
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 365
+    classID: 1
+    packedSize: 55
+    offset: 79522864
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 366
+    classID: 1
+    packedSize: 59
+    offset: 79522920
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 367
+    classID: 1
+    packedSize: 35
+    offset: 79522984
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 368
+    classID: 1
+    packedSize: 55
+    offset: 79523024
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 369
+    classID: 1
+    packedSize: 55
+    offset: 79523080
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 370
+    classID: 1
+    packedSize: 31
+    offset: 79523136
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 371
+    classID: 1
+    packedSize: 59
+    offset: 79523168
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 372
+    classID: 1
+    packedSize: 59
+    offset: 79523232
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 373
+    classID: 1
+    packedSize: 59
+    offset: 79523296
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 374
+    classID: 1
+    packedSize: 59
+    offset: 79523360
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 375
+    classID: 1
+    packedSize: 39
+    offset: 79523424
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 376
+    classID: 1
+    packedSize: 39
+    offset: 79523464
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 377
+    classID: 1
+    packedSize: 31
+    offset: 79523504
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 378
+    classID: 4
+    packedSize: 68
+    offset: 79523536
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 379
+    classID: 4
+    packedSize: 68
+    offset: 79523608
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 380
+    classID: 4
+    packedSize: 68
+    offset: 79523680
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 381
+    classID: 4
+    packedSize: 68
+    offset: 79523752
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 382
+    classID: 4
+    packedSize: 68
+    offset: 79523824
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 383
+    classID: 4
+    packedSize: 68
+    offset: 79523896
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 384
+    classID: 4
+    packedSize: 104
+    offset: 79523968
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 385
+    classID: 4
+    packedSize: 68
+    offset: 79524072
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 386
+    classID: 4
+    packedSize: 68
+    offset: 79524144
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 387
+    classID: 4
+    packedSize: 104
+    offset: 79524216
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 388
+    classID: 4
+    packedSize: 104
+    offset: 79524320
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 389
+    classID: 4
+    packedSize: 128
+    offset: 79524424
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 390
+    classID: 4
+    packedSize: 68
+    offset: 79524552
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 391
+    classID: 4
+    packedSize: 80
+    offset: 79524624
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 392
+    classID: 4
+    packedSize: 68
+    offset: 79524704
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 393
+    classID: 4
+    packedSize: 68
+    offset: 79524776
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 394
+    classID: 23
+    packedSize: 140
+    offset: 79524848
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 395
+    classID: 23
+    packedSize: 140
+    offset: 79524992
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 396
+    classID: 23
+    packedSize: 140
+    offset: 79525136
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 397
+    classID: 23
+    packedSize: 140
+    offset: 79525280
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 398
+    classID: 23
+    packedSize: 140
+    offset: 79525424
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 399
+    classID: 23
+    packedSize: 140
+    offset: 79525568
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 400
+    classID: 23
+    packedSize: 140
+    offset: 79525712
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 401
+    classID: 23
+    packedSize: 140
+    offset: 79525856
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 402
+    classID: 23
+    packedSize: 140
+    offset: 79526000
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 403
+    classID: 23
+    packedSize: 140
+    offset: 79526144
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 404
+    classID: 33
+    packedSize: 24
+    offset: 79526288
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 405
+    classID: 33
+    packedSize: 24
+    offset: 79526312
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 406
+    classID: 33
+    packedSize: 24
+    offset: 79526336
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 407
+    classID: 33
+    packedSize: 24
+    offset: 79526360
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 408
+    classID: 33
+    packedSize: 24
+    offset: 79526384
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 409
+    classID: 33
+    packedSize: 24
+    offset: 79526408
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 410
+    classID: 33
+    packedSize: 24
+    offset: 79526432
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 411
+    classID: 33
+    packedSize: 24
+    offset: 79526456
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 412
+    classID: 33
+    packedSize: 24
+    offset: 79526480
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 413
+    classID: 33
+    packedSize: 24
+    offset: 79526504
+    sourceAssetGUID: a224ca540525dd04fa85e3b49647b7c3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/debug/DebugAxeIndicator.prefab
+  - fileID: 414
+    classID: 114
+    packedSize: 9868
+    offset: 79526528
+    sourceAssetGUID: f4cfb74bad28aef40af7fd5134cb1d2d
+    buildTimeAssetPath: Assets/MarbleRace/Fonts/NotoSans-Regular SDF.asset
+  - fileID: 415
+    classID: 114
+    packedSize: 3304
+    offset: 79536400
+    sourceAssetGUID: 3742bc0cf6a93e5459317df7b0079527
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/009f84dea0d04854a8a6f3dba2e4efc7.asset
+  - fileID: 416
+    classID: 114
+    packedSize: 1372
+    offset: 79539704
+    sourceAssetGUID: 1715aeb1a7ed5724780508564179890c
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/0a13206cc5d9b754a8da562b0311412a.asset
+  - fileID: 417
+    classID: 114
+    packedSize: 2908
+    offset: 79541080
+    sourceAssetGUID: 868c25a9491d58a41b83c49da0a631e9
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/0cfd2b8f0262db847bfb55bab92d3218.asset
+  - fileID: 418
+    classID: 114
+    packedSize: 2064
+    offset: 79543992
+    sourceAssetGUID: 9d767f87f8b8d0847a8f3a17e2254084
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/174f9c8b28bed7b4fbb508b755c841a3.asset
+  - fileID: 419
+    classID: 114
+    packedSize: 5244
+    offset: 79546056
+    sourceAssetGUID: 977178764dc9be541899baa7ddf97c45
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/1e90e65c11b3fae4c90c1b55d4472db7.asset
+  - fileID: 420
+    classID: 114
+    packedSize: 2272
+    offset: 79551304
+    sourceAssetGUID: 25062a3bf3e20f24db6cc71fc4a5b26b
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/297dd35424997aa46b899ee699d492a5.asset
+  - fileID: 421
+    classID: 114
+    packedSize: 4704
+    offset: 79553576
+    sourceAssetGUID: 7597a17f1e3052a48b344f9f01cfe5dd
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/2c60a27678821064f955ff4b987da2f5.asset
+  - fileID: 422
+    classID: 114
+    packedSize: 2340
+    offset: 79558280
+    sourceAssetGUID: 7f04c1ca151b25a4e97f7be0a7560898
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/33206db8d4def4b42b47a97673ed40e5.asset
+  - fileID: 423
+    classID: 114
+    packedSize: 3720
+    offset: 79560624
+    sourceAssetGUID: 9b59d4f73a284a745bde21851819e95d
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/358a98096f2187c4eb0cee20115d2f3a.asset
+  - fileID: 424
+    classID: 114
+    packedSize: 12780
+    offset: 79564344
+    sourceAssetGUID: 807e07622d2d1824d9e0c63c0e19334d
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/396ccb24cd9636c48b8bd3aa3c3e1488.asset
+  - fileID: 425
+    classID: 114
+    packedSize: 1892
+    offset: 79577128
+    sourceAssetGUID: 06f0eec812b1b0a44b4fb6ea1a6e86ea
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/3fc012837939e6a489d9f6f64ec27520.asset
+  - fileID: 426
+    classID: 114
+    packedSize: 1516
+    offset: 79579024
+    sourceAssetGUID: f13bb6dd79f5be24fb16d01a7fb12a16
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/426c3e0a298e40b409e6b2dc8c94d45a.asset
+  - fileID: 427
+    classID: 114
+    packedSize: 3628
+    offset: 79580544
+    sourceAssetGUID: 40b98bcee65197949911c81989237664
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/4a607c05ec56e4b42aa7f9e362535687.asset
+  - fileID: 428
+    classID: 114
+    packedSize: 3960
+    offset: 79584176
+    sourceAssetGUID: 432e0b6574b4f234fad05ee44b5e54ce
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/4f4b84e9ab558694cb1ef26000ffa525.asset
+  - fileID: 429
+    classID: 114
+    packedSize: 4784
+    offset: 79588136
+    sourceAssetGUID: fccb888206c6bab489c290eb7f7e9fa9
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/5319004049d7c0f4c92a8e0a2de20fd3.asset
+  - fileID: 430
+    classID: 114
+    packedSize: 1508
+    offset: 79592920
+    sourceAssetGUID: c06a8e4bfcfa9694380063809168b710
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/553f0db2752ead24590f8ac2e1f80c06.asset
+  - fileID: 431
+    classID: 114
+    packedSize: 12068
+    offset: 79594432
+    sourceAssetGUID: 117782adb3a661f4192d5057da35a303
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/7021d3ad08c81d54c8598190c706a0c5.asset
+  - fileID: 432
+    classID: 114
+    packedSize: 32604
+    offset: 79606504
+    sourceAssetGUID: 8d4aa77e26a57e14fa948e9575ed90a3
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/71ad2ba2c082d724bbdda2d8ddd47a32.asset
+  - fileID: 433
+    classID: 114
+    packedSize: 8580
+    offset: 79639112
+    sourceAssetGUID: 2689542669ba3284e87311294e6b07b9
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/84969ee46c1ecfd4b98532cf5097f369.asset
+  - fileID: 434
+    classID: 114
+    packedSize: 10492
+    offset: 79647696
+    sourceAssetGUID: 11b179ca8c25010468d1a58a91b71b61
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/9f13e5d99c5133148bf3de973156af53.asset
+  - fileID: 435
+    classID: 114
+    packedSize: 1792
+    offset: 79658192
+    sourceAssetGUID: 32b56543022b3484d85c2d6903f7ad0a
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/b0c60135ec3e09e4796af91290498d4b.asset
+  - fileID: 436
+    classID: 114
+    packedSize: 6732
+    offset: 79659984
+    sourceAssetGUID: e3d7b25d79e18c445a280d6ec9d6e987
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/bd00462a134f6584a8bc0ae08380a04f.asset
+  - fileID: 437
+    classID: 114
+    packedSize: 1260
+    offset: 79666720
+    sourceAssetGUID: a8160d7ad711222458591a4a102d9022
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/bff695ed90fb33d4eb33bedb9d68f3ca.asset
+  - fileID: 438
+    classID: 114
+    packedSize: 30064
+    offset: 79667984
+    sourceAssetGUID: 53c35a8ef0f23034791dae3a9c107402
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/cc237821c9b4e114d8468002055ff79f.asset
+  - fileID: 439
+    classID: 114
+    packedSize: 3088
+    offset: 79698048
+    sourceAssetGUID: 094ebbacfacf25b40925f17ce58b4483
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/ccbf348cfa636094abe2f1f9525e3f3e.asset
+  - fileID: 440
+    classID: 114
+    packedSize: 2340
+    offset: 79701136
+    sourceAssetGUID: 7b0c36ef11a1f314abe90936453d0266
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/cdeaa82e9eeca4249860474b074fefa2.asset
+  - fileID: 441
+    classID: 114
+    packedSize: 3752
+    offset: 79703480
+    sourceAssetGUID: cdc7f900ac7f199428c5015bf470764f
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/d0b53a937960e5f42aa7a93f81e94eb9.asset
+  - fileID: 442
+    classID: 114
+    packedSize: 5488
+    offset: 79707232
+    sourceAssetGUID: ebbd2e173d61be2489ec3f5fd5089c60
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/d457aaca9e2e4a045b3f9117f6933bf9.asset
+  - fileID: 443
+    classID: 114
+    packedSize: 35520
+    offset: 79712720
+    sourceAssetGUID: 219ffd78ebf7fb144b9be0d0c306de6f
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/d5a5479bea26c974bb5117e12862758f.asset
+  - fileID: 444
+    classID: 114
+    packedSize: 7744
+    offset: 79748240
+    sourceAssetGUID: dfb17ff58e65bce488b0b239afb8dc49
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/d89eebc36008c0b46b2dfab326505c53.asset
+  - fileID: 445
+    classID: 114
+    packedSize: 10280
+    offset: 79755984
+    sourceAssetGUID: 8eeda4386687477449da21f7641f7248
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/dd81590b0b6330c4891cc22e5c536cfa.asset
+  - fileID: 446
+    classID: 114
+    packedSize: 2568
+    offset: 79766264
+    sourceAssetGUID: 0e552a9ba37fc4641b500b0aea293551
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/e089f8e51cdb5be47a4b17e1cecf5dcc.asset
+  - fileID: 447
+    classID: 114
+    packedSize: 2716
+    offset: 79768832
+    sourceAssetGUID: 62184f8f3db2ca34ab60c18a5afe2530
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/e28efaf66c4d9474cba1e4bfc83055ef.asset
+  - fileID: 448
+    classID: 114
+    packedSize: 2512
+    offset: 79771552
+    sourceAssetGUID: d622dbd17be1a7b44bb45dd110450c69
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/e7769029c88f01e4a890463088e5cfb8.asset
+  - fileID: 449
+    classID: 114
+    packedSize: 8004
+    offset: 79774064
+    sourceAssetGUID: 37a537acb10bf464d9cbf9856afd9002
+    buildTimeAssetPath: Assets/SerializedUdonPrograms/f2017087a05139f4ea094f56d2fadcce.asset
+  - fileID: 450
+    classID: 114
+    packedSize: 1344
+    offset: 79782072
+    sourceAssetGUID: 2e498d1c8094910479dc3e1b768306a4
+    buildTimeAssetPath: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
+      SDF - Fallback.asset
+  - fileID: 451
+    classID: 114
+    packedSize: 27760
+    offset: 79783416
+    sourceAssetGUID: 8f586378b4e144a9851e7b34d9b748ee
+    buildTimeAssetPath: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
+      SDF.asset
+  - fileID: 452
+    classID: 114
+    packedSize: 296
+    offset: 79811176
+    sourceAssetGUID: 55106727684a20b48a170c471208dd4a
+    buildTimeAssetPath: Assets/USharpVideo/Styles/Default.asset
+  - fileID: 453
+    classID: 114
+    packedSize: 1560
+    offset: 79811472
+    sourceAssetGUID: b4d1cd8c79d574642955ca285fb2e927
+    buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/4715e20276be3b141a6a216230cab4e9.asset
+  - fileID: 454
+    classID: 114
+    packedSize: 1204
+    offset: 79813032
+    sourceAssetGUID: 334a418e8a704f04d834fc69e32835a1
+    buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/517ed3964c876304293c06c16ae36aa4.asset
+  - fileID: 455
+    classID: 114
+    packedSize: 2828
+    offset: 79814240
+    sourceAssetGUID: c8f5d66fab586c34591bd821ced691ec
+    buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/566cc00e27d5822449529a3785eae366.asset
+  - fileID: 456
+    classID: 114
+    packedSize: 1648
+    offset: 79817072
+    sourceAssetGUID: 0fd7002b0eff9e742a37b094d66b3917
+    buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/c8df303ceb45ae84f85a11591f741734.asset
+  - fileID: 457
+    classID: 114
+    packedSize: 9380
+    offset: 79818720
+    sourceAssetGUID: 8d65906fce781454d9bcf94d92410637
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/BebasNeue-Regular SDF.asset
+  - fileID: 458
+    classID: 114
+    packedSize: 16260
+    offset: 79828104
+    sourceAssetGUID: 489ac19dc7a766441889da10c423ac83
+    buildTimeAssetPath: Assets/mahu/axe-throwing/resources/Capture it SDF.asset
+--- !u!668709126 &7260519634419206510
+BuiltAssetBundleInfoSet:
+  bundleInfos:
+  - bundleName: scene-android-launch party tavern world.vrcw
+    bundleArchiveFile: 3
+    packagedFileIndices: 000000000100000002000000
+  - bundleName: VRChat-sandbox
+    bundleArchiveFile: 6
+    packagedFileIndices: 05000000
+--- !u!1126 &9074645138780523786
+PackedAssets:
+  m_File: 2
+  m_ShortPath: BuildPlayer-launch party tavern world.resource
+  m_Overhead: 0
+  m_Contents:
+  - fileID: 0
+    classID: 83
+    packedSize: 2496
+    offset: 0
+    sourceAssetGUID: cffe904e61d48434886fb24c7be73bad
+    buildTimeAssetPath: Assets/MarbleRace/Audio/BallBounce.ogg
+  - fileID: 0
+    classID: 83
+    packedSize: 2976
+    offset: 0
+    sourceAssetGUID: 4c8e3b0e7c3ac1a4d8c09ac502a457d2
+    buildTimeAssetPath: Assets/mahu/axe-throwing/sfx/clang.mp3
+  - fileID: 0
+    classID: 83
+    packedSize: 12192
+    offset: 0
+    sourceAssetGUID: a21f01cb4195cfe4aa54c1b54293ebc3
+    buildTimeAssetPath: Assets/mahu/axe-throwing/sfx/WoodChop.ogg
+  - fileID: 0
+    classID: 83
+    packedSize: 18592
+    offset: 0
+    sourceAssetGUID: 64539edecbfbe8b4da36924cd282996a
+    buildTimeAssetPath: Assets/mahu/axe-throwing/sfx/failsound.mp3

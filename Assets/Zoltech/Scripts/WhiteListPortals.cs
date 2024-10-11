@@ -7,14 +7,14 @@ using System.Collections.Generic;
 
 public class WhiteListPortals : UdonSharpBehaviour
 {
-    public Bobys_WorldPortalSystem Bobys_WorldPortalSystem;
+    public Bobbys_WorldPortalSystem1 Bobys_WorldPortalSystem1;
     //public GameObject PortalUI;
-    public string[] whitelistedUsers = { "MylesXR", "JustineKat", "The Threadman", "sammievu", "helllomandy", "JakeRuneckles", "singlethread", "the_majesty", "zeNita", "nic․ej․b 2e78", "nicolepxr", "ColePaskuski", "Zzoltan", "SeaRitch",};
-    
+    public string[] whitelistedUsers = { "MylesXR", "JustineKat", "The Threadman", "sammievu", "helllomandy", "JakeRuneckles", "singlethread", "the_majesty", "zeNita", "nic․ej․b 2e78", "nicolepxr", "ColePaskuski", "Zzoltan", "SeaRitch", };
+
 
     void Start()
     {
-        Bobys_WorldPortalSystem.enabled = false;
+        Bobys_WorldPortalSystem1.enabled = false;
     }
     public override void Interact()
     {
@@ -30,13 +30,13 @@ public class WhiteListPortals : UdonSharpBehaviour
 
     public void ToggleObject()
     {
-        
-        
+
+
 
         // Apply the new state to the target object
-        if (Bobys_WorldPortalSystem != null)
+        if (Bobys_WorldPortalSystem1 != null)
         {
-            Bobys_WorldPortalSystem.enabled = true;
+            Bobys_WorldPortalSystem1.enabled = true;
         }
     }
 
