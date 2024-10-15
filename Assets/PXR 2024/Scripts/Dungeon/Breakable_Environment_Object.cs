@@ -1,16 +1,22 @@
 ﻿using UdonSharp;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 
 public class Breakable_Environment_Object : UdonSharpBehaviour
 {
+    #region Variables 
+
     public Rigidbody[] rbs;
     public Collider[] objectColliders; // Colliders of the objects that will break
     public Collider animationCollider; // Collider used for the animation, set in Inspector
     public Animator animator;
     public float deactivationTime = 5.0f; // Time in seconds before objects get deactivated
     public float animationDuration = 2.0f; // Duration of the break animation
+
+    [UdonSynced] public bool isBroken = false;
+
+    #endregion
+
+    #region On Start
 
     void Start()
     {
@@ -35,57 +41,45 @@ public class Breakable_Environment_Object : UdonSharpBehaviour
         }
     }
 
-    // Call this function to start the breaking process
+    #endregion
+
+    #region Play Animation To Break Object 
+
     public void BreakObject()
     {
-        // Start the animation first and wait for it to finish before enabling physics
         animator.enabled = true;
-        PlayStalactiteAnimation();
-        SendCustomEventDelayedSeconds("PlayBridgeBreakingAnimation", 5f);
-        SendCustomEventDelayedSeconds("EnablePhysicsAndBreak", animationDuration); // Wait for the animation to finish
-    }
-
-
-    public void PlayStalactiteAnimation()
-    {
-        animator.SetTrigger("PlayStalactiteAnimation");
-        SendCustomEventDelayedSeconds("Idle", 5f);
-    }
-
-    public void PlayBridgeBreakingAnimation()
-    {
         animator.SetTrigger("PlayAnimation");
-        SendCustomEventDelayedSeconds("Idle", 5f);
+        SendCustomEventDelayedSeconds("EnablePhysicsAndBreak", animationDuration); 
     }
 
-    public void PlayIdleAnimation()
-    {
-        animator.SetTrigger("Idle");
-    }
+    #endregion
 
+    #region  Enable Kinematic And Gravity After Delay
 
     public void EnablePhysicsAndBreak()
     {
-        // Only now, after the animation has finished, enable physics on all the rigidbodies
         foreach (Rigidbody rb in rbs)
         {
-            rb.isKinematic = false; // Enable physics
-            rb.useGravity = true;   // Re-enable gravity so the pieces can fall
+            rb.isKinematic = false; 
+            rb.useGravity = true;   
         }
-
-        // Set objects to inactive after a delay
         SendCustomEventDelayedSeconds("DeactivateObjects", deactivationTime);
     }
 
+    #endregion
 
+    #region Deactivate Obejsct After Breaking
 
     public void DeactivateObjects()
     {
         foreach (Collider col in objectColliders)
         {
-            col.gameObject.SetActive(false); // Set the objects inactive after breaking
+            col.gameObject.SetActive(false); 
         }
 
         Debug.LogWarning("Exploded objects have been set inactive.");
     }
+
+    #endregion
+
 }
