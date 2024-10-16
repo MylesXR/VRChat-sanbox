@@ -1,17 +1,17 @@
 ﻿using UdonSharp;
 using UnityEngine;
+using VRC.Udon.Common.Interfaces;
 
 public class Breakable_Environment_Object : UdonSharpBehaviour
 {
     #region Variables 
 
     public Rigidbody[] rbs;
-    public Collider[] objectColliders; // Colliders of the objects that will break
-    public Collider animationCollider; // Collider used for the animation, set in Inspector
+    public Collider[] objectColliders; 
+    public Collider animationCollider; 
     public Animator animator;
-    public float deactivationTime = 5.0f; // Time in seconds before objects get deactivated
-    public float animationDuration = 2.0f; // Duration of the break animation
-
+    public float deactivationTime = 5.0f; 
+    public float animationDuration = 2.0f; 
     [UdonSynced] public bool isBroken = false;
 
     #endregion
@@ -20,21 +20,30 @@ public class Breakable_Environment_Object : UdonSharpBehaviour
 
     void Start()
     {
-        // Disable animator and all rigidbodies' physics until triggered
-        animator.enabled = false; // Disable animation on start
+        ResetObject();
+    }
+
+    public void ResetObject()
+    {
+        // Reset the animator to idle and disable physics
+        isBroken = false;
+        animator.enabled = false;
+        animator.SetTrigger("Idle");
+
         foreach (Rigidbody rb in rbs)
         {
-            rb.isKinematic = true; // Disable physics interactions
+            rb.isKinematic = true; // Reset to kinematic (no physics interactions)
             rb.useGravity = false; // Disable gravity initially
         }
 
-        // Ensure all object colliders are enabled at the start
+        // Re-enable colliders
         foreach (Collider col in objectColliders)
         {
             col.enabled = true;
+            col.gameObject.SetActive(true);
         }
 
-        // Ensure the animation collider is enabled at the start
+        // Ensure the animation collider is enabled
         if (animationCollider != null)
         {
             animationCollider.enabled = true;
@@ -47,10 +56,23 @@ public class Breakable_Environment_Object : UdonSharpBehaviour
 
     public void BreakObject()
     {
-        animator.enabled = true;
-        animator.SetTrigger("PlayAnimation");
-        SendCustomEventDelayedSeconds("EnablePhysicsAndBreak", animationDuration); 
+        if (!isBroken)
+        {
+            SendCustomNetworkEvent(NetworkEventTarget.All, "NetworkedBreakObject");
+        }
     }
+
+    public void NetworkedBreakObject()
+    {
+        if (!isBroken) 
+        {
+            isBroken = true;
+            animator.enabled = true;
+            animator.SetTrigger("PlayAnimation");
+            SendCustomEventDelayedSeconds("EnablePhysicsAndBreak", animationDuration);
+        }
+    }
+
 
     #endregion
 
