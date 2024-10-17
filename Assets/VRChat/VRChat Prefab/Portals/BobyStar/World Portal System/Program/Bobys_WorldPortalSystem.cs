@@ -22,6 +22,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     public GameObject AlchemistMenu;
     public GameObject BarbarianMenu;
     public GameObject ExplorerMenu;
+    public GameObject NoClassMenu;
 
     #endregion
 
@@ -987,6 +988,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         switch (ClassType)
         {
             case "Alchemist":
+                NoClassMenu.SetActive(false);
                 BarbarianMenu.SetActive(false);
                 ExplorerMenu.SetActive(false);
                 AlchemistMenu.SetActive(true);
@@ -994,6 +996,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
                 break;
 
             case "Barbarian":
+                NoClassMenu.SetActive(false);
                 AlchemistMenu.SetActive(false);
                 ExplorerMenu.SetActive(false);
                 BarbarianMenu.SetActive(true);
@@ -1001,6 +1004,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
                 break;
 
             case "Explorer":
+                NoClassMenu.SetActive(false);
                 AlchemistMenu.SetActive(false);
                 BarbarianMenu.SetActive(false);
                 ExplorerMenu.SetActive(true);
