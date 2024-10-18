@@ -58,7 +58,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     #endregion
 
-    // Ebd of Added methods for Attendee Menu
+    // End of Added methods for Attendee Menu
 
     //These methods have to be outside of the code below for some reason or it will ERROR
     public void AlchemistClass() { ClassType = "Alchemist"; }

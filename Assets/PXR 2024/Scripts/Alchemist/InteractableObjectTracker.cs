@@ -1,7 +1,6 @@
 ﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon;
 using VRC.Udon.Common.Interfaces;
 
 public class InteractableObjectTracker : UdonSharpBehaviour
@@ -25,11 +24,6 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     [Space(5)][Header("Item Management")][Space(10)]
     public string ItemType;
     public InteractableObjectManager IOM; //must be public
-
-    [Header("Visual Indicators")]
-    [SerializeField] GameObject visualIndicatorPrefab;
-    private GameObject visualIndicatorInstanceOnPickup;
-    private GameObject visualIndicatorInstanceOnDrop;
 
     private VRCPlayerApi localPlayer;
 
@@ -64,14 +58,9 @@ public class InteractableObjectTracker : UdonSharpBehaviour
                 PotionWaterWalkingRB.isKinematic = true;
             }
         }
-
-
-
-
-
     }
 
-    public override void OnPickup()
+    public override void OnPickup() 
     {
         // Handle item pickups
         if (ItemType == "Herb")
@@ -111,8 +100,6 @@ public class InteractableObjectTracker : UdonSharpBehaviour
             if (PotionWallBreakerRB != null)
             {
                 PotionWallBreakerRB.isKinematic = false;
-                DestroyVisualIndicators();
-                ShowRadiusIndicatorOnPickup();
             }
         }
         else if (ItemType == "PotionSuperJumping")
@@ -120,8 +107,6 @@ public class InteractableObjectTracker : UdonSharpBehaviour
             if (PotionSuperJumpingRB != null)
             {
                 PotionSuperJumpingRB.isKinematic = false;
-                DestroyVisualIndicators();
-                ShowRadiusIndicatorOnPickup();
             }
         }
         else if (ItemType == "PotionWaterWalking")
@@ -129,12 +114,9 @@ public class InteractableObjectTracker : UdonSharpBehaviour
             if (PotionWaterWalkingRB != null)
             {
                 PotionWaterWalkingRB.isKinematic = false;
-                DestroyVisualIndicators();
-                ShowRadiusIndicatorOnPickup();
             }
         }
     }
-
 
     private void HandleItemPickup(GameObject item)
     {
@@ -153,53 +135,5 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     public void ReactivateItem()
     {
         gameObject.SetActive(true);
-    }
-
-    public override void OnDrop()
-    {
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SyncOnDrop));
-    }
-
-    public void SyncOnDrop()
-    {
-        DestroyVisualIndicators();
-        ShowRadiusIndicatorOnDrop();
-    }
-
-    private void DestroyVisualIndicators()
-    {
-        if (visualIndicatorInstanceOnPickup != null)
-        {
-            Destroy(visualIndicatorInstanceOnPickup);
-        }
-        if (visualIndicatorInstanceOnDrop != null)
-        {
-            Destroy(visualIndicatorInstanceOnDrop);
-        }
-    }
-
-    private void ShowRadiusIndicatorOnPickup()
-    {
-        if (visualIndicatorPrefab != null)
-        {
-            Vector3 playerPosition = Networking.LocalPlayer.GetPosition();
-            if (Physics.Raycast(playerPosition, Vector3.down, out RaycastHit hit))
-            {
-                visualIndicatorInstanceOnPickup = VRCInstantiate(visualIndicatorPrefab);
-                visualIndicatorInstanceOnPickup.transform.position = hit.point;
-                visualIndicatorInstanceOnPickup.transform.rotation = Quaternion.identity;
-            }
-        }
-    }
-
-    private void ShowRadiusIndicatorOnDrop()
-    {
-        if (visualIndicatorPrefab != null)
-        {
-            visualIndicatorInstanceOnDrop = VRCInstantiate(visualIndicatorPrefab);
-            visualIndicatorInstanceOnDrop.transform.SetParent(PotionWallBreaker.transform);
-            visualIndicatorInstanceOnDrop.transform.localPosition = Vector3.down * PotionWallBreaker.transform.localScale.y;
-            visualIndicatorInstanceOnDrop.transform.rotation = Quaternion.Euler(0, 90, 0);
-        }
     }
 }
