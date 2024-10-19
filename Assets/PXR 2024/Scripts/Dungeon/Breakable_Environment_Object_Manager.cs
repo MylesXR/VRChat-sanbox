@@ -74,32 +74,4 @@ public class Breakable_Environment_Object_Manager : UdonSharpBehaviour
             }
         }
     }
-
-    // Function to reset all breakable objects and other animations across the network
-    public void ResetAll()
-    {
-        SendCustomNetworkEvent(NetworkEventTarget.All, "ResetAllNetworked");
-    }
-
-    // Networked version of ResetAll
-    public void ResetAllNetworked()
-    {
-        // Reset all breakable objects
-        for (int i = 0; i < breakableObjects.Length; i++)
-        {
-            if (breakableObjects[i] != null)
-            {
-                breakableObjects[i].ResetObject(); // Custom function to reset each object
-            }
-        }
-
-        // Reset all other animators to idle
-        for (int i = 0; i < otherAnimators.Length; i++)
-        {
-            if (otherAnimators[i] != null)
-            {
-                otherAnimators[i].SetTrigger("Idle"); // Reset other animations to Idle state
-            }
-        }
-    }
 }
