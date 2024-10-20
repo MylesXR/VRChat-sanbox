@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 435990}
   - component: {fileID: 3335990}
   - component: {fileID: 2335990}
+  - component: {fileID: 7791517647506943535}
   m_Layer: 0
   m_Name: Candles_01
   m_TagString: Untagged
@@ -30,9 +31,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 429720}
-  - {fileID: 464718}
   - {fileID: 436604}
   - {fileID: 460736}
+  - {fileID: 464718}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -83,6 +84,28 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!205 &7791517647506943535
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135990}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.00000047683716, y: 0.24729098, z: 0}
+  m_Size: 0.49458203
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.14837573
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2335990}
+    - renderer: {fileID: 19988146}
+    - renderer: {fileID: 19959094}
+    - renderer: {fileID: 19904892}
+  m_Enabled: 1
 --- !u!1 &164718
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +135,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 435990}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &10864718
 Light:
@@ -200,12 +223,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168392}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.001, y: 0.1735, z: 0.075}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0010070801, y: 0.1735, z: 0.07500005}
   m_LocalScale: {x: 0.146963, y: 0.14696305, z: 0.14696305}
   m_Children: []
   m_Father: {fileID: 435990}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &19827732
 ParticleSystem:
@@ -9652,12 +9675,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 186438}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.065, y: 0.30400002, z: -0.057}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.06500244, y: 0.30400002, z: -0.05699992}
   m_LocalScale: {x: 0.14020748, y: 0.14020753, z: 0.14020753}
   m_Children: []
   m_Father: {fileID: 435990}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &19835854
 ParticleSystem:
