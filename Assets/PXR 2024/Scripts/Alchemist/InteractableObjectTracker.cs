@@ -24,6 +24,9 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     [Space(5)][Header("Item Management")][Space(10)]
     public string ItemType;
     public InteractableObjectManager IOM; //must be public
+    public VRC.SDK3.Components.VRCObjectSync objectSync; // Reference to VRC Object Sync
+
+
 
     private VRCPlayerApi localPlayer;
 
@@ -58,10 +61,26 @@ public class InteractableObjectTracker : UdonSharpBehaviour
                 PotionWaterWalkingRB.isKinematic = true;
             }
         }
+
+
+        // Disable VRC Object Sync at the start
+        if (objectSync != null)
+        {
+            objectSync.enabled = false;
+            Debug.LogWarning("Object Synced OFF");
+        }
     }
 
     public override void OnPickup() 
     {
+
+        // Enable VRC Object Sync on pickup
+        if (objectSync != null)
+        {
+            objectSync.enabled = true;
+            Debug.LogWarning("Object Synced ON");
+        }
+
         // Handle item pickups
         if (ItemType == "Herb")
         {
@@ -126,6 +145,8 @@ public class InteractableObjectTracker : UdonSharpBehaviour
         }
     }
 
+    #region Activate and Deactivate Item
+
     public void DeactivateItem()
     {
         gameObject.SetActive(false);
@@ -136,4 +157,6 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     {
         gameObject.SetActive(true);
     }
+
+    #endregion
 }

@@ -775,7 +775,9 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         if ((InputMenu == 1 || Menu.IsHeld) & !Menu.transform.GetChild(0).gameObject.activeInHierarchy)
         { _SummonPortalMenu(); }
         #endregion
-
+        //Commented out the code below to reduce update, the code below
+        //handles the portal spawning etc so it is not needed for the attendee menu
+        /*
         #region Check and Update Using Portal ID
         if (UsingPortal >= 0 & UsingPortal < Portals.Length)
         {
@@ -963,8 +965,9 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         if (PreviewRayImage != null)
         { PreviewRayImage.color = AvaliableToPlace ? new Color(0, 1, 0, .5f) : new Color(1, 0, 0, .5f); }
         #endregion
+        */
     }
-
+    
     #region Startup Info Hide
     public void _HideStartupInfo()
     {
