@@ -55,7 +55,7 @@ public class Breakable_Environment_Object : UdonSharpBehaviour
 
     #endregion
 
-    #region Deactivate Obejsct After Breaking
+    #region Deactivate Obejects After Breaking
 
     public void DeactivateObjects()
     {
@@ -68,5 +68,4 @@ public class Breakable_Environment_Object : UdonSharpBehaviour
     }
 
     #endregion
-
 }

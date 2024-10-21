@@ -5,7 +5,10 @@ using VRC.Udon;
 
 public class BreakableObject : UdonSharpBehaviour
 {
-    public Rigidbody[] rbs;
+
+    #region Variables 
+
+    public Rigidbody[] rbs; // Reference to the rigid bodies of the objects that will break
     public Collider[] objectColliders; // Reference to the colliders of the objects that will break
     public Collider animationCollider; // Reference to the collider used for the animation, set in Inspector
     public int breakerLayer; // The layer to identify the breaker
@@ -13,6 +16,8 @@ public class BreakableObject : UdonSharpBehaviour
     public Animator animator;
     public float deactivationTime = 5.0f; // Time in seconds before objects get deactivated
     public float layerChangeDelay = 1.0f; // Delay in seconds before changing to the after-break layer, adjustable in Inspector
+
+    #endregion
 
     void Start()
     {
@@ -22,6 +27,8 @@ public class BreakableObject : UdonSharpBehaviour
         {
             rb.isKinematic = true; // Disable physics interactions
             rb.useGravity = false; // Disable gravity initially
+            rb.gameObject.isStatic = true; // Make the objects static to reduce batch count
+
         }
 
         // Ensure all object colliders are enabled at the start
@@ -68,6 +75,8 @@ public class BreakableObject : UdonSharpBehaviour
         {
             rb.isKinematic = false; // Enable physics
             rb.useGravity = true;   // Re-enable gravity
+            rb.gameObject.isStatic = false; // Switch objects to dynamic, allowing them to interact with physics
+
         }
 
         // Change the colliders' layers after a delay
