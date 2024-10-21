@@ -20,13 +20,25 @@ public class ToggleMenuIfStaff : UdonSharpBehaviour
 
     void Start()
     {
-        isAttendee = true;
-        isStaff = false; 
+        attendeeMenuObject.SetActive(true);
+        staffMenuObject.SetActive(false);
     }
-    private void Update()
+    //private void Update() removed when optomizing
+    //{
+    //    attendeeMenuObject.SetActive(isAttendee);
+    //    staffMenuObject.SetActive(isStaff);
+    //}
+    public override void Interact()
     {
-        attendeeMenuObject.SetActive(isAttendee);
-        staffMenuObject.SetActive(isStaff);
+        VRCPlayerApi player = Networking.LocalPlayer;
+        foreach (string user in whitelistedUsers)
+        {
+            if (user == player.displayName)
+            {
+                attendeeMenuObject.SetActive(false);
+                staffMenuObject.SetActive(true);
+            }
+        }
     }
     public void SetStaff()
     {
@@ -35,8 +47,8 @@ public class ToggleMenuIfStaff : UdonSharpBehaviour
         {
             if (user == player.displayName)
             {
-                isAttendee = false;
-                isStaff = true;
+                attendeeMenuObject.SetActive(false);
+                staffMenuObject.SetActive(true);
             }
         }
     }
@@ -47,9 +59,9 @@ public class ToggleMenuIfStaff : UdonSharpBehaviour
         {
             if (user == player.displayName)
             {
-                isAttendee = true;
+                attendeeMenuObject.SetActive(true);
+                staffMenuObject.SetActive(false);
                 SetClass("Barbarian", barbarianScriptObject, player);
-                isStaff = false;
             }
         }
 
@@ -61,9 +73,9 @@ public class ToggleMenuIfStaff : UdonSharpBehaviour
         {
             if (user == player.displayName)
             {
-                isAttendee = true;
+                attendeeMenuObject.SetActive(true);
+                staffMenuObject.SetActive(false);
                 SetClass("Explorer", explorerScriptObject, player);
-                isStaff = false;
             }
         }
 
@@ -75,9 +87,9 @@ public class ToggleMenuIfStaff : UdonSharpBehaviour
         {
             if (user == player.displayName)
             {
-                isAttendee = true;
+                attendeeMenuObject.SetActive(true);
+                staffMenuObject.SetActive(false);
                 SetClass("Alchemist", alchemistScriptObject, player);
-                isStaff = false;
             }
         }
 
