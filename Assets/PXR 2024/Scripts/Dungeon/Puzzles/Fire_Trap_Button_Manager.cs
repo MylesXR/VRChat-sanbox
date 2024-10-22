@@ -56,27 +56,27 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         // Apply material and object states when joining
         ApplyMaterialFromIndex();
         UpdateObjectStates();
-        Debug.LogWarning("[Fire_Trap_Button_Manager] Start method initialized.");
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] Start method initialized.");
     }
 
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
-        Debug.LogWarning("[Fire_Trap_Button_Manager] Player joined: " + player.displayName);
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] Player joined: " + player.displayName);
 
         if (Networking.IsOwner(gameObject)) // Ensure the owner sends the current state
         {
             RequestSerialization(); // Force sync for new players
-            Debug.LogWarning("[Fire_Trap_Button_Manager] Requesting serialization on player join.");
+            //Debug.LogWarning("[Fire_Trap_Button_Manager] Requesting serialization on player join.");
         }
     }
 
     public void RegisterButtonPress(int buttonID)
     {
-        Debug.LogWarning("[Fire_Trap_Button_Manager] Button with ID: " + buttonID + " was pressed.");
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] Button with ID: " + buttonID + " was pressed.");
 
         if (puzzleComplete || currentGlobalGuessIndex >= maxGuesses)
         {
-            Debug.LogWarning("[Fire_Trap_Button_Manager] Button press ignored. Puzzle complete or max guesses reached.");
+            //Debug.LogWarning("[Fire_Trap_Button_Manager] Button press ignored. Puzzle complete or max guesses reached.");
             return;
         }
 
@@ -86,14 +86,14 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         syncedGuessIDs[currentGlobalGuessIndex] = buttonID; // Store the guess ID in the synced array
         currentGlobalGuessIndex++; // Increment the global guess index
 
-        Debug.LogWarning("[Fire_Trap_Button_Manager] Guess registered. Current guess count: " + currentGlobalGuessIndex);
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] Guess registered. Current guess count: " + currentGlobalGuessIndex);
 
         RequestSerialization(); // Sync the guess across all players
         ShowGuessMaterial();
 
         if (currentGlobalGuessIndex == maxGuesses)
         {
-            Debug.LogWarning("[Fire_Trap_Button_Manager] Max guesses reached. Checking pattern.");
+            //Debug.LogWarning("[Fire_Trap_Button_Manager] Max guesses reached. Checking pattern.");
             CheckPattern();
         }
     }
@@ -108,19 +108,19 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
             if (syncedGuessIDs[i] != correctPattern[i])
             {
                 isCorrect = false;
-                Debug.LogWarning("[Fire_Trap_Button_Manager] Pattern mismatch at index: " + i);
+                //Debug.LogWarning("[Fire_Trap_Button_Manager] Pattern mismatch at index: " + i);
                 break;
             }
         }
 
         if (isCorrect)
         {
-            Debug.LogWarning("[Fire_Trap_Button_Manager] Pattern is correct.");
+            //Debug.LogWarning("[Fire_Trap_Button_Manager] Pattern is correct.");
             HandleCorrectPattern();
         }
         else
         {
-            Debug.LogWarning("[Fire_Trap_Button_Manager] Pattern is incorrect.");
+            //Debug.LogWarning("[Fire_Trap_Button_Manager] Pattern is incorrect.");
             HandleIncorrectPattern();
         }
     }
@@ -131,7 +131,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         syncedMaterialIndex = CORRECT_MATERIAL; // Sync the correct material
         RequestSerialization(); // Sync across all players
         ApplyMaterialFromIndex();
-        Debug.LogWarning("[Fire_Trap_Button_Manager] Correct pattern handled. VFX deactivated.");
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] Correct pattern handled. VFX deactivated.");
 
         DeactivateVFX(); // Deactivate the objects (they were active)
 
@@ -144,7 +144,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         remainingFlashes = flashCount;
         isFlashingSynced = true;
         RequestSerialization();
-        Debug.LogWarning("[Fire_Trap_Button_Manager] Incorrect pattern. Flashing VFX.");
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] Incorrect pattern. Flashing VFX.");
         FlashDuringReset(); // Start flashing
         SendCustomEventDelayedSeconds(nameof(ResetPuzzle), resetDelay); // Reset puzzle after flashing
     }
@@ -156,14 +156,14 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         syncedMaterialIndex = GUESS_MATERIAL;
         RequestSerialization(); // Sync the material index
         ApplyMaterialFromIndex();
-        Debug.LogWarning("[Fire_Trap_Button_Manager] Guess material applied.");
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] Guess material applied.");
 
         SendCustomEventDelayedSeconds(nameof(RevertToBaseMaterial), guessMaterialDuration);
     }
 
     public void ApplyMaterialFromIndex()
     {
-        Debug.LogWarning("[Fire_Trap_Button_Manager] Applying material with index: " + syncedMaterialIndex);
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] Applying material with index: " + syncedMaterialIndex);
 
         switch (syncedMaterialIndex)
         {
@@ -189,7 +189,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
             syncedMaterialIndex = BASE_MATERIAL;
             RequestSerialization(); // Sync the change across the network
             ApplyMaterialFromIndex();
-            Debug.LogWarning("[Fire_Trap_Button_Manager] Reverting to base material.");
+            //Debug.LogWarning("[Fire_Trap_Button_Manager] Reverting to base material.");
         }
     }
 
@@ -200,7 +200,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         isObjectActive = false; // Deactivate the objects (they start as active)
         RequestSerialization(); // Sync deactivation across all players
         UpdateObjectStates(); // Deactivate the objects (VFX)
-        Debug.LogWarning("[Fire_Trap_Button_Manager] VFX deactivated.");
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] VFX deactivated.");
     }
 
     public void ReactivateVFX()
@@ -210,7 +210,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         isObjectActive = true; // Reactivate the objects after the correct solution
         RequestSerialization(); // Sync reactivation across all players
         UpdateObjectStates(); // Reactivate the objects (VFX)
-        Debug.LogWarning("[Fire_Trap_Button_Manager] VFX reactivated.");
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] VFX reactivated.");
     }
 
     public void UpdateObjectStates()
@@ -220,7 +220,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
             if (obj != null)
             {
                 obj.SetActive(isObjectActive); // Sync active/inactive state across all players
-                Debug.LogWarning("[Fire_Trap_Button_Manager] Object state updated: " + obj.name + " Active: " + isObjectActive);
+                //Debug.LogWarning("[Fire_Trap_Button_Manager] Object state updated: " + obj.name + " Active: " + isObjectActive);
             }
         }
     }
@@ -233,7 +233,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
             RequestSerialization();
             syncedMaterialIndex = BASE_MATERIAL;
             ApplyMaterialFromIndex();
-            Debug.LogWarning("[Fire_Trap_Button_Manager] Flashing ended. Resetting material.");
+            //Debug.LogWarning("[Fire_Trap_Button_Manager] Flashing ended. Resetting material.");
             return;
         }
 
@@ -244,7 +244,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         ApplyMaterialFromIndex();
 
         remainingFlashes--; // Decrease remaining flashes
-        Debug.LogWarning("[Fire_Trap_Button_Manager] Flashing during reset. Remaining flashes: " + remainingFlashes);
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] Flashing during reset. Remaining flashes: " + remainingFlashes);
         SendCustomEventDelayedSeconds(nameof(FlashDuringReset), flashInterval); // Continue flashing
     }
 
@@ -253,7 +253,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         if (backgroundMesh != null)
         {
             backgroundMesh.material = newMaterial;
-            Debug.LogWarning("[Fire_Trap_Button_Manager] Mesh material changed to: " + newMaterial.name);
+            //Debug.LogWarning("[Fire_Trap_Button_Manager] Mesh material changed to: " + newMaterial.name);
         }
     }
 
@@ -266,7 +266,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         syncedMaterialIndex = BASE_MATERIAL;
         RequestSerialization(); // Sync reset across all players
         ApplyMaterialFromIndex();
-        Debug.LogWarning("[Fire_Trap_Button_Manager] Puzzle reset.");
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] Puzzle reset.");
     }
 
     public void ResetPattern()
@@ -278,14 +278,14 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
             playerPattern[i] = -1; // Clear the player pattern
         }
         puzzleComplete = false; // Reset the puzzle state
-        Debug.LogWarning("[Fire_Trap_Button_Manager] Pattern reset.");
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] Pattern reset.");
     }
 
     public override void OnDeserialization()
     {
         ApplyMaterialFromIndex();
         UpdateObjectStates();
-        Debug.LogWarning("[Fire_Trap_Button_Manager] OnDeserialization called. State updated.");
+        //Debug.LogWarning("[Fire_Trap_Button_Manager] OnDeserialization called. State updated.");
     }
 
     private void TakeOwnership()
@@ -293,7 +293,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         if (!Networking.IsOwner(localPlayer, gameObject))
         {
             Networking.SetOwner(localPlayer, gameObject); // Transfer ownership to the interacting player
-            Debug.LogWarning("[Fire_Trap_Button_Manager] Ownership transferred to: " + localPlayer.displayName);
+            //Debug.LogWarning("[Fire_Trap_Button_Manager] Ownership transferred to: " + localPlayer.displayName);
         }
     }
 }

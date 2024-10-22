@@ -64,7 +64,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
     #region Debugging
 
     [Space(5)][Header("Debugging")][Space(10)]
-    [SerializeField] private DebugMenu debugMenu;
+    //[SerializeField] private DebugMenu debugMenu;
     private VRCPlayerApi localPlayer;
 
     #endregion
@@ -80,14 +80,13 @@ public class InteractableObjectManager : UdonSharpBehaviour
     private void Start()
     {
         localPlayer = Networking.LocalPlayer;
-        debugMenu.Log("Game Started");
         UpdateUI();
     }
 
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         base.OnPlayerJoined(player);
-        debugMenu.Log($"Player joined: {player.displayName}, ID: {player.playerId}");
+        //debugMenu.Log($"Player joined: {player.displayName}, ID: {player.playerId}");
         AssignPotionPool(player);
     }
 
@@ -97,7 +96,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
         if (playerIndex >= wallBreakerPotionPool.Length)
         {
-            debugMenu.LogError("Player index exceeds potion pool array length.");
+            //debugMenu.LogError("Player index exceeds potion pool array length.");
             return;
         }
 
@@ -106,7 +105,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
         if (wallBreakerPool != null)
         {
             Networking.SetOwner(player, wallBreakerPool.gameObject);
-            debugMenu.Log($"Assigned Wall Breaker potion pool to player {player.displayName}.");
+            //debugMenu.Log($"Assigned Wall Breaker potion pool to player {player.displayName}.");
         }
 
         // Assign Super Jump Potion Pool
@@ -114,7 +113,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
         if (superJumpPool != null)
         {
             Networking.SetOwner(player, superJumpPool.gameObject);
-            debugMenu.Log($"Assigned Super Jump potion pool to player {player.displayName}.");
+            //debugMenu.Log($"Assigned Super Jump potion pool to player {player.displayName}.");
         }
 
         // Assign Water Walking Potion Pool
@@ -122,7 +121,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
         if (waterWalkingPool != null)
         {
             Networking.SetOwner(player, waterWalkingPool.gameObject);
-            debugMenu.Log($"Assigned Water Walking potion pool to player {player.displayName}.");
+            //debugMenu.Log($"Assigned Water Walking potion pool to player {player.displayName}.");
         }
     }
 
@@ -132,7 +131,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
         if (playerIndex >= wallBreakerPotionPool.Length)
         {
-            debugMenu.LogError("Player index exceeds potion pool array length.");
+            //debugMenu.LogError("Player index exceeds potion pool array length.");
             return null;
         }
 
@@ -145,7 +144,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
             case "WallBreaker":
                 return wallBreakerPotionPool[playerIndex];
             default:
-                debugMenu.LogError("Invalid potion type.");
+                //debugMenu.LogError("Invalid potion type.");
                 return null;
         }
     }
@@ -192,7 +191,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
     {
         if (index >= 0 && index < BreakableObjects.Length && BreakableObjects[index] != null)
         {
-            debugMenu.Log($"Returning breakable object at index {index}: {BreakableObjects[index].name}");
+            //debugMenu.Log($"Returning breakable object at index {index}: {BreakableObjects[index].name}");
             return BreakableObjects[index];
         }
 
@@ -201,18 +200,18 @@ public class InteractableObjectManager : UdonSharpBehaviour
         {
             if (obj != null)
             {
-                debugMenu.Log($"Returning first available breakable object: {obj.name}");
+                //debugMenu.Log($"Returning first available breakable object: {obj.name}");
                 return obj;
             }
         }
 
-        debugMenu.LogWarning("No valid breakable object found.");
+        //debugMenu.LogWarning("No valid breakable object found.");
         return null; // No valid object found
     }
 
     public GameObject GetObjectToActivate()
     {
-        debugMenu.Log("setting object active perhaps");
+        //debugMenu.Log("setting object active perhaps");
         return WaterWalkingObject;
     }
 
@@ -272,7 +271,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
         UpdateUI();
     }
 
-
     #endregion
 
     #region Can Craft Potions
@@ -287,12 +285,12 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
             UpdateUI();
             CraftPotionWallBreaking = true;
-            debugMenu.Log("Potion Wall Breaker crafted.");
+            //debugMenu.Log("Potion Wall Breaker crafted.");
         }
         else
         {
             CraftPotionWallBreaking = false;
-            debugMenu.Log("Not enough resources to craft the Potion Wall Breaker.");
+            //debugMenu.Log("Not enough resources to craft the Potion Wall Breaker.");
         }
     }
 
@@ -306,12 +304,12 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
             UpdateUI();
             CraftPotionSuperJumping = true;
-            debugMenu.Log("Potion Super Jump crafted.");
+            //debugMenu.Log("Potion Super Jump crafted.");
         }
         else
         {
             CraftPotionSuperJumping = false;
-            debugMenu.Log("Not enough resources to craft Potion Super Jump.");
+            //debugMenu.Log("Not enough resources to craft Potion Super Jump.");
         }
     }
 
@@ -327,12 +325,12 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
             UpdateUI();
             CraftPotionWaterWalking = true;
-            debugMenu.Log("Potion Water Walk crafted.");
+            //debugMenu.Log("Potion Water Walk crafted.");
         }
         else
         {
             CraftPotionWaterWalking = false;
-            debugMenu.Log("Not enough resources to craft Potion Water Walk.");
+            //debugMenu.Log("Not enough resources to craft Potion Water Walk.");
         }
     }
 

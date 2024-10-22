@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 411900}
   - component: {fileID: 3388674}
   - component: {fileID: 2388674}
+  - component: {fileID: 9208504073824731690}
   m_Layer: 0
   m_Name: Candle_04
   m_TagString: Untagged
@@ -81,6 +82,26 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!205 &9208504073824731690
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111900}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0.15802148, z: 0.0000009536743}
+  m_Size: 0.3206572
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.14837573
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2388674}
+    - renderer: {fileID: 19937820}
+  m_Enabled: 1
 --- !u!1 &137294
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,8 +127,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137294}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00030517578, y: 0.2615, z: 0.0021}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00030517578, y: 0.2615, z: 0.0020999908}
   m_LocalScale: {x: 0.20992239, y: 0.20992245, z: 0.20992245}
   m_Children: []
   m_Father: {fileID: 411900}

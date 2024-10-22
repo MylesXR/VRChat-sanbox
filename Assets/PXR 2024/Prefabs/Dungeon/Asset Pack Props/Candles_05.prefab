@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 457436}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &10838062
 Light:
@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 457436}
   - component: {fileID: 3357436}
   - component: {fileID: 2357436}
+  - component: {fileID: 1782177451033805495}
   m_Layer: 0
   m_Name: Candles_05
   m_TagString: Untagged
@@ -121,8 +122,8 @@ Transform:
   m_LocalPosition: {x: -229.77931, y: 0, z: -4.169319}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 415712}
   - {fileID: 438062}
+  - {fileID: 415712}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -173,6 +174,26 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!205 &1782177451033805495
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157436}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.0060236454, y: 0.15900682, z: 0.0049266815}
+  m_Size: 0.31801364
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.15423304
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2357436}
+    - renderer: {fileID: 19989676}
+  m_Enabled: 1
 --- !u!1 &171542
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,12 +219,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171542}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0009, y: 0.2885, z: 0.0008}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00090026855, y: 0.2885, z: 0.00080013275}
   m_LocalScale: {x: 0.14, y: 0.14, z: 0.148}
   m_Children: []
   m_Father: {fileID: 457436}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &19829080
 ParticleSystem:
