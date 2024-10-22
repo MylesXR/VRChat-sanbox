@@ -15,13 +15,15 @@ public class ToggleMenuIfStaff : UdonSharpBehaviour
     public GameObject barbarianScriptObject;
     public GameObject alchemistScriptObject;
     public Bobys_WorldPortalSystem Bobys_WorldPortalSystem;
+    public Bobbys_WorldPortalSystem1 bobys_WorldPortalSystem1;
 
     public string[] whitelistedUsers = { "MylesXR", "JustineKat", "The Threadman", "sammievu", "helllomandy", "JakeRuneckles", "singlethread", "the_majesty", "zeNita", "nic․ej․b 2e78", "nicolepxr", "ColePaskuski", "Zzoltan", "SeaRitch",};
 
     void Start()
     {
         attendeeMenuObject.SetActive(true);
-        staffMenuObject.SetActive(false);
+        bobys_WorldPortalSystem1.enabled = false;
+
     }
     //private void Update() removed when optomizing
     //{
@@ -37,6 +39,7 @@ public class ToggleMenuIfStaff : UdonSharpBehaviour
             {
                 attendeeMenuObject.SetActive(false);
                 staffMenuObject.SetActive(true);
+                bobys_WorldPortalSystem1.enabled = true;
             }
         }
     }
@@ -49,6 +52,7 @@ public class ToggleMenuIfStaff : UdonSharpBehaviour
             {
                 attendeeMenuObject.SetActive(false);
                 staffMenuObject.SetActive(true);
+                bobys_WorldPortalSystem1.enabled = true;
             }
         }
     }
