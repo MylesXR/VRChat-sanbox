@@ -2,8 +2,6 @@
 using UdonSharp;
 using UnityEngine;
 using VRC.SDK3.Components;
-using VRC.SDKBase;
-using VRC.Udon;
 
 public class AlchemistObjectManager : UdonSharpBehaviour
 {
@@ -30,11 +28,17 @@ public class AlchemistObjectManager : UdonSharpBehaviour
 
     public void ToggleAlchemistObjects()
     {
-
         foreach (GameObject obj in alchemistObjects)
         {
             VRCPickup vrcPickup = obj.GetComponent<VRCPickup>();
-            vrcPickup.pickupable = isAlchemist;
+            if (vrcPickup != null) // Check if the VRCPickup component exists
+            {
+                vrcPickup.pickupable = isAlchemist;
+            }
+            else
+            {
+                Debug.LogWarning($"{obj.name} does not have a VRCPickup component attached.");
+            }
         }
-    } 
+    }
 }
