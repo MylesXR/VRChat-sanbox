@@ -80,12 +80,39 @@ public class InteractableObjectManager : UdonSharpBehaviour
     {
         localPlayer = Networking.LocalPlayer;
         UpdateUI();
+
+        // Ensure all potion pools are toggled off at the beginning of the scene to save resources
+        for (int i = 0; i < wallBreakerPotionPool.Length; i++)
+        {
+            if (wallBreakerPotionPool[i] != null)
+            {
+                wallBreakerPotionPool[i].gameObject.SetActive(false);
+            }
+        }
+
+        for (int i = 0; i < superJumpPotionPool.Length; i++)
+        {
+            if (superJumpPotionPool[i] != null)
+            {
+                superJumpPotionPool[i].gameObject.SetActive(false);
+            }
+        }
+
+        for (int i = 0; i < waterWalkingPotionPool.Length; i++)
+        {
+            if (waterWalkingPotionPool[i] != null)
+            {
+                waterWalkingPotionPool[i].gameObject.SetActive(false);
+            }
+        }
+
+        debugMenu.Log("All potion pools have been deactivated at scene start.");
     }
 
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         base.OnPlayerJoined(player);
-        debugMenu.Log($"Player joined: {player.displayName}, ID: {player.playerId}");
+        //debugMenu.Log($"Player joined: {player.displayName}, ID: {player.playerId}");
         AssignPotionPool(player);
     }
 
@@ -97,37 +124,83 @@ public class InteractableObjectManager : UdonSharpBehaviour
     {
         int playerIndex = player.playerId % maxPlayers;
 
+        // Check if the player's index exceeds array lengths
         if (playerIndex >= wallBreakerPotionPool.Length || playerIndex >= superJumpPotionPool.Length || playerIndex >= waterWalkingPotionPool.Length)
         {
             debugMenu.LogError("Player index exceeds potion pool array length.");
             return;
         }
-    
+
+        // Check if the player's pool is already assigned and active. If so, do nothing.
         VRCObjectPool wallBreakerPool = GetWallBreakerPotionPool(playerIndex);
-        if (wallBreakerPool != null)
+        if (wallBreakerPool != null && !wallBreakerPool.gameObject.activeSelf)
         {
+            // Activate the player's wall breaker pool
             Networking.SetOwner(player, wallBreakerPool.gameObject);
-            wallBreakerPool.gameObject.SetActive(true);  // Enable assigned pool
+            wallBreakerPool.gameObject.SetActive(true);
             debugMenu.Log($"Assigned Wall Breaker potion pool to player {player.displayName}.");
+        }
+        else
+        {
+            debugMenu.Log($"Wall Breaker potion pool already active for player {player.displayName}.");
         }
 
         VRCObjectPool superJumpPool = GetSuperJumpPotionPool(playerIndex);
-        if (superJumpPool != null)
+        if (superJumpPool != null && !superJumpPool.gameObject.activeSelf)
         {
+            // Activate the player's super jump pool
             Networking.SetOwner(player, superJumpPool.gameObject);
-            superJumpPool.gameObject.SetActive(true);  // Enable assigned pool
+            superJumpPool.gameObject.SetActive(true);
             debugMenu.Log($"Assigned Super Jump potion pool to player {player.displayName}.");
+        }
+        else
+        {
+            debugMenu.Log($"Super Jump potion pool already active for player {player.displayName}.");
         }
 
         VRCObjectPool waterWalkingPool = GetWaterWalkingPotionPool(playerIndex);
-        if (waterWalkingPool != null)
+        if (waterWalkingPool != null && !waterWalkingPool.gameObject.activeSelf)
         {
+            // Activate the player's water walking pool
             Networking.SetOwner(player, waterWalkingPool.gameObject);
-            waterWalkingPool.gameObject.SetActive(true);  // Enable assigned pool
+            waterWalkingPool.gameObject.SetActive(true);
             debugMenu.Log($"Assigned Water Walking potion pool to player {player.displayName}.");
         }
+        else
+        {
+            debugMenu.Log($"Water Walking potion pool already active for player {player.displayName}.");
+        }
 
+        // Deactivate unused potion pools to save resources
+        for (int i = 0; i < wallBreakerPotionPool.Length; i++)
+        {
+            if (wallBreakerPotionPool[i] != null && i != playerIndex && !Networking.IsOwner(Networking.LocalPlayer, wallBreakerPotionPool[i].gameObject))
+            {
+                wallBreakerPotionPool[i].gameObject.SetActive(false);
+                debugMenu.Log($"Deactivated unused Wall Breaker potion pool {i}.");
+            }
+        }
+
+        for (int i = 0; i < superJumpPotionPool.Length; i++)
+        {
+            if (superJumpPotionPool[i] != null && i != playerIndex && !Networking.IsOwner(Networking.LocalPlayer, superJumpPotionPool[i].gameObject))
+            {
+                superJumpPotionPool[i].gameObject.SetActive(false);
+                debugMenu.Log($"Deactivated unused Super Jump potion pool {i}.");
+            }
+        }
+
+        for (int i = 0; i < waterWalkingPotionPool.Length; i++)
+        {
+            if (waterWalkingPotionPool[i] != null && i != playerIndex && !Networking.IsOwner(Networking.LocalPlayer, waterWalkingPotionPool[i].gameObject))
+            {
+                waterWalkingPotionPool[i].gameObject.SetActive(false);
+                debugMenu.Log($"Deactivated unused Water Walking potion pool {i}.");
+            }
+        }
     }
+
+
 
     public VRCObjectPool GetPlayerPotionPool(int playerId, string potionType)
     {
@@ -135,7 +208,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
         if (playerIndex >= wallBreakerPotionPool.Length)
         {
-            debugMenu.LogError("Player index exceeds potion pool array length.");
+            //debugMenu.LogError("Player index exceeds potion pool array length.");
             return null;
         }
 
@@ -148,7 +221,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
             case "WallBreaker":
                 return wallBreakerPotionPool[playerIndex];
             default:
-                debugMenu.LogError("Invalid potion type.");
                 return null;
         }
     }

@@ -2,12 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.SDKBase;
-using VRC.Udon;
 using VRC.Udon.Common;
-using System.Collections.Generic;
 using VRC.SDK3.Components;
 using VRC.Udon.Common.Interfaces;
-using System;
 
 public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 {

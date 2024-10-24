@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3535653575843447180}
   - component: {fileID: 1218168087352327572}
   m_Layer: 0
-  m_Name: Potion Pool - Potion Wall Breaking
+  m_Name: Potion Pool - Potion Super Jumping
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4435842319409306392}
+  - {fileID: 7431827592760437834}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45,119 +45,99 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pool:
-  - {fileID: 3011472751079413014}
+  - {fileID: 8315481394654257732}
   StartPositions: []
   StartRotations: []
---- !u!1001 &9193658356123250059
+--- !u!1001 &2682473394479356633
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 3535653575843447180}
     m_Modifications:
-    - target: {fileID: 3019307738132756442, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 3019307738132756442, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 3019307738132756442, guid: e68a9ff32a324c94db85e316aca0c72c,
+      objectReference: {fileID: 3019307738132756442, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
-    - target: {fileID: 3323043959665102845, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 3323043959665102845, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 3323043959665102845, guid: e68a9ff32a324c94db85e316aca0c72c,
+      objectReference: {fileID: 3323043959665102845, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
-    - target: {fileID: 4762882641056659091, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 4762882641056659091, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4762882641056659091, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 4762882641056659091, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4762882641056659091, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 4762882641056659091, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4762882641056659091, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 4762882641056659091, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4762882641056659091, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 4762882641056659091, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4762882641056659091, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 4762882641056659091, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4762882641056659091, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 4762882641056659091, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4762882641056659091, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 4762882641056659091, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4762882641056659091, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 4762882641056659091, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4762882641056659091, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 4762882641056659091, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4762882641056659091, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 4762882641056659091, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6222999497364764829, guid: e68a9ff32a324c94db85e316aca0c72c,
+    - target: {fileID: 6222999497364764829, guid: e5e8a56af9269904c9b1cd6035ac1857,
         type: 3}
       propertyPath: m_Name
-      value: Potion Wall Breaking (Interactable Object)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7207323908340965836, guid: e68a9ff32a324c94db85e316aca0c72c,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.2342
-      objectReference: {fileID: 0}
-    - target: {fileID: 7207323908340965836, guid: e68a9ff32a324c94db85e316aca0c72c,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.018809285
-      objectReference: {fileID: 0}
-    - target: {fileID: 7207323908340965836, guid: e68a9ff32a324c94db85e316aca0c72c,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.2222
-      objectReference: {fileID: 0}
-    - target: {fileID: 7207323908340965836, guid: e68a9ff32a324c94db85e316aca0c72c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.386
+      value: Interactable-Potion-Super-Jumping
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e68a9ff32a324c94db85e316aca0c72c, type: 3}
---- !u!1 &3011472751079413014 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: e5e8a56af9269904c9b1cd6035ac1857, type: 3}
+--- !u!1 &8315481394654257732 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6222999497364764829, guid: e68a9ff32a324c94db85e316aca0c72c,
+  m_CorrespondingSourceObject: {fileID: 6222999497364764829, guid: e5e8a56af9269904c9b1cd6035ac1857,
     type: 3}
-  m_PrefabInstance: {fileID: 9193658356123250059}
+  m_PrefabInstance: {fileID: 2682473394479356633}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4435842319409306392 stripped
+--- !u!4 &7431827592760437834 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4762882641056659091, guid: e68a9ff32a324c94db85e316aca0c72c,
+  m_CorrespondingSourceObject: {fileID: 4762882641056659091, guid: e5e8a56af9269904c9b1cd6035ac1857,
     type: 3}
-  m_PrefabInstance: {fileID: 9193658356123250059}
+  m_PrefabInstance: {fileID: 2682473394479356633}
   m_PrefabAsset: {fileID: 0}

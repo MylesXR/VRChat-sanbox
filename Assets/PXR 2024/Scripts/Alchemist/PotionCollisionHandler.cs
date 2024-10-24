@@ -6,22 +6,19 @@ using VRC.Udon.Common.Interfaces;
 
 public class PotionCollisionHandler : UdonSharpBehaviour
 {
+    #region Variables
 
-    #region
-
-    [SerializeField] GameObject potionBreakVFX;
-    
     private GameObject objectToDestroy;
     private GameObject objectToActivate;
-
     private VRCPlayerApi localPlayer;
-    public DebugMenu debugMenu;
 
+    [SerializeField] GameObject potionBreakVFX;
+    public DebugMenu debugMenu;
+    public InteractableObjectTracker IOT;
+
+    public bool SuperJumpEnabled = false;
     [UdonSynced] public bool isKinematic = true;
     [UdonSynced] public bool shouldDestroy = false;
-
-    public InteractableObjectTracker IOT;
-    public bool SuperJumpEnabled = false;
 
     #endregion
 
@@ -120,7 +117,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
 
 
-    #region Super Jump
+    #region Super Jump Effect
 
     public void ActivateSuperJump()
     {

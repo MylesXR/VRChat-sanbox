@@ -4773,7 +4773,7 @@ GameObject:
   - component: {fileID: 4705383752555763800}
   - component: {fileID: 3019307738132756442}
   m_Layer: 13
-  m_Name: Potion Water Walking (Interactable Object)
+  m_Name: Potion Super Jumping (Interactable Object)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4820,7 +4820,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f141ed67ea61821469b494df890e6b34, type: 2}
+  - {fileID: 2100000, guid: 3d7d0eb22dc33e94990d48480f8cafba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4927,10 +4927,10 @@ MonoBehaviour:
   potionBreakVFX: {fileID: 4285711206224609459, guid: e8222a4dd05f379408e4d1a59b65f73c,
     type: 3}
   debugMenu: {fileID: 0}
-  isKinematic: 1
-  shouldDestroy: 0
   IOT: {fileID: 3019307738132756442}
   SuperJumpEnabled: 0
+  isKinematic: 1
+  shouldDestroy: 0
 --- !u!114 &3335815913990942550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5018,18 +5018,19 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 6391795458062970613}
-  Herb: {fileID: 5146737395458478588, guid: 6bff83b673935764f9d5f6a9edcfbb91, type: 3}
-  Flower: {fileID: 5146737395458478588, guid: 576c1c574f179c140b8a9098a05ccb13, type: 3}
-  Gemstone: {fileID: 5146737395458478588, guid: e9434b317599fad4eaa35eacf0edae94,
+  Herb: {fileID: 4204948755768498998, guid: fadc5a560121ece4eb6e95e567545886, type: 3}
+  Flower: {fileID: 4204948755768498998, guid: 87a17a39e2b922c49b219e1eca1d31b5, type: 3}
+  Gemstone: {fileID: 4204948755768498998, guid: d3e89a477a3f1174aa537ffcd8e4f2b9,
     type: 3}
-  Mushroom: {fileID: 0}
-  Berry: {fileID: 0}
-  Stick: {fileID: 0}
+  Mushroom: {fileID: 4204948755768498998, guid: 488802e69e6ca20458d17fcd81346561,
+    type: 3}
+  Berry: {fileID: 4204948755768498998, guid: 5a0a17783348ff14d8350a407d75fbd4, type: 3}
+  Stick: {fileID: 4204948755768498998, guid: ccda2bb309774fe4caba3591261993e6, type: 3}
   PotionWallBreaker: {fileID: 6222999497364764829, guid: e68a9ff32a324c94db85e316aca0c72c,
     type: 3}
-  PotionSuperJumping: {fileID: 6222999497364764829, guid: e5e8a56af9269904c9b1cd6035ac1857,
+  PotionSuperJumping: {fileID: 6222999497364764829}
+  PotionWaterWalking: {fileID: 6222999497364764829, guid: a075aa1cff4c8b94ca15d48340bc2ac4,
     type: 3}
-  PotionWaterWalking: {fileID: 6222999497364764829}
-  ItemType: PotionWaterWalking
+  ItemType: PotionSuperJumping
   IOM: {fileID: 0}
   objectSync: {fileID: 4705383752555763800}
