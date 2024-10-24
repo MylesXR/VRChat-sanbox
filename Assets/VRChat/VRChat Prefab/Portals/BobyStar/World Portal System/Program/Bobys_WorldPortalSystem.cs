@@ -11,7 +11,7 @@ using System;
 
 public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 {
-    //Start of added variable for Attendee Menu
+    //Start of added code for Attendee Menu
 
     #region Variables
 
@@ -58,22 +58,16 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 
     #endregion
 
-    // End of Added methods for Attendee Menu
+    #region Set Class 
 
-    //These methods have to be outside of the code below for some reason or it will ERROR
     public void AlchemistClass() { ClassType = "Alchemist"; }
     public void BarbarianClass() { ClassType = "Barbarian"; }
-    public void ExplorerClass() { ClassType = "Explorer"; } 
+    public void ExplorerClass() { ClassType = "Explorer"; }
 
+    #endregion  
 
-    public void HidePopupMessage()
-    {
-        PopUpMessageCrafting.SetActive(false);
-        PopUpMessageSpawning.SetActive(false);
-        PopUpMessagePotionAlreadySpawned.SetActive(false);
-    }
+    #region Wall Breaking Potion 
 
-    // Crafting Potions
     public void CraftWallBreakingPotion()
     {
         IOM.CanCraftPotionWallBreaking();
@@ -91,41 +85,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
     }
 
-    public void CraftSuperJumpingPotion()
-    {
-        IOM.CanCraftPotionSuperJumping();
-        if (IOM.CraftPotionSuperJumping)
-        {
-            IOM.PotionSuperJumpingCollected++;
-            IOM.UpdateUI();
-            debugMenu.Log("SUPER JUMPING POTION CRAFTED");
-        }
-        else
-        {
-            PopUpMessageCrafting.SetActive(true);
-            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 6f);
-            debugMenu.Log("Not enough resources to craft the potion");
-        }
-    }
-
-    public void CraftWaterWalkingPotion()
-    {
-        IOM.CanCraftPotionWaterWalking();
-        if (IOM.CraftPotionWaterWalking)
-        {
-            IOM.PotionWaterWalkingCollected++;
-            IOM.UpdateUI();
-            debugMenu.Log("WATER WALKING POTION CRAFTED");
-        }
-        else
-        {
-            PopUpMessageCrafting.SetActive(true);
-            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 6f);
-            debugMenu.Log("Not enough resources to craft the potion");
-        }
-    }
-
-    // Spawning Potions
     public void SpawnWallBreakingPotion()
     {
         if (IOM.PotionWallBreakingCollected >= 1)
@@ -162,6 +121,77 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             debugMenu.Log("NO WALL BREAKER POTIONS IN INVENTORY");
             PopUpMessageSpawning.SetActive(true);
             SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 3f);
+        }
+    }
+
+    public void NetworkSpawnWallBreakingPotion()
+    {
+        VRCObjectPool playerPotionPool = IOM.GetPlayerPotionPool(Networking.LocalPlayer.playerId, "WallBreaker");
+
+        if (playerPotionPool == null)
+        {
+            debugMenu.Log("Player potion pool is not assigned.");
+            return;
+        }
+
+        GameObject spawnedPotion = playerPotionPool.TryToSpawn();
+        if (spawnedPotion != null)
+        {
+            SetPotionTransform(spawnedPotion);
+            AddActivePotion(spawnedPotion);
+            ExecuteWallBreakingPotionSpawnLogic(spawnedPotion);
+        }
+        else
+        {
+            debugMenu.Log("WALL BREAKING POTION SPAWN POOL EMPTY ON NETWORK");
+        }
+    }
+
+    public void ExecuteWallBreakingPotionSpawnLogic(GameObject spawnedPotion)
+    {
+        if (spawnedPotion == null)
+        {
+            debugMenu.Log("Spawned potion is null in ExecuteWallBreakingPotionSpawnLogic.");
+            return;
+        }
+
+        PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
+        Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
+        if (potionHandler != null && potionRigidbody != null)
+        {
+            // Set kinematic state and reset any velocity
+            //potionHandler.SetKinematicState(true);
+            potionRigidbody.isKinematic = true;  // Ensure the potion is kinematic when first spawned
+            potionRigidbody.velocity = Vector3.zero;  // Reset velocity
+            potionRigidbody.angularVelocity = Vector3.zero;  // Reset angular velocity
+
+            //potionHandler.SetKinematicState(false);
+            potionHandler.SetShouldDestroy(false);
+        }
+
+        IOM.PotionWallBreakingCollected--;
+        IOM.UpdateUI();
+        debugMenu.Log("WALL BREAKER POTION SPAWNED");
+    }
+
+    #endregion
+
+    #region Super Jumping Potion
+
+    public void CraftSuperJumpingPotion()
+    {
+        IOM.CanCraftPotionSuperJumping();
+        if (IOM.CraftPotionSuperJumping)
+        {
+            IOM.PotionSuperJumpingCollected++;
+            IOM.UpdateUI();
+            debugMenu.Log("SUPER JUMPING POTION CRAFTED");
+        }
+        else
+        {
+            PopUpMessageCrafting.SetActive(true);
+            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 6f);
+            debugMenu.Log("Not enough resources to craft the potion");
         }
     }
 
@@ -205,6 +235,76 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
     }
 
+    public void NetworkSpawnSuperJumpingPotion()
+    {
+        VRCObjectPool playerPotionPool = IOM.GetPlayerPotionPool(Networking.LocalPlayer.playerId, "SuperJump");
+
+
+        if (playerPotionPool == null)
+        {
+            debugMenu.Log("Player potion pool is not assigned.");
+            return;
+        }
+
+        GameObject spawnedPotion = playerPotionPool.TryToSpawn();
+        if (spawnedPotion != null)
+        {
+            SetPotionTransform(spawnedPotion);
+            AddActivePotion(spawnedPotion);
+            ExecuteSuperJumpingPotionSpawnLogic(spawnedPotion);
+        }
+        else
+        {
+            debugMenu.Log("SUPER JUMPING POTION SPAWN POOL EMPTY ON NETWORK");
+        }
+    }
+
+    public void ExecuteSuperJumpingPotionSpawnLogic(GameObject spawnedPotion)
+    {
+        if (spawnedPotion == null)
+        {
+            debugMenu.Log("Spawned potion is null in ExecuteSuperJumpingPotionSpawnLogic.");
+            return;
+        }
+
+        PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
+        Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
+        if (potionHandler != null && potionRigidbody != null)
+        {
+            potionRigidbody.isKinematic = true;
+            potionRigidbody.velocity = Vector3.zero;
+            potionRigidbody.angularVelocity = Vector3.zero;
+
+            // potionHandler.SetKinematicState(false);
+            potionHandler.SetShouldDestroy(false);
+        }
+
+        IOM.PotionSuperJumpingCollected--;
+        IOM.UpdateUI();
+        debugMenu.Log("SUPER JUMPING POTION SPAWNED");
+    }
+
+    #endregion
+
+    #region Water Walking Potion
+
+    public void CraftWaterWalkingPotion()
+    {
+        IOM.CanCraftPotionWaterWalking();
+        if (IOM.CraftPotionWaterWalking)
+        {
+            IOM.PotionWaterWalkingCollected++;
+            IOM.UpdateUI();
+            debugMenu.Log("WATER WALKING POTION CRAFTED");
+        }
+        else
+        {
+            PopUpMessageCrafting.SetActive(true);
+            SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 6f);
+            debugMenu.Log("Not enough resources to craft the potion");
+        }
+    }
+
     public void SpawnWaterWalkingPotion()
     {
         if (IOM.PotionWaterWalkingCollected >= 1)
@@ -245,54 +345,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
     }
 
-    // Network Spawning
-    public void NetworkSpawnWallBreakingPotion()
-    {
-        VRCObjectPool playerPotionPool = IOM.GetPlayerPotionPool(Networking.LocalPlayer.playerId, "WallBreaker");
-
-        if (playerPotionPool == null)
-        {
-            debugMenu.Log("Player potion pool is not assigned.");
-            return;
-        }
-
-        GameObject spawnedPotion = playerPotionPool.TryToSpawn();
-        if (spawnedPotion != null)
-        {
-            SetPotionTransform(spawnedPotion);
-            AddActivePotion(spawnedPotion);
-            ExecuteWallBreakingPotionSpawnLogic(spawnedPotion);
-        }
-        else
-        {
-            debugMenu.Log("WALL BREAKING POTION SPAWN POOL EMPTY ON NETWORK");
-        }
-    }
-
-    public void NetworkSpawnSuperJumpingPotion()
-    {
-        VRCObjectPool playerPotionPool = IOM.GetPlayerPotionPool(Networking.LocalPlayer.playerId, "SuperJump");
-
-
-        if (playerPotionPool == null)
-        {
-            debugMenu.Log("Player potion pool is not assigned.");
-            return;
-        }
-
-        GameObject spawnedPotion = playerPotionPool.TryToSpawn();
-        if (spawnedPotion != null)
-        {
-            SetPotionTransform(spawnedPotion);
-            AddActivePotion(spawnedPotion);
-            ExecuteSuperJumpingPotionSpawnLogic(spawnedPotion);
-        }
-        else
-        {
-            debugMenu.Log("SUPER JUMPING POTION SPAWN POOL EMPTY ON NETWORK");
-        }
-    }
-
     public void NetworkSpawnWaterWalkingPotion()
     {
         VRCObjectPool playerPotionPool = IOM.GetPlayerPotionPool(Networking.LocalPlayer.playerId, "WaterWalk");
@@ -317,49 +369,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
     }
 
-    // Execute logic separately for each potion type
-    public void ExecuteWallBreakingPotionSpawnLogic(GameObject spawnedPotion)
-    {
-        if (spawnedPotion == null)
-        {
-            debugMenu.Log("Spawned potion is null in ExecuteWallBreakingPotionSpawnLogic.");
-            return;
-        }
-
-        PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
-        if (potionHandler != null)
-        {
-            potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
-            potionHandler.SetKinematicState(false);
-            potionHandler.SetShouldDestroy(false);
-        }
-
-        IOM.PotionWallBreakingCollected--;
-        IOM.UpdateUI();
-        debugMenu.Log("WALL BREAKER POTION SPAWNED");
-    }
-
-    public void ExecuteSuperJumpingPotionSpawnLogic(GameObject spawnedPotion)
-    {
-        if (spawnedPotion == null)
-        {
-            debugMenu.Log("Spawned potion is null in ExecuteSuperJumpingPotionSpawnLogic.");
-            return;
-        }
-
-        PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
-        if (potionHandler != null)
-        {
-            potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
-            potionHandler.SetKinematicState(false);
-            potionHandler.SetShouldDestroy(false);
-        }
-
-        IOM.PotionSuperJumpingCollected--;
-        IOM.UpdateUI();
-        debugMenu.Log("SUPER JUMPING POTION SPAWNED");
-    }
-
     public void ExecuteWaterWalkingPotionSpawnLogic(GameObject spawnedPotion)
     {
         if (spawnedPotion == null)
@@ -369,11 +378,14 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
 
         PotionCollisionHandler potionHandler = spawnedPotion.GetComponent<PotionCollisionHandler>();
-        if (potionHandler != null)
+        Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
+        if (potionHandler != null && potionRigidbody != null)
         {
-            potionHandler.SetObjectToDestroy(IOM.GetObjectToDestroy());
-            potionHandler.SetObjectToActivate(IOM.GetObjectToActivate());
-            potionHandler.SetKinematicState(false);
+            potionRigidbody.isKinematic = true;
+            potionRigidbody.velocity = Vector3.zero;
+            potionRigidbody.angularVelocity = Vector3.zero;
+
+            //potionHandler.SetKinematicState(false);
             potionHandler.SetShouldDestroy(false);
         }
 
@@ -382,39 +394,25 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         debugMenu.Log("WATER WALKING POTION SPAWNED");
     }
 
+    #endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    #region Destroy Potion
 
     public void NetworkDestroyPotion(GameObject potion)
     {
+        if (potion == null) return;
+
+        // Return to the pool or deactivate the potion
         PotionCollisionHandler potionHandler = potion.GetComponent<PotionCollisionHandler>();
         if (potionHandler != null)
         {
             potionHandler.DestroyPotionNetworked();
         }
     }
+
+    #endregion
+
+    #region Set Potion Spawn Transform
 
     private void SetPotionTransform(GameObject potion)
     {
@@ -427,8 +425,25 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         potion.transform.position = syncedPotionPosition;
         potion.transform.rotation = syncedPotionRotation;
         potion.SetActive(true);
-       // debugMenu.Log($"Potion transform set to position: {syncedPotionPosition}, rotation: {syncedPotionRotation}");
+
+        // Force reset kinematic state
+        PotionCollisionHandler potionHandler = potion.GetComponent<PotionCollisionHandler>();
+        if (potionHandler != null)
+        {
+            Rigidbody potionRigidbody = potion.GetComponent<Rigidbody>();
+            if (potionRigidbody != null)
+            {
+                potionRigidbody.isKinematic = true;  // Ensure it's kinematic when respawned
+                potionRigidbody.velocity = Vector3.zero;  // Reset velocity
+                potionRigidbody.angularVelocity = Vector3.zero;  // Reset angular velocity
+            }
+
+        }
     }
+
+    #endregion
+
+    #region Add Potion To Potion Pool
 
     private void AddActivePotion(GameObject potion)
     {
@@ -443,6 +458,16 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         }
     }
 
+    #endregion
+
+    #region UI Update
+
+    public void HidePopupMessage()
+    {
+        PopUpMessageCrafting.SetActive(false);
+        PopUpMessageSpawning.SetActive(false);
+        PopUpMessagePotionAlreadySpawned.SetActive(false);
+    }
 
     public override void OnDeserialization()
     {
@@ -454,41 +479,13 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
                 SetPotionTransform(activePotions[i]);
             }
         }
+
         IOM.UpdateUI();
     }
 
-    public void Interact()
-    {
-        if (Networking.LocalPlayer == null)
-        {
-            debugMenu.Log("Local player is null.");
-            return;
-        }
+    #endregion
 
-        if (Networking.IsOwner(gameObject))
-        {
-            debugMenu.Log($"Player {Networking.LocalPlayer.displayName} is the owner, spawning potion.");
-            SpawnWallBreakingPotion();
-        }
-        else
-        {
-            debugMenu.Log($"Player {Networking.LocalPlayer.displayName} is not the owner, requesting ownership.");
-            Networking.SetOwner(Networking.LocalPlayer, gameObject);
-            SpawnWallBreakingPotion();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-    //The rest of the added code is in the Summon & Hide Portal Menu region/section of the script
-    // End of added methods for Attendee Menu
+    // End of added code for Attendee Menu
 
     #region Core
     public Transform[] Spawns;
@@ -516,7 +513,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     [Space]
     public SphereCollider PlayerSphereTrigger;
     #endregion
-
 
     #region Portal Settings
     [Header("Portals")]

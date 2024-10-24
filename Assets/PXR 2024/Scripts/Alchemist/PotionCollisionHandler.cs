@@ -6,6 +6,9 @@ using VRC.Udon.Common.Interfaces;
 
 public class PotionCollisionHandler : UdonSharpBehaviour
 {
+
+    #region
+
     [SerializeField] GameObject potionBreakVFX;
     
     private GameObject objectToDestroy;
@@ -19,7 +22,8 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     public InteractableObjectTracker IOT;
     public bool SuperJumpEnabled = false;
-  
+
+    #endregion
 
     private void Start()
     {
@@ -116,8 +120,8 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
 
 
+    #region Super Jump
 
-   
     public void ActivateSuperJump()
     {
         SuperJumpEnabled = true;
@@ -131,7 +135,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         localPlayer.SetJumpImpulse(3);
     }
 
-
+    #endregion
 
 
 
@@ -184,13 +188,15 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         {
             debugMenu.Log("Destroying potion.");
         }
-        gameObject.SetActive(false); // Deactivate the object instead of destroying it
+        gameObject.SetActive(false); // Deactivate the object instead of destroying it        
     }
 
     public void DestroyPotionNetworked()
     {
         DestroyPotion();
     }
+
+    #region On Pickup & Drop
 
     public override void OnPickup()
     {
@@ -202,4 +208,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         SetKinematicState(false);
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(UpdateKinematicState));
     }
+
+    #endregion
 }

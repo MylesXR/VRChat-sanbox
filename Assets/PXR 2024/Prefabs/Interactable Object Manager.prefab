@@ -58,29 +58,29 @@ MonoBehaviour:
   FlowersCollected: 10
   GemstonesCollected: 10
   MushroomsCollected: 10
-  StonesCollected: 10
+  BerriesCollected: 10
   SticksCollected: 10
   PotionWallBreakingCollected: 10
   PotionWaterWalkingCollected: 10
   PotionSuperJumpingCollected: 10
-  CraftPotionWallBreaker: 0
   HerbsText: {fileID: 0}
   FlowersText: {fileID: 0}
   GemstonesText: {fileID: 0}
   MushroomsText: {fileID: 0}
-  StonesText: {fileID: 0}
+  BerriesText: {fileID: 0}
   SticksText: {fileID: 0}
   PotionWallBreakingText: {fileID: 0}
   PotionWaterWalkingText: {fileID: 0}
   PotionSuperJumpingText: {fileID: 0}
-  playerPotionPools:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  BreakableObject: {fileID: 0}
-  debugMenu: {fileID: 0}
+  wallBreakerPotionPool: []
+  superJumpPotionPool: []
+  waterWalkingPotionPool: []
+  BreakableObjects: []
+  WaterWalkingObject: {fileID: 0}
+  maxPlayers: 100
+  CraftPotionWallBreaking: 0
+  CraftPotionSuperJumping: 0
+  CraftPotionWaterWalking: 0
 --- !u!114 &1385798074497740459
 MonoBehaviour:
   m_ObjectHideFlags: 0

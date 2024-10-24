@@ -2,13 +2,10 @@
 using UnityEngine;
 using TMPro;
 using VRC.SDKBase;
-using VRC.Udon.Common.Interfaces;
 using VRC.SDK3.Components;
-
 
 public class InteractableObjectManager : UdonSharpBehaviour
 {
-
     #region Variables
 
     #region Inventory Items
@@ -49,10 +46,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
     [SerializeField] private VRCObjectPool[] waterWalkingPotionPool;
 
     [Space(5)][Header("Potion Objects")][Space(10)]  
-    public GameObject[] BreakableObjects;
-    [Space(10)]
-    public GameObject WaterWalkingObject;
-    [Space(10)]
     [SerializeField] private int maxPlayers = 100;
     [Space(10)]
     public bool CraftPotionWallBreaking;
@@ -64,18 +57,24 @@ public class InteractableObjectManager : UdonSharpBehaviour
     #region Debugging
 
     [Space(5)][Header("Debugging")][Space(10)]
-    //[SerializeField] private DebugMenu debugMenu;
+    [SerializeField] private DebugMenu debugMenu;
     private VRCPlayerApi localPlayer;
 
     #endregion
 
     #endregion
 
+    #region Object Pools 
+
     public VRCObjectPool GetWallBreakerPotionPool(int playerIndex) { return wallBreakerPotionPool[playerIndex]; }
 
     public VRCObjectPool GetSuperJumpPotionPool(int playerIndex) { return superJumpPotionPool[playerIndex]; }
 
     public VRCObjectPool GetWaterWalkingPotionPool(int playerIndex) { return waterWalkingPotionPool[playerIndex]; }
+
+    #endregion
+
+    #region On Start & Player Join
 
     private void Start()
     {
@@ -86,43 +85,48 @@ public class InteractableObjectManager : UdonSharpBehaviour
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         base.OnPlayerJoined(player);
-        //debugMenu.Log($"Player joined: {player.displayName}, ID: {player.playerId}");
+        debugMenu.Log($"Player joined: {player.displayName}, ID: {player.playerId}");
         AssignPotionPool(player);
     }
+
+    #endregion
+
+    #region Assign Potion Pools
 
     private void AssignPotionPool(VRCPlayerApi player)
     {
         int playerIndex = player.playerId % maxPlayers;
 
-        if (playerIndex >= wallBreakerPotionPool.Length)
+        if (playerIndex >= wallBreakerPotionPool.Length || playerIndex >= superJumpPotionPool.Length || playerIndex >= waterWalkingPotionPool.Length)
         {
-            //debugMenu.LogError("Player index exceeds potion pool array length.");
+            debugMenu.LogError("Player index exceeds potion pool array length.");
             return;
         }
-
-        // Assign Wall Breaker Potion Pool
+    
         VRCObjectPool wallBreakerPool = GetWallBreakerPotionPool(playerIndex);
         if (wallBreakerPool != null)
         {
             Networking.SetOwner(player, wallBreakerPool.gameObject);
-            //debugMenu.Log($"Assigned Wall Breaker potion pool to player {player.displayName}.");
+            wallBreakerPool.gameObject.SetActive(true);  // Enable assigned pool
+            debugMenu.Log($"Assigned Wall Breaker potion pool to player {player.displayName}.");
         }
 
-        // Assign Super Jump Potion Pool
         VRCObjectPool superJumpPool = GetSuperJumpPotionPool(playerIndex);
         if (superJumpPool != null)
         {
             Networking.SetOwner(player, superJumpPool.gameObject);
-            //debugMenu.Log($"Assigned Super Jump potion pool to player {player.displayName}.");
+            superJumpPool.gameObject.SetActive(true);  // Enable assigned pool
+            debugMenu.Log($"Assigned Super Jump potion pool to player {player.displayName}.");
         }
 
-        // Assign Water Walking Potion Pool
         VRCObjectPool waterWalkingPool = GetWaterWalkingPotionPool(playerIndex);
         if (waterWalkingPool != null)
         {
             Networking.SetOwner(player, waterWalkingPool.gameObject);
-            //debugMenu.Log($"Assigned Water Walking potion pool to player {player.displayName}.");
+            waterWalkingPool.gameObject.SetActive(true);  // Enable assigned pool
+            debugMenu.Log($"Assigned Water Walking potion pool to player {player.displayName}.");
         }
+
     }
 
     public VRCObjectPool GetPlayerPotionPool(int playerId, string potionType)
@@ -131,7 +135,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
         if (playerIndex >= wallBreakerPotionPool.Length)
         {
-            //debugMenu.LogError("Player index exceeds potion pool array length.");
+            debugMenu.LogError("Player index exceeds potion pool array length.");
             return null;
         }
 
@@ -144,18 +148,14 @@ public class InteractableObjectManager : UdonSharpBehaviour
             case "WallBreaker":
                 return wallBreakerPotionPool[playerIndex];
             default:
-                //debugMenu.LogError("Invalid potion type.");
+                debugMenu.LogError("Invalid potion type.");
                 return null;
         }
     }
 
-    private void OnEnable()
-    {
-        if (localPlayer != null && localPlayer.isLocal)
-        {
-            Networking.SetOwner(localPlayer, gameObject);
-        }
-    }
+    #endregion
+
+    #region Update Alchemist UI
 
     public void UpdateUI()
     {
@@ -187,33 +187,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
             PotionSuperJumpingText.text = $"{PotionSuperJumpingCollected}";
     }
 
-    public GameObject GetObjectToDestroy(int index = 0)
-    {
-        if (index >= 0 && index < BreakableObjects.Length && BreakableObjects[index] != null)
-        {
-            //debugMenu.Log($"Returning breakable object at index {index}: {BreakableObjects[index].name}");
-            return BreakableObjects[index];
-        }
-
-        // If the index is out of bounds or the object is null, return the first non-null object
-        foreach (var obj in BreakableObjects)
-        {
-            if (obj != null)
-            {
-                //debugMenu.Log($"Returning first available breakable object: {obj.name}");
-                return obj;
-            }
-        }
-
-        //debugMenu.LogWarning("No valid breakable object found.");
-        return null; // No valid object found
-    }
-
-    public GameObject GetObjectToActivate()
-    {
-        //debugMenu.Log("setting object active perhaps");
-        return WaterWalkingObject;
-    }
+    #endregion
 
     #region Increment Collected Items
 
@@ -335,5 +309,4 @@ public class InteractableObjectManager : UdonSharpBehaviour
     }
 
     #endregion
-
 }
