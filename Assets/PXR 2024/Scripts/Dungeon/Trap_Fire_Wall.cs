@@ -1,8 +1,6 @@
 ﻿
 using UdonSharp;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 
 public class Trap_Fire_Wall : UdonSharpBehaviour
 {
@@ -12,7 +10,6 @@ public class Trap_Fire_Wall : UdonSharpBehaviour
 
     private void Start()
     {
-        // Start the toggling process
         ToggleObjects();
     }
 

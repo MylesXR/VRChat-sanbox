@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3330559771550602255}
+  - component: {fileID: 218928786943334872}
   m_Layer: 11
   m_Name: Axe_02
   m_TagString: Untagged
@@ -31,6 +32,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &218928786943334872
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3330559771550602256}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.107730865, y: 0.51674, z: 0.00021152198}
+  m_Size: 1.03348
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.1483412
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 4177391941664435802}
+  m_Enabled: 1
 --- !u!1001 &3330559771188032222
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -138,6 +158,12 @@ PrefabInstance:
 --- !u!4 &3004533214638445877 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c3556856cdaacde4ba704d8ecb753ea1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3330559771188032222}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4177391941664435802 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: c3556856cdaacde4ba704d8ecb753ea1,
     type: 3}
   m_PrefabInstance: {fileID: 3330559771188032222}
   m_PrefabAsset: {fileID: 0}

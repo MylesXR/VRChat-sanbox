@@ -17,18 +17,20 @@ public class Player_Trigger_Zone_Manager : UdonSharpBehaviour
     [UdonSynced] private bool puzzleComplete = false; // Sync puzzle state across all players
     private int localPlayersInTrigger = 0; // Local count of players currently in the trigger zones
 
+    /*
     void Start()
     {
         Debug.LogWarning("Total trigger zones in scene: " + triggerZones.Length);
         Debug.LogWarning("Required players to complete puzzle: " + requiredPlayers);
         Debug.LogWarning("Required triggers to complete puzzle: " + requiredTriggers);
     }
+    */
 
     // Call this when a player activates a trigger
     public void OnPlateActivated()
     {
         localPlayersInTrigger++;
-        Debug.LogWarning("Local player entered trigger zone. Local players in trigger: " + localPlayersInTrigger);
+        //Debug.LogWarning("Local player entered trigger zone. Local players in trigger: " + localPlayersInTrigger);
 
         // If enough players are in triggers, sync this event across all players
         if (AllPlatesActivated())
@@ -44,14 +46,14 @@ public class Player_Trigger_Zone_Manager : UdonSharpBehaviour
     public void OnPlateDeactivated()
     {
         localPlayersInTrigger--;
-        Debug.LogWarning("Local player left trigger zone. Local players in trigger: " + localPlayersInTrigger);
+        //Debug.LogWarning("Local player left trigger zone. Local players in trigger: " + localPlayersInTrigger);
 
         // If puzzle was complete but a player leaves, reset the puzzle
         if (puzzleComplete)
         {
             puzzleComplete = false;
             RequestSerialization(); // Sync the reset state across the network
-            Debug.LogWarning("Puzzle reset because a player left a trigger zone.");
+            //Debug.LogWarning("Puzzle reset because a player left a trigger zone.");
         }
     }
 
@@ -69,7 +71,7 @@ public class Player_Trigger_Zone_Manager : UdonSharpBehaviour
             }
         }
 
-        Debug.LogWarning("Triggers activated: " + activatedTriggers);
+        //Debug.LogWarning("Triggers activated: " + activatedTriggers);
 
         // Ensure the required number of triggers and players are present
         return activatedTriggers >= requiredTriggers && localPlayersInTrigger >= requiredPlayers;
@@ -84,7 +86,7 @@ public class Player_Trigger_Zone_Manager : UdonSharpBehaviour
             syncedPlayersInTrigger = localPlayersInTrigger; // Sync the number of players in trigger zones
             RequestSerialization(); // Sync the state across players
             PlayAnimation(); // Trigger the animation
-            Debug.LogWarning("Puzzle completed and synced.");
+            //Debug.LogWarning("Puzzle completed and synced.");
         }
     }
 
@@ -94,7 +96,7 @@ public class Player_Trigger_Zone_Manager : UdonSharpBehaviour
         if (MrSoupsGoldenLadleAnimator != null)
         {
             MrSoupsGoldenLadleAnimator.SetTrigger("PlayAnimation"); // Play the animation
-            Debug.LogWarning("Playing Mr-Soups-Golden-Ladle animation.");
+            //Debug.LogWarning("Playing Mr-Soups-Golden-Ladle animation.");
         }
     }
 
@@ -104,7 +106,7 @@ public class Player_Trigger_Zone_Manager : UdonSharpBehaviour
         if (puzzleComplete)
         {
             PlayAnimation();
-            Debug.LogWarning("Deserialization triggered: Playing animation for late joiners.");
+            //Debug.LogWarning("Deserialization triggered: Playing animation for late joiners.");
         }
     }
 }

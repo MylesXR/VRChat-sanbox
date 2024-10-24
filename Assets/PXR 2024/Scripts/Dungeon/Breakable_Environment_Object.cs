@@ -4,6 +4,7 @@ using VRC.Udon.Common.Interfaces;
 
 public class Breakable_Environment_Object : UdonSharpBehaviour
 {
+
     #region Variables 
 
     public Rigidbody[] rbs;
@@ -13,42 +14,6 @@ public class Breakable_Environment_Object : UdonSharpBehaviour
     public float deactivationTime = 5.0f; 
     public float animationDuration = 2.0f; 
     [UdonSynced] public bool isBroken = false;
-
-    #endregion
-
-    #region On Start
-
-    void Start()
-    {
-        ResetObject();
-    }
-
-    public void ResetObject()
-    {
-        // Reset the animator to idle and disable physics
-        isBroken = false;
-        animator.enabled = false;
-        animator.SetTrigger("Idle");
-
-        foreach (Rigidbody rb in rbs)
-        {
-            rb.isKinematic = true; // Reset to kinematic (no physics interactions)
-            rb.useGravity = false; // Disable gravity initially
-        }
-
-        // Re-enable colliders
-        foreach (Collider col in objectColliders)
-        {
-            col.enabled = true;
-            col.gameObject.SetActive(true);
-        }
-
-        // Ensure the animation collider is enabled
-        if (animationCollider != null)
-        {
-            animationCollider.enabled = true;
-        }
-    }
 
     #endregion
 
@@ -90,7 +55,7 @@ public class Breakable_Environment_Object : UdonSharpBehaviour
 
     #endregion
 
-    #region Deactivate Obejsct After Breaking
+    #region Deactivate Obejects After Breaking
 
     public void DeactivateObjects()
     {
@@ -103,5 +68,4 @@ public class Breakable_Environment_Object : UdonSharpBehaviour
     }
 
     #endregion
-
 }

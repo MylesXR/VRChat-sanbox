@@ -1,7 +1,6 @@
 ﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon;
 
 public class Fire_Trap_Manager : UdonSharpBehaviour
 {
@@ -46,7 +45,7 @@ public class Fire_Trap_Manager : UdonSharpBehaviour
         // Prevent button interaction if flashing is already in progress
         if (buttonLocked)
         {
-            Debug.LogWarning("[Fire_Trap_Manager] Button press ignored: traps are flashing.");
+            //Debug.LogWarning("[Fire_Trap_Manager] Button press ignored: traps are flashing.");
             return;
         }
 
@@ -57,7 +56,7 @@ public class Fire_Trap_Manager : UdonSharpBehaviour
 
         // Lock the button to prevent further presses during flashing
         buttonLocked = true;
-        Debug.LogWarning("[Fire_Trap_Manager] Button locked: flashing sequence started.");
+        //Debug.LogWarning("[Fire_Trap_Manager] Button locked: flashing sequence started.");
 
         // Toggle flashing state
         isFlashing = !isFlashing;
@@ -78,14 +77,14 @@ public class Fire_Trap_Manager : UdonSharpBehaviour
         {
             ResetBottomTraps(); // Reset bottom traps to fully on
             buttonLocked = false; // Unlock the button once reset
-            Debug.LogWarning("[Fire_Trap_Manager] Traps reset: button unlocked.");
+            //Debug.LogWarning("[Fire_Trap_Manager] Traps reset: button unlocked.");
         }
     }
 
     // Flash all bottom traps for the duration and interval
     public void FlashBottomTraps()
     {
-        Debug.LogWarning("[Fire_Trap_Manager] Flashing sequence started.");
+        //Debug.LogWarning("[Fire_Trap_Manager] Flashing sequence started.");
 
         for (int i = 0; i < BottomFireTraps.Length; i++)
         {
@@ -105,7 +104,7 @@ public class Fire_Trap_Manager : UdonSharpBehaviour
         if (BottomFireTraps[trapIndex] != null && isFlashing)
         {
             BottomFireTraps[trapIndex].SetActive(true); // Turn trap on
-            Debug.LogWarning("[Fire_Trap_Manager] Trap " + trapIndex + " turned on.");
+            //Debug.LogWarning("[Fire_Trap_Manager] Trap " + trapIndex + " turned on.");
             SendCustomEventDelayedSeconds("TurnOffTrap_" + trapIndex, flashDuration); // Turn off after flashDuration
         }
     }
@@ -125,7 +124,7 @@ public class Fire_Trap_Manager : UdonSharpBehaviour
         if (BottomFireTraps[trapIndex] != null && isFlashing)
         {
             BottomFireTraps[trapIndex].SetActive(false); // Turn trap off
-            Debug.LogWarning("[Fire_Trap_Manager] Trap " + trapIndex + " turned off.");
+            //Debug.LogWarning("[Fire_Trap_Manager] Trap " + trapIndex + " turned off.");
             SendCustomEventDelayedSeconds("TurnOnTrap_" + trapIndex, flashInterval); // Turn it back on after flashInterval
         }
     }
@@ -145,7 +144,7 @@ public class Fire_Trap_Manager : UdonSharpBehaviour
         if (BottomFireTraps[trapIndex] != null && isFlashing)
         {
             BottomFireTraps[trapIndex].SetActive(true); // Turn trap back on
-            Debug.LogWarning("[Fire_Trap_Manager] Trap " + trapIndex + " turned on.");
+            //Debug.LogWarning("[Fire_Trap_Manager] Trap " + trapIndex + " turned on.");
             SendCustomEventDelayedSeconds("TurnOffTrap_" + trapIndex, flashDuration); // Turn it off after the duration
         }
     }
@@ -158,7 +157,7 @@ public class Fire_Trap_Manager : UdonSharpBehaviour
 
         // Unlock the button, allowing the player to press it again
         buttonLocked = false;
-        Debug.LogWarning("[Fire_Trap_Manager] Flashing finished: button unlocked.");
+        //Debug.LogWarning("[Fire_Trap_Manager] Flashing finished: button unlocked.");
     }
 
     // Resets bottom traps to their default state (all on)
@@ -169,7 +168,7 @@ public class Fire_Trap_Manager : UdonSharpBehaviour
             if (BottomFireTraps[i] != null)
             {
                 BottomFireTraps[i].SetActive(true); // Reset bottom traps to fully on
-                Debug.LogWarning("[Fire_Trap_Manager] Trap " + i + " reset to fully on.");
+                //Debug.LogWarning("[Fire_Trap_Manager] Trap " + i + " reset to fully on.");
             }
         }
     }

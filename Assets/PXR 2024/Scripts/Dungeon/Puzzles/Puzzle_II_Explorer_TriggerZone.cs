@@ -20,11 +20,11 @@ public class Puzzle_II_Explorer_TriggerZone : UdonSharpBehaviour
         if (vfxObject != null)
         {
             vfxObject.SetActive(false); // Start inactive
-            Debug.LogWarning("VFX disabled at start.");
+            //Debug.LogWarning("VFX disabled at start.");
         }
         else
         {
-            Debug.LogWarning("VFX object is not assigned.");
+            //Debug.LogWarning("VFX object is not assigned.");
         }
     }
 
