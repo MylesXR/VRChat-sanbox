@@ -146,14 +146,10 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffectNetworked));
         SetShouldDestroy(true);
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
+        RequestSerialization();
     }
 
-    public void SetKinematicState(bool state)
-    {
-        isKinematic = state;
-        RequestSerialization();
-        UpdateKinematicState();
-    }
+
 
     public void SetShouldDestroy(bool state)
     {
@@ -191,6 +187,27 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public void DestroyPotionNetworked()
     {
         DestroyPotion();
+        gameObject.SetActive(false);  // Ensure the potion is deactivated for all players
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void SetKinematicState(bool state)
+    {
+        isKinematic = state;
+        RequestSerialization();
+        UpdateKinematicState();
     }
 
     #region On Pickup & Drop

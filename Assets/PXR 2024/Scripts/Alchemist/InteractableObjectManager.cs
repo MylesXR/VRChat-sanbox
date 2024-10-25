@@ -146,11 +146,36 @@ public class InteractableObjectManager : UdonSharpBehaviour
         if (localPlayer == Networking.LocalPlayer)
         {
             debugMenu.Log($"Player joined: {player.displayName}, ID: {player.playerId}");
+            //ClearAllThrownPotions();
             AssignPotionPool(player);
-            return;
-
-        }     
+        }
     }
+
+    private void ClearAllThrownPotions()
+    {
+        for (int i = 0; i < potionPoolPlayerIds.Length; i++)
+        {
+            VRCObjectPool wallBreakerPool = GetWallBreakerPotionPool(i);
+            if (wallBreakerPool != null)
+            {
+                DeactivateAllPoolObjects(wallBreakerPool);
+            }
+
+            VRCObjectPool superJumpPool = GetSuperJumpPotionPool(i);
+            if (superJumpPool != null)
+            {
+                DeactivateAllPoolObjects(superJumpPool);
+            }
+
+            VRCObjectPool waterWalkingPool = GetWaterWalkingPotionPool(i);
+            if (waterWalkingPool != null)
+            {
+                DeactivateAllPoolObjects(waterWalkingPool);
+            }
+        }
+    }
+
+
 
     #endregion
 
@@ -162,50 +187,63 @@ public class InteractableObjectManager : UdonSharpBehaviour
         {
             debugMenu.Log($"Player left: {player.displayName}, ID: {player.playerId}");
 
-            // Free up the leaving player's pools
+            // Find the player’s index in the pool array and reset it
             for (int i = 0; i < potionPoolPlayerIds.Length; i++)
             {
-                if (potionPoolPlayerIds[i] == player.playerId)
+                if (potionPoolPlayerIds[i] == player.playerId) // This is the player’s index
                 {
-                    potionPoolPlayerIds[i] = -1; // Reset slot
-                    DeactivateAndResetPools(i);
-                    debugMenu.Log($"Freed up potion pool slot {i} for {player.displayName}.");
+                    potionPoolPlayerIds[i] = -1; // Free the slot for reuse
+                    ResetAndDeactivatePools(i);  // Deactivate the pool for this index
+                    debugMenu.Log($"Potion pool slot {i} is now cleared for reuse for {player.displayName}.");
                     break;
                 }
             }
         }
     }
 
-    // Deactivate pools and transfer ownership back to the local player
-    private void DeactivateAndResetPools(int index)
+    private void ResetAndDeactivatePools(int index)
     {
-        // Transfer and deactivate Wall Breaker pool
+        VRCPlayerApi localPlayer = Networking.LocalPlayer;
+
+        // Reset and deactivate the Wall Breaker potion pool
         VRCObjectPool wallBreakerPool = GetWallBreakerPotionPool(index);
-        if (wallBreakerPool != null && wallBreakerPool.gameObject.activeSelf)
+        if (wallBreakerPool != null)
         {
-            Networking.SetOwner(localPlayer, wallBreakerPool.gameObject);
+            DeactivateAllPoolObjects(wallBreakerPool);
             wallBreakerPool.gameObject.SetActive(false);
-            debugMenu.Log($"Wall Breaker pool at index {index} deactivated and ownership reset.");
+            debugMenu.Log($"Wall Breaker pool at index {index} reset and fully deactivated.");
         }
 
-        // Transfer and deactivate Super Jump pool
+        // Do the same for Super Jump and Water Walking pools
         VRCObjectPool superJumpPool = GetSuperJumpPotionPool(index);
-        if (superJumpPool != null && superJumpPool.gameObject.activeSelf)
+        if (superJumpPool != null)
         {
-            Networking.SetOwner(localPlayer, superJumpPool.gameObject);
+            DeactivateAllPoolObjects(superJumpPool);
             superJumpPool.gameObject.SetActive(false);
-            debugMenu.Log($"Super Jump pool at index {index} deactivated and ownership reset.");
+            debugMenu.Log($"Super Jump pool at index {index} reset and fully deactivated.");
         }
 
-        // Transfer and deactivate Water Walking pool
         VRCObjectPool waterWalkingPool = GetWaterWalkingPotionPool(index);
-        if (waterWalkingPool != null && waterWalkingPool.gameObject.activeSelf)
+        if (waterWalkingPool != null)
         {
-            Networking.SetOwner(localPlayer, waterWalkingPool.gameObject);
+            DeactivateAllPoolObjects(waterWalkingPool);
             waterWalkingPool.gameObject.SetActive(false);
-            debugMenu.Log($"Water Walking pool at index {index} deactivated and ownership reset.");
+            debugMenu.Log($"Water Walking pool at index {index} reset and fully deactivated.");
         }
     }
+
+    private void DeactivateAllPoolObjects(VRCObjectPool pool)
+    {
+        foreach (GameObject obj in pool.Pool)
+        {
+            if (obj != null && obj.activeSelf)
+            {
+                obj.SetActive(false);  // Deactivate each object in the pool to reset visibility
+            }
+        }
+    }
+
+
 
 
 
@@ -214,36 +252,20 @@ public class InteractableObjectManager : UdonSharpBehaviour
     #region Assign Potion Pool
 
     private void AssignPotionPool(VRCPlayerApi player)
-{
-    int maxRetries = wallBreakerPotionPool.Length; // To prevent an infinite loop
-
-    // Keep trying the next index if the pool is already active
-    for (int i = 0; i < maxRetries; i++)
     {
-        // Calculate the next playerIndex based on playerId and number of pools
-        playerIndex = (player.playerId + i) % wallBreakerPotionPool.Length;
-
-        debugMenu.Log($"Trying to assign potion pools for player {player.displayName} with playerIndex {playerIndex}");
-
-        // Check if the player's index exceeds the number of available pools
-        if (playerIndex >= wallBreakerPotionPool.Length || playerIndex >= superJumpPotionPool.Length || playerIndex >= waterWalkingPotionPool.Length)
+        for (int i = 0; i < potionPoolPlayerIds.Length; i++)
         {
-            debugMenu.LogError($"Not enough potion pools for player {player.displayName}.");
-            return;  // No pools available, stop here
+            if (potionPoolPlayerIds[i] == -1) // Check for the first available slot
+            {
+                potionPoolPlayerIds[i] = player.playerId; // Assign the player to this slot
+                AssignPlayerPools(player, i); // Activate their pools based on index
+                debugMenu.Log($"Assigned pool slot {i} to player {player.displayName} with ID {player.playerId}.");
+                return;
+            }
         }
-
-        // Check if the pool is already in use by another player
-        VRCObjectPool wallBreakerPool = GetWallBreakerPotionPool(playerIndex);
-        if (wallBreakerPool != null && !wallBreakerPool.gameObject.activeSelf)
-        {
-            // Assign the pools to the player
-            AssignPlayerPools(player, playerIndex);
-            return;  // Exit the loop once a valid pool is found
-        }
+        debugMenu.LogError($"All potion pools are currently in use. Could not assign a pool to player {player.displayName}.");
     }
 
-    debugMenu.LogError($"All potion pools are currently in use. Could not assign a pool to player {player.displayName}.");
-}
 
     private void AssignPlayerPools(VRCPlayerApi player, int index)
     {
@@ -285,37 +307,30 @@ public class InteractableObjectManager : UdonSharpBehaviour
         }
     }
 
-
-
-
-
-
-
-
-
     #endregion
 
     #region Get Potion Pool ID
 
     public VRCObjectPool GetPlayerPotionPool(int playerId, string potionType)
     {
-        playerIndex = playerId;
-
-        if (playerIndex >= wallBreakerPotionPool.Length)
+        // Find the player's assigned pool index in potionPoolPlayerIds
+        int playerIndex = -1;
+        for (int i = 0; i < potionPoolPlayerIds.Length; i++)
         {
-            debugMenu.LogError("Player index exceeds potion pool array length.");
+            if (potionPoolPlayerIds[i] == playerId)
+            {
+                playerIndex = i;
+                break;
+            }
+        }
+
+        if (playerIndex == -1)
+        {
+            debugMenu.LogError("Player's potion pool not found. Verify assignment process.");
             return null;
         }
 
-        // Retrieve the VRCPlayerApi instance for the player
-        VRCPlayerApi player = VRCPlayerApi.GetPlayerById(playerId);
-        if (player == null)
-        {
-            debugMenu.LogError("Player not found. Cannot assign potion pool.");
-            return null;
-        }
-
-        // Ownership verification
+        // Retrieve the correct pool based on the potion type
         VRCObjectPool pool = null;
         switch (potionType)
         {
@@ -328,23 +343,14 @@ public class InteractableObjectManager : UdonSharpBehaviour
             case "WallBreaker":
                 pool = wallBreakerPotionPool[playerIndex];
                 break;
+            default:
+                debugMenu.LogError("Invalid potion type.");
+                return null;
         }
 
-        // Check if the player is the owner of the pool, and if not, transfer ownership
-        if (pool != null && Networking.IsOwner(player, pool.gameObject))
-        {
-            return pool;
-        }
-        else if (pool != null)
-        {
-            Networking.SetOwner(player, pool.gameObject);
-            debugMenu.Log($"Ownership of {potionType} pool reassigned to player ID {playerId}.");
-            return pool;
-        }
-
-        debugMenu.LogError($"{potionType} pool not found or ownership could not be verified.");
-        return null;
+        return pool;
     }
+
 
 
 
