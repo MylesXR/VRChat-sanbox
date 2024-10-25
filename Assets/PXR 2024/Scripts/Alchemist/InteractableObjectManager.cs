@@ -127,6 +127,20 @@ public class InteractableObjectManager : UdonSharpBehaviour
         }
     }
 
+    public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
+    {
+        UpdateOwner();
+    }
+
+    private void UpdateOwner()
+    {
+        isOwner = Networking.IsOwner(gameObject);
+    }
+
+    #endregion
+
+    #region On Player Join
+
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         if (localPlayer == Networking.LocalPlayer)
@@ -138,16 +152,9 @@ public class InteractableObjectManager : UdonSharpBehaviour
         }     
     }
 
+    #endregion
 
-    public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
-    {
-        UpdateOwner();
-    }
-
-    private void UpdateOwner()
-    {
-        isOwner = Networking.IsOwner(gameObject);
-    }
+    #region On Player Left
 
     public override void OnPlayerLeft(VRCPlayerApi player)
     {
@@ -228,8 +235,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
         debugMenu.Log($"Potion pools deactivated and reset for player {player.displayName}.");
     }
-
-
 
     #endregion
 
