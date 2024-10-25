@@ -153,12 +153,17 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     #region Assign Potion Pool
 
-    private void AssignPotionPool(VRCPlayerApi player)
-    {
-        // Calculate playerIndex based on playerId and number of pools
-        playerIndex = player.playerId % wallBreakerPotionPool.Length;
+  private void AssignPotionPool(VRCPlayerApi player)
+{
+    int maxRetries = wallBreakerPotionPool.Length; // To prevent an infinite loop
 
-        debugMenu.Log($"Assigning potion pools for player {player.displayName} with playerIndex {playerIndex}");
+    // Keep trying the next index if the pool is already active
+    for (int i = 0; i < maxRetries; i++)
+    {
+        // Calculate the next playerIndex based on playerId and number of pools
+        playerIndex = (player.playerId + i) % wallBreakerPotionPool.Length;
+
+        debugMenu.Log($"Trying to assign potion pools for player {player.displayName} with playerIndex {playerIndex}");
 
         // Check if the player's index exceeds the number of available pools
         if (playerIndex >= wallBreakerPotionPool.Length || playerIndex >= superJumpPotionPool.Length || playerIndex >= waterWalkingPotionPool.Length)
@@ -167,42 +172,46 @@ public class InteractableObjectManager : UdonSharpBehaviour
             return;  // No pools available, stop here
         }
 
-        // Assign Wall Breaker potion pool
+        // Check if the pool is already in use by another player
         VRCObjectPool wallBreakerPool = GetWallBreakerPotionPool(playerIndex);
         if (wallBreakerPool != null && !wallBreakerPool.gameObject.activeSelf)
         {
-            wallBreakerPool.gameObject.SetActive(true);
-            debugMenu.Log($"Activated Wall Breaker potion pool for player {player.displayName}.");
-        }
-        else
-        {
-            debugMenu.LogWarning($"Wall Breaker potion pool already active or null for player {player.displayName}.");
-        }
-
-        // Assign Super Jump potion pool
-        VRCObjectPool superJumpPool = GetSuperJumpPotionPool(playerIndex);
-        if (superJumpPool != null && !superJumpPool.gameObject.activeSelf)
-        {
-            superJumpPool.gameObject.SetActive(true);
-            debugMenu.Log($"Activated Super Jump potion pool for player {player.displayName}.");
-        }
-        else
-        {
-            debugMenu.LogWarning($"Super Jump potion pool already active or null for player {player.displayName}.");
-        }
-
-        // Assign Water Walking potion pool
-        VRCObjectPool waterWalkingPool = GetWaterWalkingPotionPool(playerIndex);
-        if (waterWalkingPool != null && !waterWalkingPool.gameObject.activeSelf)
-        {
-            waterWalkingPool.gameObject.SetActive(true);
-            debugMenu.Log($"Activated Water Walking potion pool for player {player.displayName}.");
-        }
-        else
-        {
-            debugMenu.LogWarning($"Water Walking potion pool already active or null for player {player.displayName}.");
+            // Assign the pools to the player
+            AssignPlayerPools(player, playerIndex);
+            return;  // Exit the loop once a valid pool is found
         }
     }
+
+    debugMenu.LogError($"All potion pools are currently in use. Could not assign a pool to player {player.displayName}.");
+}
+
+private void AssignPlayerPools(VRCPlayerApi player, int index)
+{
+    // Assign Wall Breaker potion pool
+    VRCObjectPool wallBreakerPool = GetWallBreakerPotionPool(index);
+    if (wallBreakerPool != null && !wallBreakerPool.gameObject.activeSelf)
+    {
+        wallBreakerPool.gameObject.SetActive(true);
+        debugMenu.Log($"Activated Wall Breaker potion pool for player {player.displayName}.");
+    }
+
+    // Assign Super Jump potion pool
+    VRCObjectPool superJumpPool = GetSuperJumpPotionPool(index);
+    if (superJumpPool != null && !superJumpPool.gameObject.activeSelf)
+    {
+        superJumpPool.gameObject.SetActive(true);
+        debugMenu.Log($"Activated Super Jump potion pool for player {player.displayName}.");
+    }
+
+    // Assign Water Walking potion pool
+    VRCObjectPool waterWalkingPool = GetWaterWalkingPotionPool(index);
+    if (waterWalkingPool != null && !waterWalkingPool.gameObject.activeSelf)
+    {
+        waterWalkingPool.gameObject.SetActive(true);
+        debugMenu.Log($"Activated Water Walking potion pool for player {player.displayName}.");
+    }
+}
+
 
 
 
