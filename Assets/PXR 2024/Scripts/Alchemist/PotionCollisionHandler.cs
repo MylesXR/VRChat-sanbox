@@ -19,13 +19,21 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public bool SuperJumpEnabled = false;
     [UdonSynced] public bool isKinematic = true;
     [UdonSynced] public bool shouldDestroy = false;
+    [UdonSynced] public bool isDestroyed = false; // Tracks if the potion is destroyed
+
 
     #endregion
+
+    #region On Start
 
     private void Start()
     {
         localPlayer = Networking.LocalPlayer;
     }
+
+    #endregion
+
+    #region Set Object to Destroy & Activate
 
     public void SetObjectToDestroy(GameObject target)
     {
@@ -45,13 +53,15 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         }
     }
 
-    public override void OnDeserialization()
+    #endregion
+
+    #region Set Kinematic State
+
+    public void SetKinematicState(bool state)
     {
+        isKinematic = state;
+        RequestSerialization();
         UpdateKinematicState();
-        if (shouldDestroy)
-        {
-            DestroyPotion();
-        }
     }
 
     private void UpdateKinematicState()
@@ -68,6 +78,10 @@ public class PotionCollisionHandler : UdonSharpBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region On Collision Enter
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -110,12 +124,11 @@ public class PotionCollisionHandler : UdonSharpBehaviour
             }
 
             TriggerVFXandDestroy();
+            TriggerVFXandReturnToPool();
         }
     }
 
-
-
-
+    #endregion
 
     #region Super Jump Effect
 
@@ -134,32 +147,51 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     #endregion
 
-
-
-
-
-
-
-    public void TriggerVFXandDestroy ()
+    public void SyncPotionState()
     {
-        TriggerPotionBreakEffect();
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffectNetworked));
-        SetShouldDestroy(true);
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
-        RequestSerialization();
+        if (isDestroyed)
+        {
+            DestroyPotionNetworked();
+        }
+        else
+        {
+            UpdateKinematicState();
+        }
     }
 
 
+
+
+    #region Destroy Potions and Play VFX 
 
     public void SetShouldDestroy(bool state)
     {
         shouldDestroy = state;
         RequestSerialization();
+
         if (state)
         {
-            DestroyPotion();
+            DestroyPotion();  // Destroy locally
+            SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
+            ReturnPotionToPool();  // Ensure the object is returned to the pool after destroying
         }
     }
+
+
+
+
+
+    public void TriggerVFXandDestroy()
+    {
+        TriggerPotionBreakEffect();
+        isDestroyed = true; // Set destruction flag for sync
+        SetShouldDestroy(true); // Local destruction
+        RequestSerialization(); // Ensure network synchronization
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffectNetworked));
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
+    }
+
+
 
     private void TriggerPotionBreakEffect()
     {
@@ -193,22 +225,31 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
 
 
-
-
-
-
-
-
-
-
-
-
-    public void SetKinematicState(bool state)
+    public void TriggerVFXandReturnToPool()
     {
-        isKinematic = state;
+        TriggerPotionBreakEffect();
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffectNetworked));
+
+        // Set shouldDestroy and deactivate network-wide, ensuring consistency
+        SetShouldDestroy(true);
+        ReturnPotionToPool();  // Move potion to pool after setting destroy state
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(ReturnPotionToPoolNetworked));
         RequestSerialization();
-        UpdateKinematicState();
     }
+
+    // Return potion to the pool and deactivate locally
+    private void ReturnPotionToPool()
+    {
+        gameObject.SetActive(false);  // Ensure local deactivation
+    }
+
+    // Ensure all clients return the potion to the pool
+    public void ReturnPotionToPoolNetworked()
+    {
+        ReturnPotionToPool();
+    }
+
+    #endregion
 
     #region On Pickup & Drop
 
@@ -221,6 +262,22 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     {
         SetKinematicState(false);
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(UpdateKinematicState));
+    }
+
+    #endregion
+
+    #region Networking
+
+    public override void OnDeserialization()
+    {
+        if (isDestroyed)
+        {
+            DestroyPotion();  // Immediately deactivate if potion is marked destroyed
+        }
+        else
+        {
+            UpdateKinematicState();
+        }
     }
 
     #endregion
