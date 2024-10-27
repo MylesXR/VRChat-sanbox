@@ -35,27 +35,20 @@
                 float3 worldPos;
             };
 
-            // Main shader function
             void surf(Input IN, inout SurfaceOutputStandard o)
             {
-                // Calculate distance from camera to the object
                 float distance = length(UnityWorldSpaceViewDir(IN.worldPos));
 
-                // Adjust alpha cutoff based on distance (no drastic change)
                 float distanceFactor = saturate(distance / _MaxDistance);
                 float adjustedCutoff = _Cutoff * (1.0 - (distanceFactor * 0.5));
 
-                // Sample the main texture
                 fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
                 o.Albedo = c.rgb;
 
-                // Sample the normal map
                 o.Normal = UnpackNormal(tex2D(_NormalMap, IN.uv_NormalMap));
 
-                // Apply smoothness
                 o.Smoothness = _Smoothness;
 
-                // Apply the adjusted alpha cutoff for transparency
                 clip(c.a - adjustedCutoff);
                 o.Alpha = c.a;
             }

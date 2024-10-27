@@ -94,8 +94,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         {
             if (collision.gameObject == objectToDestroy)
             {
-
-                if(IOT.ItemType == "PotionWallBreaking")
+                if (IOT.ItemType == "PotionWallBreaking")
                 {
                     Destroy(objectToDestroy);
                     if (debugMenu != null)
@@ -105,28 +104,13 @@ public class PotionCollisionHandler : UdonSharpBehaviour
                 }
             }
 
-            if (IOT.ItemType == "PotionSuperJumping")
-            {
-
-                ActivateSuperJump();
-            }
-
-            if (IOT.ItemType == "PotionWaterWalking")
-            {
-                if (objectToActivate != null)
-                {
-                    objectToActivate.SetActive(true);  // Activate the object
-                    if (debugMenu != null)
-                    {
-                        debugMenu.Log("Water Walking Potion has activated the object: " + objectToActivate.name);
-                    }
-                }
-            }
-
+            // Set destruction flags and request serialization for sync
+            isDestroyed = true;
             TriggerVFXandDestroy();
-            TriggerVFXandReturnToPool();
+            RequestSerialization(); // Ensure all clients receive the updated state
         }
     }
+
 
     #endregion
 
@@ -173,7 +157,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         {
             DestroyPotion();  // Destroy locally
             SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
-            ReturnPotionToPool();  // Ensure the object is returned to the pool after destroying
         }
     }
 
@@ -220,33 +203,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     {
         DestroyPotion();
         gameObject.SetActive(false);  // Ensure the potion is deactivated for all players
-    }
-
-
-
-
-    public void TriggerVFXandReturnToPool()
-    {
-        TriggerPotionBreakEffect();
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffectNetworked));
-
-        // Set shouldDestroy and deactivate network-wide, ensuring consistency
-        SetShouldDestroy(true);
-        ReturnPotionToPool();  // Move potion to pool after setting destroy state
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(ReturnPotionToPoolNetworked));
-        RequestSerialization();
-    }
-
-    // Return potion to the pool and deactivate locally
-    private void ReturnPotionToPool()
-    {
-        gameObject.SetActive(false);  // Ensure local deactivation
-    }
-
-    // Ensure all clients return the potion to the pool
-    public void ReturnPotionToPoolNetworked()
-    {
-        ReturnPotionToPool();
     }
 
     #endregion
