@@ -1,102 +1,10 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!382020655 &-8378903510243975673
-PluginBuildInfo:
-  m_RuntimePlugins:
-  - Unity.Burst.Unsafe
-  - VRC.SDK3.Dynamics.PhysBone
-  - OVRPlugin
-  - YamlDotNet
-  - System.Threading.Tasks.Extensions
-  - VRC.Udon.ClientBindings
-  - openvr_api
-  - portmidi
-  - VRC.Udon.VRCWrapperModules
-  - VRCSDK3
-  - VRC.Udon.VM
-  - Serilog
-  - nunit.framework
-  - SemanticVersioning
-  - librsync.net
-  - VRC.Udon.Common
-  - VRC.SDK3.Dynamics.Contact
-  - Collections.Pooled
-  - System.Collections.Immutable
-  - SDKBase-Legacy
-  - System.Numerics.Vectors
-  - System.Buffers
-  - VRC.Dynamics
-  - VRC.Udon.Wrapper
-  - Serilog.Sinks.File
-  - VRC.Udon.Security
-  - clipper_library
-  - VRC.Collections
-  - VRCSDKBase
-  - System.Runtime.CompilerServices.Unsafe
-  - vrc_image_loader
-  - libvrc_image_loader
-  - Newtonsoft.Json
-  - libopenvr_api
-  - Blake2Sharp
-  - System.Memory
-  - System.Text.Encoding.CodePages
-  - VRCCore-Editor
-  - VRC.Utility
-  - AudioPluginOculusSpatializer
-  m_EditorPlugins:
-  - ICSharpCode.SharpZipLib
-  - VRCSDK3-Editor
-  - Microsoft.CodeAnalysis
-  - VRC.Udon.VRCTypeResolverModules
-  - AppleEventIntegration
-  - liblz4Plastic
-  - Unity.Plastic.Newtonsoft.Json
-  - unityplastic
-  - VRC.Udon.Compiler
-  - System.Reflection.Metadata
-  - Microsoft.CodeAnalysis.CSharp
-  - VRC.Udon.UAssembly
-  - vpm-core-lib
-  - VRC.Udon.Graph
-  - UnityEditor.VR
-  - 0Harmony
-  - VRC.SDK3.Dynamics.PhysBone.Editor
-  - VRCSDKBase-Editor
-  - VRC.SDK3.Dynamics.Contact.Editor
-  - VRC.Udon.VRCGraphModules
-  - log4netPlastic
-  - VRC.Udon.EditorBindings
-  - zlib64Plastic
-  - Unity.Plastic.Antlr3.Runtime
-  - Serilog.Sinks.Unity3D
-  - lz4x64Plastic
---- !u!668709126 &-5136302206955051081
-BuiltAssetBundleInfoSet:
-  bundleInfos:
-  - bundleName: scene-standalonewindows64-alchemist prototyping scene.vrcw
-    bundleArchiveFile: 2
-    packagedFileIndices: 0000000001000000
-  - bundleName: VRChat-sandbox
-    bundleArchiveFile: 5
-    packagedFileIndices: 04000000
---- !u!1126 &-2375298402570725106
-PackedAssets:
-  m_File: 4
-  m_ShortPath: CAB-272ad1682f08ca2319d24b4ddad3876a
-  m_Overhead: 4096
-  m_Contents:
-  - fileID: 1
-    classID: 142
-    packedSize: 104
-    offset: 4096
-    sourceAssetGUID: 00000000000000000000000000000000
-    buildTimeAssetPath: AssetBundle Object
-  - fileID: 2
-    classID: 290
-    packedSize: 128
-    offset: 4200
-    sourceAssetGUID: 00000000000000000000000000000000
-    buildTimeAssetPath: 'Built-in AssetBundleManifest: AssetBundleManifest'
+--- !u!641289076 &-3484493674753925727
+AudioBuildInfo:
+  m_IsAudioDisabled: 0
+  m_AudioClipCount: 0
+  m_AudioMixerCount: 0
 --- !u!1125 &1
 BuildReport:
   m_ObjectHideFlags: 0
@@ -107,7 +15,7 @@ BuildReport:
   m_Summary:
     buildStartTime:
       serializedVersion: 2
-      ticks: 638656897384211884
+      ticks: 638656967629318145
     buildGUID: 00000000000000000000000000000000
     platformName: Win64
     platformGroupName: Standalone
@@ -115,9 +23,9 @@ BuildReport:
     assetBundleOptions: 32
     outputPath: C:/Users/cole/AppData/Local/Temp/DefaultCompany/VRChat-sandbox/scene-standalonewindows64-alchemist
       prototyping scene.vrcw
-    crc: 4212752562
-    totalSize: 5647545
-    totalTimeTicks: 392162648
+    crc: 480515126
+    totalSize: 5647894
+    totalTimeTicks: 471583161
     totalErrors: 0
     totalWarnings: 0
     buildType: 1
@@ -134,19 +42,19 @@ BuildReport:
       scene.vrcw/BuildPlayer-Alchemist Prototyping Scene.sharedAssets
     role: SharedAssets
     id: 1
-    totalSize: 10089764
+    totalSize: 10088996
   - path: C:/Users/cole/Documents/Single Thread Theatre/PXR/PXR 2024/Unity Projects/VR
       Chat Sandbox/VRChat-sandbox/scene-standalonewindows64-alchemist prototyping
       scene.vrcw
     role: AssetBundle
     id: 2
-    totalSize: 5641841
+    totalSize: 5642193
   - path: C:/Users/cole/Documents/Single Thread Theatre/PXR/PXR 2024/Unity Projects/VR
       Chat Sandbox/VRChat-sandbox/scene-standalonewindows64-alchemist prototyping
       scene.vrcw.manifest
     role: AssetBundleTextManifest
     id: 3
-    totalSize: 4450
+    totalSize: 4449
   - path: C:/Users/cole/Documents/Single Thread Theatre/PXR/PXR 2024/Unity Projects/VR
       Chat Sandbox/VRChat-sandbox/VRChat-sandbox/CAB-272ad1682f08ca2319d24b4ddad3876a
     role: ResourcesFile
@@ -156,75 +64,79 @@ BuildReport:
       Chat Sandbox/VRChat-sandbox/VRChat-sandbox
     role: ManifestAssetBundle
     id: 5
-    totalSize: 1068
+    totalSize: 1067
   - path: C:/Users/cole/Documents/Single Thread Theatre/PXR/PXR 2024/Unity Projects/VR
       Chat Sandbox/VRChat-sandbox/VRChat-sandbox.manifest
     role: AssetBundleTextManifest
     id: 6
-    totalSize: 186
+    totalSize: 185
   m_BuildSteps:
   - stepName: Build Asset Bundles
-    durationTicks: 392162648
+    durationTicks: 471583161
     depth: 0
     messages: []
   - stepName: Calculate asset bundles to be built
-    durationTicks: 104990
+    durationTicks: 77660
     depth: 1
     messages: []
   - stepName: Compile scripts
-    durationTicks: 36201289
+    durationTicks: 48046286
     depth: 1
     messages: []
   - stepName: Build player
-    durationTicks: 288605712
+    durationTicks: 351416454
     depth: 1
     messages: []
   - stepName: Prepare assets for target platform
-    durationTicks: 4091460
+    durationTicks: 4199196
     depth: 2
     messages: []
   - stepName: Building scenes
-    durationTicks: 225283770
+    durationTicks: 221376116
     depth: 2
     messages: []
   - stepName: Building scene Assets/PXR 2024/Scenes/Character prototype/Alchemist
       Prototyping Scene.unity
-    durationTicks: 225263377
+    durationTicks: 221364028
     depth: 3
     messages: []
   - stepName: Writing asset files
-    durationTicks: 9321813
+    durationTicks: 77674432
     depth: 2
     messages: []
   - stepName: Packaging assets - archive:/BuildPlayer-Alchemist Prototyping Scene/BuildPlayer-Alchemist
       Prototyping Scene.sharedAssets
-    durationTicks: 9271921
+    durationTicks: 77618186
     depth: 3
     messages: []
   - stepName: Creating compressed player package
-    durationTicks: 20073486
+    durationTicks: 19204226
     depth: 2
     messages: []
   - stepName: Postprocess built player
-    durationTicks: 47765
+    durationTicks: 45559
     depth: 2
     messages: []
   m_Appendices:
-  - {fileID: -5136302206955051081}
-  - {fileID: 5745948153320194436}
-  - {fileID: -8378903510243975673}
-  - {fileID: 37871312407281889}
-  - {fileID: -2375298402570725106}
---- !u!641289076 &37871312407281889
-AudioBuildInfo:
-  m_IsAudioDisabled: 0
-  m_AudioClipCount: 0
-  m_AudioMixerCount: 0
---- !u!1126 &5745948153320194436
+  - {fileID: 4598411037192612862}
+  - {fileID: 6431373916207909844}
+  - {fileID: 7253888143602738882}
+  - {fileID: -3484493674753925727}
+  - {fileID: 6573889622748966279}
+--- !u!668709126 &4598411037192612862
+BuiltAssetBundleInfoSet:
+  bundleInfos:
+  - bundleName: scene-standalonewindows64-alchemist prototyping scene.vrcw
+    bundleArchiveFile: 2
+    packagedFileIndices: 0000000001000000
+  - bundleName: VRChat-sandbox
+    bundleArchiveFile: 5
+    packagedFileIndices: 04000000
+--- !u!1126 &6431373916207909844
 PackedAssets:
   m_File: 1
   m_ShortPath: BuildPlayer-Alchemist Prototyping Scene.sharedAssets
-  m_Overhead: 273074
+  m_Overhead: 273078
   m_Contents:
   - fileID: 1
     classID: 150
@@ -1359,475 +1271,475 @@ PackedAssets:
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 187
     classID: 1
-    packedSize: 59
+    packedSize: 67
     offset: 9717008
-    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Gemstone.prefab
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 188
     classID: 1
-    packedSize: 67
-    offset: 9717072
+    packedSize: 59
+    offset: 9717080
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 189
     classID: 1
-    packedSize: 59
+    packedSize: 51
     offset: 9717144
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Mushroom.prefab
   - fileID: 190
     classID: 1
-    packedSize: 139
-    offset: 9717208
+    packedSize: 47
+    offset: 9717200
     sourceAssetGUID: f395b87c385cec74b959caf8f8829827
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Berry.prefab
   - fileID: 191
     classID: 1
     packedSize: 59
-    offset: 9717352
+    offset: 9717248
     sourceAssetGUID: fc1e8add40597e2408e24f9746129483
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Potion-Wall-Breaking.prefab
   - fileID: 192
     classID: 1
-    packedSize: 63
-    offset: 9717416
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    packedSize: 135
+    offset: 9717312
+    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Herb.prefab
   - fileID: 193
     classID: 1
     packedSize: 63
-    offset: 9717480
+    offset: 9717448
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 194
     classID: 1
-    packedSize: 67
-    offset: 9717544
+    packedSize: 63
+    offset: 9717512
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 195
     classID: 1
-    packedSize: 63
-    offset: 9717616
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    packedSize: 139
+    offset: 9717576
+    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Berry.prefab
   - fileID: 196
     classID: 1
-    packedSize: 51
-    offset: 9717680
-    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Wall-Breaking.prefab
-  - fileID: 197
-    classID: 1
-    packedSize: 135
-    offset: 9717736
-    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Herb.prefab
-  - fileID: 198
-    classID: 1
-    packedSize: 63
-    offset: 9717872
+    packedSize: 67
+    offset: 9717720
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
-  - fileID: 199
+  - fileID: 197
+    classID: 1
+    packedSize: 63
+    offset: 9717792
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+  - fileID: 198
     classID: 1
     packedSize: 59
-    offset: 9717936
-    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Herb.prefab
-  - fileID: 200
-    classID: 1
-    packedSize: 139
-    offset: 9718000
+    offset: 9717856
     sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Gemstone.prefab
+  - fileID: 199
+    classID: 1
+    packedSize: 63
+    offset: 9717920
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+  - fileID: 200
+    classID: 1
+    packedSize: 159
+    offset: 9717984
+    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Wall-Breaking.prefab
   - fileID: 201
     classID: 1
     packedSize: 139
     offset: 9718144
-    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
+    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Flower.prefab
+      Objects/Interactable-Gemstone.prefab
   - fileID: 202
     classID: 1
     packedSize: 51
     offset: 9718288
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
-  - fileID: 203
-    classID: 1
-    packedSize: 159
-    offset: 9718344
     sourceAssetGUID: fc1e8add40597e2408e24f9746129483
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Potion-Wall-Breaking.prefab
+  - fileID: 203
+    classID: 1
+    packedSize: 59
+    offset: 9718344
+    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Water-Walking.prefab
   - fileID: 204
     classID: 1
-    packedSize: 39
-    offset: 9718504
+    packedSize: 51
+    offset: 9718408
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 205
     classID: 1
-    packedSize: 59
-    offset: 9718544
+    packedSize: 39
+    offset: 9718464
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+  - fileID: 206
+    classID: 1
+    packedSize: 139
+    offset: 9718504
     sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Flower.prefab
-  - fileID: 206
+  - fileID: 207
     classID: 1
-    packedSize: 47
-    offset: 9718608
+    packedSize: 139
+    offset: 9718648
     sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Stick.prefab
-  - fileID: 207
-    classID: 1
-    packedSize: 63
-    offset: 9718656
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 208
     classID: 1
-    packedSize: 159
-    offset: 9718720
+    packedSize: 59
+    offset: 9718792
     sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Potion-Super-Jumping.prefab
   - fileID: 209
     classID: 1
     packedSize: 59
-    offset: 9718880
+    offset: 9718856
+    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Berry.prefab
+  - fileID: 210
+    classID: 1
+    packedSize: 63
+    offset: 9718920
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+  - fileID: 211
+    classID: 1
+    packedSize: 59
+    offset: 9718984
+    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Herb.prefab
+  - fileID: 212
+    classID: 1
+    packedSize: 59
+    offset: 9719048
     sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Stick.prefab
-  - fileID: 210
-    classID: 1
-    packedSize: 139
-    offset: 9718944
-    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Mushroom.prefab
-  - fileID: 211
-    classID: 1
-    packedSize: 159
-    offset: 9719088
-    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Water-Walking.prefab
-  - fileID: 212
-    classID: 1
-    packedSize: 31
-    offset: 9719248
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 213
     classID: 1
-    packedSize: 59
-    offset: 9719280
-    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Water-Walking.prefab
+    packedSize: 31
+    offset: 9719112
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 214
     classID: 1
-    packedSize: 51
-    offset: 9719344
-    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
+    packedSize: 159
+    offset: 9719144
+    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Gemstone.prefab
+      Objects/Interactable-Potion-Super-Jumping.prefab
   - fileID: 215
     classID: 1
-    packedSize: 51
-    offset: 9719400
-    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    packedSize: 59
+    offset: 9719304
+    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Mushroom.prefab
+      Objects/Interactable-Flower.prefab
   - fileID: 216
     classID: 1
     packedSize: 75
-    offset: 9719456
+    offset: 9719368
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 217
     classID: 1
-    packedSize: 47
-    offset: 9719536
-    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    packedSize: 51
+    offset: 9719448
+    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Berry.prefab
+      Objects/Interactable-Gemstone.prefab
   - fileID: 218
     classID: 1
-    packedSize: 139
-    offset: 9719584
-    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
+    packedSize: 47
+    offset: 9719504
+    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Stick.prefab
+      Objects/Interactable-Herb.prefab
   - fileID: 219
     classID: 1
-    packedSize: 47
-    offset: 9719728
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    packedSize: 59
+    offset: 9719552
+    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Mushroom.prefab
   - fileID: 220
     classID: 1
-    packedSize: 63
-    offset: 9719776
+    packedSize: 47
+    offset: 9719616
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 221
     classID: 1
-    packedSize: 59
-    offset: 9719840
-    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Berry.prefab
+    packedSize: 63
+    offset: 9719664
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 222
     classID: 1
     packedSize: 47
-    offset: 9719904
+    offset: 9719728
     sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Flower.prefab
   - fileID: 223
     classID: 1
-    packedSize: 47
-    offset: 9719952
-    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Herb.prefab
-  - fileID: 224
-    classID: 1
-    packedSize: 59
-    offset: 9720000
-    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Super-Jumping.prefab
-  - fileID: 225
-    classID: 1
-    packedSize: 59
-    offset: 9720064
+    packedSize: 139
+    offset: 9719776
     sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Mushroom.prefab
+  - fileID: 224
+    classID: 1
+    packedSize: 159
+    offset: 9719920
+    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Water-Walking.prefab
+  - fileID: 225
+    classID: 1
+    packedSize: 47
+    offset: 9720080
+    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Stick.prefab
   - fileID: 226
     classID: 4
     packedSize: 80
     offset: 9720128
-    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Berry.prefab
+      Objects/Interactable-Stick.prefab
   - fileID: 227
     classID: 4
-    packedSize: 80
+    packedSize: 68
     offset: 9720208
-    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Herb.prefab
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 228
     classID: 4
-    packedSize: 68
-    offset: 9720288
+    packedSize: 92
+    offset: 9720280
     sourceAssetGUID: fc1e8add40597e2408e24f9746129483
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Potion-Wall-Breaking.prefab
   - fileID: 229
     classID: 4
-    packedSize: 68
-    offset: 9720360
-    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    packedSize: 80
+    offset: 9720376
+    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Berry.prefab
+      Objects/Interactable-Flower.prefab
   - fileID: 230
     classID: 4
     packedSize: 68
-    offset: 9720432
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
-  - fileID: 231
-    classID: 4
-    packedSize: 68
-    offset: 9720504
-    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Flower.prefab
-  - fileID: 232
-    classID: 4
-    packedSize: 80
-    offset: 9720576
-    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Flower.prefab
-  - fileID: 233
-    classID: 4
-    packedSize: 116
-    offset: 9720656
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
-  - fileID: 234
-    classID: 4
-    packedSize: 68
-    offset: 9720776
+    offset: 9720456
     sourceAssetGUID: fc1e8add40597e2408e24f9746129483
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Potion-Wall-Breaking.prefab
-  - fileID: 235
+  - fileID: 231
     classID: 4
     packedSize: 80
-    offset: 9720848
-    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Flower.prefab
-  - fileID: 236
-    classID: 4
-    packedSize: 80
-    offset: 9720928
-    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Mushroom.prefab
-  - fileID: 237
-    classID: 4
-    packedSize: 68
-    offset: 9721008
-    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Herb.prefab
-  - fileID: 238
-    classID: 4
-    packedSize: 80
-    offset: 9721080
+    offset: 9720528
     sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Gemstone.prefab
-  - fileID: 239
+  - fileID: 232
+    classID: 4
+    packedSize: 116
+    offset: 9720608
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+  - fileID: 233
+    classID: 4
+    packedSize: 68
+    offset: 9720728
+    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Wall-Breaking.prefab
+  - fileID: 234
     classID: 4
     packedSize: 80
-    offset: 9721160
+    offset: 9720800
     sourceAssetGUID: f395b87c385cec74b959caf8f8829827
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Berry.prefab
-  - fileID: 240
+  - fileID: 235
+    classID: 4
+    packedSize: 80
+    offset: 9720880
+    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Herb.prefab
+  - fileID: 236
     classID: 4
     packedSize: 68
-    offset: 9721240
+    offset: 9720960
+    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Super-Jumping.prefab
+  - fileID: 237
+    classID: 4
+    packedSize: 68
+    offset: 9721032
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+  - fileID: 238
+    classID: 4
+    packedSize: 68
+    offset: 9721104
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+  - fileID: 239
+    classID: 4
+    packedSize: 68
+    offset: 9721176
+    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Mushroom.prefab
+  - fileID: 240
+    classID: 4
+    packedSize: 80
+    offset: 9721248
     sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Potion-Super-Jumping.prefab
   - fileID: 241
     classID: 4
-    packedSize: 68
-    offset: 9721312
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    packedSize: 80
+    offset: 9721328
+    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Mushroom.prefab
   - fileID: 242
     classID: 4
-    packedSize: 92
-    offset: 9721384
-    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
+    packedSize: 80
+    offset: 9721408
+    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Wall-Breaking.prefab
+      Objects/Interactable-Flower.prefab
   - fileID: 243
     classID: 4
-    packedSize: 80
-    offset: 9721480
-    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Gemstone.prefab
+    packedSize: 104
+    offset: 9721488
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 244
     classID: 4
-    packedSize: 68
-    offset: 9721560
+    packedSize: 92
+    offset: 9721592
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 245
     classID: 4
     packedSize: 68
-    offset: 9721632
-    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Gemstone.prefab
+    offset: 9721688
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 246
     classID: 4
     packedSize: 68
-    offset: 9721704
-    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
+    offset: 9721760
+    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Water-Walking.prefab
+      Objects/Interactable-Berry.prefab
   - fileID: 247
     classID: 4
+    packedSize: 68
+    offset: 9721832
+    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Stick.prefab
+  - fileID: 248
+    classID: 4
+    packedSize: 140
+    offset: 9721904
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+  - fileID: 249
+    classID: 4
     packedSize: 80
-    offset: 9721776
+    offset: 9722048
     sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Herb.prefab
-  - fileID: 248
-    classID: 4
-    packedSize: 80
-    offset: 9721856
-    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Super-Jumping.prefab
-  - fileID: 249
-    classID: 4
-    packedSize: 104
-    offset: 9721936
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 250
     classID: 4
-    packedSize: 92
-    offset: 9722040
+    packedSize: 68
+    offset: 9722128
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 251
     classID: 4
     packedSize: 68
-    offset: 9722136
+    offset: 9722200
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 252
     classID: 4
-    packedSize: 140
-    offset: 9722208
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    packedSize: 68
+    offset: 9722272
+    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Water-Walking.prefab
   - fileID: 253
     classID: 4
     packedSize: 68
-    offset: 9722352
+    offset: 9722344
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 254
     classID: 4
     packedSize: 68
-    offset: 9722424
-    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    offset: 9722416
+    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Mushroom.prefab
+      Objects/Interactable-Gemstone.prefab
   - fileID: 255
     classID: 4
     packedSize: 68
-    offset: 9722496
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    offset: 9722488
+    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Herb.prefab
   - fileID: 256
     classID: 4
     packedSize: 68
-    offset: 9722568
+    offset: 9722560
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 257
     classID: 4
-    packedSize: 68
-    offset: 9722640
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    packedSize: 80
+    offset: 9722632
+    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Gemstone.prefab
   - fileID: 258
     classID: 4
     packedSize: 68
@@ -1836,78 +1748,78 @@ PackedAssets:
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 259
     classID: 4
-    packedSize: 80
+    packedSize: 68
     offset: 9722784
-    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Water-Walking.prefab
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 260
     classID: 4
     packedSize: 80
-    offset: 9722864
-    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    offset: 9722856
+    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Mushroom.prefab
+      Objects/Interactable-Stick.prefab
   - fileID: 261
     classID: 4
     packedSize: 68
-    offset: 9722944
+    offset: 9722936
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 262
     classID: 4
-    packedSize: 80
-    offset: 9723016
-    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Stick.prefab
+    packedSize: 68
+    offset: 9723008
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 263
     classID: 4
-    packedSize: 68
-    offset: 9723096
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    packedSize: 80
+    offset: 9723080
+    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Mushroom.prefab
   - fileID: 264
     classID: 4
-    packedSize: 68
-    offset: 9723168
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    packedSize: 80
+    offset: 9723160
+    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Berry.prefab
   - fileID: 265
     classID: 4
-    packedSize: 68
+    packedSize: 80
     offset: 9723240
-    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
+    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Stick.prefab
+      Objects/Interactable-Potion-Water-Walking.prefab
   - fileID: 266
     classID: 4
-    packedSize: 80
-    offset: 9723312
-    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
+    packedSize: 68
+    offset: 9723320
+    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Stick.prefab
+      Objects/Interactable-Flower.prefab
   - fileID: 267
     classID: 23
     packedSize: 140
     offset: 9723392
-    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
+    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Super-Jumping.prefab
+      Objects/Interactable-Flower.prefab
   - fileID: 268
     classID: 23
     packedSize: 140
     offset: 9723536
-    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
+    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Flower.prefab
+      Objects/Interactable-Potion-Water-Walking.prefab
   - fileID: 269
     classID: 23
     packedSize: 140
     offset: 9723680
-    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Mushroom.prefab
+      Objects/Interactable-Potion-Super-Jumping.prefab
   - fileID: 270
     classID: 23
     packedSize: 140
@@ -1919,170 +1831,170 @@ PackedAssets:
     classID: 23
     packedSize: 140
     offset: 9723968
-    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
+    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Water-Walking.prefab
+      Objects/Interactable-Berry.prefab
   - fileID: 272
     classID: 23
     packedSize: 140
     offset: 9724112
-    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
+    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Gemstone.prefab
+      Objects/Interactable-Potion-Wall-Breaking.prefab
   - fileID: 273
     classID: 23
     packedSize: 140
     offset: 9724256
-    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
+    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Wall-Breaking.prefab
+      Objects/Interactable-Herb.prefab
   - fileID: 274
     classID: 23
     packedSize: 140
     offset: 9724400
-    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Berry.prefab
+      Objects/Interactable-Mushroom.prefab
   - fileID: 275
     classID: 23
     packedSize: 140
     offset: 9724544
-    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
+    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Herb.prefab
+      Objects/Interactable-Gemstone.prefab
   - fileID: 276
     classID: 33
     packedSize: 24
     offset: 9724688
-    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
+    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Stick.prefab
+      Objects/Interactable-Potion-Wall-Breaking.prefab
   - fileID: 277
     classID: 33
     packedSize: 24
     offset: 9724712
-    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Mushroom.prefab
+      Objects/Interactable-Herb.prefab
   - fileID: 278
     classID: 33
     packedSize: 24
     offset: 9724736
-    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
+    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Gemstone.prefab
+      Objects/Interactable-Potion-Water-Walking.prefab
   - fileID: 279
     classID: 33
     packedSize: 24
     offset: 9724760
-    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
+    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Flower.prefab
+      Objects/Interactable-Stick.prefab
   - fileID: 280
     classID: 33
     packedSize: 24
     offset: 9724784
-    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Berry.prefab
+      Objects/Interactable-Potion-Super-Jumping.prefab
   - fileID: 281
     classID: 33
     packedSize: 24
     offset: 9724808
-    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
+    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Super-Jumping.prefab
+      Objects/Interactable-Gemstone.prefab
   - fileID: 282
     classID: 33
     packedSize: 24
     offset: 9724832
-    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
+    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Wall-Breaking.prefab
+      Objects/Interactable-Flower.prefab
   - fileID: 283
     classID: 33
     packedSize: 24
     offset: 9724856
-    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
+    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Water-Walking.prefab
+      Objects/Interactable-Berry.prefab
   - fileID: 284
     classID: 33
     packedSize: 24
     offset: 9724880
-    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
+    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Herb.prefab
+      Objects/Interactable-Mushroom.prefab
   - fileID: 285
     classID: 54
     packedSize: 36
     offset: 9724904
-    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Mushroom.prefab
+      Objects/Interactable-Berry.prefab
   - fileID: 286
     classID: 54
     packedSize: 36
     offset: 9724944
-    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
+    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Water-Walking.prefab
+      Objects/Interactable-Stick.prefab
   - fileID: 287
     classID: 54
     packedSize: 36
     offset: 9724984
-    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
+    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Gemstone.prefab
+      Objects/Interactable-Potion-Water-Walking.prefab
   - fileID: 288
     classID: 54
     packedSize: 36
     offset: 9725024
-    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
+    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Herb.prefab
+      Objects/Interactable-Flower.prefab
   - fileID: 289
     classID: 54
     packedSize: 36
     offset: 9725064
-    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
+    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Wall-Breaking.prefab
+      Objects/Interactable-Mushroom.prefab
   - fileID: 290
     classID: 54
     packedSize: 36
     offset: 9725104
-    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Berry.prefab
+      Objects/Interactable-Gemstone.prefab
   - fileID: 291
     classID: 54
     packedSize: 36
     offset: 9725144
-    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
+    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Flower.prefab
+      Objects/Interactable-Potion-Super-Jumping.prefab
   - fileID: 292
     classID: 54
     packedSize: 36
     offset: 9725184
-    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
+    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Stick.prefab
+      Objects/Interactable-Herb.prefab
   - fileID: 293
     classID: 54
     packedSize: 36
     offset: 9725224
-    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
+    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Super-Jumping.prefab
+      Objects/Interactable-Potion-Wall-Breaking.prefab
   - fileID: 294
     classID: 65
     packedSize: 52
     offset: 9725264
-    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
+    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Water-Walking.prefab
+      Objects/Interactable-Potion-Super-Jumping.prefab
   - fileID: 295
     classID: 65
     packedSize: 52
@@ -2094,58 +2006,58 @@ PackedAssets:
     classID: 65
     packedSize: 52
     offset: 9725376
-    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
+    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Herb.prefab
+      Objects/Interactable-Potion-Water-Walking.prefab
   - fileID: 297
     classID: 65
     packedSize: 52
     offset: 9725432
-    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
+    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Flower.prefab
+      Objects/Interactable-Potion-Wall-Breaking.prefab
   - fileID: 298
     classID: 65
     packedSize: 52
     offset: 9725488
-    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
+    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Super-Jumping.prefab
+      Objects/Interactable-Potion-Wall-Breaking.prefab
   - fileID: 299
     classID: 65
     packedSize: 52
     offset: 9725544
-    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
+    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Stick.prefab
+      Objects/Interactable-Mushroom.prefab
   - fileID: 300
     classID: 65
     packedSize: 52
     offset: 9725600
-    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
+    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Wall-Breaking.prefab
+      Objects/Interactable-Herb.prefab
   - fileID: 301
     classID: 65
     packedSize: 52
     offset: 9725656
-    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Mushroom.prefab
+      Objects/Interactable-Gemstone.prefab
   - fileID: 302
     classID: 65
     packedSize: 52
     offset: 9725712
-    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
+    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Wall-Breaking.prefab
+      Objects/Interactable-Flower.prefab
   - fileID: 303
     classID: 65
     packedSize: 52
     offset: 9725768
-    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
+    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Gemstone.prefab
+      Objects/Interactable-Stick.prefab
   - fileID: 304
     classID: 198
     packedSize: 7348
@@ -2160,85 +2072,85 @@ PackedAssets:
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 306
     classID: 198
-    packedSize: 7516
+    packedSize: 7348
     offset: 9740528
-    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Super-Jumping.prefab
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 307
     classID: 198
     packedSize: 7348
-    offset: 9748048
+    offset: 9747880
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 308
     classID: 198
-    packedSize: 7516
-    offset: 9755400
-    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Water-Walking.prefab
+    packedSize: 7348
+    offset: 9755232
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 309
     classID: 198
     packedSize: 7348
-    offset: 9762920
+    offset: 9762584
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 310
     classID: 198
+    packedSize: 7348
+    offset: 9769936
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+  - fileID: 311
+    classID: 198
     packedSize: 7516
-    offset: 9770272
+    offset: 9777288
     sourceAssetGUID: fc1e8add40597e2408e24f9746129483
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Potion-Wall-Breaking.prefab
-  - fileID: 311
-    classID: 198
-    packedSize: 7348
-    offset: 9777792
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 312
     classID: 198
-    packedSize: 7348
-    offset: 9785144
+    packedSize: 7516
+    offset: 9784808
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 313
     classID: 198
     packedSize: 7348
-    offset: 9792496
+    offset: 9792328
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 314
     classID: 198
-    packedSize: 7516
-    offset: 9799848
+    packedSize: 7348
+    offset: 9799680
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 315
     classID: 198
-    packedSize: 7348
-    offset: 9807368
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    packedSize: 7516
+    offset: 9807032
+    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Super-Jumping.prefab
   - fileID: 316
     classID: 198
-    packedSize: 7348
-    offset: 9814720
+    packedSize: 7516
+    offset: 9814552
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 317
     classID: 198
-    packedSize: 7516
+    packedSize: 7348
     offset: 9822072
     sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
     buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 318
     classID: 198
-    packedSize: 7348
-    offset: 9829592
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    packedSize: 7516
+    offset: 9829424
+    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Water-Walking.prefab
   - fileID: 319
     classID: 199
     packedSize: 256
@@ -2249,8 +2161,9 @@ PackedAssets:
     classID: 199
     packedSize: 256
     offset: 9837200
-    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
+    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Wall-Breaking.prefab
   - fileID: 321
     classID: 199
     packedSize: 256
@@ -2267,9 +2180,8 @@ PackedAssets:
     classID: 199
     packedSize: 256
     offset: 9837968
-    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Super-Jumping.prefab
+    sourceAssetGUID: e8222a4dd05f379408e4d1a59b65f73c
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/Alchemist/Potions/Potion VFX.prefab
   - fileID: 324
     classID: 199
     packedSize: 256
@@ -2298,16 +2210,16 @@ PackedAssets:
     classID: 199
     packedSize: 256
     offset: 9839248
-    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
+    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Wall-Breaking.prefab
+      Objects/Interactable-Potion-Water-Walking.prefab
   - fileID: 329
     classID: 199
     packedSize: 256
     offset: 9839504
-    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
+    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Water-Walking.prefab
+      Objects/Interactable-Potion-Super-Jumping.prefab
   - fileID: 330
     classID: 199
     packedSize: 256
@@ -2336,30 +2248,30 @@ PackedAssets:
     classID: 205
     packedSize: 68
     offset: 9840784
-    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Berry.prefab
+      Objects/Interactable-Herb.prefab
   - fileID: 335
     classID: 205
     packedSize: 68
     offset: 9840856
-    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
+    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Stick.prefab
+      Objects/Interactable-Mushroom.prefab
   - fileID: 336
     classID: 205
     packedSize: 68
     offset: 9840928
-    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
+    sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Flower.prefab
+      Objects/Interactable-Stick.prefab
   - fileID: 337
     classID: 205
     packedSize: 68
     offset: 9841000
-    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Mushroom.prefab
+      Objects/Interactable-Flower.prefab
   - fileID: 338
     classID: 205
     packedSize: 68
@@ -2371,9 +2283,9 @@ PackedAssets:
     classID: 205
     packedSize: 68
     offset: 9841144
-    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
+    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Herb.prefab
+      Objects/Interactable-Berry.prefab
   - fileID: 340
     classID: 114
     packedSize: 96
@@ -2430,363 +2342,451 @@ PackedAssets:
     buildTimeAssetPath: Assets/SerializedUdonPrograms/28920e6b50147254ba721b277a1f284c.asset
   - fileID: 349
     classID: 114
-    packedSize: 14608
+    packedSize: 13860
     offset: 9885808
     sourceAssetGUID: 09761ad4994cab84a8d338aa56e44701
     buildTimeAssetPath: Assets/SerializedUdonPrograms/337e451b19b9f35449c6aabe2ef431c4.asset
   - fileID: 350
     classID: 114
     packedSize: 2000
-    offset: 9900416
+    offset: 9899672
     sourceAssetGUID: aed99108b6f90184cb336dec658f7f51
     buildTimeAssetPath: Assets/SerializedUdonPrograms/3528b80ff5c56fe4c908ad637b13b139.asset
   - fileID: 351
     classID: 114
     packedSize: 3388
-    offset: 9902416
+    offset: 9901672
     sourceAssetGUID: 761da41e717a6554ea6a09913b696a27
     buildTimeAssetPath: Assets/SerializedUdonPrograms/38e9d9fa9f91e2c4bb439de86f643abf.asset
   - fileID: 352
     classID: 114
     packedSize: 2004
-    offset: 9905808
+    offset: 9905064
     sourceAssetGUID: c96dfff734486084fa230334c7c5c69f
     buildTimeAssetPath: Assets/SerializedUdonPrograms/770132f2ccc7f6f4d9b7c164d5a01bda.asset
   - fileID: 353
     classID: 114
-    packedSize: 6396
-    offset: 9907816
+    packedSize: 6436
+    offset: 9907072
     sourceAssetGUID: 861734628e195e74fb1b867177272923
     buildTimeAssetPath: Assets/SerializedUdonPrograms/aa5a5bc2f80388944b0e7843928ead2c.asset
   - fileID: 354
     classID: 114
     packedSize: 4380
-    offset: 9914216
+    offset: 9913512
     sourceAssetGUID: fb6d6c8caf66e284baec621d5985af5f
     buildTimeAssetPath: Assets/SerializedUdonPrograms/ab49399ade07a8d4cae3902efc4d0a41.asset
   - fileID: 355
     classID: 114
     packedSize: 2236
-    offset: 9918600
+    offset: 9917896
     sourceAssetGUID: 2289e6e74797ea84fbb380c00626112b
     buildTimeAssetPath: Assets/SerializedUdonPrograms/babb5c5d4ad4dc04db348cd55cb170a3.asset
   - fileID: 356
     classID: 114
     packedSize: 2900
-    offset: 9920840
+    offset: 9920136
     sourceAssetGUID: 20e7c7e24ebd1a742a48866d114ac148
     buildTimeAssetPath: Assets/SerializedUdonPrograms/bf2cff0c1d32d954badff504b28960d1.asset
   - fileID: 357
     classID: 114
     packedSize: 2120
-    offset: 9923744
+    offset: 9923040
     sourceAssetGUID: 79a641b5ad02b554da7d9ba51655bee6
     buildTimeAssetPath: Assets/SerializedUdonPrograms/dfbf04249324c8741a8f464efb2442b2.asset
   - fileID: 358
     classID: 114
     packedSize: 7136
-    offset: 9925864
+    offset: 9925160
     sourceAssetGUID: 3bcf4079f6831e543a237bd73c0badbc
     buildTimeAssetPath: Assets/TextMesh Pro/Resources/Fonts & Materials/Bilbo.asset
   - fileID: 359
     classID: 114
     packedSize: 1344
-    offset: 9933000
+    offset: 9932296
     sourceAssetGUID: 2e498d1c8094910479dc3e1b768306a4
     buildTimeAssetPath: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
       SDF - Fallback.asset
   - fileID: 360
     classID: 114
     packedSize: 27760
-    offset: 9934344
+    offset: 9933640
     sourceAssetGUID: 8f586378b4e144a9851e7b34d9b748ee
     buildTimeAssetPath: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
       SDF.asset
   - fileID: 361
     classID: 114
     packedSize: 6036
-    offset: 9962104
+    offset: 9961400
     sourceAssetGUID: 05ef96363634f70469391bcae1becb77
     buildTimeAssetPath: Assets/TextMesh Pro/Resources/Fonts & Materials/Magi.asset
   - fileID: 362
     classID: 114
     packedSize: 1204
-    offset: 9968144
+    offset: 9967440
     sourceAssetGUID: 334a418e8a704f04d834fc69e32835a1
     buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/517ed3964c876304293c06c16ae36aa4.asset
   - fileID: 363
     classID: 114
     packedSize: 3360
-    offset: 9969352
+    offset: 9968648
     sourceAssetGUID: c8f5d66fab586c34591bd821ced691ec
     buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/566cc00e27d5822449529a3785eae366.asset
   - fileID: 364
     classID: 114
-    packedSize: 42468
-    offset: 9972712
+    packedSize: 42404
+    offset: 9972008
     sourceAssetGUID: fbc55d934419e1e46a16f6c0307c5229
     buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/a7c59c708e613cb4db6f1946b8d8a47e.asset
   - fileID: 365
     classID: 114
     packedSize: 1648
-    offset: 10015184
+    offset: 10014416
     sourceAssetGUID: 0fd7002b0eff9e742a37b094d66b3917
     buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/c8df303ceb45ae84f85a11591f741734.asset
   - fileID: 366
     classID: 114
     packedSize: 7744
-    offset: 10016832
+    offset: 10016064
     sourceAssetGUID: c647b61b824f0b245b4321419fdd47f7
     buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/ebc75da603f7f8c409613fbf50bf8fe8.asset
   - fileID: 367
     classID: 114
     packedSize: 3956
-    offset: 10024576
+    offset: 10023808
     sourceAssetGUID: 1408cdda23381bf4296cb33c7c4943e3
     buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/f2b9f02ae7027d14ba573659b2c0ece1.asset
   - fileID: 368
     classID: 114
     packedSize: 96
-    offset: 10028536
+    offset: 10027768
     sourceAssetGUID: ca9f5fa95ffab41fb9a615ab714db018
     buildTimeAssetPath: Packages/com.unity.inputsystem/InputSystem/Plugins/PlayerInput/DefaultInputActions.inputactions
   - fileID: 369
     classID: 114
     packedSize: 92
-    offset: 10028632
+    offset: 10027864
     sourceAssetGUID: ca9f5fa95ffab41fb9a615ab714db018
     buildTimeAssetPath: Packages/com.unity.inputsystem/InputSystem/Plugins/PlayerInput/DefaultInputActions.inputactions
   - fileID: 370
     classID: 114
     packedSize: 100
-    offset: 10028728
+    offset: 10027960
     sourceAssetGUID: ca9f5fa95ffab41fb9a615ab714db018
     buildTimeAssetPath: Packages/com.unity.inputsystem/InputSystem/Plugins/PlayerInput/DefaultInputActions.inputactions
   - fileID: 371
     classID: 114
     packedSize: 108
-    offset: 10028832
+    offset: 10028064
     sourceAssetGUID: ca9f5fa95ffab41fb9a615ab714db018
     buildTimeAssetPath: Packages/com.unity.inputsystem/InputSystem/Plugins/PlayerInput/DefaultInputActions.inputactions
   - fileID: 372
     classID: 114
     packedSize: 96
-    offset: 10028944
+    offset: 10028176
     sourceAssetGUID: ca9f5fa95ffab41fb9a615ab714db018
     buildTimeAssetPath: Packages/com.unity.inputsystem/InputSystem/Plugins/PlayerInput/DefaultInputActions.inputactions
   - fileID: 373
     classID: 114
     packedSize: 112
-    offset: 10029040
+    offset: 10028272
     sourceAssetGUID: ca9f5fa95ffab41fb9a615ab714db018
     buildTimeAssetPath: Packages/com.unity.inputsystem/InputSystem/Plugins/PlayerInput/DefaultInputActions.inputactions
   - fileID: 374
     classID: 114
-    packedSize: 180
-    offset: 10029152
+    packedSize: 5560
+    offset: 10028384
     sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Mushroom.prefab
   - fileID: 375
     classID: 114
+    packedSize: 180
+    offset: 10033944
+    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Berry.prefab
+  - fileID: 376
+    classID: 114
     packedSize: 36
-    offset: 10029336
+    offset: 10034128
     sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Herb.prefab
-  - fileID: 376
-    classID: 114
-    packedSize: 3524
-    offset: 10029376
-    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Wall-Breaking.prefab
   - fileID: 377
     classID: 114
-    packedSize: 180
-    offset: 10032904
-    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Berry.prefab
-  - fileID: 378
-    classID: 114
-    packedSize: 36
-    offset: 10033088
-    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Berry.prefab
-  - fileID: 379
-    classID: 114
-    packedSize: 3524
-    offset: 10033128
-    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Water-Walking.prefab
-  - fileID: 380
-    classID: 114
-    packedSize: 5352
-    offset: 10036656
-    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Super-Jumping.prefab
-  - fileID: 381
-    classID: 114
-    packedSize: 180
-    offset: 10042008
+    packedSize: 5396
+    offset: 10034168
     sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Stick.prefab
-  - fileID: 382
+  - fileID: 378
     classID: 114
-    packedSize: 188
-    offset: 10042192
+    packedSize: 3524
+    offset: 10039568
     sourceAssetGUID: fc1e8add40597e2408e24f9746129483
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Potion-Wall-Breaking.prefab
-  - fileID: 383
+  - fileID: 379
     classID: 114
-    packedSize: 3524
-    offset: 10042384
+    packedSize: 5352
+    offset: 10043096
     sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Potion-Super-Jumping.prefab
-  - fileID: 384
-    classID: 114
-    packedSize: 5640
-    offset: 10045912
-    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Gemstone.prefab
-  - fileID: 385
+  - fileID: 380
     classID: 114
     packedSize: 180
-    offset: 10051552
+    offset: 10048448
     sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Flower.prefab
-  - fileID: 386
+  - fileID: 381
     classID: 114
     packedSize: 36
-    offset: 10051736
+    offset: 10048632
+    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Mushroom.prefab
+  - fileID: 382
+    classID: 114
+    packedSize: 3524
+    offset: 10048672
+    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Water-Walking.prefab
+  - fileID: 383
+    classID: 114
+    packedSize: 188
+    offset: 10052200
+    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Wall-Breaking.prefab
+  - fileID: 384
+    classID: 114
+    packedSize: 36
+    offset: 10052392
+    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Berry.prefab
+  - fileID: 385
+    classID: 114
+    packedSize: 5236
+    offset: 10052432
+    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Herb.prefab
+  - fileID: 386
+    classID: 114
+    packedSize: 5640
+    offset: 10057672
     sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Gemstone.prefab
   - fileID: 387
     classID: 114
-    packedSize: 36
-    offset: 10051776
-    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Mushroom.prefab
-  - fileID: 388
-    classID: 114
-    packedSize: 5116
-    offset: 10051816
-    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Water-Walking.prefab
-  - fileID: 389
-    classID: 114
-    packedSize: 5160
-    offset: 10056936
-    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Berry.prefab
-  - fileID: 390
-    classID: 114
     packedSize: 180
-    offset: 10062096
-    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Gemstone.prefab
-  - fileID: 391
-    classID: 114
-    packedSize: 5396
-    offset: 10062280
+    offset: 10063312
     sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Stick.prefab
-  - fileID: 392
+  - fileID: 388
+    classID: 114
+    packedSize: 188
+    offset: 10063496
+    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Super-Jumping.prefab
+  - fileID: 389
     classID: 114
     packedSize: 36
-    offset: 10067680
+    offset: 10063688
+    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Flower.prefab
+  - fileID: 390
+    classID: 114
+    packedSize: 5508
+    offset: 10063728
     sourceAssetGUID: fc1e8add40597e2408e24f9746129483
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Potion-Wall-Breaking.prefab
+  - fileID: 391
+    classID: 114
+    packedSize: 5116
+    offset: 10069240
+    sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Water-Walking.prefab
+  - fileID: 392
+    classID: 114
+    packedSize: 180
+    offset: 10074360
+    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Mushroom.prefab
   - fileID: 393
     classID: 114
-    packedSize: 36
-    offset: 10067720
+    packedSize: 5004
+    offset: 10074544
     sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Flower.prefab
   - fileID: 394
     classID: 114
     packedSize: 188
-    offset: 10067760
+    offset: 10079552
     sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Potion-Water-Walking.prefab
   - fileID: 395
     classID: 114
     packedSize: 36
-    offset: 10067952
-    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Super-Jumping.prefab
-  - fileID: 396
-    classID: 114
-    packedSize: 5004
-    offset: 10067992
-    sourceAssetGUID: 104d4d00a80ba0c4ea9cc23c5cca3a87
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Flower.prefab
-  - fileID: 397
-    classID: 114
-    packedSize: 180
-    offset: 10073000
-    sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Herb.prefab
-  - fileID: 398
-    classID: 114
-    packedSize: 5560
-    offset: 10073184
-    sourceAssetGUID: 3f1d1e63c02a3dd4d8454c0ddbc4ed97
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Mushroom.prefab
-  - fileID: 399
-    classID: 114
-    packedSize: 188
-    offset: 10078744
-    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Super-Jumping.prefab
-  - fileID: 400
-    classID: 114
-    packedSize: 36
-    offset: 10078936
+    offset: 10079744
     sourceAssetGUID: b135b8b57ae547b48b2f6d7548ed9314
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Potion-Water-Walking.prefab
-  - fileID: 401
-    classID: 114
-    packedSize: 5508
-    offset: 10078976
-    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
-    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
-      Objects/Interactable-Potion-Wall-Breaking.prefab
-  - fileID: 402
+  - fileID: 396
     classID: 114
     packedSize: 36
-    offset: 10084488
+    offset: 10079784
     sourceAssetGUID: ebe07ea9056865c438ade6a1359f92c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Stick.prefab
-  - fileID: 403
+  - fileID: 397
     classID: 114
-    packedSize: 5236
-    offset: 10084528
+    packedSize: 36
+    offset: 10079824
+    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Gemstone.prefab
+  - fileID: 398
+    classID: 114
+    packedSize: 3524
+    offset: 10079864
+    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Super-Jumping.prefab
+  - fileID: 399
+    classID: 114
+    packedSize: 180
+    offset: 10083392
     sourceAssetGUID: 473e704508a20364bbdf6fed81a536c6
     buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
       Objects/Interactable-Herb.prefab
+  - fileID: 400
+    classID: 114
+    packedSize: 5160
+    offset: 10083576
+    sourceAssetGUID: f395b87c385cec74b959caf8f8829827
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Berry.prefab
+  - fileID: 401
+    classID: 114
+    packedSize: 180
+    offset: 10088736
+    sourceAssetGUID: bfa6dd46b19d98746ba5591a3a625d55
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Gemstone.prefab
+  - fileID: 402
+    classID: 114
+    packedSize: 36
+    offset: 10088920
+    sourceAssetGUID: d976f93e89f889748a65a4466c6ea118
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Super-Jumping.prefab
+  - fileID: 403
+    classID: 114
+    packedSize: 36
+    offset: 10088960
+    sourceAssetGUID: fc1e8add40597e2408e24f9746129483
+    buildTimeAssetPath: Assets/UdonSharp/PrefabBuild/Assets/PXR 2024/Prefabs/Interactable
+      Objects/Interactable-Potion-Wall-Breaking.prefab
+--- !u!1126 &6573889622748966279
+PackedAssets:
+  m_File: 4
+  m_ShortPath: CAB-272ad1682f08ca2319d24b4ddad3876a
+  m_Overhead: 4096
+  m_Contents:
+  - fileID: 1
+    classID: 142
+    packedSize: 104
+    offset: 4096
+    sourceAssetGUID: 00000000000000000000000000000000
+    buildTimeAssetPath: AssetBundle Object
+  - fileID: 2
+    classID: 290
+    packedSize: 128
+    offset: 4200
+    sourceAssetGUID: 00000000000000000000000000000000
+    buildTimeAssetPath: 'Built-in AssetBundleManifest: AssetBundleManifest'
+--- !u!382020655 &7253888143602738882
+PluginBuildInfo:
+  m_RuntimePlugins:
+  - Unity.Burst.Unsafe
+  - VRC.SDK3.Dynamics.PhysBone
+  - OVRPlugin
+  - YamlDotNet
+  - System.Threading.Tasks.Extensions
+  - VRC.Udon.ClientBindings
+  - openvr_api
+  - portmidi
+  - VRC.Udon.VRCWrapperModules
+  - VRCSDK3
+  - VRC.Udon.VM
+  - Serilog
+  - nunit.framework
+  - SemanticVersioning
+  - librsync.net
+  - VRC.Udon.Common
+  - VRC.SDK3.Dynamics.Contact
+  - Collections.Pooled
+  - System.Collections.Immutable
+  - SDKBase-Legacy
+  - System.Numerics.Vectors
+  - System.Buffers
+  - VRC.Dynamics
+  - VRC.Udon.Wrapper
+  - Serilog.Sinks.File
+  - VRC.Udon.Security
+  - clipper_library
+  - VRC.Collections
+  - VRCSDKBase
+  - System.Runtime.CompilerServices.Unsafe
+  - vrc_image_loader
+  - libvrc_image_loader
+  - Newtonsoft.Json
+  - libopenvr_api
+  - Blake2Sharp
+  - System.Memory
+  - System.Text.Encoding.CodePages
+  - VRCCore-Editor
+  - VRC.Utility
+  - AudioPluginOculusSpatializer
+  m_EditorPlugins:
+  - ICSharpCode.SharpZipLib
+  - VRCSDK3-Editor
+  - Microsoft.CodeAnalysis
+  - VRC.Udon.VRCTypeResolverModules
+  - AppleEventIntegration
+  - liblz4Plastic
+  - Unity.Plastic.Newtonsoft.Json
+  - unityplastic
+  - VRC.Udon.Compiler
+  - System.Reflection.Metadata
+  - Microsoft.CodeAnalysis.CSharp
+  - VRC.Udon.UAssembly
+  - vpm-core-lib
+  - VRC.Udon.Graph
+  - UnityEditor.VR
+  - 0Harmony
+  - VRC.SDK3.Dynamics.PhysBone.Editor
+  - VRCSDKBase-Editor
+  - VRC.SDK3.Dynamics.Contact.Editor
+  - VRC.Udon.VRCGraphModules
+  - log4netPlastic
+  - VRC.Udon.EditorBindings
+  - zlib64Plastic
+  - Unity.Plastic.Antlr3.Runtime
+  - Serilog.Sinks.Unity3D
+  - lz4x64Plastic

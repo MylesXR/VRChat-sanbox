@@ -88,17 +88,13 @@ public class InteractableObjectManager : UdonSharpBehaviour
         UpdateOwner();
         DeactivateAllPotionPools();
 
-        // Initialize the potionPoolPlayerIds array with a fixed size
-        int maxPlayers = 100; // Example max player count; adjust as needed
+        int maxPlayers = 100; 
         potionPoolPlayerIds = new int[maxPlayers];
         for (int i = 0; i < potionPoolPlayerIds.Length; i++)
         {
             potionPoolPlayerIds[i] = -1; // Set unused slots to -1
         }
-
         debugMenu.Log("All potion pools have been deactivated for local player at scene start.");
-
-
     }
 
 
@@ -161,56 +157,63 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     #endregion
 
+    // Track potion active states by player index
+    private bool[] isPotionActive = new bool[100]; // Assuming max 100 players
+
+
     #region On Player Join and Leave
 
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         if (localPlayer == Networking.LocalPlayer)
         {
+            // Get player index for potion visibility check
             int assignedIndex = FindAssignedIndex(player.playerId);
-
             if (assignedIndex == -1)
             {
+                DeactivateInactivePotionsForNewPlayer(player);
                 AssignPotionPool(player);
             }
+        }
+    }
 
-            foreach (VRCObjectPool pool in wallBreakerPotionPool)
+    // Method to deactivate only inactive potions for newly joined player
+    private void DeactivateInactivePotionsForNewPlayer(VRCPlayerApi newPlayer)
+    {
+        foreach (var pool in new[] { wallBreakerPotionPool, superJumpPotionPool, waterWalkingPotionPool })
+        {
+            foreach (var potionPool in pool)
             {
-                foreach (GameObject potion in pool.Pool)
+                foreach (var potion in potionPool.Pool)
                 {
-                    PotionCollisionHandler collisionHandler = potion.GetComponent<PotionCollisionHandler>();
-                    if (collisionHandler != null)
+                    // Set inactive potions to be invisible for new player
+                    if (!potion.activeSelf)
                     {
-                        collisionHandler.SyncPotionState();
-                    }
-                }
-            }
-
-            foreach (VRCObjectPool pool in superJumpPotionPool)
-            {
-                foreach (GameObject potion in pool.Pool)
-                {
-                    PotionCollisionHandler collisionHandler = potion.GetComponent<PotionCollisionHandler>();
-                    if (collisionHandler != null)
-                    {
-                        collisionHandler.SyncPotionState();
-                    }
-                }
-            }
-
-            foreach (VRCObjectPool pool in waterWalkingPotionPool)
-            {
-                foreach (GameObject potion in pool.Pool)
-                {
-                    PotionCollisionHandler collisionHandler = potion.GetComponent<PotionCollisionHandler>();
-                    if (collisionHandler != null)
-                    {
-                        collisionHandler.SyncPotionState();
+                        Networking.SetOwner(newPlayer, potion);
+                        potion.SetActive(false);
+                        DestroyPotion(potion);
                     }
                 }
             }
         }
     }
+
+    public void DestroyPotion(GameObject potion)
+    {
+        // Get the PotionCollisionHandler from the potion
+        PotionCollisionHandler potionHandler = potion.GetComponent<PotionCollisionHandler>();
+        if (potionHandler != null)
+        {
+            potionHandler.TriggerVFXandDestroy();  // Calls both VFX and destruction
+        }
+        else
+        {
+            debugMenu.Log("PotionCollisionHandler not found on the potion.");
+        }
+    }
+
+
+
 
     public override void OnPlayerLeft(VRCPlayerApi player)
     {
@@ -239,7 +242,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
     {
         VRCPlayerApi localPlayer = Networking.LocalPlayer;
 
-        // Reset and deactivate the Wall Breaker potion pool
         VRCObjectPool wallBreakerPool = GetWallBreakerPotionPool(index);
         if (wallBreakerPool != null)
         {
@@ -248,7 +250,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
             debugMenu.Log($"Wall Breaker pool at index {index} reset and fully deactivated.");
         }
 
-        // Do the same for Super Jump and Water Walking pools
         VRCObjectPool superJumpPool = GetSuperJumpPotionPool(index);
         if (superJumpPool != null)
         {
@@ -272,7 +273,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
         {
             if (obj != null && obj.activeSelf)
             {
-                obj.SetActive(false);  // Deactivate each object in the pool to reset visibility
+                obj.SetActive(false);  
             }
         }
     }

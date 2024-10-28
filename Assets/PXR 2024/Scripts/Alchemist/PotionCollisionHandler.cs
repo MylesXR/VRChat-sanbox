@@ -90,7 +90,8 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         }
 
         isDestroyed = true;
-        TriggerVFXandDestroy();
+        //TriggerVFXandDestroy();
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));
     }
 
 
@@ -183,34 +184,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     {
         SetKinematicState(false);
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(UpdateKinematicState));
-    }
-
-    #endregion
-
-    #region Networking
-
-    //public override void OnDeserialization()
-    //{
-    //    if (isDestroyed)
-    //    {
-    //        DestroyPotion();
-    //    }
-    //    else
-    //    {
-    //        UpdateKinematicState();
-    //    }
-    //}
-
-    public void SyncPotionState()
-    {
-        if (isDestroyed)
-        {
-            DestroyPotion(); // Ensure potion is deactivated for all players
-        }
-        else
-        {
-            UpdateKinematicState(); // Sync physical state if not destroyed
-        }
     }
 
     #endregion
