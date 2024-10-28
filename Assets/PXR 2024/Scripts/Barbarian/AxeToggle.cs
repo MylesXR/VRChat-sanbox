@@ -17,6 +17,7 @@ public class AxeToggle : UdonSharpBehaviour
 
     private bool hasBeenEnabled = false;
 
+    private bool isOwner = false;
     private VRCPlayerApi localPlayer;
 
     private int ownershipTransferCount = 0;
@@ -46,39 +47,41 @@ public class AxeToggle : UdonSharpBehaviour
 
         localPlayer = Networking.GetOwner(gameObject);
         // Start the enum for custom update cycle
+        localPlayer = Networking.LocalPlayer;
+        UpdateOwner();
         CustomUpdateSeconds();
     }
+    public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
+    {
+        UpdateOwner();
+    }
 
+    private void UpdateOwner()
+    {
+        isOwner = Networking.IsOwner(gameObject);
+    }
     void Update()
     {
-        if (Networking.IsOwner(gameObject)) // Check if the local player owns this object
+        // Early exit if the player is not the owner
+        if (!isOwner) return;
+
+        // Early exit if the toggle key hasn't been pressed
+        if (!Input.GetKeyDown(toggleKey)) return;
+
+        // If both conditions are met, then proceed to check the player class and toggle visibility
+        ToggleAxeVisibility();
+    }
+    private void ToggleAxeVisibility()
+    {
+        VRCPlayerApi localPlayer = Networking.LocalPlayer;
+        if (localPlayer != null)
         {
-
-            if (Input.GetKeyDown(toggleKey))
+            string playerClass = playerManager.GetPlayerClass(localPlayer);
+            if (playerClass == "Barbarian")
             {
-
-                // Check if the local player is a Barbarian
-                VRCPlayerApi localPlayer = Networking.LocalPlayer;
-                if (localPlayer != null)
-                {
-                    string playerClass = playerManager.GetPlayerClass(localPlayer);
-                    if (playerClass == "Barbarian")
-                    {
-                        Debug.Log("[AxeToggle] Player is a Barbarian. Toggling visibility.");
-
-                        // Toggle visibility locally and sync across network
-                        IsVisible = !IsVisible;
-
-                        // Request serialization to sync with other players
-                        RequestSerialization();
-                    }
-                    else
-                    {
-                        Debug.Log("[AxeToggle] Player is not a Barbarian. Visibility not changed.");
-                    }
-                }
+                IsVisible = !IsVisible;
+                RequestSerialization();
             }
-
         }
     }
 
@@ -122,19 +125,6 @@ public class AxeToggle : UdonSharpBehaviour
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         RequestSerialization();
-    }
-    public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
-    {
-        //ownershipTransferCount++;
-        //Debug.Log($"[AxeToggle] Ownership transferred to: {newOwner.displayName}. Transfer count: {ownershipTransferCount}");
-
-        //// Check if the transfer count exceeds 1
-        //if (ownershipTransferCount > 0)
-        //{
-        //    Debug.Log("[AxeToggle] Ownership transferred more than once. Destroying the object.");
-        //    Destroy(gameObject); // Destroy the game object
-        //    return;
-        //}
     }
 
     public override void OnPlayerLeft(VRCPlayerApi player)

@@ -21,6 +21,7 @@ public class TetherToggle : UdonSharpBehaviour
 
     private int ownershipTransferCount = 0;
 
+    private bool isOwner;
     [UdonSynced, FieldChangeCallback(nameof(IsVisibleTether))]
     private bool isVisibleTether = false;
     private bool IsVisibleTether
@@ -45,40 +46,42 @@ public class TetherToggle : UdonSharpBehaviour
         TetherObjectPC.SetActive(false);
 
         localPlayer = Networking.GetOwner(gameObject);
+        localPlayer = Networking.LocalPlayer;
+        UpdateOwner();
         // Start the enum for custom update cycle
         CustomUpdateSeconds();
     }
+    public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
+    {
+        UpdateOwner();
+    }
 
+    private void UpdateOwner()
+    {
+        isOwner = Networking.IsOwner(gameObject);
+    }
     void Update()
     {
-        if (Networking.IsOwner(gameObject)) // Check if the local player owns this object
+        // Early exit if the player is not the owner
+        if (!isOwner) return;
+
+        // Early exit if the toggle key hasn't been pressed
+        if (!Input.GetKeyDown(toggleKey)) return;
+
+        ToggleTetherVisibility();
+    }
+
+    private void ToggleTetherVisibility()
+    {
+        VRCPlayerApi localPlayer = Networking.LocalPlayer;
+        if (localPlayer != null)
         {
-
-            if (Input.GetKeyDown(toggleKey))
+            string playerClass = playerManager.GetPlayerClass(localPlayer);
+            if (playerClass == "Explorer")
             {
-
-                // Check if the local player is a Barbarian
-                VRCPlayerApi localPlayer = Networking.LocalPlayer;
-                if (localPlayer != null)
-                {
-                    string playerClass = playerManager.GetPlayerClass(localPlayer);
-                    if (playerClass == "Explorer")
-                    {
-                        Debug.Log("[TetherToggle] Player is a Explorer. Toggling visibility.");
-
-                        // Toggle visibility locally and sync across network
-                        IsVisibleTether = !IsVisibleTether;
-
-                        // Request serialization to sync with other players
-                        RequestSerialization();
-                    }
-                    else
-                    {
-                        Debug.Log("[TetherToggle] Player is not a Explorer. Visibility not changed.");
-                    }
-                }
+                IsVisibleTether = !IsVisibleTether;
+                RequestSerialization();
             }
-
         }
     }
 
@@ -122,19 +125,7 @@ public class TetherToggle : UdonSharpBehaviour
     {
         RequestSerialization();
     }
-    public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
-    {
-        //ownershipTransferCount++;
-        //Debug.Log($"[AxeToggle] Ownership transferred to: {newOwner.displayName}. Transfer count: {ownershipTransferCount}");
 
-        //// Check if the transfer count exceeds 1
-        //if (ownershipTransferCount > 0)
-        //{
-        //    Debug.Log("[AxeToggle] Ownership transferred more than once. Destroying the object.");
-        //    Destroy(gameObject); // Destroy the game object
-        //    return;
-        //}
-    }
 
     public override void OnPlayerLeft(VRCPlayerApi player)
     {
