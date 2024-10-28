@@ -5,6 +5,9 @@ using VRC.Udon.Common.Interfaces;
 
 public class InteractableObjectTracker : UdonSharpBehaviour
 {
+
+    #region Variables
+
     [Space(5)][Header("Interactable Items")]
     [SerializeField] GameObject Herb;
     [SerializeField] GameObject Flower;
@@ -26,9 +29,9 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     public InteractableObjectManager IOM; //must be public
     public VRC.SDK3.Components.VRCObjectSync objectSync; // Reference to VRC Object Sync
 
-
-
     private VRCPlayerApi localPlayer;
+
+    #endregion
 
     void Start()
     {
@@ -66,8 +69,8 @@ public class InteractableObjectTracker : UdonSharpBehaviour
         // Disable VRC Object Sync at the start
         if (objectSync != null)
         {
-            objectSync.enabled = false;
-            Debug.LogWarning("Object Synced OFF");
+            //objectSync.enabled = false;
+            //Debug.LogWarning("Object Synced OFF");
         }
     }
 
@@ -77,8 +80,8 @@ public class InteractableObjectTracker : UdonSharpBehaviour
         // Enable VRC Object Sync on pickup
         if (objectSync != null)
         {
-            objectSync.enabled = true;
-            Debug.LogWarning("Object Synced ON");
+            //objectSync.enabled = true;
+            //Debug.LogWarning("Object Synced ON");
         }
 
         // Handle item pickups
@@ -119,6 +122,7 @@ public class InteractableObjectTracker : UdonSharpBehaviour
             if (PotionWallBreakerRB != null)
             {
                 PotionWallBreakerRB.isKinematic = false;
+                
             }
         }
         else if (ItemType == "PotionSuperJumping")
@@ -126,6 +130,7 @@ public class InteractableObjectTracker : UdonSharpBehaviour
             if (PotionSuperJumpingRB != null)
             {
                 PotionSuperJumpingRB.isKinematic = false;
+                
             }
         }
         else if (ItemType == "PotionWaterWalking")
@@ -133,6 +138,7 @@ public class InteractableObjectTracker : UdonSharpBehaviour
             if (PotionWaterWalkingRB != null)
             {
                 PotionWaterWalkingRB.isKinematic = false;
+                
             }
         }
     }

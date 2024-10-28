@@ -6,25 +6,34 @@ using VRC.Udon.Common.Interfaces;
 
 public class PotionCollisionHandler : UdonSharpBehaviour
 {
-    [SerializeField] GameObject potionBreakVFX;
-    
+    #region Variables
+
     private GameObject objectToDestroy;
     private GameObject objectToActivate;
-
     private VRCPlayerApi localPlayer;
-    public DebugMenu debugMenu;
 
+    [SerializeField] GameObject potionBreakVFX;
+    public DebugMenu debugMenu;
+    public InteractableObjectTracker IOT;
+
+    public bool SuperJumpEnabled = false;
     [UdonSynced] public bool isKinematic = true;
     [UdonSynced] public bool shouldDestroy = false;
+    [UdonSynced] public bool isDestroyed = false; // Tracks if the potion is destroyed
 
-    public InteractableObjectTracker IOT;
-    public bool SuperJumpEnabled = false;
-  
+
+    #endregion
+
+    #region On Start
 
     private void Start()
     {
         localPlayer = Networking.LocalPlayer;
     }
+
+    #endregion
+
+    #region Set Object to Destroy & Activate
 
     public void SetObjectToDestroy(GameObject target)
     {
@@ -37,20 +46,21 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     public void SetObjectToActivate(GameObject target)
     {
-        objectToActivate = target;  // Assign the object to activate
+        objectToActivate = target; 
         if (debugMenu != null)
         {
             debugMenu.Log("Object to activate set to: " + objectToActivate.name);
         }
     }
 
-    public override void OnDeserialization()
+    #endregion
+
+    #region Set Kinematic State
+
+    public void SetKinematicState(bool state)
     {
+        isKinematic = state;
         UpdateKinematicState();
-        if (shouldDestroy)
-        {
-            DestroyPotion();
-        }
     }
 
     private void UpdateKinematicState()
@@ -68,6 +78,10 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         }
     }
 
+    #endregion
+
+    #region On Collision Enter
+
     private void OnCollisionEnter(Collision collision)
     {
         if (debugMenu != null)
@@ -75,49 +89,16 @@ public class PotionCollisionHandler : UdonSharpBehaviour
             debugMenu.Log("Potion has collided with: " + collision.gameObject.name);
         }
 
-        if (Networking.IsOwner(gameObject))
-        {
-            if (collision.gameObject == objectToDestroy)
-            {
-
-                if(IOT.ItemType == "PotionWallBreaking")
-                {
-                    Destroy(objectToDestroy);
-                    if (debugMenu != null)
-                    {
-                        debugMenu.Log("Potion collided with the destroyable object: " + objectToDestroy.name);
-                    }
-                }
-            }
-
-            if (IOT.ItemType == "PotionSuperJumping")
-            {
-
-                ActivateSuperJump();
-            }
-
-            if (IOT.ItemType == "PotionWaterWalking")
-            {
-                if (objectToActivate != null)
-                {
-                    objectToActivate.SetActive(true);  // Activate the object
-                    if (debugMenu != null)
-                    {
-                        debugMenu.Log("Water Walking Potion has activated the object: " + objectToActivate.name);
-                    }
-                }
-            }
-
-            TriggerVFXandDestroy();
-        }
+        isDestroyed = true;
+        //TriggerVFXandDestroy();
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));
     }
 
 
+    #endregion
 
+    #region Super Jump Effect
 
-
-
-   
     public void ActivateSuperJump()
     {
         SuperJumpEnabled = true;
@@ -131,38 +112,41 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         localPlayer.SetJumpImpulse(3);
     }
 
+    #endregion
 
 
 
-
-
-
-
-
-    public void TriggerVFXandDestroy ()
-    {
-        TriggerPotionBreakEffect();
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffectNetworked));
-        SetShouldDestroy(true);
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
-    }
-
-    public void SetKinematicState(bool state)
-    {
-        isKinematic = state;
-        RequestSerialization();
-        UpdateKinematicState();
-    }
+    #region Destroy Potions and Play VFX 
 
     public void SetShouldDestroy(bool state)
     {
         shouldDestroy = state;
-        RequestSerialization();
+
         if (state)
         {
-            DestroyPotion();
+            //DestroyPotion();  // Destroy locally
+            //SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
+            //SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));
         }
     }
+
+    public void TriggerVFXandDestroy()
+    {
+        // Ensure the local player is the owner before setting destruction state
+        if (!Networking.IsOwner(gameObject))
+        {
+            Networking.SetOwner(Networking.LocalPlayer, gameObject);
+        }
+
+    
+        TriggerPotionBreakEffect();
+        DestroyPotion();
+        isDestroyed = true;
+
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffect));
+    }
+
 
     private void TriggerPotionBreakEffect()
     {
@@ -173,24 +157,23 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         }
     }
 
-    public void TriggerPotionBreakEffectNetworked()
-    {
-        TriggerPotionBreakEffect();
-    }
-
     private void DestroyPotion()
     {
         if (debugMenu != null)
         {
             debugMenu.Log("Destroying potion.");
         }
-        gameObject.SetActive(false); // Deactivate the object instead of destroying it
+        gameObject.SetActive(false);
     }
 
     public void DestroyPotionNetworked()
     {
         DestroyPotion();
     }
+
+    #endregion
+
+    #region On Pickup & Drop
 
     public override void OnPickup()
     {
@@ -202,4 +185,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         SetKinematicState(false);
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(UpdateKinematicState));
     }
+
+    #endregion
 }
