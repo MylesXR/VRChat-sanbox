@@ -100,7 +100,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
                 Networking.SetOwner(Networking.LocalPlayer, spawnedPotion);
                 syncedPotionPosition = PotionsSpawnPoint.position;
                 syncedPotionRotation = PotionsSpawnPoint.rotation;
-                RequestSerialization();
+                //RequestSerialization();
 
                 SetPotionTransform(spawnedPotion);
                 AddActivePotion(spawnedPotion);
@@ -211,7 +211,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
                 Networking.SetOwner(Networking.LocalPlayer, spawnedPotion);
                 syncedPotionPosition = PotionsSpawnPoint.position;
                 syncedPotionRotation = PotionsSpawnPoint.rotation;
-                RequestSerialization();
+                //RequestSerialization();
 
                 SetPotionTransform(spawnedPotion);
                 AddActivePotion(spawnedPotion);
@@ -321,7 +321,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
                 Networking.SetOwner(Networking.LocalPlayer, spawnedPotion);
                 syncedPotionPosition = PotionsSpawnPoint.position;
                 syncedPotionRotation = PotionsSpawnPoint.rotation;
-                RequestSerialization();
+               // RequestSerialization();
 
                 SetPotionTransform(spawnedPotion);
                 AddActivePotion(spawnedPotion);
@@ -389,22 +389,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         IOM.PotionWaterWalkingCollected--;
         IOM.UpdateUI();
         debugMenu.Log("WATER WALKING POTION SPAWNED");
-    }
-
-    #endregion
-
-    #region Destroy Potion
-
-    public void NetworkDestroyPotion(GameObject potion)
-    {
-        if (potion == null) return;
-
-        // Return to the pool or deactivate the potion
-        PotionCollisionHandler potionHandler = potion.GetComponent<PotionCollisionHandler>();
-        if (potionHandler != null)
-        {
-            potionHandler.DestroyPotionNetworked();
-        }
     }
 
     #endregion

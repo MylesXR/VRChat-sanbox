@@ -3,7 +3,6 @@ using UnityEngine;
 using TMPro;
 using VRC.SDKBase;
 using VRC.SDK3.Components;
-using System.Reflection;
 
 public class InteractableObjectManager : UdonSharpBehaviour
 {
@@ -186,11 +185,32 @@ public class InteractableObjectManager : UdonSharpBehaviour
                     }
                 }
             }
+
+            foreach (VRCObjectPool pool in superJumpPotionPool)
+            {
+                foreach (GameObject potion in pool.Pool)
+                {
+                    PotionCollisionHandler collisionHandler = potion.GetComponent<PotionCollisionHandler>();
+                    if (collisionHandler != null)
+                    {
+                        collisionHandler.SyncPotionState();
+                    }
+                }
+            }
+
+            foreach (VRCObjectPool pool in waterWalkingPotionPool)
+            {
+                foreach (GameObject potion in pool.Pool)
+                {
+                    PotionCollisionHandler collisionHandler = potion.GetComponent<PotionCollisionHandler>();
+                    if (collisionHandler != null)
+                    {
+                        collisionHandler.SyncPotionState();
+                    }
+                }
+            }
         }
     }
-
-
-
 
     public override void OnPlayerLeft(VRCPlayerApi player)
     {
@@ -210,10 +230,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
             }
         }
     }
-
-
-
-
 
     #endregion
 

@@ -46,7 +46,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     public void SetObjectToActivate(GameObject target)
     {
-        objectToActivate = target;  // Assign the object to activate
+        objectToActivate = target; 
         if (debugMenu != null)
         {
             debugMenu.Log("Object to activate set to: " + objectToActivate.name);
@@ -60,7 +60,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public void SetKinematicState(bool state)
     {
         isKinematic = state;
-        RequestSerialization();
         UpdateKinematicState();
     }
 
@@ -90,25 +89,8 @@ public class PotionCollisionHandler : UdonSharpBehaviour
             debugMenu.Log("Potion has collided with: " + collision.gameObject.name);
         }
 
-        if (Networking.IsOwner(gameObject))
-        {
-            if (collision.gameObject == objectToDestroy)
-            {
-                if (IOT.ItemType == "PotionWallBreaking")
-                {
-                    Destroy(objectToDestroy);
-                    if (debugMenu != null)
-                    {
-                        debugMenu.Log("Potion collided with the destroyable object: " + objectToDestroy.name);
-                    }
-                }
-            }
-
-            // Set destruction flags and request serialization for sync
-            isDestroyed = true;
-            TriggerVFXandDestroy();
-            RequestSerialization(); // Ensure all clients receive the updated state
-        }
+        isDestroyed = true;
+        TriggerVFXandDestroy();
     }
 
 
@@ -131,19 +113,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     #endregion
 
-    public void SyncPotionState()
-    {
-        if (isDestroyed)
-        {
-            DestroyPotionNetworked();
-        }
-        else
-        {
-            UpdateKinematicState();
-        }
-    }
-
-
 
 
     #region Destroy Potions and Play VFX 
@@ -151,29 +120,31 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public void SetShouldDestroy(bool state)
     {
         shouldDestroy = state;
-        RequestSerialization();
 
         if (state)
         {
-            DestroyPotion();  // Destroy locally
-            SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
+            //DestroyPotion();  // Destroy locally
+            //SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
+            //SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));
         }
     }
 
-
-
-
-
     public void TriggerVFXandDestroy()
     {
-        TriggerPotionBreakEffect();
-        isDestroyed = true; // Set destruction flag for sync
-        SetShouldDestroy(true); // Local destruction
-        RequestSerialization(); // Ensure network synchronization
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffectNetworked));
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
-    }
+        // Ensure the local player is the owner before setting destruction state
+        if (!Networking.IsOwner(gameObject))
+        {
+            Networking.SetOwner(Networking.LocalPlayer, gameObject);
+        }
 
+    
+        TriggerPotionBreakEffect();
+        DestroyPotion();
+        isDestroyed = true;
+
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffect));
+    }
 
 
     private void TriggerPotionBreakEffect()
@@ -185,24 +156,18 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         }
     }
 
-    public void TriggerPotionBreakEffectNetworked()
-    {
-        TriggerPotionBreakEffect();
-    }
-
     private void DestroyPotion()
     {
         if (debugMenu != null)
         {
             debugMenu.Log("Destroying potion.");
         }
-        gameObject.SetActive(false); // Deactivate the object instead of destroying it        
+        gameObject.SetActive(false);
     }
 
     public void DestroyPotionNetworked()
     {
         DestroyPotion();
-        gameObject.SetActive(false);  // Ensure the potion is deactivated for all players
     }
 
     #endregion
@@ -224,15 +189,27 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     #region Networking
 
-    public override void OnDeserialization()
+    //public override void OnDeserialization()
+    //{
+    //    if (isDestroyed)
+    //    {
+    //        DestroyPotion();
+    //    }
+    //    else
+    //    {
+    //        UpdateKinematicState();
+    //    }
+    //}
+
+    public void SyncPotionState()
     {
         if (isDestroyed)
         {
-            DestroyPotion();  // Immediately deactivate if potion is marked destroyed
+            DestroyPotion(); // Ensure potion is deactivated for all players
         }
         else
         {
-            UpdateKinematicState();
+            UpdateKinematicState(); // Sync physical state if not destroyed
         }
     }
 
