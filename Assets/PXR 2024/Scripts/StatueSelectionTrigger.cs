@@ -11,6 +11,10 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
     public Bobys_WorldPortalSystem Bobys_WorldPortalSystem;
     public PlayerManager playerManager;
 
+    [SerializeField] GameObject explorerText;
+    [SerializeField] GameObject barbarianText;
+    [SerializeField] GameObject alchemistText;
+
     public int thisObjectValue;
 
     private void Start()
@@ -18,6 +22,9 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
         explorer.SetActive(false);
         barbarian.SetActive(false);
         alchemist.SetActive(false);
+        alchemistText.SetActive(false);
+        explorerText.SetActive(false);
+        barbarianText.SetActive(false);
     }
 
     public override void OnPlayerTriggerEnter(VRCPlayerApi player)
@@ -28,6 +35,16 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
         }
     }
 
+    public override void OnPlayerTriggerExit(VRCPlayerApi player)
+    {
+        if (player.isLocal)
+        {
+            alchemistText.SetActive(false);
+            explorerText.SetActive(false);
+            barbarianText.SetActive(false);
+        }
+    }
+
     public void ToggleObject(VRCPlayerApi player)
     {
         if (player.isLocal)
@@ -35,14 +52,23 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
             if (thisObjectValue == 1)
             {
                 SetClass("Explorer", explorer, player);
+                explorerText.SetActive(true);
+                barbarianText.SetActive(false);
+                alchemistText.SetActive(false);
             }
             else if (thisObjectValue == 2)
             {
                 SetClass("Barbarian", barbarian, player);
+                barbarianText.SetActive(true);
+                alchemistText.SetActive(false);
+                explorerText.SetActive(false);
             }
             else if (thisObjectValue == 3)
             {
                 SetClass("Alchemist", alchemist, player);
+                alchemistText.SetActive(true);
+                explorerText.SetActive(false);
+                barbarianText.SetActive(false);
             }
         }
     }
@@ -56,6 +82,9 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
         explorer.SetActive(false);
         barbarian.SetActive(false);
         alchemist.SetActive(false);
+        alchemistText.SetActive(false);
+        explorerText.SetActive(false);
+        barbarian.SetActive(false);
 
         classObject.SetActive(true);
         Bobys_WorldPortalSystem.ClassType = className;
