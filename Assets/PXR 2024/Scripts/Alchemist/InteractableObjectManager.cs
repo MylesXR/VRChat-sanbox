@@ -169,16 +169,19 @@ public class InteractableObjectManager : UdonSharpBehaviour
         {
             int assignedIndex = FindAssignedIndex(player.playerId);
 
+            DeactivateInactivePotionsForNewPlayer(player);
+            DisablePotionsLocally();
+
             // Destroy previous potion pool if assigned
             if (assignedIndex != -1)
             {
                 ResetAndDeactivatePools(assignedIndex);
+                //DeactivateInactivePotionsForNewPlayer(player);
                 potionPoolPlayerIds[assignedIndex] = -1; // Mark as unassigned
             }
 
             // Assign new potion pool for the player
-            DisablePotionsLocally();
-            DeactivateInactivePotionsForNewPlayer(player);
+
             AssignPotionPool(player);
             debugMenu.Log($"Player {player.displayName} joined, reset and assigned new potion pool.");
         }
@@ -231,15 +234,10 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     public void DestroyPotion(GameObject potion)
     {
-        // Get the PotionCollisionHandler from the potion
         PotionCollisionHandler potionHandler = potion.GetComponent<PotionCollisionHandler>();
         if (potionHandler != null)
         {
             potionHandler.TriggerVFXandDestroy();  // Calls both VFX and destruction
-        }
-        else
-        {
-            debugMenu.Log("PotionCollisionHandler not found on the potion.");
         }
     }
 
@@ -256,6 +254,8 @@ public class InteractableObjectManager : UdonSharpBehaviour
             {
                 potionPoolPlayerIds[playerIndex] = -1;
                 ResetAndDeactivatePools(playerIndex);
+                DeactivateInactivePotionsForNewPlayer(player);
+                DisablePotionsLocally();
                 debugMenu.Log($"Player {player.displayName} left, cleared pool index {playerIndex}");
             }
             else
