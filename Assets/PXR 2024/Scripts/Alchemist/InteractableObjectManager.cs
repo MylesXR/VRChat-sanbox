@@ -167,15 +167,46 @@ public class InteractableObjectManager : UdonSharpBehaviour
     {
         if (localPlayer == Networking.LocalPlayer)
         {
-            // Get player index for potion visibility check
             int assignedIndex = FindAssignedIndex(player.playerId);
-            if (assignedIndex == -1)
+
+            // Destroy previous potion pool if assigned
+            if (assignedIndex != -1)
             {
-                DeactivateInactivePotionsForNewPlayer(player);
-                AssignPotionPool(player);
+                ResetAndDeactivatePools(assignedIndex);
+                potionPoolPlayerIds[assignedIndex] = -1; // Mark as unassigned
+            }
+
+            // Assign new potion pool for the player
+            DisablePotionsLocally();
+            DeactivateInactivePotionsForNewPlayer(player);
+            AssignPotionPool(player);
+            debugMenu.Log($"Player {player.displayName} joined, reset and assigned new potion pool.");
+        }
+    }
+
+    private void DisablePotionsLocally()
+    {
+        VRCObjectPool[] allPotionPools = new VRCObjectPool[] {
+            GetWallBreakerPotionPool(0), GetSuperJumpPotionPool(0), GetWaterWalkingPotionPool(0),
+            GetWallBreakerPotionPool(1), GetSuperJumpPotionPool(1), GetWaterWalkingPotionPool(1),
+            // Add additional entries as needed for each pool index
+        };
+
+        foreach (var pool in allPotionPools)
+        {
+            if (pool != null)
+            {
+                foreach (var potion in pool.Pool)
+                {
+                    if (potion != null && potion.activeSelf)
+                    {
+                        potion.SetActive(false); // Disable potion locally only
+                    }
+                }
             }
         }
     }
+
 
     // Method to deactivate only inactive potions for newly joined player
     private void DeactivateInactivePotionsForNewPlayer(VRCPlayerApi newPlayer)
