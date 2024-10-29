@@ -163,7 +163,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             potionRigidbody.angularVelocity = Vector3.zero;  // Reset angular velocity
 
             //potionHandler.SetKinematicState(false);
-            potionHandler.SetShouldDestroy(false);
+            //potionHandler.SetShouldDestroy(false);
         }
 
         IOM.PotionWallBreakingCollected--;
@@ -273,7 +273,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             potionRigidbody.angularVelocity = Vector3.zero;
 
             // potionHandler.SetKinematicState(false);
-            potionHandler.SetShouldDestroy(false);
+            //potionHandler.SetShouldDestroy(false);
         }
 
         IOM.PotionSuperJumpingCollected--;
@@ -383,7 +383,7 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             potionRigidbody.angularVelocity = Vector3.zero;
 
             //potionHandler.SetKinematicState(false);
-            potionHandler.SetShouldDestroy(false);
+            //potionHandler.SetShouldDestroy(false);
         }
 
         IOM.PotionWaterWalkingCollected--;

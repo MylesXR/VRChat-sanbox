@@ -18,7 +18,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     public bool SuperJumpEnabled = false;
     [UdonSynced] public bool isKinematic = true;
-    [UdonSynced] public bool shouldDestroy = false;
+    //[UdonSynced] public bool shouldDestroy = false;
     [UdonSynced] public bool isDestroyed = false; // Tracks if the potion is destroyed
 
 
@@ -33,24 +33,17 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     #endregion
 
-    #region Set Object to Destroy & Activate
+    #region On Pickup & Drop
 
-    public void SetObjectToDestroy(GameObject target)
+    public override void OnPickup()
     {
-        objectToDestroy = target;
-        if (debugMenu != null)
-        {
-            debugMenu.Log("Object to destroy set to: " + objectToDestroy.name);
-        }
+        SetKinematicState(true);
     }
 
-    public void SetObjectToActivate(GameObject target)
+    public override void OnDrop()
     {
-        objectToActivate = target; 
-        if (debugMenu != null)
-        {
-            debugMenu.Log("Object to activate set to: " + objectToActivate.name);
-        }
+        SetKinematicState(false);
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(UpdateKinematicState));
     }
 
     #endregion
@@ -70,11 +63,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         {
             potionRigidbody.isKinematic = isKinematic;
             potionRigidbody.useGravity = !isKinematic;
-
-            if (debugMenu != null)
-            {
-                debugMenu.Log("Potion Rigidbody settings updated after deserialization: isKinematic = " + isKinematic);
-            }
         }
     }
 
@@ -88,78 +76,32 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         {
             debugMenu.Log("Potion has collided with: " + collision.gameObject.name);
         }
-        if (IOT.ItemType == "PotionWallBreaking")
-        {
 
-        }
-        else if (IOT.ItemType == "PotionSuperJumping")
+        if (IOT.ItemType == "PotionSuperJumping")
         {
-            ActivateSuperJump();
-        }
-        else if (IOT.ItemType == "PotionWaterWalking")
-        {
-
+            ActivateSuperJump();          
         }
 
-
-        isDestroyed = true;
-        //TriggerVFXandDestroy();
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));
     }
 
-
     #endregion
-
-    #region Super Jump Effect
-
-    public void ActivateSuperJump()
-    {
-        SuperJumpEnabled = true;
-        localPlayer.SetJumpImpulse(15);
-        SendCustomEventDelayedSeconds(nameof(DeactivateSuperJump), 10f);
-    }
-
-    public void DeactivateSuperJump()
-    {
-        SuperJumpEnabled = false;
-        localPlayer.SetJumpImpulse(3);
-    }
-
-    #endregion
-
-
 
     #region Destroy Potions and Play VFX 
 
-    public void SetShouldDestroy(bool state)
-    {
-        shouldDestroy = state;
-
-        if (state)
-        {
-            //DestroyPotion();  // Destroy locally
-            //SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
-            //SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));
-        }
-    }
-
     public void TriggerVFXandDestroy()
     {
-        // Ensure the local player is the owner before setting destruction state
-        if (!Networking.IsOwner(gameObject))
-        {
-            Networking.SetOwner(Networking.LocalPlayer, gameObject);
-        }
-
-    
-        TriggerPotionBreakEffect();
-        DestroyPotion();
         isDestroyed = true;
 
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotionNetworked));
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffect));
-    }
+        if (localPlayer == Networking.LocalPlayer)
+        {
+            TriggerPotionBreakEffect();
+            DestroyPotion();
+        }
 
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffect));
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotion));
+    }
 
     private void TriggerPotionBreakEffect()
     {
@@ -179,24 +121,27 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         gameObject.SetActive(false);
     }
 
-    public void DestroyPotionNetworked()
-    {
-        DestroyPotion();
-    }
-
     #endregion
 
-    #region On Pickup & Drop
+    #region Super Jump Effect
 
-    public override void OnPickup()
+    public void ActivateSuperJump()
     {
-        SetKinematicState(true);
+        if (localPlayer == Networking.LocalPlayer)
+        {
+            SuperJumpEnabled = true;
+            localPlayer.SetJumpImpulse(15);
+            SendCustomEventDelayedSeconds(nameof(DeactivateSuperJump), 10f);
+        }
     }
 
-    public override void OnDrop()
+    public void DeactivateSuperJump()
     {
-        SetKinematicState(false);
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(UpdateKinematicState));
+        if (localPlayer == Networking.LocalPlayer)
+        {
+            SuperJumpEnabled = false;
+            localPlayer.SetJumpImpulse(3);
+        }
     }
 
     #endregion
