@@ -88,6 +88,19 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         {
             debugMenu.Log("Potion has collided with: " + collision.gameObject.name);
         }
+        if (IOT.ItemType == "PotionWallBreaking")
+        {
+
+        }
+        else if (IOT.ItemType == "PotionSuperJumping")
+        {
+            ActivateSuperJump();
+        }
+        else if (IOT.ItemType == "PotionWaterWalking")
+        {
+
+        }
+
 
         isDestroyed = true;
         //TriggerVFXandDestroy();

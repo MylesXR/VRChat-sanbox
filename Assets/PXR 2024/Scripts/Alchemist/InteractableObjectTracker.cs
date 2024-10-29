@@ -80,8 +80,8 @@ public class InteractableObjectTracker : UdonSharpBehaviour
         // Enable VRC Object Sync on pickup
         if (objectSync != null)
         {
-            //objectSync.enabled = true;
-            //Debug.LogWarning("Object Synced ON");
+            objectSync.enabled = true;
+            Debug.LogWarning("Object Synced ON");
         }
 
         // Handle item pickups
