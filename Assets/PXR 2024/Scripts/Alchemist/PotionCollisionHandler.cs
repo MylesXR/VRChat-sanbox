@@ -7,18 +7,15 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 {
     #region Variables
 
-    private GameObject objectToDestroy;
-    private GameObject objectToActivate;
     private VRCPlayerApi localPlayer;
+    private bool SuperJumpEnabled = false;
 
     [SerializeField] GameObject potionBreakVFX;
     public DebugMenu debugMenu;
     public InteractableObjectTracker IOT;
-
-    private bool SuperJumpEnabled = false;
+  
     [UdonSynced] public bool isKinematic = true;
     [UdonSynced] public bool isDestroyed = false; // Tracks if the potion is destroyed
-
 
     #endregion
 
@@ -27,6 +24,19 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     private void Start()
     {
         localPlayer = Networking.LocalPlayer;
+    }
+
+    public override void OnPlayerJoined(VRCPlayerApi player)
+    {
+        // Explicitly enforce destroyed state for newly joined players
+        if (isDestroyed)
+        {
+            DestroyPotion();
+            if (debugMenu != null)
+            {
+                debugMenu.Log($"PotionCollisionHandler: OnPlayerJoined - Destroying potion for new player: {player.displayName}");
+            }
+        }
     }
 
     #endregion
@@ -66,14 +76,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     #endregion
 
-    public override void OnDeserialization()
-    {
-        if (isDestroyed == true)
-        {
-            DestroyPotion();
-        }
-    }
-
     #region On Collision Enter
 
     private void OnCollisionEnter(Collision collision)
@@ -83,8 +85,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
             ActivateSuperJump();          
         }
 
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));
-        OnDeserialization();
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));      
     }
 
     #endregion
@@ -94,17 +95,12 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public void TriggerVFXandDestroy()
     {
         isDestroyed = true;
-        RequestSerialization();
 
-        if (localPlayer == Networking.LocalPlayer)
+        if (Networking.LocalPlayer == VRC.SDKBase.Networking.LocalPlayer)
         {
             TriggerPotionBreakEffect();
             DestroyPotion();
         }
-
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffect));
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotion));
-        OnDeserialization();
     }
 
     private void TriggerPotionBreakEffect()
@@ -148,7 +144,5 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         }
     }
 
-    #endregion
-
-    
+    #endregion   
 }

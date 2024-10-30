@@ -64,22 +64,10 @@ public class InteractableObjectTracker : UdonSharpBehaviour
                 PotionWaterWalkingRB.isKinematic = true;
             }
         }
-
-        //if (objectSync != null)
-        //{
-        //    objectSync.enabled = false;
-        //    Debug.LogWarning("Object Synced OFF");
-        //}
     }
 
     public override void OnPickup() 
     {
-
-        //if (objectSync != null)
-        //{
-        //    objectSync.enabled = true;
-        //    Debug.LogWarning("Object Synced ON");
-        //}
 
         if (ItemType == "Herb")
         {
