@@ -1,7 +1,6 @@
 ﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon;
 using VRC.Udon.Common.Interfaces;
 
 public class PotionCollisionHandler : UdonSharpBehaviour
@@ -16,9 +15,8 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public DebugMenu debugMenu;
     public InteractableObjectTracker IOT;
 
-    public bool SuperJumpEnabled = false;
+    private bool SuperJumpEnabled = false;
     [UdonSynced] public bool isKinematic = true;
-    //[UdonSynced] public bool shouldDestroy = false;
     [UdonSynced] public bool isDestroyed = false; // Tracks if the potion is destroyed
 
 
@@ -68,21 +66,25 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     #endregion
 
+    public override void OnDeserialization()
+    {
+        if (isDestroyed == true)
+        {
+            DestroyPotion();
+        }
+    }
+
     #region On Collision Enter
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (debugMenu != null)
-        {
-            debugMenu.Log("Potion has collided with: " + collision.gameObject.name);
-        }
-
         if (IOT.ItemType == "PotionSuperJumping")
         {
             ActivateSuperJump();          
         }
 
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));
+        OnDeserialization();
     }
 
     #endregion
@@ -92,6 +94,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public void TriggerVFXandDestroy()
     {
         isDestroyed = true;
+        RequestSerialization();
 
         if (localPlayer == Networking.LocalPlayer)
         {
@@ -101,6 +104,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerPotionBreakEffect));
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DestroyPotion));
+        OnDeserialization();
     }
 
     private void TriggerPotionBreakEffect()
@@ -145,4 +149,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     }
 
     #endregion
+
+    
 }

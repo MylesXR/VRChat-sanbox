@@ -161,9 +161,6 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             potionRigidbody.isKinematic = true;  // Ensure the potion is kinematic when first spawned
             potionRigidbody.velocity = Vector3.zero;  // Reset velocity
             potionRigidbody.angularVelocity = Vector3.zero;  // Reset angular velocity
-
-            //potionHandler.SetKinematicState(false);
-            //potionHandler.SetShouldDestroy(false);
         }
 
         IOM.PotionWallBreakingCollected--;

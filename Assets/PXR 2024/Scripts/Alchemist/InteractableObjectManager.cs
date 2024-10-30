@@ -175,6 +175,11 @@ public class InteractableObjectManager : UdonSharpBehaviour
             AssignPotionPool(player);
             debugMenu.Log($"Player {player.displayName} joined and was assigned a new potion pool.");
         }
+
+        if (localPlayer != Networking.LocalPlayer)
+        {
+           ResetAndDeactivatePools(assignedIndex); // Reset and deactivate the pool for this index
+        }
     }
 
     public override void OnPlayerLeft(VRCPlayerApi player)
@@ -189,6 +194,11 @@ public class InteractableObjectManager : UdonSharpBehaviour
                 ResetAndDeactivatePools(playerIndex);
                 debugMenu.Log($"Player {player.displayName} left, cleared pool index {playerIndex}");
             }
+        }
+
+        if (localPlayer != Networking.LocalPlayer)
+        {
+            ResetAndDeactivatePools(playerIndex); // Reset and deactivate the pool for this index
         }
 
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(ResetAndDeactivatePools));
