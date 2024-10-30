@@ -13,6 +13,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     [SerializeField] GameObject potionBreakVFX;
     public DebugMenu debugMenu;
     public InteractableObjectTracker IOT;
+    public InteractableObjectManager IOM;
   
     [UdonSynced] public bool isKinematic = true;
     [UdonSynced] public bool isDestroyed = false; // Tracks if the potion is destroyed
@@ -29,13 +30,10 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
         // Explicitly enforce destroyed state for newly joined players
-        if (isDestroyed)
+        if (isDestroyed == true)
         {
             DestroyPotion();
-            if (debugMenu != null)
-            {
-                debugMenu.Log($"PotionCollisionHandler: OnPlayerJoined - Destroying potion for new player: {player.displayName}");
-            }
+            debugMenu.Log($"PotionCollisionHandler: OnPlayerJoined - Destroying potion for new player: {player.displayName}");
         }
     }
 
@@ -95,12 +93,8 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public void TriggerVFXandDestroy()
     {
         isDestroyed = true;
-
-        if (Networking.LocalPlayer == VRC.SDKBase.Networking.LocalPlayer)
-        {
-            TriggerPotionBreakEffect();
-            DestroyPotion();
-        }
+        TriggerPotionBreakEffect();
+        DestroyPotion();      
     }
 
     private void TriggerPotionBreakEffect()
@@ -116,9 +110,18 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     {
         if (debugMenu != null)
         {
-            debugMenu.Log("Destroying potion.");
+            debugMenu.Log("PotionCollisionHandler: Requesting potion destruction.");
         }
-        gameObject.SetActive(false);
+
+        if (IOM != null)
+        {
+            // Assuming Networking.LocalPlayer is the player who owns this potion
+            IOM.DestroyPotion(gameObject, Networking.LocalPlayer.playerId, IOT.ItemType);
+        }
+        else
+        {
+            debugMenu.LogError("InteractableObjectManager reference is missing.");
+        }
     }
 
     #endregion

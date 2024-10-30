@@ -45,6 +45,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
     [SerializeField] private VRCObjectPool[] wallBreakerPotionPool;
     [SerializeField] private VRCObjectPool[] superJumpPotionPool;
     [SerializeField] private VRCObjectPool[] waterWalkingPotionPool;
+    public int[] potionPoolPlayerIds;
 
     [Space(5)][Header("Potion Crafting Bools")][Space(10)]  
     public bool CraftPotionWallBreaking;
@@ -52,7 +53,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
     public bool CraftPotionWaterWalking;
 
     private int playerIndex;
-    public int[] potionPoolPlayerIds;
+    
 
     public bool isOwner;
 
@@ -87,7 +88,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
         localPlayer = Networking.LocalPlayer;
         UpdateUI();
         UpdateOwner();
-        DeactivateAllPotionPools();
 
         int maxPlayers = 100; 
         potionPoolPlayerIds = new int[maxPlayers];
@@ -97,54 +97,6 @@ public class InteractableObjectManager : UdonSharpBehaviour
         }
         debugMenu.Log("All potion pools have been deactivated for local player at scene start.");
     }
-
-
-    private void DeactivateAllPotionPools()
-    {
-        // Deactivate all Wall Breaker potion pool objects
-        foreach (var pool in wallBreakerPotionPool)
-        {
-            if (pool != null)
-            {
-                DeactivateAllPoolObjects(pool);
-                pool.gameObject.SetActive(false);
-            }
-        }
-
-        // Deactivate all Super Jump potion pool objects
-        foreach (var pool in superJumpPotionPool)
-        {
-            if (pool != null)
-            {
-                DeactivateAllPoolObjects(pool);
-                pool.gameObject.SetActive(false);
-            }
-        }
-
-        // Deactivate all Water Walking potion pool objects
-        foreach (var pool in waterWalkingPotionPool)
-        {
-            if (pool != null)
-            {
-                DeactivateAllPoolObjects(pool);
-                pool.gameObject.SetActive(false);
-            }
-        }
-    }
-
-
-    private int FindAssignedIndex(int playerId)
-    {
-        for (int i = 0; i < potionPoolPlayerIds.Length; i++)
-        {
-            if (potionPoolPlayerIds[i] == playerId)
-            {
-                return i; // Return the assigned index if found
-            }
-        }
-        return -1; // Return -1 if no assigned index is found
-    }
-
 
     public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
     {
@@ -164,106 +116,8 @@ public class InteractableObjectManager : UdonSharpBehaviour
     {
         if (localPlayer == Networking.LocalPlayer)
         {
-            DeactivateAllPotionPools();
-            DestroyAllDestroyedPotions();
             AssignPotionPool(player);
             debugMenu.Log($"Player {player.displayName} joined and was assigned a new potion pool.");
-
-            // Enforce proper state of potions for the new player
-            foreach (VRCObjectPool pool in wallBreakerPotionPool)
-            {
-                EnforcePotionOwnershipAndState(pool);
-            }
-            foreach (VRCObjectPool pool in superJumpPotionPool)
-            {
-                EnforcePotionOwnershipAndState(pool);
-            }
-            foreach (VRCObjectPool pool in waterWalkingPotionPool)
-            {
-                EnforcePotionOwnershipAndState(pool);
-            }
-        }
-    }
-
-    private void EnforcePotionOwnershipAndState(VRCObjectPool pool)
-    {
-        foreach (GameObject obj in pool.Pool)
-        {
-            PotionCollisionHandler potionHandler = obj.GetComponent<PotionCollisionHandler>();
-            if (potionHandler != null)
-            {
-                // Ensure ownership is transferred to the local player before enforcing state
-                Networking.SetOwner(Networking.LocalPlayer, obj);
-
-                // Enforce destroyed state
-                if (potionHandler.isDestroyed)
-                {
-                    obj.SetActive(false);
-                    if (debugMenu != null)
-                    {
-                        debugMenu.Log($"Potion in pool {pool.name} marked as destroyed and deactivated.");
-                    }
-                }
-                else
-                {
-                    obj.SetActive(true); // Ensure the potion is active if it's not destroyed
-                    if (debugMenu != null)
-                    {
-                        debugMenu.Log($"Potion in pool {pool.name} is active for player {Networking.LocalPlayer.displayName}.");
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    private void DestroyAllDestroyedPotions()
-    {
-        debugMenu.Log("InteractableObjectManager: Destroying all potions that are marked as destroyed.");
-
-        // Iterate through all potion pools and destroy objects marked as destroyed
-        foreach (VRCObjectPool pool in wallBreakerPotionPool)
-        {
-            if (pool != null)
-            {
-                DestroyPotionsInPool(pool);
-            }
-        }
-
-        foreach (VRCObjectPool pool in superJumpPotionPool)
-        {
-            if (pool != null)
-            {
-                DestroyPotionsInPool(pool);
-            }
-        }
-
-        foreach (VRCObjectPool pool in waterWalkingPotionPool)
-        {
-            if (pool != null)
-            {
-                DestroyPotionsInPool(pool);
-            }
-        }
-    }
-
-    private void DestroyPotionsInPool(VRCObjectPool pool)
-    {
-        foreach (GameObject obj in pool.Pool)
-        {
-            PotionCollisionHandler potionHandler = obj.GetComponent<PotionCollisionHandler>();
-            if (potionHandler != null)
-            {
-                if (potionHandler.isDestroyed)
-                {
-                    obj.SetActive(false); // Deactivate the destroyed potion
-                    if (debugMenu != null)
-                    {
-                        debugMenu.Log($"InteractableObjectManager: Destroying potion in pool {pool.name} marked as destroyed.");
-                    }
-                }  
-            }
         }
     }
 
@@ -276,54 +130,84 @@ public class InteractableObjectManager : UdonSharpBehaviour
             if (playerIndex != -1)
             {
                 potionPoolPlayerIds[playerIndex] = -1;
-                ResetAndDeactivatePools(playerIndex);
                 debugMenu.Log($"Player {player.displayName} left, cleared pool index {playerIndex}");
             }
         }
-
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(ResetAndDeactivatePools));
     }
 
     #endregion
 
-    #region Reset and Deactivate Potions
+    #region Destroy Potion
 
-    private void ResetAndDeactivatePools(int index)
+    private VRCObjectPool GetPotionPool(int playerId, string potionType)
     {
-        VRCObjectPool wallBreakerPool = GetWallBreakerPotionPool(index);
-        if (wallBreakerPool != null)
+        int playerIndex = FindAssignedIndex(playerId);
+        if (playerIndex == -1)
         {
-            DeactivateAllPoolObjects(wallBreakerPool);
-            wallBreakerPool.gameObject.SetActive(false);
-            debugMenu.Log($"Wall Breaker pool at index {index} reset and fully deactivated.");
+            debugMenu.LogError("Player's pool index not found.");
+            return null;
         }
 
-        VRCObjectPool superJumpPool = GetSuperJumpPotionPool(index);
-        if (superJumpPool != null)
+        VRCObjectPool selectedPool = null;
+
+        // Check potion type to determine the appropriate pool
+        switch (potionType)
         {
-            DeactivateAllPoolObjects(superJumpPool);
-            superJumpPool.gameObject.SetActive(false);
-            debugMenu.Log($"Super Jump pool at index {index} reset and fully deactivated.");
+            case "PotionWallBreaking":
+                selectedPool = wallBreakerPotionPool[playerIndex];
+                break;
+            case "PotionSuperJumping":
+                selectedPool = superJumpPotionPool[playerIndex];
+                break;
+            case "PotionWaterWalking":
+                selectedPool = waterWalkingPotionPool[playerIndex];
+                break;
+            default:
+                debugMenu.LogError($"Invalid potion type provided: {potionType}");
+                return null;
         }
 
-        VRCObjectPool waterWalkingPool = GetWaterWalkingPotionPool(index);
-        if (waterWalkingPool != null)
+        if (selectedPool == null)
         {
-            DeactivateAllPoolObjects(waterWalkingPool);
-            waterWalkingPool.gameObject.SetActive(false);
-            debugMenu.Log($"Water Walking pool at index {index} reset and fully deactivated.");
+            debugMenu.LogError($"Pool for potion type {potionType} is not set or inactive for player index {playerIndex}.");
         }
+
+        return selectedPool;
     }
 
-    private void DeactivateAllPoolObjects(VRCObjectPool pool)
+    public void DestroyPotion(GameObject potion, int playerId, string potionType)
     {
-        foreach (GameObject obj in pool.Pool)
+        debugMenu.Log($"Attempting to destroy potion: Player ID {playerId}, Potion Type {potionType}");
+
+        VRCObjectPool pool = GetPotionPool(playerId, potionType);
+
+        if (potion == null)
         {
-            if (obj != null && obj.activeSelf)
+            debugMenu.LogError("DestroyPotion error: Potion reference is null.");
+            return;
+        }
+
+        if (pool == null)
+        {
+            debugMenu.LogError("DestroyPotion error: Pool reference is null for the provided player and potion type.");
+            return;
+        }
+
+        potion.SetActive(false);
+        pool.Return(potion);
+        debugMenu.Log("Potion successfully returned to pool.");
+    }
+
+    private int FindAssignedIndex(int playerId)
+    {
+        for (int i = 0; i < potionPoolPlayerIds.Length; i++)
+        {
+            if (potionPoolPlayerIds[i] == playerId)
             {
-                obj.SetActive(false);  
+                return i; // Return the assigned index if found
             }
         }
+        return -1; // Return -1 if no assigned index is found
     }
 
     #endregion
@@ -464,7 +348,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
     }
 
     #endregion
-
+    
     #region Increment Collected Items
 
     public void IncrementHerbsCollected()
