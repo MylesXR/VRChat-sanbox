@@ -8,7 +8,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     #region Variables
 
     private VRCPlayerApi localPlayer;
-    private bool SuperJumpEnabled = false;
 
     [SerializeField] GameObject potionBreakVFX;
     public DebugMenu debugMenu;
@@ -25,16 +24,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     private void Start()
     {
         localPlayer = Networking.LocalPlayer;
-    }
-
-    public override void OnPlayerJoined(VRCPlayerApi player)
-    {
-        // Explicitly enforce destroyed state for newly joined players
-        if (isDestroyed == true)
-        {
-            DestroyPotion();
-            debugMenu.Log($"PotionCollisionHandler: OnPlayerJoined - Destroying potion for new player: {player.displayName}");
-        }
     }
 
     #endregion
@@ -78,13 +67,16 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (IOT.ItemType == "PotionSuperJumping")
+        if (Networking.IsOwner(gameObject)) // Only trigger if the local player owns the potion
         {
-            ActivateSuperJump();          
+            if (IOT.ItemType == "PotionSuperJumping")
+            {
+                ActivateSuperJump();
+            }
+            SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));
         }
-
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));      
     }
+
 
     #endregion
 
@@ -92,10 +84,16 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     public void TriggerVFXandDestroy()
     {
-        isDestroyed = true;
-        TriggerPotionBreakEffect();
-        DestroyPotion();      
+        if (Networking.IsOwner(gameObject))
+        {
+            isDestroyed = true;
+            RequestSerialization(); // Sync destruction state
+            TriggerPotionBreakEffect();
+            DestroyPotion(); // Only owner handles actual destruction
+        }
     }
+
+
 
     private void TriggerPotionBreakEffect()
     {
@@ -112,19 +110,20 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         {
             debugMenu.Log("PotionCollisionHandler: Requesting potion destruction.");
         }
-
-        if (IOM != null)
+        if (localPlayer == Networking.LocalPlayer)
         {
-            // Assuming Networking.LocalPlayer is the player who owns this potion
             IOM.DestroyPotion(gameObject, Networking.LocalPlayer.playerId, IOT.ItemType);
-        }
-        else
-        {
-            debugMenu.LogError("InteractableObjectManager reference is missing.");
         }
     }
 
     #endregion
+
+    private void OnEnable()
+    {
+        isDestroyed = false; // Reset the destruction state
+        RequestSerialization(); // Sync state across the network to avoid empty pool issue
+    }
+
 
     #region Super Jump Effect
 
@@ -132,7 +131,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     {
         if (localPlayer == Networking.LocalPlayer)
         {
-            SuperJumpEnabled = true;
             localPlayer.SetJumpImpulse(15);
             SendCustomEventDelayedSeconds(nameof(DeactivateSuperJump), 10f);
         }
@@ -142,7 +140,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     {
         if (localPlayer == Networking.LocalPlayer)
         {
-            SuperJumpEnabled = false;
             localPlayer.SetJumpImpulse(3);
         }
     }

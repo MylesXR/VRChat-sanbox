@@ -53,11 +53,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
     public bool CraftPotionWaterWalking;
 
     private int playerIndex;
-    
-
     public bool isOwner;
-
-
 
     #endregion
 
@@ -68,6 +64,10 @@ public class InteractableObjectManager : UdonSharpBehaviour
     private VRCPlayerApi localPlayer;
 
     #endregion
+
+    [UdonSynced] private int wallBreakerPoolVersion = 0;
+    [UdonSynced] private int superJumpPoolVersion = 0;
+    [UdonSynced] private int waterWalkingPoolVersion = 0;
 
     #endregion
 
@@ -110,6 +110,18 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     #endregion
 
+    private int FindAssignedIndex(int playerId)
+    {
+        for (int i = 0; i < potionPoolPlayerIds.Length; i++)
+        {
+            if (potionPoolPlayerIds[i] == playerId)
+            {
+                return i; // Return the assigned index if found
+            }
+        }
+        return -1; // Return -1 if no assigned index is found
+    }
+
     #region On Player Join and Leave
 
     public override void OnPlayerJoined(VRCPlayerApi player)
@@ -117,23 +129,62 @@ public class InteractableObjectManager : UdonSharpBehaviour
         if (localPlayer == Networking.LocalPlayer)
         {
             AssignPotionPool(player);
+            ResetPoolsForNewPlayer(player); // Reset pools for the joining player
+            Networking.SetOwner(localPlayer, gameObject); // Ensure ownership for state sync
+
             debugMenu.Log($"Player {player.displayName} joined and was assigned a new potion pool.");
         }
     }
 
-    public override void OnPlayerLeft(VRCPlayerApi player)
-    {
-        int playerIndex = FindAssignedIndex(player.playerId);
 
-        if (localPlayer == Networking.LocalPlayer)
+    private void ResetPoolsForNewPlayer(VRCPlayerApi player)
+    {
+        foreach (VRCObjectPool pool in wallBreakerPotionPool)
         {
-            if (playerIndex != -1)
+            ResetPoolObjects(pool);
+        }
+        foreach (VRCObjectPool pool in superJumpPotionPool)
+        {
+            ResetPoolObjects(pool);
+        }
+        foreach (VRCObjectPool pool in waterWalkingPotionPool)
+        {
+            ResetPoolObjects(pool);
+        }
+        debugMenu.Log("All pools reset for new player join.");
+    }
+
+    private void ResetPoolObjects(VRCObjectPool pool)
+    {
+        if (pool == null) return;
+
+        foreach (GameObject obj in pool.Pool) // Iterate over all objects in the pool
+        {
+            obj.transform.position = pool.transform.position;
+            obj.transform.rotation = Quaternion.identity;
+
+            // Remove any active visual effects on the pooled object here, but avoid deactivation
+            var vfxComponent = obj.GetComponentInChildren<ParticleSystem>();
+            if (vfxComponent != null)
             {
-                potionPoolPlayerIds[playerIndex] = -1;
-                debugMenu.Log($"Player {player.displayName} left, cleared pool index {playerIndex}");
+                vfxComponent.Stop();
+                vfxComponent.Clear();
             }
         }
     }
+
+
+
+    public override void OnPlayerLeft(VRCPlayerApi player)
+    {
+        int playerIndex = FindAssignedIndex(player.playerId);
+        if (playerIndex != -1)
+        {
+            potionPoolPlayerIds[playerIndex] = -1;
+            debugMenu.Log($"Player {player.displayName} left, reset pool index {playerIndex}.");
+        }
+    }
+
 
     #endregion
 
@@ -177,38 +228,61 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     public void DestroyPotion(GameObject potion, int playerId, string potionType)
     {
-        debugMenu.Log($"Attempting to destroy potion: Player ID {playerId}, Potion Type {potionType}");
-
         VRCObjectPool pool = GetPotionPool(playerId, potionType);
 
-        if (potion == null)
+        if (pool != null)
         {
-            debugMenu.LogError("DestroyPotion error: Potion reference is null.");
-            return;
-        }
+            if (!Networking.IsOwner(localPlayer, pool.gameObject))
+            {
+                Networking.SetOwner(localPlayer, pool.gameObject);
+                if (!Networking.IsOwner(localPlayer, pool.gameObject))
+                {
+                    debugMenu.LogError("Failed to transfer ownership of the pool.");
+                    return;
+                }
+            }
 
-        if (pool == null)
+            // Full reset of potion state before returning to pool
+            ResetPotionState(potion);
+
+            pool.Return(potion); // Properly return the potion to the pool
+            debugMenu.Log("Potion successfully returned to pool with full reset.");
+        }
+        else
         {
             debugMenu.LogError("DestroyPotion error: Pool reference is null for the provided player and potion type.");
-            return;
         }
-
-        potion.SetActive(false);
-        pool.Return(potion);
-        debugMenu.Log("Potion successfully returned to pool.");
     }
 
-    private int FindAssignedIndex(int playerId)
+
+    private void ResetPotionState(GameObject potion)
     {
-        for (int i = 0; i < potionPoolPlayerIds.Length; i++)
+        // Reset position and rotation
+        potion.transform.position = Vector3.zero;
+        potion.transform.rotation = Quaternion.identity;
+
+        // Ensure all VFX are deactivated
+        var vfxComponent = potion.GetComponentInChildren<ParticleSystem>();
+        if (vfxComponent != null)
         {
-            if (potionPoolPlayerIds[i] == playerId)
-            {
-                return i; // Return the assigned index if found
-            }
+            vfxComponent.Stop();
+            vfxComponent.Clear();
         }
-        return -1; // Return -1 if no assigned index is found
+
+        // Reset destruction state
+        var collisionHandler = potion.GetComponent<PotionCollisionHandler>();
+        if (collisionHandler != null)
+        {
+            collisionHandler.isDestroyed = false;
+            collisionHandler.RequestSerialization(); // Sync reset state
+        }
     }
+
+
+
+
+
+
 
     #endregion
 
@@ -218,28 +292,54 @@ public class InteractableObjectManager : UdonSharpBehaviour
     {
         for (int i = 0; i < potionPoolPlayerIds.Length; i++)
         {
-            // Ensure unassigned slots are available
-            if (potionPoolPlayerIds[i] == -1)
+            if (potionPoolPlayerIds[i] == -1) // Ensure unassigned slots are available
             {
-                potionPoolPlayerIds[i] = player.playerId;
+                potionPoolPlayerIds[i] = player.playerId; // Assign player to this slot
                 AssignPlayerPools(player, i);
                 debugMenu.Log($"Assigned pool slot {i} to player {player.displayName}");
+
+                // Ensure activation and ownership of WallBreaker pool
+                VRCObjectPool wallBreakerPool = GetPlayerPotionPool(player.playerId, "WallBreaker");
+                if (wallBreakerPool != null)
+                {
+                    Networking.SetOwner(player, wallBreakerPool.gameObject); // Set owner
+                    wallBreakerPool.gameObject.SetActive(true); // Activate the pool
+                }
+
+                // Ensure activation and ownership of SuperJump pool
+                VRCObjectPool superJumpPool = GetPlayerPotionPool(player.playerId, "SuperJump");
+                if (superJumpPool != null)
+                {
+                    Networking.SetOwner(player, superJumpPool.gameObject);
+                    superJumpPool.gameObject.SetActive(true);
+                }
+
+                // Ensure activation and ownership of WaterWalking pool
+                VRCObjectPool waterWalkingPool = GetPlayerPotionPool(player.playerId, "WaterWalk");
+                if (waterWalkingPool != null)
+                {
+                    Networking.SetOwner(player, waterWalkingPool.gameObject);
+                    waterWalkingPool.gameObject.SetActive(true);
+                }
+
                 return;
             }
         }
         debugMenu.LogError("No available pool slot for new player.");
     }
 
+
+
+
     private void AssignPlayerPools(VRCPlayerApi player, int index)
     {
-        // Ensure that slot assignment is valid for the player
         if (potionPoolPlayerIds[index] != -1 && potionPoolPlayerIds[index] != player.playerId)
         {
             debugMenu.LogError($"Slot {index} is occupied by another player. Unable to assign to {player.displayName}.");
             return;
         }
 
-        potionPoolPlayerIds[index] = player.playerId; // Update the player ID in the tracking array
+        potionPoolPlayerIds[index] = player.playerId;
 
         if (localPlayer == Networking.LocalPlayer)
         {
@@ -248,6 +348,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
             {
                 Networking.SetOwner(player, wallBreakerPool.gameObject);
                 wallBreakerPool.gameObject.SetActive(true);
+                wallBreakerPoolVersion++; // Increment version to sync
                 debugMenu.Log($"Wall Breaker pool assigned to player {player.displayName} at index {index}.");
             }
 
@@ -256,6 +357,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
             {
                 Networking.SetOwner(player, superJumpPool.gameObject);
                 superJumpPool.gameObject.SetActive(true);
+                superJumpPoolVersion++; // Increment version to sync
                 debugMenu.Log($"Super Jump pool assigned to player {player.displayName} at index {index}.");
             }
 
@@ -264,10 +366,13 @@ public class InteractableObjectManager : UdonSharpBehaviour
             {
                 Networking.SetOwner(player, waterWalkingPool.gameObject);
                 waterWalkingPool.gameObject.SetActive(true);
+                waterWalkingPoolVersion++; // Increment version to sync
                 debugMenu.Log($"Water Walking pool assigned to player {player.displayName} at index {index}.");
             }
         }
     }
+
+
 
     #endregion
 
@@ -463,4 +568,5 @@ public class InteractableObjectManager : UdonSharpBehaviour
     }
 
     #endregion
+
 }
