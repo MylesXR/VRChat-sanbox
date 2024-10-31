@@ -110,6 +110,8 @@ public class InteractableObjectManager : UdonSharpBehaviour
 
     #endregion
 
+
+
     private int FindAssignedIndex(int playerId)
     {
         for (int i = 0; i < potionPoolPlayerIds.Length; i++)
@@ -158,12 +160,21 @@ public class InteractableObjectManager : UdonSharpBehaviour
     {
         if (pool == null) return;
 
-        foreach (GameObject obj in pool.Pool) // Iterate over all objects in the pool
+        foreach (GameObject obj in pool.Pool)
         {
+            // Get PotionCollisionHandler to check isHeld status
+            var collisionHandler = obj.GetComponent<PotionCollisionHandler>();
+            if (collisionHandler != null && collisionHandler.isHeld)
+            {
+                debugMenu.Log("Potion is held; skipping reset for this object.");
+                continue; // Skip reset if potion is held
+            }
+
+            // Reset position and rotation
             obj.transform.position = pool.transform.position;
             obj.transform.rotation = Quaternion.identity;
 
-            // Remove any active visual effects on the pooled object here, but avoid deactivation
+            // Remove any active visual effects
             var vfxComponent = obj.GetComponentInChildren<ParticleSystem>();
             if (vfxComponent != null)
             {
@@ -172,6 +183,7 @@ public class InteractableObjectManager : UdonSharpBehaviour
             }
         }
     }
+
 
 
 

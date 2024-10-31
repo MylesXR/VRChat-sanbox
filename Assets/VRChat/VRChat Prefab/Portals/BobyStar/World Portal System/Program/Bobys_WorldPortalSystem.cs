@@ -156,11 +156,10 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
         if (potionHandler != null && potionRigidbody != null)
         {
-            // Set kinematic state and reset any velocity
-            //potionHandler.SetKinematicState(true);
+            potionHandler.isHeld = true;
             potionRigidbody.isKinematic = true;  // Ensure the potion is kinematic when first spawned
             potionRigidbody.velocity = Vector3.zero;  // Reset velocity
-            potionRigidbody.angularVelocity = Vector3.zero;  // Reset angular velocity
+            potionRigidbody.angularVelocity = Vector3.zero;  // Reset angular velocity           
         }
 
         IOM.PotionWallBreakingCollected--;
@@ -265,10 +264,10 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
         if (potionHandler != null && potionRigidbody != null)
         {
+            potionHandler.isHeld = true;
             potionRigidbody.isKinematic = true;
             potionRigidbody.velocity = Vector3.zero;
-            potionRigidbody.angularVelocity = Vector3.zero;
-
+            potionRigidbody.angularVelocity = Vector3.zero;          
             // potionHandler.SetKinematicState(false);
             //potionHandler.SetShouldDestroy(false);
         }
@@ -375,10 +374,10 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
         Rigidbody potionRigidbody = spawnedPotion.GetComponent<Rigidbody>();
         if (potionHandler != null && potionRigidbody != null)
         {
+            potionHandler.isHeld = true;
             potionRigidbody.isKinematic = true;
             potionRigidbody.velocity = Vector3.zero;
             potionRigidbody.angularVelocity = Vector3.zero;
-
             //potionHandler.SetKinematicState(false);
             //potionHandler.SetShouldDestroy(false);
         }

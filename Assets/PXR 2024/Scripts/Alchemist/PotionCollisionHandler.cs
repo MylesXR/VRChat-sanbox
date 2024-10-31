@@ -13,7 +13,8 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public DebugMenu debugMenu;
     public InteractableObjectTracker IOT;
     public InteractableObjectManager IOM;
-  
+
+    public bool isHeld = false; // New flag to track potion hold status
     [UdonSynced] public bool isKinematic = true;
     [UdonSynced] public bool isDestroyed = false; // Tracks if the potion is destroyed
 
@@ -33,13 +34,30 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public override void OnPickup()
     {
         SetKinematicState(true);
+        isHeld = true; // Lock the potion as held
+        RequestSerialization(); // Sync hold status across the network
     }
 
     public override void OnDrop()
     {
         SetKinematicState(false);
         SendCustomNetworkEvent(NetworkEventTarget.All, nameof(UpdateKinematicState));
+        RequestSerialization(); // Sync hold status across the network
     }
+
+    //private void OnEnable()
+    //{
+    //    if (isHeld) // Prevent reset if the object is held
+    //    {
+    //        debugMenu.Log("Potion is held; skipping reset.");
+    //        return;
+    //    }
+
+    //    isDestroyed = false; // Reset destruction state only if inactive
+    //    RequestSerialization();
+    //}
+
+
 
     #endregion
 
@@ -73,6 +91,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
             {
                 ActivateSuperJump();
             }
+            isHeld = false; // Release hold lock when dropped
             SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));
         }
     }
@@ -117,13 +136,6 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     }
 
     #endregion
-
-    private void OnEnable()
-    {
-        isDestroyed = false; // Reset the destruction state
-        RequestSerialization(); // Sync state across the network to avoid empty pool issue
-    }
-
 
     #region Super Jump Effect
 
