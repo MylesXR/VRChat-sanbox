@@ -3,23 +3,35 @@ using UnityEngine;
 
 public class VRC_ToggleKinematicOff_OnPickup : UdonSharpBehaviour
 {
-    private Rigidbody rb;
+    [SerializeField] Rigidbody rigidBody;
+    [UdonSynced] public bool isKinematic;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-
-        if (rb != null)
+        if (rigidBody != null)
         {
-            rb.isKinematic = true; // Set kinematic to true at the start
+            rigidBody.isKinematic = true; // Set kinematic to true at the start
+            isKinematic= true;
         }
     }
 
     public override void OnPickup()
     {
-        if (rb != null)
+        DisableKinematic();
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "DisableKinematic");
+    }
+
+    public override void OnDrop()
+    {
+        DisableKinematic();
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "DisableKinematic");
+    }
+
+    public void DisableKinematic()
+    {
+        if (rigidBody != null)
         {
-            rb.isKinematic = false; // Toggle kinematic off when picked up
+            rigidBody.isKinematic = false; // Toggle kinematic off when picked up
         }
     }
 }

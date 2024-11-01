@@ -135,7 +135,7 @@ public class InteractableObjectTracker : UdonSharpBehaviour
         }
     }
 
-    #region Activate and Deactivate Item
+    #region Activate & Deactivate Item
 
     public void DeactivateItem()
     {
@@ -144,8 +144,10 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     }
 
     public void ReactivateItem()
-    {
+    {     
         gameObject.SetActive(true);
+        Rigidbody interactableRigidBody = gameObject.GetComponent<Rigidbody>();
+        interactableRigidBody.isKinematic = true;
     }
 
     #endregion

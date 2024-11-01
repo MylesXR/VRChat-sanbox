@@ -9,7 +9,13 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
     [Header("Arrays")]
     public int[] correctPattern; // Correct order of button IDs
     public GameObject[] objectsToDeactivate; // Objects/VFX to activate or deactivate
-    public MeshRenderer backgroundMesh; // For visual feedback
+    public SkinnedMeshRenderer backgroundMesh; // For visual feedback
+
+    [Header("Button Guess Colors")]
+    public Material button1GuessMaterial;
+    public Material button2GuessMaterial;
+    public Material button3GuessMaterial;
+    public Material button4GuessMaterial;
 
     [Header("Settings")]
     public int maxGuesses = 4; // Maximum number of button presses allowed
@@ -17,6 +23,7 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
     public Material correctMaterial;
     public Material guessMaterial;
     public Material baseMaterial;
+
     public float guessMaterialDuration = 0.25f; // Time to show guess material
     public float resetDelay = 5f; // Delay before resetting puzzle after solving
     public float vfxActiveTime = 3f; // Time the objects remain off after correct solution
@@ -31,6 +38,10 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
     private const int GUESS_MATERIAL = 1;
     private const int INCORRECT_MATERIAL = 2;
     private const int CORRECT_MATERIAL = 3;
+    private const int BUTTON1_GUESS_MATERIAL = 4;
+    private const int BUTTON2_GUESS_MATERIAL = 5;
+    private const int BUTTON3_GUESS_MATERIAL = 6;
+    private const int BUTTON4_GUESS_MATERIAL = 7;
 
     [UdonSynced] private bool isObjectActive = true; // Objects start active
     [UdonSynced] private bool isFlashingSynced; // Sync flashing state across players
@@ -72,31 +83,28 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
 
     public void RegisterButtonPress(int buttonID)
     {
-        //Debug.LogWarning("[Fire_Trap_Button_Manager] Button with ID: " + buttonID + " was pressed.");
-
         if (puzzleComplete || currentGlobalGuessIndex >= maxGuesses)
         {
-            //Debug.LogWarning("[Fire_Trap_Button_Manager] Button press ignored. Puzzle complete or max guesses reached.");
             return;
         }
+            
 
         TakeOwnership(); // Ensure the player can sync their interactions
 
-        playerPattern[currentGlobalGuessIndex] = buttonID; // Store the guess ID
-        syncedGuessIDs[currentGlobalGuessIndex] = buttonID; // Store the guess ID in the synced array
-        currentGlobalGuessIndex++; // Increment the global guess index
+        playerPattern[currentGlobalGuessIndex] = buttonID;
+        syncedGuessIDs[currentGlobalGuessIndex] = buttonID;
+        currentGlobalGuessIndex++;
 
-        //Debug.LogWarning("[Fire_Trap_Button_Manager] Guess registered. Current guess count: " + currentGlobalGuessIndex);
-
-        RequestSerialization(); // Sync the guess across all players
-        ShowGuessMaterial();
+        RequestSerialization();
+        ShowGuessMaterial(buttonID); // Pass the buttonID to show the correct color
 
         if (currentGlobalGuessIndex == maxGuesses)
         {
-            //Debug.LogWarning("[Fire_Trap_Button_Manager] Max guesses reached. Checking pattern.");
             CheckPattern();
         }
+            
     }
+
 
     private void CheckPattern()
     {
@@ -163,8 +171,6 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
 
     public void ApplyMaterialFromIndex()
     {
-        //Debug.LogWarning("[Fire_Trap_Button_Manager] Applying material with index: " + syncedMaterialIndex);
-
         switch (syncedMaterialIndex)
         {
             case BASE_MATERIAL:
@@ -179,8 +185,24 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
             case CORRECT_MATERIAL:
                 ChangeMeshMaterial(correctMaterial);
                 break;
+            case BUTTON1_GUESS_MATERIAL:
+                ChangeMeshMaterial(button1GuessMaterial);
+                break;
+            case BUTTON2_GUESS_MATERIAL:
+                ChangeMeshMaterial(button2GuessMaterial);
+                break;
+            case BUTTON3_GUESS_MATERIAL:
+                ChangeMeshMaterial(button3GuessMaterial);
+                break;
+            case BUTTON4_GUESS_MATERIAL:
+                ChangeMeshMaterial(button4GuessMaterial);
+                break;
+            default:
+                ChangeMeshMaterial(baseMaterial); // Fallback to base material if index is invalid
+                break;
         }
     }
+
 
     public void RevertToBaseMaterial()
     {
@@ -296,4 +318,37 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
             //Debug.LogWarning("[Fire_Trap_Button_Manager] Ownership transferred to: " + localPlayer.displayName);
         }
     }
+
+
+    public void ShowGuessMaterial(int buttonID)
+    {
+        TakeOwnership(); // Ensure the player owns the object to sync changes
+
+        // Set material index based on the button ID for network sync
+        switch (buttonID)
+        {
+            case 1:
+                syncedMaterialIndex = BUTTON1_GUESS_MATERIAL;
+                break;
+            case 2:
+                syncedMaterialIndex = BUTTON2_GUESS_MATERIAL;
+                break;
+            case 3:
+                syncedMaterialIndex = BUTTON3_GUESS_MATERIAL;
+                break;
+            case 4:
+                syncedMaterialIndex = BUTTON4_GUESS_MATERIAL;
+                break;
+            default:
+                syncedMaterialIndex = GUESS_MATERIAL; // Fallback material
+                break;
+        }
+
+        RequestSerialization(); // Sync the material index across players
+        ApplyMaterialFromIndex(); // Apply the synced material
+
+        SendCustomEventDelayedSeconds(nameof(RevertToBaseMaterial), guessMaterialDuration);
+    }
+
+
 }
