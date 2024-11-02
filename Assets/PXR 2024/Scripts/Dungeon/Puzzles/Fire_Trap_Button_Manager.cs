@@ -143,8 +143,8 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
 
         DeactivateVFX(); // Deactivate the objects (they were active)
 
-        SendCustomEventDelayedSeconds(nameof(ReactivateVFX), vfxActiveTime); // Reactivate after the timed amount
-        SendCustomEventDelayedSeconds(nameof(ResetPuzzle), resetDelay); // Reset puzzle after a delay
+        //SendCustomEventDelayedSeconds(nameof(ReactivateVFX), vfxActiveTime); // Reactivate after the timed amount
+        //SendCustomEventDelayedSeconds(nameof(ResetPuzzle), resetDelay); // Reset puzzle after a delay
     }
 
     private void HandleIncorrectPattern()
