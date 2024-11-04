@@ -13,22 +13,22 @@ public class VRC_ToggleObjectOnPickup : UdonSharpBehaviour
 
     private void Start()
     {
-        // Disable VRC Object Sync at the start
-        if (objectSync != null)
-        {
-            objectSync.enabled = false;
-            Debug.LogWarning("Object Sync OFF");
-        }
+        //// Disable VRC Object Sync at the start
+        //if (objectSync != null)
+        //{
+        //    objectSync.enabled = false;
+        //    Debug.LogWarning("Object Sync OFF");
+        //}
     }
 
     public override void OnPickup()
     {
         // Enable VRC Object Sync on pickup
-        if (objectSync != null)
-        {
-            objectSync.enabled = true;
-            Debug.LogWarning("Object Sync ON");
-        }
+        //if (objectSync != null)
+        //{
+        //    objectSync.enabled = true;
+        //    Debug.LogWarning("Object Sync ON");
+        //}
 
         if (pickupCollider != null)
         {
@@ -44,12 +44,12 @@ public class VRC_ToggleObjectOnPickup : UdonSharpBehaviour
 
     public override void OnDrop()
     {
-        // Disable VRC Object Sync on drop
-        if (objectSync != null)
-        {
-            objectSync.enabled = false;
-            Debug.LogWarning("Object Sync OFF");
-        }
+        //// Disable VRC Object Sync on drop
+        //if (objectSync != null)
+        //{
+        //    objectSync.enabled = false;
+        //    Debug.LogWarning("Object Sync OFF");
+        //}
 
         if (pickupCollider != null)
         {

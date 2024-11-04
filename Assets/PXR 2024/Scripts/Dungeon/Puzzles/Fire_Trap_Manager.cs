@@ -75,7 +75,7 @@ public class Fire_Trap_Manager : UdonSharpBehaviour
         }
         else
         {
-            ResetBottomTraps(); // Reset bottom traps to fully on
+            //ResetBottomTraps(); // Reset bottom traps to fully on
             buttonLocked = false; // Unlock the button once reset
             //Debug.LogWarning("[Fire_Trap_Manager] Traps reset: button unlocked.");
         }
@@ -95,7 +95,7 @@ public class Fire_Trap_Manager : UdonSharpBehaviour
         }
 
         // After the flash reset time, set all bottom traps to fully on and stop flashing
-        SendCustomEventDelayedSeconds("StopFlashingAndReset", flashResetTime);
+        //SendCustomEventDelayedSeconds("StopFlashingAndReset", flashResetTime);
     }
 
     // Flash a specific trap: turn on for flashDuration, then off for flashInterval
