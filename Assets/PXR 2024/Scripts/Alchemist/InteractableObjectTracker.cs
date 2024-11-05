@@ -27,7 +27,7 @@ public class InteractableObjectTracker : UdonSharpBehaviour
     [Space(5)][Header("Item Management")][Space(10)]
     public string ItemType;
     public InteractableObjectManager IOM; //must be public
-    public VRC.SDK3.Components.VRCObjectSync objectSync; // Reference to VRC Object Sync
+    //public VRC.SDK3.Components.VRCObjectSync objectSync; // Reference to VRC Object Sync
 
     private VRCPlayerApi localPlayer;
 

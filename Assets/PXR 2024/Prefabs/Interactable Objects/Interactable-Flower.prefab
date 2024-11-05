@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3223142441203916758}
   - component: {fileID: 5900441568448601371}
   - component: {fileID: 7586697164845527812}
-  - component: {fileID: 5182448137650038326}
   - component: {fileID: 3202761839080467943}
   - component: {fileID: 3540216362584509796}
   - component: {fileID: 2223779122545093780}
@@ -98,19 +97,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7710427, y: 1.0039655, z: 0.7717029}
   m_Center: {x: 0.012103289, y: 0.5019961, z: 0.00081554055}
---- !u!114 &5182448137650038326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482997264152629071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1783056023, guid: 661092b4961be7145bfbe56e1e62337b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllowCollisionOwnershipTransfer: 1
 --- !u!54 &3202761839080467943
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -197,7 +183,6 @@ MonoBehaviour:
     type: 3}
   ItemType: Flower
   IOM: {fileID: 0}
-  objectSync: {fileID: 5182448137650038326}
 --- !u!114 &1501133742458584198
 MonoBehaviour:
   m_ObjectHideFlags: 0

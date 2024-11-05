@@ -96,7 +96,6 @@ GameObject:
   - component: {fileID: 4671433988001095435}
   - component: {fileID: 5411079271190323166}
   - component: {fileID: 3366244229903779049}
-  - component: {fileID: 8052616695487090851}
   - component: {fileID: 2246241854538582435}
   - component: {fileID: 6553757210847713733}
   m_Layer: 13
@@ -228,19 +227,6 @@ MonoBehaviour:
   currentlyHeldBy: {fileID: 0}
   pickupable: 1
   proximity: 2
---- !u!114 &8052616695487090851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4556552134091599255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1783056023, guid: 661092b4961be7145bfbe56e1e62337b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllowCollisionOwnershipTransfer: 1
 --- !u!114 &2246241854538582435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +264,6 @@ MonoBehaviour:
     type: 3}
   ItemType: Mushroom
   IOM: {fileID: 0}
-  objectSync: {fileID: 8052616695487090851}
 --- !u!114 &6553757210847713733
 MonoBehaviour:
   m_ObjectHideFlags: 0

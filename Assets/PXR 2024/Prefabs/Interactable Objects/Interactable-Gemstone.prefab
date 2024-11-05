@@ -65,7 +65,6 @@ GameObject:
   - component: {fileID: 4740728127349671221}
   - component: {fileID: 908496304151512677}
   - component: {fileID: 2052385449855571371}
-  - component: {fileID: 6763868654320525868}
   - component: {fileID: 6564059466164517802}
   - component: {fileID: 571935926594164708}
   m_Layer: 13
@@ -197,19 +196,6 @@ MonoBehaviour:
   currentlyHeldBy: {fileID: 0}
   pickupable: 1
   proximity: 2
---- !u!114 &6763868654320525868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3990944713437202852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1783056023, guid: 661092b4961be7145bfbe56e1e62337b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllowCollisionOwnershipTransfer: 1
 --- !u!114 &6564059466164517802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +233,6 @@ MonoBehaviour:
     type: 3}
   ItemType: Gemstone
   IOM: {fileID: 0}
-  objectSync: {fileID: 6763868654320525868}
 --- !u!114 &571935926594164708
 MonoBehaviour:
   m_ObjectHideFlags: 0

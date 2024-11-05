@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 9196713723722203487}
   - component: {fileID: 1118901675732419231}
   - component: {fileID: 3902288346478728770}
-  - component: {fileID: 316491047071377488}
   - component: {fileID: 5614230953636058671}
   - component: {fileID: 2485783937445981744}
   - component: {fileID: 1435859187040936085}
@@ -180,19 +179,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.22846225, y: 0.92545277, z: 0.11029388}
   m_Center: {x: 0.03809445, y: 0.4572744, z: 0.023470974}
---- !u!114 &316491047071377488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6576367607708300785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1783056023, guid: 661092b4961be7145bfbe56e1e62337b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllowCollisionOwnershipTransfer: 1
 --- !u!54 &5614230953636058671
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -279,7 +265,6 @@ MonoBehaviour:
     type: 3}
   ItemType: Berry
   IOM: {fileID: 0}
-  objectSync: {fileID: 316491047071377488}
 --- !u!114 &2638426388819947938
 MonoBehaviour:
   m_ObjectHideFlags: 0

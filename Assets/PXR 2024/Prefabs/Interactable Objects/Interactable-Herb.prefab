@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8270662880725423410}
   - component: {fileID: 5717383182966683240}
   - component: {fileID: 5847956825564203819}
-  - component: {fileID: 4473844133009066698}
   - component: {fileID: 4497504278241838941}
   - component: {fileID: 7155801327648803442}
   m_Layer: 13
@@ -146,19 +145,6 @@ MonoBehaviour:
   currentlyHeldBy: {fileID: 0}
   pickupable: 1
   proximity: 2
---- !u!114 &4473844133009066698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 550025416689750314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1783056023, guid: 661092b4961be7145bfbe56e1e62337b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllowCollisionOwnershipTransfer: 1
 --- !u!114 &4497504278241838941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,7 +183,6 @@ MonoBehaviour:
     type: 3}
   ItemType: Herb
   IOM: {fileID: 0}
-  objectSync: {fileID: 4473844133009066698}
 --- !u!114 &7155801327648803442
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 360234185919263671}
   - component: {fileID: 265441167212426670}
   - component: {fileID: 5092332115271042870}
-  - component: {fileID: 3193832279630601360}
   - component: {fileID: 6926403130219755418}
   - component: {fileID: 4142577311348479881}
   m_Layer: 13
@@ -146,19 +145,6 @@ MonoBehaviour:
   currentlyHeldBy: {fileID: 0}
   pickupable: 1
   proximity: 2
---- !u!114 &3193832279630601360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842814148722138710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1783056023, guid: 661092b4961be7145bfbe56e1e62337b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllowCollisionOwnershipTransfer: 1
 --- !u!114 &6926403130219755418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,7 +183,6 @@ MonoBehaviour:
     type: 3}
   ItemType: Stick
   IOM: {fileID: 0}
-  objectSync: {fileID: 3193832279630601360}
 --- !u!114 &4142577311348479881
 MonoBehaviour:
   m_ObjectHideFlags: 0
