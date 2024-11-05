@@ -8,6 +8,20 @@ public class VRC_Play_And_Stop_Animation_Synced : UdonSharpBehaviour
     public string AnimationStopTrigger = "StopAnimation";
     [UdonSynced] public bool isAnimationPlaying = false;
 
+
+    private void Start()
+    {
+        if (isAnimationPlaying)
+        {
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnimation");
+        }
+        else
+        {
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "StopAnimation");
+        }
+
+    }
+
     public override void Interact()
     {
         if (Animators != null && Animators.Length > 0)

@@ -1,7 +1,6 @@
 ﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon;
 
 public class Puzzle_II_Explorer_Ladle_Respawn : UdonSharpBehaviour
 {
@@ -31,7 +30,7 @@ public class Puzzle_II_Explorer_Ladle_Respawn : UdonSharpBehaviour
             }
             else
             {
-                Debug.LogWarning($"Object with name '{targetObjectNames[i]}' not found in the scene.");
+                //Debug.LogWarning($"Object with name '{targetObjectNames[i]}' not found in the scene.");
             }
         }
     }

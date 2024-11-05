@@ -101,6 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1299691083746646804}
+  - component: {fileID: 2654459589160252174}
   m_Layer: 11
   m_Name: Mesh & LOD Parent
   m_TagString: Untagged
@@ -124,6 +125,27 @@ Transform:
   m_Father: {fileID: 3535653575843447180}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &2654459589160252174
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3304812658150953353}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0.22948371}
+  m_Size: 1.8
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.059407126
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6381251106363507399}
+    - renderer: {fileID: 5751276209174745115}
+    - renderer: {fileID: 5752631654059855869}
+  m_Enabled: 1
 --- !u!1 &4204948755768498998
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,6 +396,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 458553573201800058}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &6381251106363507399 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6833049262640622013, guid: 255b9651b142d484eb54e738c5990109,
+    type: 3}
+  m_PrefabInstance: {fileID: 458553573201800058}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5554864901530209043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -507,6 +535,18 @@ PrefabInstance:
 --- !u!4 &5550283802940353409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4584431484625042, guid: 007c57e2df8e9b144b99f471b84f3d56,
+    type: 3}
+  m_PrefabInstance: {fileID: 5554864901530209043}
+  m_PrefabAsset: {fileID: 0}
+--- !u!199 &5751276209174745115 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 199982541912562440, guid: 007c57e2df8e9b144b99f471b84f3d56,
+    type: 3}
+  m_PrefabInstance: {fileID: 5554864901530209043}
+  m_PrefabAsset: {fileID: 0}
+--- !u!199 &5752631654059855869 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 199192134335169774, guid: 007c57e2df8e9b144b99f471b84f3d56,
     type: 3}
   m_PrefabInstance: {fileID: 5554864901530209043}
   m_PrefabAsset: {fileID: 0}
