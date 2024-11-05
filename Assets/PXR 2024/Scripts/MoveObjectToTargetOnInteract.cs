@@ -2,6 +2,7 @@
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
+using VRC.Udon.Common.Interfaces;
 
 public class MoveObjectToTargetOnInteract: UdonSharpBehaviour
 {
@@ -11,7 +12,12 @@ public class MoveObjectToTargetOnInteract: UdonSharpBehaviour
 
     public override void Interact()
     {
+
         // Check if targetObject and targetPosition are set
+        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(ObjectMove));
+    }
+    public void ObjectMove()
+    {
         if (targetObject != null && targetPosition != null)
         {
             // Move the target object to the target position
