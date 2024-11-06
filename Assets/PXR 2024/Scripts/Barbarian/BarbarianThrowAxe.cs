@@ -21,12 +21,6 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
     private float pressTime;
 
     private VRCPlayerApi localPlayer;
-    public AxeAssigner axeManager;  // Set this reference in AxeAssigner script
-    public VRCPlayerApi ownerPlayer; // Set this in the AxeAssigner script
-    [UdonSynced] public int axeIndex; // Set this in the AxeAssigner script
-    [UdonSynced] private Vector3 syncedHeadPosition;
-    [UdonSynced] private Quaternion syncedHeadRotation;
-    [UdonSynced] private float syncedThrowForce;
     private bool hasBeenEnabled = false;
 
     private void OnEnable()
@@ -46,14 +40,13 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
         axeRigidbody = GetComponent<Rigidbody>();
         localPlayer = Networking.LocalPlayer;
         Debug.Log("[BarbarianThrowAxe] Start called");
-        Debug.Log($"[BarbarianThrowAxe] axeIndex is {axeIndex}");
     }
 
     private void Update()
     {
         if (localPlayer != null && localPlayer.isLocal)
         {
-            if (isThrown == false)
+            if (!isThrown)
             {
                 transform.localPosition = initialLocalPosition;
                 transform.localRotation = initialLocalRotation;
@@ -83,45 +76,13 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
 
     private void ThrowAxe(float force)
     {
-        Debug.Log($"[BarbarianThrowAxe] Attempting to throw axe with index: {axeIndex}");
+        Debug.Log("[BarbarianThrowAxe] ThrowAxe called locally");
 
-        // Ensure only the local player who owns the axe throws it
-        if (Networking.IsOwner(gameObject))
-        {
-            Debug.Log("[BarbarianThrowAxe] Local player owns the axe, throwing it");
-            transform.parent = null;
-            Vector3 throwDirection = playerHead.forward; // Only forward direction
-
-            axeRigidbody.isKinematic = false;
-            axeRigidbody.AddForce(throwDirection * force, ForceMode.Impulse);
-
-            isThrown = true;
-            throwTime = Time.time;
-
-            // Sync the throw action across the network with position and rotation
-            syncedHeadPosition = playerHead.position;
-            syncedHeadRotation = playerHead.rotation;
-            syncedThrowForce = force;
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SyncThrow");
-        }
-        else
-        {
-            Debug.LogWarning($"[BarbarianThrowAxe] Local player does not own the axe, cannot throw.");
-        }
-    }
-
-    public void SyncThrow()
-    {
-        if (Networking.IsOwner(gameObject)) return;
-
-        Debug.Log("[BarbarianThrowAxe] SyncThrow called on remote client");
         transform.parent = null;
-        transform.position = syncedHeadPosition;
-        transform.rotation = syncedHeadRotation;
-        Vector3 throwDirection = syncedHeadRotation * Vector3.forward; // Only forward direction
+        Vector3 throwDirection = playerHead.forward;
 
         axeRigidbody.isKinematic = false;
-        axeRigidbody.AddForce(throwDirection * syncedThrowForce, ForceMode.Impulse);
+        axeRigidbody.AddForce(throwDirection * force, ForceMode.Impulse);
 
         isThrown = true;
         throwTime = Time.time;
@@ -130,6 +91,7 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
     private void ResetAxe()
     {
         Debug.Log("[BarbarianThrowAxe] ResetAxe called");
+
         transform.parent = axeParent;
         transform.localPosition = initialLocalPosition;
         transform.localRotation = initialLocalRotation;
@@ -137,8 +99,8 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
         axeRigidbody.isKinematic = true;
         isThrown = false;
 
-        // Return the axe to the pool
-        axeManager.axePool.Return(gameObject);
-        Debug.Log("[BarbarianThrowAxe] Axe returned to pool");
+        // Optionally deactivate the axe if pooling is used locally
+        gameObject.SetActive(false);
+        Debug.Log("[BarbarianThrowAxe] Axe reset locally");
     }
 }
