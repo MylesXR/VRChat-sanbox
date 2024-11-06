@@ -20,7 +20,6 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
     private float throwTime;
     private float pressTime;
 
-    private VRCPlayerApi localPlayer;
     private bool hasBeenEnabled = false;
 
     private void OnEnable()
@@ -38,46 +37,46 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
     private void Start()
     {
         axeRigidbody = GetComponent<Rigidbody>();
-        localPlayer = Networking.LocalPlayer;
         Debug.Log("[BarbarianThrowAxe] Start called");
     }
 
     private void Update()
     {
-        if (localPlayer != null && localPlayer.isLocal)
+        // Reset position if the axe is not thrown
+        if (!isThrown)
         {
-            if (!isThrown)
-            {
-                transform.localPosition = initialLocalPosition;
-                transform.localRotation = initialLocalRotation;
-            }
+            transform.localPosition = initialLocalPosition;
+            transform.localRotation = initialLocalRotation;
+        }
 
-            if (Input.GetKeyDown(throwKey) && !isThrown)
-            {
-                pressTime = Time.time;
-                Debug.Log("[BarbarianThrowAxe] Throw key pressed");
-            }
+        // Handle throw action
+        if (Input.GetKeyDown(throwKey) && !isThrown)
+        {
+            pressTime = Time.time;
+            Debug.Log("[BarbarianThrowAxe] Throw key pressed");
+        }
 
-            if (Input.GetKeyUp(throwKey) && !isThrown)
-            {
-                float holdDuration = Time.time - pressTime;
-                float throwForce = Mathf.Lerp(minThrowForce, maxThrowForce, Mathf.Clamp01(holdDuration / forceHoldTime));
-                Debug.Log($"[BarbarianThrowAxe] Throw key released, hold duration: {holdDuration}, throw force: {throwForce}");
-                ThrowAxe(throwForce);
-            }
+        if (Input.GetKeyUp(throwKey) && !isThrown)
+        {
+            float holdDuration = Time.time - pressTime;
+            float throwForce = Mathf.Lerp(minThrowForce, maxThrowForce, Mathf.Clamp01(holdDuration / forceHoldTime));
+            Debug.Log($"[BarbarianThrowAxe] Throw key released, hold duration: {holdDuration}, throw force: {throwForce}");
+            ThrowAxe(throwForce);
+        }
 
-            if (isThrown && Time.time - throwTime >= resetTime)
-            {
-                Debug.Log("[BarbarianThrowAxe] Resetting axe");
-                ResetAxe();
-            }
+        // Check if it's time to reset the axe
+        if (isThrown && Time.time - throwTime >= resetTime)
+        {
+            Debug.Log("[BarbarianThrowAxe] Resetting axe");
+            ResetAxe();
         }
     }
 
     private void ThrowAxe(float force)
     {
-        Debug.Log("[BarbarianThrowAxe] ThrowAxe called locally");
+        Debug.Log("[BarbarianThrowAxe] ThrowAxe called");
 
+        // Detach from parent and apply force
         transform.parent = null;
         Vector3 throwDirection = playerHead.forward;
 
@@ -92,6 +91,7 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
     {
         Debug.Log("[BarbarianThrowAxe] ResetAxe called");
 
+        // Reattach to parent and reset position/rotation
         transform.parent = axeParent;
         transform.localPosition = initialLocalPosition;
         transform.localRotation = initialLocalRotation;
@@ -99,8 +99,8 @@ public class BarbarianThrowAxe : UdonSharpBehaviour
         axeRigidbody.isKinematic = true;
         isThrown = false;
 
-        // Optionally deactivate the axe if pooling is used locally
-        gameObject.SetActive(false);
-        Debug.Log("[BarbarianThrowAxe] Axe reset locally");
+        // Automatically reactivate the axe after resetting
+        gameObject.SetActive(true);
+        Debug.Log("[BarbarianThrowAxe] Axe re-enabled after reset");
     }
 }

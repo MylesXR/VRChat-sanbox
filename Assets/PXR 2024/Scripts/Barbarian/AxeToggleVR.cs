@@ -2,133 +2,60 @@
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
-using VRC.Udon.Common.Interfaces;
 
 public class AxeToggleVR : UdonSharpBehaviour
 {
-    public KeyCode toggleKey = KeyCode.T; // Key to press for toggling
-
-    // Reference to the child GameObject to toggle
-    public GameObject axeObjectVR;
-
+    public GameObject axeObjectVR; // Reference to the VR axe object
     public PlayerManager playerManager;
 
-    private bool hasBeenEnabled = false;
-
-    private VRCPlayerApi localPlayer;
-
-    private int ownershipTransferCount = 0;
-
-    private bool isPlayerInVR = false;
-
-    [UdonSynced, FieldChangeCallback(nameof(IsVisibleVR))]
     private bool isVisibleVR = false;
-
-    private bool IsVisibleVR
-    {
-        get => isVisibleVR;
-        set
-        {
-            isVisibleVR = value;
-            SetVisibility(isVisibleVR);
-        }
-    }
+    private bool isPlayerInVR = false; // Set once at start
 
     void Start()
     {
-        // Ensure the axeObject is set
         if (axeObjectVR == null)
         {
             Debug.LogError("Axe object reference is not set!");
-            enabled = false; // Disable the script if the axeObject is not assigned
+            enabled = false; // Disable the script if the axeObjectVR is not assigned
             return;
         }
+
+        // Start with the axeObject disabled
         axeObjectVR.SetActive(false);
 
-        // Start the enum for custom update cycle
+        // Check if the player is in VR once at start
+        isPlayerInVR = Networking.LocalPlayer != null && Networking.LocalPlayer.IsUserInVR();
+
+        // Start the custom update cycle to regularly check the class
         CustomUpdateSeconds();
     }
 
-    //void Update()
-    //{
-    //    if (Networking.IsOwner(gameObject)) // Check if the local player owns this object
-    //    {
-
-    //        if (Input.GetKeyDown(toggleKey))
-    //        {
-
-    //            // Check if the local player is a Barbarian
-    //            VRCPlayerApi localPlayer = Networking.LocalPlayer;
-    //            if (localPlayer != null)
-    //            {
-    //                string playerClass = playerManager.GetPlayerClass(localPlayer);
-    //                if (playerClass == "Barbarian")
-    //                {
-    //                    Debug.Log("[AxeToggle] Player is a Barbarian. Toggling visibility.");
-
-    //                    // Toggle visibility locally and sync across network
-    //                    IsVisibleVR = !IsVisibleVR;
-
-    //                    // Request serialization to sync with other players
-    //                    RequestSerialization();
-    //                }
-    //                else
-    //                {
-    //                    Debug.Log("[AxeToggle] Player is not a Barbarian. Visibility not changed.");
-    //                }
-    //            }
-    //        }
-
-    //    }
-    //}
-
     public void CustomUpdateSeconds()
     {
-        if (Networking.IsOwner(gameObject))
+        // Check the player's class every 1.5 seconds, update visibility only if both VR and class are correct
+        if (isPlayerInVR && playerManager.GetPlayerClass() == "Barbarian")
         {
-            VRCPlayerApi localPlayer = Networking.LocalPlayer;
-            isVisibleVR = localPlayer.IsUserInVR();
-            if (localPlayer != null)
-            {
-                string playerClass = playerManager.GetPlayerClass(localPlayer);
-                if (playerClass != "Barbarian")
-                {
-                    isVisibleVR = false;
-
-                }
-                if (playerClass == "Barbarian" && isPlayerInVR)
-                {
-                    isVisibleVR = true;
-                }
-            }
-
-            UpdateVisibility();
-
-            // Schedule the next call
-            SendCustomEventDelayedSeconds(nameof(CustomUpdateSeconds), 1.5f);
+            isVisibleVR = true;
         }
+        else
+        {
+            isVisibleVR = false;
+        }
+
+        UpdateVisibility();
+
+        // Schedule the next call to CustomUpdateSeconds in 1.5 seconds
+        SendCustomEventDelayedSeconds(nameof(CustomUpdateSeconds), 1.5f);
     }
 
     public void UpdateVisibility()
     {
         SetVisibility(isVisibleVR);
     }
-    public override void OnDeserialization()
-    {
-        // Sync the visibility state when receiving network updates
-        //Debug.Log("[AxeToggle] OnDeserialization called. Setting visibility to: " + isVisible);
-        SetVisibility(isVisibleVR);
-    }
 
     private void SetVisibility(bool visible)
     {
-        // Set the visibility of the child object
+        // Set the visibility of the axeObjectVR
         axeObjectVR.SetActive(visible);
-        //Debug.Log("[AxeToggle] Axe visibility set to: " + visible);
-    }
-
-    public override void OnPlayerJoined(VRCPlayerApi player)
-    {
-        RequestSerialization();
     }
 }

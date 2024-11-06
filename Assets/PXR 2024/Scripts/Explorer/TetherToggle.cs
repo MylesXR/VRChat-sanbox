@@ -2,7 +2,6 @@
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
-using VRC.Udon.Common.Interfaces;
 
 public class TetherToggle : UdonSharpBehaviour
 {
@@ -10,20 +9,7 @@ public class TetherToggle : UdonSharpBehaviour
     public GameObject TetherObjectPC; // Reference to the child GameObject to toggle
     public PlayerManager playerManager;
 
-    private bool isOwner = false;
-    private VRCPlayerApi localPlayer;
-
-    [UdonSynced, FieldChangeCallback(nameof(IsVisibleTether))]
     private bool isVisibleTether = false;
-    private bool IsVisibleTether
-    {
-        get => isVisibleTether;
-        set
-        {
-            isVisibleTether = value;
-            SetVisibility(isVisibleTether);
-        }
-    }
 
     void Start()
     {
@@ -34,74 +20,50 @@ public class TetherToggle : UdonSharpBehaviour
             return;
         }
 
+        // Start with the TetherObjectPC disabled
         TetherObjectPC.SetActive(false);
-        localPlayer = Networking.LocalPlayer;
-        UpdateOwner();
+
+        // Begin the custom update cycle
         CustomUpdateSeconds();
-    }
-
-    public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
-    {
-        UpdateOwner();
-    }
-
-    private void UpdateOwner()
-    {
-        isOwner = Networking.IsOwner(gameObject);
     }
 
     void Update()
     {
-        if (!isOwner || !Input.GetKeyDown(toggleKey)) return;
-        ToggleTetherVisibility();
+        // Toggle visibility if the toggle key is pressed
+        if (Input.GetKeyDown(toggleKey))
+        {
+            ToggleTetherVisibility();
+        }
     }
 
     private void ToggleTetherVisibility()
     {
-        if (localPlayer != null && playerManager.GetPlayerClass(localPlayer) == "Explorer")
+        // Toggle visibility only if the player has the "Explorer" class
+        if (playerManager.GetPlayerClass() == "Explorer")
         {
-            IsVisibleTether = !IsVisibleTether;
-            RequestSerialization();
+            isVisibleTether = !isVisibleTether;
+            SetVisibility(isVisibleTether);
         }
     }
 
     public void CustomUpdateSeconds()
     {
-        if (localPlayer != null && playerManager.GetPlayerClass(localPlayer) != "Explorer")
+        // If the player is not "Explorer" class, automatically hide the tether
+        if (playerManager.GetPlayerClass() != "Explorer")
         {
             isVisibleTether = false;
         }
 
-        UpdateVisibility();
+        // Update visibility based on the current isVisibleTether state
+        SetVisibility(isVisibleTether);
+
+        // Schedule the next call to CustomUpdateSeconds in 1.5 seconds
         SendCustomEventDelayedSeconds(nameof(CustomUpdateSeconds), 1.5f);
-    }
-
-    public void UpdateVisibility()
-    {
-        SetVisibility(isVisibleTether);
-    }
-
-    public override void OnDeserialization()
-    {
-        SetVisibility(isVisibleTether);
     }
 
     private void SetVisibility(bool visible)
     {
+        // Set the visibility of the TetherObjectPC
         TetherObjectPC.SetActive(visible);
-    }
-
-    public override void OnPlayerJoined(VRCPlayerApi player)
-    {
-        RequestSerialization();
-    }
-
-    public override void OnPlayerLeft(VRCPlayerApi player)
-    {
-        if (player == localPlayer)
-        {
-            // Optional: handle visibility if the local player leaves
-            TetherObjectPC.SetActive(false);
-        }
     }
 }

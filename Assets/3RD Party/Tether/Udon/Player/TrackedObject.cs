@@ -25,7 +25,7 @@ namespace Player
 
         public void Update()
         {
-            if (!editorMode && Networking.IsOwner(localPlayer, gameObject))
+            if (!editorMode)
             {
                 VRCPlayerApi.TrackingData data = localPlayer.GetTrackingData(trackingType);
                 transform.SetPositionAndRotation(data.position, data.rotation);

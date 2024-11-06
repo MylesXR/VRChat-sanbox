@@ -2,7 +2,6 @@
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
-using VRC.Udon.Common.Interfaces;
 
 public class AxeToggle : UdonSharpBehaviour
 {
@@ -10,20 +9,7 @@ public class AxeToggle : UdonSharpBehaviour
     public GameObject axeObject; // Reference to the child GameObject to toggle
     public PlayerManager playerManager;
 
-    private bool isOwner = false;
-    private VRCPlayerApi localPlayer;
-
-    [UdonSynced, FieldChangeCallback(nameof(IsVisible))]
     private bool isVisible = false;
-    private bool IsVisible
-    {
-        get => isVisible;
-        set
-        {
-            isVisible = value;
-            SetVisibility(isVisible);
-        }
-    }
 
     void Start()
     {
@@ -34,74 +20,48 @@ public class AxeToggle : UdonSharpBehaviour
             return;
         }
 
+        // Start with the axeObject disabled
         axeObject.SetActive(false);
-        localPlayer = Networking.LocalPlayer;
-        UpdateOwner();
+
+        // Begin the custom update cycle
         CustomUpdateSeconds();
-    }
-
-    public override void OnOwnershipTransferred(VRCPlayerApi newOwner)
-    {
-        UpdateOwner();
-    }
-
-    private void UpdateOwner()
-    {
-        isOwner = Networking.IsOwner(gameObject);
     }
 
     void Update()
     {
-        if (!isOwner || !Input.GetKeyDown(toggleKey)) return;
-        ToggleAxeVisibility();
+        // Toggle visibility if the toggle key is pressed
+        if (Input.GetKeyDown(toggleKey))
+        {
+            ToggleAxeVisibility();
+        }
     }
 
     private void ToggleAxeVisibility()
     {
-        if (localPlayer != null && playerManager.GetPlayerClass(localPlayer) == "Barbarian")
+        // Toggle visibility only if the player has the "Barbarian" class
+        if (playerManager.GetPlayerClass() == "Barbarian")
         {
-            IsVisible = !IsVisible;
-            RequestSerialization();
+            isVisible = !isVisible;
+            SetVisibility(isVisible);
         }
     }
 
     public void CustomUpdateSeconds()
     {
-        if (localPlayer != null && playerManager.GetPlayerClass(localPlayer) != "Barbarian")
+        // If the player is not "Barbarian" class, automatically hide the axe
+        if (playerManager.GetPlayerClass() != "Barbarian")
         {
             isVisible = false;
+            SetVisibility(isVisible);
         }
 
-        UpdateVisibility();
+        // Schedule the next call to CustomUpdateSeconds in 1.5 seconds
         SendCustomEventDelayedSeconds(nameof(CustomUpdateSeconds), 1.5f);
-    }
-
-    public void UpdateVisibility()
-    {
-        SetVisibility(isVisible);
-    }
-
-    public override void OnDeserialization()
-    {
-        SetVisibility(isVisible);
     }
 
     private void SetVisibility(bool visible)
     {
+        // Set the visibility of the axeObject
         axeObject.SetActive(visible);
-    }
-
-    public override void OnPlayerJoined(VRCPlayerApi player)
-    {
-        RequestSerialization();
-    }
-
-    public override void OnPlayerLeft(VRCPlayerApi player)
-    {
-        if (player == localPlayer)
-        {
-            // Optional: handle visibility if the local player leaves
-            axeObject.SetActive(false);
-        }
     }
 }

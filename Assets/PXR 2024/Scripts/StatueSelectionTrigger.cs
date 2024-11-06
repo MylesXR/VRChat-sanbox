@@ -19,19 +19,20 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
 
     private void Start()
     {
+        // Start with all class-related objects and text hidden
         explorer.SetActive(false);
         barbarian.SetActive(false);
         alchemist.SetActive(false);
-        alchemistText.SetActive(false);
         explorerText.SetActive(false);
         barbarianText.SetActive(false);
+        alchemistText.SetActive(false);
     }
 
     public override void OnPlayerTriggerEnter(VRCPlayerApi player)
     {
         if (player.isLocal)
         {
-            ToggleObject(player);
+            ToggleObject();
         }
     }
 
@@ -39,64 +40,60 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
     {
         if (player.isLocal)
         {
-            alchemistText.SetActive(false);
+            // Hide all class text when the player exits the trigger
             explorerText.SetActive(false);
             barbarianText.SetActive(false);
+            alchemistText.SetActive(false);
         }
     }
 
-    public void ToggleObject(VRCPlayerApi player)
+    private void ToggleObject()
     {
-        if (player.isLocal)
+        // Determine class based on `thisObjectValue` and update visibility
+        switch (thisObjectValue)
         {
-            if (thisObjectValue == 1)
-            {
-                SetClass("Explorer", explorer, player);
+            case 1:
+                SetClass("Explorer", explorer);
                 explorerText.SetActive(true);
                 barbarianText.SetActive(false);
                 alchemistText.SetActive(false);
-            }
-            else if (thisObjectValue == 2)
-            {
-                SetClass("Barbarian", barbarian, player);
+                break;
+            case 2:
+                SetClass("Barbarian", barbarian);
                 barbarianText.SetActive(true);
-                alchemistText.SetActive(false);
                 explorerText.SetActive(false);
-            }
-            else if (thisObjectValue == 3)
-            {
-                SetClass("Alchemist", alchemist, player);
+                alchemistText.SetActive(false);
+                break;
+            case 3:
+                SetClass("Alchemist", alchemist);
                 alchemistText.SetActive(true);
                 explorerText.SetActive(false);
                 barbarianText.SetActive(false);
-            }
+                break;
         }
     }
 
-    private void SetClass(string className, GameObject classObject, VRCPlayerApi player)
+    private void SetClass(string className, GameObject classObject)
     {
-        // Update the local player's class
-        playerManager.SetPlayerClass(player, className);
+        // Set the class for the local player only
+        playerManager.SetPlayerClass(className);
 
-        // Update the local player's visual representation
+        // Hide all class objects initially
         explorer.SetActive(false);
         barbarian.SetActive(false);
         alchemist.SetActive(false);
-        alchemistText.SetActive(false);
-        explorerText.SetActive(false);
-        barbarian.SetActive(false);
 
+        // Show the selected class object
         classObject.SetActive(true);
-        Bobys_WorldPortalSystem.ClassType = className;
 
-        // Notify other scripts that this player's class has changed
-        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UpdateClassObjects");
+        // Update the class type in the portal system
+        Bobys_WorldPortalSystem.ClassType = className;
     }
 
     public void UpdateClassObjects()
     {
-        VRCPlayerApi localPlayer = Networking.LocalPlayer;
-        string className = playerManager.GetPlayerClass(localPlayer);
+        // Update the visual objects based on the local player's class
+        string className = playerManager.GetPlayerClass();
 
         explorer.SetActive(className == "Explorer");
         barbarian.SetActive(className == "Barbarian");

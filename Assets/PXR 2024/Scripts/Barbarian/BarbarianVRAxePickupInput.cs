@@ -2,7 +2,6 @@
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
-using UnityEngine.UI;
 
 namespace Tether
 {
@@ -10,217 +9,75 @@ namespace Tether
     public class BarbarianVRAxePickupInput : UdonSharpBehaviour
     {
         [Header("Player Attachment")]
-        [Tooltip("If this pickup should return to a point when the player lets go.")]
-        public bool hasReturnPoint;
-        [Tooltip("Position to return this pickup when the player lets go. Typically attached to behind the player's head.")]
-        public Transform returnPoint;
-        [Tooltip("Original parent of this axe.")]
-
-        public Transform axeParentVR;
+        public bool hasReturnPoint; // If the axe should return to a point when released
+        public Transform returnPoint; // Position to return this pickup when released
+        public Transform axeParentVR; // Original parent of the axe
 
         [Header("Scripts")]
-        [Tooltip("The VRC_Pickup to use. Required to be on the same game object.")]
-        public VRC_Pickup pickup;
+        public VRC_Pickup pickup; // Reference to the VRC_Pickup component
 
         [Header("Inputs")]
-        [Tooltip("Input to read if pickup is in left hand.")]
-        public string leftInput = "Oculus_CrossPlatform_PrimaryIndexTrigger";
-        [Tooltip("Input to read if pickup is in right hand.")]
-        public string rightInput = "Oculus_CrossPlatform_SecondaryIndexTrigger";
-
-        [Header("Debugging")]
-        [Tooltip("Text component to display debug logs in the VRChat world.")]
-        public Text debugText;
-        private string logMessages = "";
+        public string leftInput = "Oculus_CrossPlatform_PrimaryIndexTrigger"; // Input for left hand
+        public string rightInput = "Oculus_CrossPlatform_SecondaryIndexTrigger"; // Input for right hand
 
         [Header("Properties")]
-        public Rigidbody axeRidgidbodyVR;
+        public Rigidbody axeRigidbodyVR;
         public MeshRenderer axeMeshRenderer;
 
         [Header("Settings")]
-        [Tooltip("The Time it will take this axe to reset after thrown.")]
-        public float resetTime = 10f;
-
+        public float resetTime = 10f; // Time before the axe resets after being thrown
 
         private float dropTime;
-        private VRCPlayerApi owner;
-
-        //[UdonSynced] private Vector3 syncedPosition;
-        //[UdonSynced] private Quaternion syncedRotation;
-        //[UdonSynced] private bool syncedCurrentlyHeld;
-        [UdonSynced] private bool syncedMeshRendererEnabled;
-        //[UdonSynced] private bool syncedAtReturnPoint;
-        private bool resetPosition;
-        private bool positionResetTriggered;
+        private bool resetPosition = false;
+        private bool positionResetTriggered = false;
         private bool currentlyHeld = false;
 
         void Start()
         {
-            owner = Networking.GetOwner(gameObject);
-            LogDebug($"Start: Axe owned by {owner.displayName}");
+            // Initialization code, if needed
         }
 
-        public void Update()
+        void Update()
         {
-            if (Networking.IsOwner(gameObject))
+            // Check if the axe needs to reset position after being dropped
+            if (!currentlyHeld && !resetPosition && !positionResetTriggered && Time.time - dropTime >= resetTime)
             {
-                if (!currentlyHeld && !resetPosition && !positionResetTriggered && Time.time - dropTime >= resetTime)
-                {
-                    resetPosition = true;
-                    positionResetTriggered = true;
-                    LogDebug("reset position true update fired");
-                } 
-                // Sync position, rotation, and gravity state frequently
-                //syncedPosition = transform.position;
-                //syncedRotation = transform.rotation;
-
-                if (!currentlyHeld && resetPosition && hasReturnPoint)
-                {
-                    LogDebug("reset position false update fired");
-                    axeRidgidbodyVR.isKinematic = true;
-                    transform.parent = axeParentVR;
-                    transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
-                    axeMeshRenderer.enabled = false;
-                    //syncedCurrentlyHeld = false;
-                    syncedMeshRendererEnabled = false;
-                    //syncedAtReturnPoint = true;
-                    resetPosition = false;
-
-                }
-                else
-                {
-
-                    syncedMeshRendererEnabled = axeMeshRenderer.enabled;
-                    //syncedAtReturnPoint = !currentlyHeld && resetPosition && hasReturnPoint;
-                }
-                //RequestSerialization();
+                resetPosition = true;
+                positionResetTriggered = true;
             }
-            else
+
+            // Reset position if required and return point is enabled
+            if (!currentlyHeld && resetPosition && hasReturnPoint)
             {
-                // Apply synced state for non-owners
-                //transform.SetPositionAndRotation(syncedPosition, syncedRotation);
-                axeMeshRenderer.enabled = syncedMeshRendererEnabled; // && !syncedAtReturnPoint;
-                //currentlyHeld = syncedCurrentlyHeld;
-                axeRidgidbodyVR.isKinematic = currentlyHeld;
-                transform.SetParent(null);
-                pickup.pickupable = false;
+                ResetAxePosition();
+                resetPosition = false;
             }
         }
 
-        private void OnEnable()
+        private void ResetAxePosition()
         {
-            if (Networking.IsOwner(gameObject))
-            {
-                if (!currentlyHeld && hasReturnPoint)
-                {
-                    transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
-                    axeMeshRenderer.enabled = false;
-                    LogDebug("OnEnable: Axe returned to return point");
-                }
-            }
-        }
-
-        private void OnDisable()
-        {
-            if (Networking.IsOwner(gameObject))
-            {
-                currentlyHeld = false;
-                axeMeshRenderer.enabled = false;
-                LogDebug("OnDisable: Axe mesh renderer disabled");
-            }
+            axeRigidbodyVR.isKinematic = true;
+            transform.parent = axeParentVR;
+            transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
+            axeMeshRenderer.enabled = false;
         }
 
         public override void OnPickup()
         {
-            //VRCPlayerApi player = Networking.LocalPlayer;
-            //if (player != owner)
-            //{
-            //    pickup.Drop();
-            //    LogDebug("OnPickup: Non-owner attempted to pick up the axe");
-            //    return;
-            //}
-
             resetPosition = false;
             positionResetTriggered = false;
             currentlyHeld = true;
             axeMeshRenderer.enabled = true;
-            LogDebug($"OnPickup: Axe picked up, reset position = {resetPosition}, positionResetTriggered = {positionResetTriggered}");
 
-            // Detach from head tracker
+            // Detach from head tracker or return point
             transform.SetParent(null);
-
-            // Sync the state
-            //syncedCurrentlyHeld = true;
-            syncedMeshRendererEnabled = true;
-            //syncedAtReturnPoint = false;
-
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SyncAxePickup");
-            RequestSerialization();
         }
 
         public override void OnDrop()
         {
             currentlyHeld = false;
             dropTime = Time.time;
-            LogDebug("OnDrop: Axe dropped");
-
-
-                axeRidgidbodyVR.isKinematic = false;
-                LogDebug("OnDrop: Rigidbody kinematic turned off, gravity turned on");
-
-
-            // Sync the state
-            //syncedCurrentlyHeld = false;
-            syncedMeshRendererEnabled = true; // Keep renderer enabled while axe is moving
-            //syncedAtReturnPoint = false;
-            RequestSerialization();
-
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SyncAxeDrop");
-        }
-
-        public override void OnDeserialization()
-        {
-            // Handle synchronization of the axe mesh renderer and kinematic state
-            //transform.SetPositionAndRotation(syncedPosition, syncedRotation);
-            axeMeshRenderer.enabled = syncedMeshRendererEnabled; //&& !syncedAtReturnPoint;
-            //currentlyHeld = syncedCurrentlyHeld;
-
-                axeRidgidbodyVR.isKinematic = currentlyHeld;
-                //LogDebug("OnDeserialization: Rigidbody kinematic and gravity state synchronized");
-
-        }
-
-        public void SyncAxePickup()
-        {
-            if (!Networking.IsOwner(Networking.LocalPlayer, gameObject))
-            {
-                axeMeshRenderer.enabled = true;
-                transform.SetParent(null);
-                LogDebug($"SyncAxePickup: Axe mesh renderer set to true for non-owner player {Networking.LocalPlayer.displayName}");
-            }
-        }
-
-        public void SyncAxeDrop()
-        {
-            if (axeMeshRenderer != null)
-            {
-                axeMeshRenderer.enabled = true;
-                LogDebug("SyncAxeDrop: Axe mesh renderer state synchronized");
-            }
-
-                axeRidgidbodyVR.isKinematic = currentlyHeld;
-                LogDebug("SyncAxeDrop: Rigidbody kinematic and gravity state synchronized");
-
-        }
-
-        private void LogDebug(string message)
-        {
-            Debug.Log(message);
-            logMessages += message + "\n";
-            if (debugText != null)
-            {
-                debugText.text = logMessages;
-            }
+            axeRigidbodyVR.isKinematic = false; // Enable gravity for the axe
         }
     }
 }

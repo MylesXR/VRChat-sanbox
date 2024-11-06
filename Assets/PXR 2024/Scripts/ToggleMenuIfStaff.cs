@@ -101,7 +101,7 @@ public class ToggleMenuIfStaff : UdonSharpBehaviour
     private void SetClass(string className, GameObject classObject, VRCPlayerApi player)
     {
         // Update the local player's class
-        playerManager.SetPlayerClass(player, className);
+        playerManager.SetPlayerClass(className);
 
         // Update the local player's visual representation
         explorerScriptObject.SetActive(false);
@@ -117,7 +117,7 @@ public class ToggleMenuIfStaff : UdonSharpBehaviour
     public void UpdateClassObjects()
     {
         VRCPlayerApi localPlayer = Networking.LocalPlayer;
-        string className = playerManager.GetPlayerClass(localPlayer);
+        string className = playerManager.GetPlayerClass();
 
         explorerScriptObject.SetActive(className == "Explorer");
         barbarianScriptObject.SetActive(className == "Barbarian");
