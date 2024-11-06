@@ -1,7 +1,6 @@
 ﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon;
 
 public class StatueSelectionTrigger : UdonSharpBehaviour
 {
@@ -29,26 +28,18 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
 
     public override void OnPlayerTriggerEnter(VRCPlayerApi player)
     {
-        if (player.isLocal)
-        {
             ToggleObject(player);
-        }
     }
 
     public override void OnPlayerTriggerExit(VRCPlayerApi player)
     {
-        if (player.isLocal)
-        {
             alchemistText.SetActive(false);
             explorerText.SetActive(false);
             barbarianText.SetActive(false);
-        }
     }
 
     public void ToggleObject(VRCPlayerApi player)
     {
-        if (player.isLocal)
-        {
             if (thisObjectValue == 1)
             {
                 SetClass("Explorer", explorer, player);
@@ -70,7 +61,7 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
                 explorerText.SetActive(false);
                 barbarianText.SetActive(false);
             }
-        }
+        
     }
 
     private void SetClass(string className, GameObject classObject, VRCPlayerApi player)
@@ -88,8 +79,6 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
 
         classObject.SetActive(true);
         Bobys_WorldPortalSystem.ClassType = className;
-
-        // Notify other scripts that this player's class has changed
         SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UpdateClassObjects");
     }
 
@@ -97,7 +86,6 @@ public class StatueSelectionTrigger : UdonSharpBehaviour
     {
         VRCPlayerApi localPlayer = Networking.LocalPlayer;
         string className = playerManager.GetPlayerClass(localPlayer);
-
         explorer.SetActive(className == "Explorer");
         barbarian.SetActive(className == "Barbarian");
         alchemist.SetActive(className == "Alchemist");
