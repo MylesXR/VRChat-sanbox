@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.SDKBase;
 using VRC.Udon.Common;
+using TMPro;
 
 public class Bobys_WorldPortalSystem : UdonSharpBehaviour
 {
@@ -27,6 +28,8 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     [SerializeField] GameObject PopUpMessageCrafting;
     [SerializeField] GameObject PopUpMessageSpawning;
     [SerializeField] GameObject PopUpMessagePotionAlreadySpawned;
+    [SerializeField] TextMeshProUGUI SuperJumpTimerText;  // Ensure this is declared here
+
 
     #endregion
 
@@ -40,6 +43,13 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     [SerializeField] private GameObject WallBreakingPotion;
     [SerializeField] private GameObject SuperJumpingPotion;
     [SerializeField] private GameObject WaterWalkingPotion;
+
+    #endregion
+
+    #region Timer Variables
+
+    private int superJumpTimeRemaining;
+    private const int superJumpDuration = 10;  // Duration for the Super Jump effect in seconds
 
     #endregion
 
@@ -127,12 +137,47 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
             SuperJumpingPotion.SetActive(true);
             IOM.PotionSuperJumpingCollected--;
             IOM.UpdateUI();
+            StartSuperJumpTimer();  // Start the countdown timer when the potion is spawned
         }
         else
         {
             PopUpMessageSpawning.SetActive(true);
             SendCustomEventDelayedSeconds(nameof(HidePopupMessage), 3f);
         }
+    }
+
+    public void StartSuperJumpTimer()
+    {
+        // Set the initial time remaining and make the text element visible
+        superJumpTimeRemaining = superJumpDuration;
+        SuperJumpTimerText.gameObject.SetActive(true);
+        UpdateSuperJumpTimerDisplay();
+        // Start the countdown with a custom delayed event
+        SendCustomEventDelayedSeconds(nameof(UpdateSuperJumpTimer), 1f);
+    }
+
+    public void UpdateSuperJumpTimer()
+    {
+        // Decrement the timer each second
+        if (superJumpTimeRemaining > 0)
+        {
+            superJumpTimeRemaining--;
+            UpdateSuperJumpTimerDisplay();
+
+            // Continue updating every second until time runs out
+            SendCustomEventDelayedSeconds(nameof(UpdateSuperJumpTimer), 1f);
+        }
+        else
+        {
+            // Hide the timer text when the countdown ends
+            SuperJumpTimerText.gameObject.SetActive(false);
+        }
+    }
+
+    private void UpdateSuperJumpTimerDisplay()
+    {
+        // Display the remaining seconds in the text element
+        SuperJumpTimerText.text = $"{superJumpTimeRemaining}s";
     }
 
     #endregion
@@ -185,11 +230,9 @@ public class Bobys_WorldPortalSystem : UdonSharpBehaviour
     {
         if (PotionsSpawnPoint == null) return;
 
-        // Reset the potion's position, rotation, and make it kinematic to avoid falling on spawn
         potion.transform.position = PotionsSpawnPoint.position;
         potion.transform.rotation = PotionsSpawnPoint.rotation;
 
-        // Set the Rigidbody to kinematic if it exists
         Rigidbody potionRigidbody = potion.GetComponent<Rigidbody>();
         if (potionRigidbody != null)
         {
