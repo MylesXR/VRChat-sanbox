@@ -1,23 +1,19 @@
 ﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon.Common.Interfaces;
 
 public class PotionCollisionHandler : UdonSharpBehaviour
 {
     #region Variables
 
-    private VRCPlayerApi localPlayer;
-
-    [SerializeField] GameObject potionBreakVFX;
-    public DebugMenu debugMenu;
     public InteractableObjectTracker IOT;
-    public InteractableObjectManager IOM;
+    [SerializeField] GameObject potionBreakVFX;
 
-    public bool isHeld = false; // New flag to track potion hold status
-    [UdonSynced] public bool isKinematic = true;
-    [UdonSynced] public bool isDestroyed = false; // Tracks if the potion is destroyed
-
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
+    private bool isHeld = false;  
+    private VRCPlayerApi localPlayer;
+ 
     #endregion
 
     #region On Start
@@ -25,6 +21,8 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     private void Start()
     {
         localPlayer = Networking.LocalPlayer;
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
     }
 
     #endregion
@@ -34,30 +32,14 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     public override void OnPickup()
     {
         SetKinematicState(true);
-        isHeld = true; // Lock the potion as held
-        RequestSerialization(); // Sync hold status across the network
+        isHeld = true;
     }
 
     public override void OnDrop()
     {
         SetKinematicState(false);
-        SendCustomNetworkEvent(NetworkEventTarget.All, nameof(UpdateKinematicState));
-        RequestSerialization(); // Sync hold status across the network
+        isHeld = false;
     }
-
-    //private void OnEnable()
-    //{
-    //    if (isHeld) // Prevent reset if the object is held
-    //    {
-    //        debugMenu.Log("Potion is held; skipping reset.");
-    //        return;
-    //    }
-
-    //    isDestroyed = false; // Reset destruction state only if inactive
-    //    RequestSerialization();
-    //}
-
-
 
     #endregion
 
@@ -65,17 +47,12 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     public void SetKinematicState(bool state)
     {
-        isKinematic = state;
-        UpdateKinematicState();
-    }
-
-    private void UpdateKinematicState()
-    {
         Rigidbody potionRigidbody = GetComponent<Rigidbody>();
+
         if (potionRigidbody != null)
         {
-            potionRigidbody.isKinematic = isKinematic;
-            potionRigidbody.useGravity = !isKinematic;
+            potionRigidbody.isKinematic = state;
+            potionRigidbody.useGravity = !state;
         }
     }
 
@@ -85,34 +62,21 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (Networking.IsOwner(gameObject)) // Only trigger if the local player owns the potion
+        if (!isHeld)
         {
             if (IOT.ItemType == "PotionSuperJumping")
             {
                 ActivateSuperJump();
             }
-            isHeld = false; // Release hold lock when dropped
-            SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TriggerVFXandDestroy));
+
+            TriggerPotionBreakEffect();
+            ResetPosition();
         }
     }
-
 
     #endregion
 
-    #region Destroy Potions and Play VFX 
-
-    public void TriggerVFXandDestroy()
-    {
-        if (Networking.IsOwner(gameObject))
-        {
-            isDestroyed = true;
-            RequestSerialization(); // Sync destruction state
-            TriggerPotionBreakEffect();
-            DestroyPotion(); // Only owner handles actual destruction
-        }
-    }
-
-
+    #region Reset Position and VFX
 
     private void TriggerPotionBreakEffect()
     {
@@ -123,16 +87,12 @@ public class PotionCollisionHandler : UdonSharpBehaviour
         }
     }
 
-    private void DestroyPotion()
+    private void ResetPosition()
     {
-        if (debugMenu != null)
-        {
-            debugMenu.Log("PotionCollisionHandler: Requesting potion destruction.");
-        }
-        if (localPlayer == Networking.LocalPlayer)
-        {
-            IOM.DestroyPotion(gameObject, Networking.LocalPlayer.playerId, IOT.ItemType);
-        }
+        transform.position = initialPosition;
+        transform.rotation = initialRotation;
+        SetKinematicState(true);
+        gameObject.SetActive(false);
     }
 
     #endregion
@@ -157,4 +117,5 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     }
 
     #endregion   
+
 }
