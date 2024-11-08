@@ -1,22 +1,24 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
+using VRC.Udon.Common.Interfaces;
 
 public class VRC_PlayAnimation_Synced : UdonSharpBehaviour
 {
     public Animator Animator;
     public string AnimationTrigger = "PlayAnimation";
+    [UdonSynced] private bool isAnimationPlaying;
 
     public override void Interact()
     {
-        if (Animator != null)
-        {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnimation");
-        }      
+        SendCustomNetworkEvent(NetworkEventTarget.All, "PlayAnimation");
     }
 
     public void PlayAnimation()
     {
-        Animator.SetTrigger(AnimationTrigger);
+        if (Animator != null)
+        {
+            isAnimationPlaying = !isAnimationPlaying; 
+            Animator.SetTrigger(AnimationTrigger);
+        }
     }
 }

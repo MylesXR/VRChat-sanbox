@@ -8,6 +8,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
 
     public InteractableObjectTracker IOT;
     [SerializeField] GameObject potionBreakVFX;
+    [SerializeField] AudioSource potionBreakSFX;
 
     private Vector3 initialPosition;
     private Quaternion initialRotation;
@@ -64,11 +65,13 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     {
         if (!isHeld)
         {
+            potionBreakSFX.Play();
+
             if (IOT.ItemType == "PotionSuperJumping")
             {
                 ActivateSuperJump();
             }
-
+            
             TriggerPotionBreakEffect();
             ResetPosition();
         }
@@ -79,7 +82,7 @@ public class PotionCollisionHandler : UdonSharpBehaviour
     #region Reset Position and VFX
 
     private void TriggerPotionBreakEffect()
-    {
+    {       
         if (potionBreakVFX != null)
         {
             GameObject vfxInstance = Instantiate(potionBreakVFX, transform.position, Quaternion.identity);

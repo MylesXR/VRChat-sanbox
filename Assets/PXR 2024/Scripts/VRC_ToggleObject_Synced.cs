@@ -4,7 +4,7 @@ using UnityEngine;
 public class VRC_ToggleObject_Synced : UdonSharpBehaviour
 {
     public GameObject[] targetObjects; 
-    [UdonSynced] private bool isObjectActive; 
+    [UdonSynced] public bool isObjectActive; 
 
     private void Start()
     {     

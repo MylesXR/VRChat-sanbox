@@ -30,6 +30,10 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
     public int flashCount = 3; // Number of flashes for incorrect pattern
     public float flashInterval = 0.2f; // Flashing interval for incorrect pattern
 
+    [SerializeField] AudioSource PuzzleGuessSFX;
+    [SerializeField] AudioSource PuzzleCompletedSFX;
+    [SerializeField] AudioSource PuzzleNotCompletedSFX;
+
     private int[] playerPattern; // Store player's input as integers
     private bool puzzleComplete = false; // Puzzle state
 
@@ -87,8 +91,8 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
         {
             return;
         }
-            
 
+        PuzzleGuessSFX.Play();
         TakeOwnership(); // Ensure the player can sync their interactions
 
         playerPattern[currentGlobalGuessIndex] = buttonID;
@@ -135,8 +139,9 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
 
     private void HandleCorrectPattern()
     {
+        PuzzleCompletedSFX.Play();
         puzzleComplete = true;
-        syncedMaterialIndex = CORRECT_MATERIAL; // Sync the correct material
+        syncedMaterialIndex = CORRECT_MATERIAL; // Sync the correct material     
         RequestSerialization(); // Sync across all players
         ApplyMaterialFromIndex();
         //Debug.LogWarning("[Fire_Trap_Button_Manager] Correct pattern handled. VFX deactivated.");
@@ -149,8 +154,9 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
 
     private void HandleIncorrectPattern()
     {
+        PuzzleNotCompletedSFX.Play();
         remainingFlashes = flashCount;
-        isFlashingSynced = true;
+        isFlashingSynced = true;        
         RequestSerialization();
         //Debug.LogWarning("[Fire_Trap_Button_Manager] Incorrect pattern. Flashing VFX.");
         FlashDuringReset(); // Start flashing
@@ -158,10 +164,9 @@ public class Fire_Trap_Button_Manager : UdonSharpBehaviour
     }
 
     public void ShowGuessMaterial()
-    {
+    {        
         TakeOwnership(); // Ensure the player owns the object to sync changes
-
-        syncedMaterialIndex = GUESS_MATERIAL;
+        syncedMaterialIndex = GUESS_MATERIAL;      
         RequestSerialization(); // Sync the material index
         ApplyMaterialFromIndex();
         //Debug.LogWarning("[Fire_Trap_Button_Manager] Guess material applied.");
