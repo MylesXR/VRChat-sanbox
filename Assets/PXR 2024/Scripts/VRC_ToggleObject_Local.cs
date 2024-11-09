@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class VRC_ToggleObject_Local : UdonSharpBehaviour
 {
-    public GameObject[] targetObjects; // Array of GameObjects to be toggled
+    public GameObject[] targetObjects;
     private bool isObjectActive;
 
     public override void Interact()
