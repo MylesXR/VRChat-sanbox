@@ -1,6 +1,8 @@
 ﻿using UdonSharp;
 using UnityEngine;
+using VRC.SDKBase;
 
+[UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
 public class VRC_Play_And_Stop_Animation_Synced : UdonSharpBehaviour
 {
     public Animator[] Animators;
@@ -8,62 +10,82 @@ public class VRC_Play_And_Stop_Animation_Synced : UdonSharpBehaviour
     public string AnimationStopTrigger = "StopAnimation";
     [UdonSynced] public bool isAnimationPlaying = false;
 
+    private VRCPlayerApi localPlayer;
+    private bool pendingInteraction = false;
 
     private void Start()
     {
-        if (isAnimationPlaying)
-        {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnimation");
-        }
-        else
-        {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "StopAnimation");
-        }
-
+        localPlayer = Networking.LocalPlayer;
+        ApplyAnimationState();
     }
 
     public override void Interact()
     {
-        if (Animators != null && Animators.Length > 0)
+        if (!Networking.IsOwner(gameObject))
         {
-            if (!isAnimationPlaying)
-            {
-                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnimation");
-                isAnimationPlaying = true;
-            }
-            else
-            {
-                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "StopAnimation");
-                isAnimationPlaying = false;
-            }
+            // Request ownership and mark interaction as pending
+            pendingInteraction = true;
+            Networking.SetOwner(localPlayer, gameObject);
+        }
+        else
+        {
+            // If already the owner, proceed with toggling the state
+            ToggleAnimationState();
         }
     }
 
-    public void PlayAnimation()
+    public override void OnOwnershipTransferred(VRCPlayerApi player)
     {
-        if (Animators != null)
+        if (player.isLocal && pendingInteraction)
         {
-            foreach (Animator animator in Animators)
-            {
-                if (animator != null)
-                {
-                    animator.SetTrigger(AnimationPlayTrigger);
-                }
-            }
+            // Ownership has been transferred to the local player
+            pendingInteraction = false;
+            ToggleAnimationState();
         }
     }
 
-    public void StopAnimation()
+    private void ToggleAnimationState()
     {
-        if (Animators != null)
+        // Toggle the animation state
+        isAnimationPlaying = !isAnimationPlaying;
+
+        // Apply the new animation state
+        ApplyAnimationState();
+
+        // Request serialization to synchronize the state across clients
+        RequestSerialization();
+    }
+
+    public void ApplyAnimationState()
+    {
+        if (isAnimationPlaying)
         {
-            foreach (Animator animator in Animators)
-            {
-                if (animator != null)
-                {
-                    animator.SetTrigger(AnimationStopTrigger);
-                }
-            }
+            PlayAnimation();
         }
+        else
+        {
+            StopAnimation();
+        }
+    }
+
+    private void PlayAnimation()
+    {
+        foreach (Animator animator in Animators)
+        {
+            animator.SetTrigger(AnimationPlayTrigger);
+        }
+    }
+
+    private void StopAnimation()
+    {
+        foreach (Animator animator in Animators)
+        {
+            animator.SetTrigger(AnimationStopTrigger);
+        }
+    }
+
+    public override void OnDeserialization()
+    {
+        ApplyAnimationState();
     }
 }
