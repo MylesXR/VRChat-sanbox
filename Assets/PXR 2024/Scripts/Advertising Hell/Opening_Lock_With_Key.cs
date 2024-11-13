@@ -3,15 +3,27 @@ using UnityEngine;
 
 public class Opening_Lock_With_Key : UdonSharpBehaviour
 {
-    public GameObject keyObject;
+    public GameObject[] keyObjects; // Array to store multiple key objects
     public Animator lockAnimator;
+    public string animationTriggerName = "PlayAnimation"; // Name of the animation trigger
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == keyObject)
+        // Check if lockAnimator is assigned
+        if (lockAnimator == null)
         {
-            lockAnimator.SetTrigger("PlayAnimation");
-            keyObject.SetActive(false);
+            Debug.LogWarning("Lock animator is not assigned.");
+            return;
+        }
+
+        foreach (GameObject keyObject in keyObjects)
+        {
+            if (other.gameObject == keyObject)
+            {
+                lockAnimator.SetTrigger(animationTriggerName);
+                keyObject.SetActive(false); 
+                break;
+            }
         }
     }
 }
