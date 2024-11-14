@@ -23,4 +23,9 @@ public class PlayAnimationSyncedCellDoors : UdonSharpBehaviour
         animator.SetTrigger("PlayAnimation");
     }
 
+    public void TriggerSyncedAnimation()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "AnimationPlay");
+    }
+
 }
