@@ -6,6 +6,7 @@ using VRC.Udon;
 
 public class PlayAnimationSynced1 : UdonSharpBehaviour
 {
+
     public Animator animator;
 
     public override void Interact()
