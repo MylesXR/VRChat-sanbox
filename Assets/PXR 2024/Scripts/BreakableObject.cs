@@ -14,6 +14,7 @@ public class BreakableObject : UdonSharpBehaviour
     public Animator animator;
     public float deactivationTime = 5.0f; // Time in seconds before objects get deactivated
     public float layerChangeDelay = 1.0f; // Delay in seconds before changing to the after-break layer, adjustable in Inspector
+    public AudioSource audioSource;
 
     #endregion
 
@@ -53,9 +54,12 @@ public class BreakableObject : UdonSharpBehaviour
 
     public void PlayBreakAnimation()
     {
+        audioSource.Play();
+
         // Enable animation and break the object
         animator.enabled = true;
         animator.SetTrigger("PlayAnimation");
+        
 
         // Disable the animation collider once the explosion happens
         if (animationCollider != null)

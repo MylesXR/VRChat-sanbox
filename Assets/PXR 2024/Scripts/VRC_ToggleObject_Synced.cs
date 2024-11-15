@@ -1,29 +1,44 @@
 ﻿using UdonSharp;
 using UnityEngine;
+using VRC.SDKBase;
 
 public class VRC_ToggleObject_Synced : UdonSharpBehaviour
 {
     public GameObject[] targetObjects; 
-    [UdonSynced] public bool isObjectActive; 
+    [UdonSynced] public bool isObjectActive;
 
     private void Start()
-    {     
-        if (targetObjects != null && targetObjects.Length > 0) // Initialize the variable and set the objects' initial state
+    {
+        if (targetObjects != null && targetObjects.Length > 0)
         {
-            isObjectActive = targetObjects[0].activeSelf; // Assume all objects share the same initial state
+            isObjectActive = targetObjects[0].activeSelf;
             SetObjectsActive(isObjectActive);
         }
     }
 
     public override void Interact()
     {
-        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ToggleObjects");
+        // Check if the local player is the owner
+        if (!Networking.IsOwner(gameObject))
+        {
+            // Request ownership
+            Networking.SetOwner(Networking.LocalPlayer, gameObject);
+        }
+
+        ToggleObjects();
+        RequestSerialization();
     }
 
     public void ToggleObjects()
-    {     
-            isObjectActive = !isObjectActive; // Toggle the state and update the synced variable
-            SetObjectsActive(isObjectActive); // Apply the new state to all target objects      
+    {
+        isObjectActive = !isObjectActive;
+        SetObjectsActive(isObjectActive);
+    }
+
+    public override void OnDeserialization()
+    {
+        // Update the objects' state when the synced variable changes
+        SetObjectsActive(isObjectActive);
     }
 
     private void SetObjectsActive(bool state)
