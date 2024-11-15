@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1126 &-5404037863837309520
+--- !u!1126 &-7536246369050597656
 PackedAssets:
   m_File: 5
   m_ShortPath: CAB-272ad1682f08ca2319d24b4ddad3876a
@@ -18,6 +18,24 @@ PackedAssets:
     offset: 4200
     sourceAssetGUID: 00000000000000000000000000000000
     buildTimeAssetPath: 'Built-in AssetBundleManifest: AssetBundleManifest'
+--- !u!1126 &-7513363284397765241
+PackedAssets:
+  m_File: 2
+  m_ShortPath: BuildPlayer-Final Animation Testing Scene.resource
+  m_Overhead: 0
+  m_Contents:
+  - fileID: 0
+    classID: 83
+    packedSize: 37568
+    offset: 0
+    sourceAssetGUID: 010a2f11a443cc74c8fa5d21b43c5f94
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/PXR 2025 Final Animation/Fireworks.wav
+  - fileID: 0
+    classID: 83
+    packedSize: 242944
+    offset: 0
+    sourceAssetGUID: 11694dba73d30df43878ee30a765aa4e
+    buildTimeAssetPath: Assets/PXR 2024/Prefabs/PXR 2025 Final Animation/SnokeflakeTwinkle.wav
 --- !u!1125 &1
 BuildReport:
   m_ObjectHideFlags: 0
@@ -28,7 +46,7 @@ BuildReport:
   m_Summary:
     buildStartTime:
       serializedVersion: 2
-      ticks: 638672545478611954
+      ticks: 638672551962074958
     buildGUID: 00000000000000000000000000000000
     platformName: Win64
     platformGroupName: Standalone
@@ -36,9 +54,9 @@ BuildReport:
     assetBundleOptions: 32
     outputPath: C:/Users/cole/AppData/Local/Temp/DefaultCompany/VRChat-sandbox/scene-standalonewindows64-final
       animation testing scene.vrcw
-    crc: 349623622
-    totalSize: 8054552
-    totalTimeTicks: 215879142
+    crc: 2851479178
+    totalSize: 8056519
+    totalTimeTicks: 177915121
     totalErrors: 0
     totalWarnings: 0
     buildType: 1
@@ -49,13 +67,13 @@ BuildReport:
       scene.vrcw/BuildPlayer-Final Animation Testing Scene
     role: Scene
     id: 0
-    totalSize: 1084792
+    totalSize: 1084272
   - path: C:/Users/cole/Documents/Single Thread Theatre/PXR/PXR 2024/Unity Projects/VR
       Chat Sandbox/VRChat-sandbox/scene-standalonewindows64-final animation testing
       scene.vrcw/BuildPlayer-Final Animation Testing Scene.sharedAssets
     role: SharedAssets
     id: 1
-    totalSize: 28234560
+    totalSize: 28235136
   - path: C:/Users/cole/Documents/Single Thread Theatre/PXR/PXR 2024/Unity Projects/VR
       Chat Sandbox/VRChat-sandbox/scene-standalonewindows64-final animation testing
       scene.vrcw/BuildPlayer-Final Animation Testing Scene.resource
@@ -67,13 +85,13 @@ BuildReport:
       scene.vrcw
     role: AssetBundle
     id: 3
-    totalSize: 8051622
+    totalSize: 8053588
   - path: C:/Users/cole/Documents/Single Thread Theatre/PXR/PXR 2024/Unity Projects/VR
       Chat Sandbox/VRChat-sandbox/scene-standalonewindows64-final animation testing
       scene.vrcw.manifest
     role: AssetBundleTextManifest
     id: 4
-    totalSize: 1673
+    totalSize: 1674
   - path: C:/Users/cole/Documents/Single Thread Theatre/PXR/PXR 2024/Unity Projects/VR
       Chat Sandbox/VRChat-sandbox/VRChat-sandbox/CAB-272ad1682f08ca2319d24b4ddad3876a
     role: ResourcesFile
@@ -91,73 +109,59 @@ BuildReport:
     totalSize: 188
   m_BuildSteps:
   - stepName: Build Asset Bundles
-    durationTicks: 215879142
+    durationTicks: 177915121
     depth: 0
     messages: []
   - stepName: Calculate asset bundles to be built
-    durationTicks: 401977
+    durationTicks: 417885
     depth: 1
     messages: []
   - stepName: Compile scripts
-    durationTicks: 30958841
+    durationTicks: 57787421
     depth: 1
     messages: []
   - stepName: Build player
-    durationTicks: 139069678
+    durationTicks: 67807988
     depth: 1
     messages: []
   - stepName: Prepare assets for target platform
-    durationTicks: 2513072
+    durationTicks: 2950978
     depth: 2
     messages: []
   - stepName: Building scenes
-    durationTicks: 7090377
+    durationTicks: 7735435
     depth: 2
     messages: []
   - stepName: Building scene Assets/PXR 2024/Scenes/Character prototype/Final Animation
       Testing Scene.unity
-    durationTicks: 7078087
+    durationTicks: 7722485
     depth: 3
     messages: []
   - stepName: Writing asset files
-    durationTicks: 91059648
+    durationTicks: 12078135
     depth: 2
     messages: []
   - stepName: Packaging assets - archive:/BuildPlayer-Final Animation Testing Scene/BuildPlayer-Final
       Animation Testing Scene.sharedAssets
-    durationTicks: 91029851
+    durationTicks: 12047082
     depth: 3
     messages: []
   - stepName: Creating compressed player package
-    durationTicks: 23738451
+    durationTicks: 27227920
     depth: 2
     messages: []
   - stepName: Postprocess built player
-    durationTicks: 55578
+    durationTicks: 52289
     depth: 2
     messages: []
   m_Appendices:
-  - {fileID: 2061281943966795168}
-  - {fileID: 7745815609930007914}
-  - {fileID: 8139633138571652613}
-  - {fileID: 9043903850783745499}
-  - {fileID: 5093706401671120311}
-  - {fileID: -5404037863837309520}
---- !u!668709126 &2061281943966795168
-BuiltAssetBundleInfoSet:
-  bundleInfos:
-  - bundleName: scene-standalonewindows64-final animation testing scene.vrcw
-    bundleArchiveFile: 3
-    packagedFileIndices: 000000000100000002000000
-  - bundleName: VRChat-sandbox
-    bundleArchiveFile: 6
-    packagedFileIndices: 05000000
---- !u!641289076 &5093706401671120311
-AudioBuildInfo:
-  m_IsAudioDisabled: 0
-  m_AudioClipCount: 2
-  m_AudioMixerCount: 0
---- !u!1126 &7745815609930007914
+  - {fileID: 6953695009781816616}
+  - {fileID: 554575777998342478}
+  - {fileID: -7513363284397765241}
+  - {fileID: 8030480664543486259}
+  - {fileID: 4450440025575130278}
+  - {fileID: -7536246369050597656}
+--- !u!1126 &554575777998342478
 PackedAssets:
   m_File: 1
   m_ShortPath: BuildPlayer-Final Animation Testing Scene.sharedAssets
@@ -614,59 +618,55 @@ PackedAssets:
       Effects/Prefabs/ParticlesLight.prefab
   - fileID: 72
     classID: 114
-    packedSize: 2944
+    packedSize: 3520
     offset: 28219128
     sourceAssetGUID: d96632bfbaa932e45960a3ab70f3a18d
     buildTimeAssetPath: Assets/SerializedUdonPrograms/55a4b4cd44d1fbc4386aca30e12664fc.asset
   - fileID: 73
     classID: 114
     packedSize: 2928
-    offset: 28222072
+    offset: 28222648
     sourceAssetGUID: 43b4db6bd3241ad489593494bb4ea198
     buildTimeAssetPath: Assets/SerializedUdonPrograms/637e325e4eeee314faac0a2be7aaf70e.asset
   - fileID: 74
     classID: 114
     packedSize: 2120
-    offset: 28225000
+    offset: 28225576
     sourceAssetGUID: 79a641b5ad02b554da7d9ba51655bee6
     buildTimeAssetPath: Assets/SerializedUdonPrograms/dfbf04249324c8741a8f464efb2442b2.asset
   - fileID: 75
     classID: 114
     packedSize: 2428
-    offset: 28227120
+    offset: 28227696
     sourceAssetGUID: ecf6abc75688a3241afe46ce3d015b85
     buildTimeAssetPath: Assets/SerializedUdonPrograms/fef9fae08f523654c850f0ab4165ac19.asset
   - fileID: 76
     classID: 114
     packedSize: 3360
-    offset: 28229552
+    offset: 28230128
     sourceAssetGUID: c8f5d66fab586c34591bd821ced691ec
     buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/566cc00e27d5822449529a3785eae366.asset
   - fileID: 77
     classID: 114
     packedSize: 1648
-    offset: 28232912
+    offset: 28233488
     sourceAssetGUID: 0fd7002b0eff9e742a37b094d66b3917
     buildTimeAssetPath: Assets/UdonSharp/SerializedUdonPrograms/c8df303ceb45ae84f85a11591f741734.asset
---- !u!1126 &8139633138571652613
-PackedAssets:
-  m_File: 2
-  m_ShortPath: BuildPlayer-Final Animation Testing Scene.resource
-  m_Overhead: 0
-  m_Contents:
-  - fileID: 0
-    classID: 83
-    packedSize: 37568
-    offset: 0
-    sourceAssetGUID: 010a2f11a443cc74c8fa5d21b43c5f94
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/PXR 2025 Final Animation/Fireworks.wav
-  - fileID: 0
-    classID: 83
-    packedSize: 242944
-    offset: 0
-    sourceAssetGUID: 11694dba73d30df43878ee30a765aa4e
-    buildTimeAssetPath: Assets/PXR 2024/Prefabs/PXR 2025 Final Animation/SnokeflakeTwinkle.wav
---- !u!382020655 &9043903850783745499
+--- !u!641289076 &4450440025575130278
+AudioBuildInfo:
+  m_IsAudioDisabled: 0
+  m_AudioClipCount: 2
+  m_AudioMixerCount: 0
+--- !u!668709126 &6953695009781816616
+BuiltAssetBundleInfoSet:
+  bundleInfos:
+  - bundleName: scene-standalonewindows64-final animation testing scene.vrcw
+    bundleArchiveFile: 3
+    packagedFileIndices: 000000000100000002000000
+  - bundleName: VRChat-sandbox
+    bundleArchiveFile: 6
+    packagedFileIndices: 05000000
+--- !u!382020655 &8030480664543486259
 PluginBuildInfo:
   m_RuntimePlugins:
   - Unity.Burst.Unsafe
