@@ -1,39 +1,25 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 
 public class FireworksSound : UdonSharpBehaviour
 {
-    public ParticleSystem mainParticleSystem; // Assign the root particle system here
-    public AudioSource audioSource;           // Assign the AudioSource here
+    public ParticleSystem[] particleSystems;
+    public AudioSource[] audioSources;
 
-    private ParticleSystem.EmissionModule emissionModule;
-
-    void Start()
-    {
-        if (mainParticleSystem != null)
-        {
-            // Set up emission module for tracking particle count if needed
-            emissionModule = mainParticleSystem.emission;
-        }
-
-        if (audioSource == null)
-        {
-            Debug.LogWarning("AudioSource is not assigned.");
-        }
-    }
+    [Range(0.5f, 2.0f)] public float minPitch = 0.8f;
+    [Range(0.5f, 2.0f)] public float maxPitch = 1.2f;
+    [Range(0.5f, 1.0f)] public float minVolume = 0.7f;
+    [Range(0.5f, 1.0f)] public float maxVolume = 1.0f;
 
     void Update()
     {
-        // Check if particles are actively being emitted
-        if (mainParticleSystem != null && audioSource != null)
+        for (int i = 0; i < particleSystems.Length; i++)
         {
-            // If particles are emitting, play the audio if not already playing
-            if (mainParticleSystem.particleCount > 0 && !audioSource.isPlaying)
+            if (particleSystems[i].particleCount > 0 && !audioSources[i].isPlaying)
             {
-                audioSource.Play();
+                audioSources[i].pitch = Random.Range(minPitch, maxPitch);
+                audioSources[i].volume = Random.Range(minVolume, maxVolume);
+                audioSources[i].Play();
             }
         }
     }
