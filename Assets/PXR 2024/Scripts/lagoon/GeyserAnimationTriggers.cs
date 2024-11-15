@@ -49,4 +49,9 @@ public class GeyserAnimationTriggers : UdonSharpBehaviour
         thisGeyser.SetTrigger("PlayAnimation4");
         otherGeyser.SetTrigger("PlayAnimation3");
     }
+
+    public void SetTriggerNetwroked()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnimationSet1");
+    }
 }
