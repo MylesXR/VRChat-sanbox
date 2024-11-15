@@ -6,13 +6,35 @@ using VRC.Udon;
 
 public class FireworksSound : UdonSharpBehaviour
 {
-    public AudioSource audioSource;  // Reference to the audio source to play
+    public ParticleSystem mainParticleSystem; // Assign the root particle system here
+    public AudioSource audioSource;           // Assign the AudioSource here
 
-    private void OnParticleCollision(GameObject other)
+    private ParticleSystem.EmissionModule emissionModule;
+
+    void Start()
     {
-        if (!audioSource.isPlaying)
+        if (mainParticleSystem != null)
         {
-            audioSource.Play();
+            // Set up emission module for tracking particle count if needed
+            emissionModule = mainParticleSystem.emission;
+        }
+
+        if (audioSource == null)
+        {
+            Debug.LogWarning("AudioSource is not assigned.");
+        }
+    }
+
+    void Update()
+    {
+        // Check if particles are actively being emitted
+        if (mainParticleSystem != null && audioSource != null)
+        {
+            // If particles are emitting, play the audio if not already playing
+            if (mainParticleSystem.particleCount > 0 && !audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
         }
     }
 }
