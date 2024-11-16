@@ -1,24 +1,22 @@
 ﻿using UdonSharp;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 
 public class AudioPlay_OnStart : UdonSharpBehaviour
 {
-    public float minPitch = 0.8f;   // Minimum pitch range
-    public float maxPitch = 1.2f;   // Maximum pitch range
+    [Header("Audio Settings")][Space(5)]
+    [SerializeField] private float minPitch = 0.75f;
+    [SerializeField] private float maxPitch = 1.25f;
+    [SerializeField] private float minVolume = 0.50f;
+    [SerializeField] private float maxVolume = 1f;
 
     void Start()
     {
-        // Get the AudioSource component on this GameObject
         AudioSource audioSource = GetComponent<AudioSource>();
 
         if (audioSource != null)
         {
-            // Set a random pitch within the defined range
             audioSource.pitch = Random.Range(minPitch, maxPitch);
-
-            // Play the audio at the randomized pitch
+            audioSource.volume = Random.Range(minVolume, maxVolume);
             audioSource.Play();
         }
         else
