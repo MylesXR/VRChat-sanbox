@@ -11,13 +11,13 @@ public class RotateUdon : UdonSharpBehaviour
 	public float z;
 	void Start()
 	{
-
+		transform.Rotate(x + 0f, y + 0f, z + 0f);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 
-		transform.Rotate(x + 0f, y + 0f, z + 0f);
+		//transform.Rotate(x + 0f, y + 0f, z + 0f);
 	}
 }
