@@ -156,7 +156,7 @@ public class SyncAudioPlayer : UdonSharpBehaviour
     private void Start()
     {
         isMirrorActive = false; // Initialize mirror state to inactive
-        //mirrorGameObject.SetActive(isMirrorActive); // Set the GameObject to the initial state
+        ////mirrorGameObject.SetActive(isMirrorActive); // Set the GameObject to the initial state
         lastToggleTime = Time.time; // Initialize last toggle time
 
         if (Networking.IsMaster)
@@ -226,6 +226,11 @@ public class SyncAudioPlayer : UdonSharpBehaviour
 
         // Flag as initialized
         audioInitialized = true;
+    }
+
+    public override void Interact()
+    {
+        RestartAllAudioSources();
     }
 
 }
